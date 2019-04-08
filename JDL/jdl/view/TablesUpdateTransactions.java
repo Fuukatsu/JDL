@@ -693,39 +693,6 @@ public class TablesUpdateTransactions extends JFrame{
 						tables_passportNoTxt.setText(rs1.getString("trans_passportNo"));
 						tables_tinIdTxt.setText(rs1.getString("trans_tinID"));
 						tables_comboBox1.addItem(rs1.getString("trans_transId"));
-							
-							if(!(rs1.getString("trans_visaType").toString().equals(""))){
-							
-								tables_visaTypeTxt.setText(rs1.getString("trans_visaType").toString());
-								String visaEnd = String.valueOf(rs1.getString("trans_visaEndDate"));
-								visaModel1.setDate(Integer.parseInt(visaEnd.substring(0, visaEnd.indexOf("-"))), (Integer.parseInt(visaEnd.substring(visaEnd.indexOf("-")+1, visaEnd.lastIndexOf("-"))))-1, Integer.parseInt(visaEnd.substring(visaEnd.lastIndexOf("-")+1, visaEnd.length())));
-								visaModel1.setSelected(true);
-								String visaStart = String.valueOf(rs1.getString("trans_visaStartDate"));
-								visaModel.setDate(Integer.parseInt(visaStart.substring(0, visaStart.indexOf("-"))), (Integer.parseInt(visaStart.substring(visaStart.indexOf("-")+1, visaStart.lastIndexOf("-"))))-1, Integer.parseInt(visaStart.substring(visaStart.lastIndexOf("-")+1, visaStart.length())));
-								visaModel.setSelected(true);
-							}
-							
-							if(!(rs1.getString("trans_permitType").equals("")) ){	
-								tables_permitTypeTxt.setText(rs1.getString("trans_permitType").toString());
-								String permitStart = String.valueOf(rs1.getString("trans_permitStartDate"));
-								permitModel.setDate(Integer.parseInt(permitStart.substring(0, permitStart.indexOf("-"))), (Integer.parseInt(permitStart.substring(permitStart.indexOf("-")+1, permitStart.lastIndexOf("-"))))-1, Integer.parseInt(permitStart.substring(permitStart.lastIndexOf("-")+1, permitStart.length())));
-								permitModel.setSelected(true);
-								String permitEnd = String.valueOf(rs1.getString("trans_permitEndDate"));
-								permitModel1.setDate(Integer.parseInt(permitEnd.substring(0, permitEnd.indexOf("-"))), (Integer.parseInt(permitEnd.substring(permitEnd.indexOf("-")+1, permitEnd.lastIndexOf("-"))))-1, Integer.parseInt(permitEnd.substring(permitEnd.lastIndexOf("-")+1, permitEnd.length())));
-								permitModel1.setSelected(true);
-							}
-							
-							if(!(rs1.getString("trans_aepID").equals(""))){	
-								tables_aepIdTxt.setText(rs1.getString("trans_aepID").toString());
-								String aepStart = String.valueOf(rs1.getString("trans_aepStartDate"));
-								if(aepStart.equals(""))
-									aepModel.setDate(Integer.parseInt(aepStart.substring(0, aepStart.indexOf("-"))), (Integer.parseInt(aepStart.substring(aepStart.indexOf("-")+1, aepStart.lastIndexOf("-"))))-1, Integer.parseInt(aepStart.substring(aepStart.lastIndexOf("-"), aepStart.length())));
-								aepModel.setSelected(true);
-								String aepEnd = String.valueOf(rs1.getString("trans_aepEndDate"));
-								if(aepEnd.equals(""))
-									aepModel1.setDate(Integer.parseInt(aepEnd.substring(0, aepEnd.indexOf("-"))), (Integer.parseInt(aepEnd.substring(aepEnd.indexOf("-")+1, aepEnd.lastIndexOf("-"))))-1, Integer.parseInt(aepEnd.substring(aepEnd.lastIndexOf("-"), aepEnd.length())));
-								aepModel1.setSelected(true);
-						}
 					}
 					while(rs.next()) {
 						tables_lastnameLbl.setText("Lastname: "+rs.getString("client_lastname"));
