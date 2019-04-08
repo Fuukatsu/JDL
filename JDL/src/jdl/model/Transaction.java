@@ -1,5 +1,6 @@
 package jdl.model;
 
+
 import java.sql.Date;
 
 public class Transaction 

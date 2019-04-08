@@ -21,6 +21,7 @@ import java.sql.Statement;
 import java.util.*;
 import au.com.bytecode.opencsv.CSVReader;
 
+
 public class CSVLoaderMain {
 	
 	String word = "NULL";
