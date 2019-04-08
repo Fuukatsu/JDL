@@ -524,7 +524,10 @@ public class TablesAddClient extends JFrame{
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Client's names or alias must not contain numeric character.</font color = #ffffff></html>", "Detected an numerical character in client's names/alias", JOptionPane.ERROR_MESSAGE);
 					}else if(objectFilter.containsAlpha(tables_clientContactTxt.getText() )) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Client's contact number must not contain alphabet characters.</font color = #ffffff></html>", "Detected an alphabet character in client's contact number", JOptionPane.ERROR_MESSAGE);
-					}else {
+					}else if(!(objectFilter.checkEmail(tables_clientEmailTxt.getText()))) {
+						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Client's email is not valid</font color = #ffffff></html>", "Detected an invalid email", JOptionPane.ERROR_MESSAGE);
+					}
+					else {
 						String d = birthdatePicker.getJFormattedTextField().getText().toString();
 						DateFormat format = new SimpleDateFormat("yyyy-MM-dd"); 
 						Calendar c = Calendar.getInstance();

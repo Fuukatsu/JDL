@@ -202,7 +202,7 @@ public class Tables extends JFrame{
 					if(md.getRowCount() > 0 && tables_comboBox.getSelectedIndex() != 0)
 					{
 						tables_tinIdTxt.setText(md.getValueAt(0, 3).toString());
-						tables_tinIdTxt.setEditable(false);
+						tables_tinIdTxt.setEditable(true);
 						//System.out.println(md.getValueAt(0, 3));		
 					}
 					else
@@ -630,8 +630,8 @@ public class Tables extends JFrame{
 					boolean permitValid = false;
 					boolean aepValid = false;
 					boolean ptntValid = false;
-					if(tables_passportNoTxt.getText() != "") {
-						if(tables_tinIdTxt.getText() != "") {
+					if(!(tables_passportNoTxt.getText().isEmpty())) {
+						if(!(tables_tinIdTxt.getText().isEmpty())) {
 							if((!(tables_visaTypeTxt.getText().isEmpty()) && !(ve.isEmpty() && vs.isEmpty()) || (tables_visaTypeTxt.getText().isEmpty()) && (ve.isEmpty() && vs.isEmpty())) && DateCheck(ve,vs)) {
 								visaValid = true;
 							}
@@ -672,9 +672,11 @@ public class Tables extends JFrame{
 							
 							else
 								ptntValid = true;
-							if(visaValid && permitValid && aepValid && ptntValid) 
+							if(visaValid && permitValid && aepValid && ptntValid ) 
 							{
 								Register();
+								dispose();
+								new Tables().setVisible(true);
 							}							
 						}
 						else {

@@ -693,6 +693,7 @@ public class TablesUpdateTransactions extends JFrame{
 						tables_passportNoTxt.setText(rs1.getString("trans_passportNo"));
 						tables_tinIdTxt.setText(rs1.getString("trans_tinID"));
 						tables_comboBox1.addItem(rs1.getString("trans_transId"));
+							
 							if(!(rs1.getString("trans_visaType").toString().equals(""))){
 							
 								tables_visaTypeTxt.setText(rs1.getString("trans_visaType").toString());
@@ -704,7 +705,7 @@ public class TablesUpdateTransactions extends JFrame{
 								visaModel1.setSelected(true);
 							}
 							
-							if(!(rs1.getString("trans_permitType").equals(""))){	
+							if(!(rs1.getString("trans_permitType").equals("")) ){	
 								tables_permitTypeTxt.setText(rs1.getString("trans_permitType").toString());
 								String permitStart = String.valueOf(rs1.getString("trans_permitStartDate"));
 								permitModel.setDate(Integer.parseInt(permitStart.substring(0, permitStart.indexOf("-"))), (Integer.parseInt(permitStart.substring(permitStart.indexOf("-")+1, permitStart.lastIndexOf("-"))))-1, Integer.parseInt(permitStart.substring(permitStart.lastIndexOf("-")+1, permitStart.length())));
@@ -712,7 +713,8 @@ public class TablesUpdateTransactions extends JFrame{
 								String permitEnd = String.valueOf(rs1.getString("trans_permitEndDate"));
 								permitModel1.setDate(Integer.parseInt(permitEnd.substring(0, permitEnd.indexOf("-"))), (Integer.parseInt(permitEnd.substring(permitEnd.indexOf("-")+1, permitEnd.lastIndexOf("-"))))-1, Integer.parseInt(permitEnd.substring(permitEnd.lastIndexOf("-")+1, permitEnd.length())));
 								permitModel1.setSelected(true);
-							}	
+							}
+							
 							if(!(rs1.getString("trans_aepID").equals(""))){	
 								tables_aepIdTxt.setText(rs1.getString("trans_aepID").toString());
 								String aepStart = String.valueOf(rs1.getString("trans_aepStartDate"));
