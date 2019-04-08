@@ -1,6 +1,10 @@
 package jdl.controller;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import jdl.dao.Queries;
 import jdl.model.Client;
@@ -56,4 +60,19 @@ public class objectFilter
 	public static boolean checkEmail(String email) {
 		return email.contains("@");
 	}
+	
+	public static String addDay(String date) {
+		//String d = birthdatePicker.getJFormattedTextField().getText().toString();
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd"); 
+		Calendar c = Calendar.getInstance();
+		try {
+			c.setTime(format.parse(date));
+		}catch(ParseException ex) {
+			ex.printStackTrace();
+		}
+		c.add(Calendar.DAY_OF_MONTH, 1);
+		String newDate = format.format(c.getTime());  
+		return newDate;
+	}
+	
 }

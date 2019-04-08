@@ -46,6 +46,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
@@ -72,7 +73,7 @@ public class Tables extends JFrame{
 	 	
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		boolean approved = false;
-		if((date1.isEmpty()) && (date1.isEmpty())) {
+		if((date1.isEmpty()) && (date2.isEmpty())) {
 			return approved = true;
 		}
 		else if(!date1.isEmpty() && date2.isEmpty()) {
@@ -672,7 +673,7 @@ public class Tables extends JFrame{
 							
 							else
 								ptntValid = true;
-							if(visaValid && permitValid && aepValid && ptntValid ) 
+							if(visaValid && permitValid && aepValid && ptntValid && (DateCheck(ve,vs) && DateCheck(ps,pe) && DateCheck(as,ae)) ) 
 							{
 								Register();
 								dispose(); 
@@ -703,38 +704,43 @@ public class Tables extends JFrame{
 			Transaction trans = new Transaction();
 			trans.setPassportNo(tables_passportNoTxt.getText());
 			trans.setTinID(tables_tinIdTxt.getText());
-			trans.setVisaType(tables_visaTypeTxt.getText());				
+			trans.setVisaType(tables_visaTypeTxt.getText());			
+			
+			
+			
 			if(visaStartPick.getJFormattedTextField().getText().toString().equals(""))
-				trans.setVisaStartDate(null);
-			else
-				trans.setVisaStartDate(java.sql.Date.valueOf(visaStartPick.getJFormattedTextField().getText().toString()));			
-			if(visaEndPick.getJFormattedTextField().getText().toString().equals(""))
 				trans.setVisaEndDate(null);
 			else
-				trans.setVisaEndDate(java.sql.Date.valueOf(visaEndPick.getJFormattedTextField().getText().toString()));
+				trans.setVisaEndDate(java.sql.Date.valueOf(objectFilter.addDay(visaStartPick.getJFormattedTextField().getText().toString())));		
+			
+			if(visaEndPick.getJFormattedTextField().getText().toString().equals(""))
+				trans.setVisaStartDate(null);
+			else
+				trans.setVisaStartDate(java.sql.Date.valueOf(objectFilter.addDay(visaEndPick.getJFormattedTextField().getText().toString())));
 			trans.setPermitType(tables_permitTypeTxt.getText());
 			if(permitStartPick.getJFormattedTextField().getText().toString().equals(""))
 				trans.setPermitStartDate(null);
 			else
-				trans.setPermitStartDate(java.sql.Date.valueOf(permitStartPick.getJFormattedTextField().getText().toString()));
+				trans.setPermitStartDate(java.sql.Date.valueOf(objectFilter.addDay(permitStartPick.getJFormattedTextField().getText().toString())));
 			if(permitEndPick.getJFormattedTextField().getText().toString().equals(""))
 				trans.setPermitEndDate(null);
 			else
-				trans.setPermitEndDate(java.sql.Date.valueOf(permitEndPick.getJFormattedTextField().getText().toString()));
+				trans.setPermitEndDate(java.sql.Date.valueOf(objectFilter.addDay(permitEndPick.getJFormattedTextField().getText().toString())));
 			trans.setAepID(tables_aepIdTxt.getText());
 			if(aepStartPick.getJFormattedTextField().getText().toString().equals(""))
 				trans.setAepStartDate(null);
 			else
-				trans.setAepEndDate(java.sql.Date.valueOf(aepStartPick.getJFormattedTextField().getText().toString()));		
+				trans.setAepEndDate(java.sql.Date.valueOf(objectFilter.addDay(aepStartPick.getJFormattedTextField().getText().toString())));		
 			if(aepEndPick.getJFormattedTextField().getText().toString().equals(""))
 				trans.setAepEndDate(null);
 			else
-				trans.setAepEndDate(java.sql.Date.valueOf(aepEndPick.getJFormattedTextField().getText().toString()));
+				trans.setAepEndDate(java.sql.Date.valueOf(objectFilter.addDay(aepEndPick.getJFormattedTextField().getText().toString())));
 			trans.setClient_id(Integer.parseInt(objectFilter.getClientList()[client_id].split(":")[1].trim()));
 			Calendar calendar = Calendar.getInstance();
 			java.sql.Date currentDate = new java.sql.Date(calendar.getTime().getTime());
 			trans.setTransTimestamp(currentDate);
 			trans.setTransAuthor(Runner.getUser().getUser_username());
+			
 			boolean c = Queries.insertTransaction(trans);
 			if(c)
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Transaction inserted successfully.</font color = #ffffff></html>", "Transaction Created", JOptionPane.INFORMATION_MESSAGE);
