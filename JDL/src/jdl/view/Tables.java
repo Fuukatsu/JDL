@@ -675,7 +675,7 @@ public class Tables extends JFrame{
 							if(visaValid && permitValid && aepValid && ptntValid ) 
 							{
 								Register();
-								dispose();
+								dispose(); 
 								new Tables().setVisible(true);
 							}							
 						}

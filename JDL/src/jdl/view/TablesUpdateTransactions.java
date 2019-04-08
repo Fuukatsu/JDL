@@ -698,11 +698,11 @@ public class TablesUpdateTransactions extends JFrame{
 							
 								tables_visaTypeTxt.setText(rs1.getString("trans_visaType").toString());
 								String visaEnd = String.valueOf(rs1.getString("trans_visaEndDate"));
-								visaModel.setDate(Integer.parseInt(visaEnd.substring(0, visaEnd.indexOf("-"))), (Integer.parseInt(visaEnd.substring(visaEnd.indexOf("-")+1, visaEnd.lastIndexOf("-"))))-1, Integer.parseInt(visaEnd.substring(visaEnd.lastIndexOf("-")+1, visaEnd.length())));
-								visaModel.setSelected(true);
-								String visaStart = String.valueOf(rs1.getString("trans_visaStartDate"));
-								visaModel1.setDate(Integer.parseInt(visaStart.substring(0, visaStart.indexOf("-"))), (Integer.parseInt(visaStart.substring(visaStart.indexOf("-")+1, visaStart.lastIndexOf("-"))))-1, Integer.parseInt(visaStart.substring(visaStart.lastIndexOf("-")+1, visaStart.length())));
+								visaModel1.setDate(Integer.parseInt(visaEnd.substring(0, visaEnd.indexOf("-"))), (Integer.parseInt(visaEnd.substring(visaEnd.indexOf("-")+1, visaEnd.lastIndexOf("-"))))-1, Integer.parseInt(visaEnd.substring(visaEnd.lastIndexOf("-")+1, visaEnd.length())));
 								visaModel1.setSelected(true);
+								String visaStart = String.valueOf(rs1.getString("trans_visaStartDate"));
+								visaModel.setDate(Integer.parseInt(visaStart.substring(0, visaStart.indexOf("-"))), (Integer.parseInt(visaStart.substring(visaStart.indexOf("-")+1, visaStart.lastIndexOf("-"))))-1, Integer.parseInt(visaStart.substring(visaStart.lastIndexOf("-")+1, visaStart.length())));
+								visaModel.setSelected(true);
 							}
 							
 							if(!(rs1.getString("trans_permitType").equals("")) ){	
