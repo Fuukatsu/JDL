@@ -730,7 +730,7 @@ public class Tables extends JFrame{
 			if(aepStartPick.getJFormattedTextField().getText().toString().equals(""))
 				trans.setAepStartDate(null);
 			else
-				trans.setAepEndDate(java.sql.Date.valueOf(objectFilter.addDay(aepStartPick.getJFormattedTextField().getText().toString())));		
+				trans.setAepStartDate(java.sql.Date.valueOf(objectFilter.addDay(aepStartPick.getJFormattedTextField().getText().toString())));		
 			if(aepEndPick.getJFormattedTextField().getText().toString().equals(""))
 				trans.setAepEndDate(null);
 			else

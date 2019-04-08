@@ -24,6 +24,7 @@ import jdl.controller.AutoCompletion;
 import jdl.controller.DateLabelFormatter;
 import jdl.controller.Runner;
 import jdl.controller.TableColumnAdjuster;
+import jdl.controller.objectFilter;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -90,7 +91,7 @@ public class TablesUpdateTransactions extends JFrame{
 	 	
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		boolean approved = false;
-		if((date1.isEmpty()) && (date1.isEmpty())) {
+		if((date1.isEmpty()) && (date2.isEmpty())) {
 			return approved = true;
 		}
 		else if(!date1.isEmpty() && date2.isEmpty()) {
@@ -584,17 +585,24 @@ public class TablesUpdateTransactions extends JFrame{
 				int row = tables_comboBox1.getSelectedIndex();
 				if(row > -1)
 				{
+					System.out.println(tm.getValueAt(row, 1).toString());
+					System.out.println(tm.getValueAt(row, 2).toString());
+					System.out.println(tm.getValueAt(row, 3).toString());
+					System.out.println(tm.getValueAt(row, 4).toString());
+					System.out.println(tm.getValueAt(row, 7).toString());
+					System.out.println(tm.getValueAt(row, 10).toString());
+					
 					tables_passportNoTxt.setText(tm.getValueAt(row, 2).toString());
 					tables_tinIdTxt.setText(tm.getValueAt(row, 3).toString());
 					tables_visaTypeTxt.setText(tm.getValueAt(row, 4).toString());
 					if(tm.getValueAt(row, 5) != null)
-						visaStartPick.getJFormattedTextField().setText(tm.getValueAt(row, 5).toString());
-					else
-						visaStartPick.getJFormattedTextField().setText("");
-					if(tm.getValueAt(row, 6) != null)
-						visaEndPick.getJFormattedTextField().setText(tm.getValueAt(row, 6).toString());
+						visaEndPick.getJFormattedTextField().setText(tm.getValueAt(row, 5).toString());
 					else
 						visaEndPick.getJFormattedTextField().setText("");
+					if(tm.getValueAt(row, 6) != null)
+						visaStartPick.getJFormattedTextField().setText(tm.getValueAt(row, 6).toString());
+					else
+						visaStartPick.getJFormattedTextField().setText("");
 					tables_permitTypeTxt.setText(tm.getValueAt(row, 7).toString());
 					if(tm.getValueAt(row, 8) != null)
 						permitStartPick.getJFormattedTextField().setText(tm.getValueAt(row, 8).toString());
@@ -690,8 +698,6 @@ public class TablesUpdateTransactions extends JFrame{
 					statement1.setInt(1, temp);
 					ResultSet rs1 = statement1.executeQuery();
 					while(rs1.next()) {
-						tables_passportNoTxt.setText(rs1.getString("trans_passportNo"));
-						tables_tinIdTxt.setText(rs1.getString("trans_tinID"));
 						tables_comboBox1.addItem(rs1.getString("trans_transId"));
 					}
 					while(rs.next()) {
@@ -830,26 +836,26 @@ public class TablesUpdateTransactions extends JFrame{
 				if(visaStartPick.getJFormattedTextField().getText().toString().equals(""))
 					statement1.setDate(5, null);
 				else
-					statement1.setDate(5, java.sql.Date.valueOf(visaStartPick.getJFormattedTextField().getText().toString()));
+					statement1.setDate(5, java.sql.Date.valueOf(objectFilter.addDay(visaStartPick.getJFormattedTextField().getText().toString())) );
 				
 				
 				if(visaEndPick.getJFormattedTextField().getText().toString().equals(""))
 					statement1.setDate(4, null);
 				else
-					statement1.setDate(4, java.sql.Date.valueOf(visaEndPick.getJFormattedTextField().getText().toString()));
+					statement1.setDate(4, java.sql.Date.valueOf(objectFilter.addDay(visaEndPick.getJFormattedTextField().getText().toString())));
 				
 				statement1.setString(6, tables_permitTypeTxt.getText());
 				
 				if(permitStartPick.getJFormattedTextField().getText().toString().equals(""))
 					statement1.setDate(7, null);
 				else
-					statement1.setDate(7, java.sql.Date.valueOf(permitStartPick.getJFormattedTextField().getText().toString()));
+					statement1.setDate(7, java.sql.Date.valueOf(objectFilter.addDay(permitStartPick.getJFormattedTextField().getText().toString())));
 				
 				
 				if(permitEndPick.getJFormattedTextField().getText().toString().equals(""))
 					statement1.setDate(8, null);
 				else
-					statement1.setDate(8, java.sql.Date.valueOf(permitEndPick.getJFormattedTextField().getText().toString()));
+					statement1.setDate(8, java.sql.Date.valueOf(objectFilter.addDay(permitEndPick.getJFormattedTextField().getText().toString())));
 				
 				
 				statement1.setString(9, tables_aepIdTxt.getText());
@@ -857,13 +863,13 @@ public class TablesUpdateTransactions extends JFrame{
 				if(aepStartPick.getJFormattedTextField().getText().toString().equals(""))
 					statement1.setDate(10, null);
 				else
-					statement1.setDate(10, java.sql.Date.valueOf(aepStartPick.getJFormattedTextField().getText().toString()));
+					statement1.setDate(10, java.sql.Date.valueOf(objectFilter.addDay(aepStartPick.getJFormattedTextField().getText().toString())));
 				
 				
 				if(aepEndPick.getJFormattedTextField().getText().toString().equals(""))
 					statement1.setDate(11, null);
 				else
-					statement1.setDate(11, java.sql.Date.valueOf(aepEndPick.getJFormattedTextField().getText().toString()));
+					statement1.setDate(11, java.sql.Date.valueOf(objectFilter.addDay(aepEndPick.getJFormattedTextField().getText().toString())));
 				
 				
 				statement1.setInt(12, Integer.parseInt(client_id));
