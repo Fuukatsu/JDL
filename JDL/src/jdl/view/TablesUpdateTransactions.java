@@ -91,7 +91,7 @@ public class TablesUpdateTransactions extends JFrame{
 	 	
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		boolean approved = false;
-		if((date1.isEmpty()) && (date1.isEmpty())) {
+		if((date1.isEmpty()) && (date2.isEmpty())) {
 			return approved = true;
 		}
 		else if(!date1.isEmpty() && date2.isEmpty()) {
@@ -589,13 +589,13 @@ public class TablesUpdateTransactions extends JFrame{
 					tables_tinIdTxt.setText(tm.getValueAt(row, 3).toString());
 					tables_visaTypeTxt.setText(tm.getValueAt(row, 4).toString());
 					if(tm.getValueAt(row, 5) != null)
-						visaStartPick.getJFormattedTextField().setText(tm.getValueAt(row, 5).toString());
-					else
-						visaStartPick.getJFormattedTextField().setText("");
-					if(tm.getValueAt(row, 6) != null)
-						visaEndPick.getJFormattedTextField().setText(tm.getValueAt(row, 6).toString());
+						visaEndPick.getJFormattedTextField().setText(tm.getValueAt(row, 5).toString());
 					else
 						visaEndPick.getJFormattedTextField().setText("");
+					if(tm.getValueAt(row, 6) != null)
+						visaStartPick.getJFormattedTextField().setText(tm.getValueAt(row, 6).toString());
+					else
+						visaStartPick.getJFormattedTextField().setText("");
 					tables_permitTypeTxt.setText(tm.getValueAt(row, 7).toString());
 					if(tm.getValueAt(row, 8) != null)
 						permitStartPick.getJFormattedTextField().setText(tm.getValueAt(row, 8).toString());
@@ -705,8 +705,8 @@ public class TablesUpdateTransactions extends JFrame{
 						tables_emaiLbl.setText("Email: "+rs.getString("client_email"));
 						tables_contactLbl.setText("Contact No.: "+rs.getString("client_contact"));
 					}
-					tables_passportNoTxt.setEditable(false);
-					tables_tinIdTxt.setEditable(false);
+					tables_passportNoTxt.setEditable(true);
+					tables_tinIdTxt.setEditable(true);
 
 					}
 					}catch (SQLException e1) {
