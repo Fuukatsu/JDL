@@ -214,7 +214,6 @@ public class Tables extends JFrame{
 			}
 		});
 		
-		tables_reloadBtn.doClick();		
 		tables_reloadBtn.setBackground(new Color(0, 102, 102));
 		tables_reloadBtn.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
 		tables_reloadBtn.setBorder(null);
@@ -730,7 +729,7 @@ public class Tables extends JFrame{
 			if(aepStartPick.getJFormattedTextField().getText().toString().equals(""))
 				trans.setAepStartDate(null);
 			else
-				trans.setAepEndDate(java.sql.Date.valueOf(objectFilter.addDay(aepStartPick.getJFormattedTextField().getText().toString())));		
+				trans.setAepStartDate(java.sql.Date.valueOf(objectFilter.addDay(aepStartPick.getJFormattedTextField().getText().toString())));		
 			if(aepEndPick.getJFormattedTextField().getText().toString().equals(""))
 				trans.setAepEndDate(null);
 			else
