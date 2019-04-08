@@ -214,7 +214,6 @@ public class Tables extends JFrame{
 			}
 		});
 		
-		tables_reloadBtn.doClick();		
 		tables_reloadBtn.setBackground(new Color(0, 102, 102));
 		tables_reloadBtn.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
 		tables_reloadBtn.setBorder(null);
