@@ -518,13 +518,16 @@ public class TablesAddClient extends JFrame{
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Client's Birthdate must not be empty.</font color = #ffffff></html>", "Detected an empty client's birthdate", JOptionPane.ERROR_MESSAGE);
 					}else if(tables_genderBox.getSelectedItem().toString().equals("")) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Client's Gender must not be empty.</font color = #ffffff></html>", "Detected an empty or undefinable gender", JOptionPane.ERROR_MESSAGE);
-					}else if(tables_clientContactTxt.getText().equals("") && tables_clientEmailTxt.getText() .equals("")) {
+					}else if(tables_clientContactTxt.getText().equals("") && tables_clientEmailTxt.getText().equals("")) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>There should at least one contact information available for a client</font color = #ffffff></html>", "Detected an empty contact no or email", JOptionPane.ERROR_MESSAGE);
 					}else if(objectFilter.containsDigit(tables_clientAliasTxt.getText()) || objectFilter.containsDigit(tables_clientFirstnameTxt.getText()) || objectFilter.containsDigit(tables_clientLastnameTxt.getText())) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Client's names or alias must not contain numeric character.</font color = #ffffff></html>", "Detected an numerical character in client's names/alias", JOptionPane.ERROR_MESSAGE);
 					}else if(objectFilter.containsAlpha(tables_clientContactTxt.getText() )) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Client's contact number must not contain alphabet characters.</font color = #ffffff></html>", "Detected an alphabet character in client's contact number", JOptionPane.ERROR_MESSAGE);
-					}else {
+					}else if(!(objectFilter.checkEmail(tables_clientEmailTxt.getText())) &&  tables_clientContactTxt.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Client's email is not valid</font color = #ffffff></html>", "Detected an invalid email", JOptionPane.ERROR_MESSAGE);
+					}
+					else {
 						String d = birthdatePicker.getJFormattedTextField().getText().toString();
 						DateFormat format = new SimpleDateFormat("yyyy-MM-dd"); 
 						Calendar c = Calendar.getInstance();

@@ -52,4 +52,8 @@ public class objectFilter
 	    }
 	    return ul;
 	}
+	
+	public static boolean checkEmail(String email) {
+		return email.contains("@");
+	}
 }
