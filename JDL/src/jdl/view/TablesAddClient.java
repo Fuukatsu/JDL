@@ -524,25 +524,15 @@ public class TablesAddClient extends JFrame{
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Client's names or alias must not contain numeric character.</font color = #ffffff></html>", "Detected an numerical character in client's names/alias", JOptionPane.ERROR_MESSAGE);
 					}else if(objectFilter.containsAlpha(tables_clientContactTxt.getText() )) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Client's contact number must not contain alphabet characters.</font color = #ffffff></html>", "Detected an alphabet character in client's contact number", JOptionPane.ERROR_MESSAGE);
-					}else if(!(objectFilter.checkEmail(tables_clientEmailTxt.getText())) &&  tables_clientContactTxt.getText().equals("")) {
+					}else if((!(objectFilter.checkEmail(tables_clientEmailTxt.getText())) && !(tables_clientEmailTxt.getText().equals(""))) &&  (tables_clientContactTxt.getText().equals("")|| !(tables_clientContactTxt.getText().equals("")) )) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Client's email is not valid</font color = #ffffff></html>", "Detected an invalid email", JOptionPane.ERROR_MESSAGE);
 					}
 					else {
-						String d = birthdatePicker.getJFormattedTextField().getText().toString();
-						DateFormat format = new SimpleDateFormat("yyyy-MM-dd"); 
-						Calendar c = Calendar.getInstance();
-						try {
-							c.setTime(format.parse(d));
-						}catch(ParseException ex) {
-							ex.printStackTrace();
-						}
-						c.add(Calendar.DAY_OF_MONTH, 1);
-						String newDate = format.format(c.getTime());  
 						
 						statement1.setString(1, tables_clientLastnameTxt.getText());
 						statement1.setString(2, tables_clientFirstnameTxt.getText());
 						statement1.setString(3, tables_nationalityBox.getSelectedItem().toString());
-						statement1.setDate(4, java.sql.Date.valueOf(newDate));
+						statement1.setDate(4, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().toString())));
 						statement1.setString(5, tables_genderBox.getSelectedItem().toString());
 						statement1.setString(6, tables_clientCompanyTxt.getText());
 						statement1.setString(7, tables_clientPositionTxt.getText());

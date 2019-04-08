@@ -239,7 +239,7 @@ public class TablesUpdateTransactions extends JFrame{
 							", trans_aepID AS 'AEP ID' " + 
 							", trans_aepStartDate AS 'AEP Start Date' " + 
 							", trans_aepEndDate AS 'AEP Expiry Date' " + 
-							" FROM jdl_accounts.transactions WHERE client_id ="+Integer.parseInt(client_id)+" ORDER BY trans_transId DESC");
+							" FROM jdl_accounts.transactions WHERE client_id ="+Integer.parseInt(client_id)+" ORDER BY trans_transId");
 					tm = DbUtils.resultSetToTableModel(rs1);
 					table_1.setModel(tm);
 					table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
