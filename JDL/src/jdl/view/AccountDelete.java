@@ -19,6 +19,7 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import jdl.controller.AutoCompletion;
+import jdl.controller.Runner;
 
 import java.util.Properties;
 
@@ -140,7 +141,7 @@ public class AccountDelete extends JFrame{
 		try {
 			conn1 = DriverManager.getConnection("jdbc:mysql://localhost:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
 			Statement stat=conn1.createStatement();
-			ResultSet rs1=stat.executeQuery("SELECT * FROM jdl_accounts.users");
+			ResultSet rs1=stat.executeQuery("SELECT * FROM jdl_accounts.users WHERE user_id != "+Runner.getUser().getUser_id()+"");
 			
 			 while(rs1.next()){        
 				 	String user_username = rs1.getString("user_username");
