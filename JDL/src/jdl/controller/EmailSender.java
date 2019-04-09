@@ -15,7 +15,7 @@ import javax.mail.internet.MimeMessage;
 import jdl.model.Email;
 
 public class EmailSender{
-	public static void EmailSendFunction(String date, String recipient, String message) 
+	public static void EmailSendFunction(String date, String recipient, String message, String subject) 
 	{
 		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 		  // Get a Properties object
@@ -49,7 +49,7 @@ public class EmailSender{
 		     msg.setFrom(new InternetAddress("xxxx@gmail.com"));
 		     msg.setRecipients(Message.RecipientType.TO, 
 		                      InternetAddress.parse(recipient, false));
-		     msg.setSubject("JDL Business and Immigration Consultancy: Expiring Document");
+		     msg.setSubject(subject);
 		     msg.setText(message);
 		     msg.setSentDate(new Date());
 		     Transport.send(msg);
