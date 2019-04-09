@@ -185,11 +185,11 @@ public class OptionList extends JFrame{
 		options_manageLbl.setBounds(92, 391, 188, 25);
 		getContentPane().add(options_manageLbl);
 		
-		JLabel options_employeeLbl = new JLabel("EMPLOYEE ACTIVITY");
+		JLabel options_employeeLbl = new JLabel("<HTML><CENTER>TRANSACTION <br>ACTIVITY HISTORY</br></CENTER></HTML>");
 		options_employeeLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		options_employeeLbl.setForeground(Color.WHITE);
-		options_employeeLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 18));
-		options_employeeLbl.setBounds(415, 391, 180, 25);
+		options_employeeLbl.setFont(new Font("Segoe UI Semilight", Font.BOLD, 15));
+		options_employeeLbl.setBounds(429, 391, 172, 44);
 		getContentPane().add(options_employeeLbl);
 		
 		JLabel options_upload = new JLabel("");
