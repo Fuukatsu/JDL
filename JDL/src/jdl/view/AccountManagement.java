@@ -376,44 +376,7 @@ public class AccountManagement extends JFrame{
 			}
 		});
 		emp_comboBox.addItem("Select username");
-		emp_comboBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Connection conn;
-				try {
-					conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
-					String sql = "SELECT * FROM jdl_accounts.users WHERE user_username=?";
-					String sql1 = "SELECT * FROM jdl_accounts.employees WHERE user_id=?";
-					PreparedStatement statement = (PreparedStatement) conn.prepareStatement(sql);
-					PreparedStatement statement1 = (PreparedStatement) conn.prepareStatement(sql1);
-					
-					statement.setString(1,String.valueOf(emp_comboBox.getSelectedItem().toString()));
-
-					ResultSet rs = statement.executeQuery();
-					
-					while (rs.next()) {
-						emp_userIdTxt.setText(rs.getString("user_id"));
-				} 
-					
-					statement1.setInt(1, Integer.parseInt(emp_userIdTxt.getText()));
-					ResultSet rs1 = statement1.executeQuery();
-					
-					while (rs1.next()) {
-						emp_LastnameTxt.setText(rs1.getString("emp_lastname"));
-						emp_FirstnameTxt.setText(rs1.getString("emp_firstname"));
-						emp_PositionTxt.setText(rs1.getString("emp_position"));
-						emp_GenderTxt.setText(rs1.getString("emp_gender"));
-						String dateValue = String.valueOf(rs1.getString("emp_birthdate"));
-						birthdateModel.setDate(Integer.parseInt(dateValue.substring(0, dateValue.indexOf("-"))), (Integer.parseInt(dateValue.substring(dateValue.indexOf("-")+1, dateValue.lastIndexOf("-"))))-1, Integer.parseInt(dateValue.substring(dateValue.lastIndexOf("-")+1, dateValue.length())));
-						birthdateModel.setSelected(true);
-						emp_AddressTxt.setText(rs1.getString("emp_address"));
-						emp_ContactTxt.setText(rs1.getString("emp_contact"));
-						emp_EmailTxt.setText(rs1.getString("emp_email"));	
-					}
-				}catch (SQLException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
+		
 		
 		Connection conn1;
 		try {
@@ -630,6 +593,51 @@ public class AccountManagement extends JFrame{
 		emp_background.setBounds(0, 0, 1422, 799);
 		getContentPane().add(emp_background);
 
+		tables_registerBtn.setEnabled(false);
+		
+		emp_comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(emp_comboBox.getSelectedIndex() == 0) {
+					tables_registerBtn.setEnabled(false);
+				}else {
+					tables_registerBtn.setEnabled(true);
+					Connection conn;
+					try {
+						conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+						String sql = "SELECT * FROM jdl_accounts.users WHERE user_username=?";
+						String sql1 = "SELECT * FROM jdl_accounts.employees WHERE user_id=?";
+						PreparedStatement statement = (PreparedStatement) conn.prepareStatement(sql);
+						PreparedStatement statement1 = (PreparedStatement) conn.prepareStatement(sql1);
+						
+						statement.setString(1,String.valueOf(emp_comboBox.getSelectedItem().toString()));
+	
+						ResultSet rs = statement.executeQuery();
+						
+						while (rs.next()) {
+							emp_userIdTxt.setText(rs.getString("user_id"));
+					} 
+						
+						statement1.setInt(1, Integer.parseInt(emp_userIdTxt.getText()));
+						ResultSet rs1 = statement1.executeQuery();
+						
+						while (rs1.next()) {
+							emp_LastnameTxt.setText(rs1.getString("emp_lastname"));
+							emp_FirstnameTxt.setText(rs1.getString("emp_firstname"));
+							emp_PositionTxt.setText(rs1.getString("emp_position"));
+							emp_GenderTxt.setText(rs1.getString("emp_gender"));
+							String dateValue = String.valueOf(rs1.getString("emp_birthdate"));
+							birthdateModel.setDate(Integer.parseInt(dateValue.substring(0, dateValue.indexOf("-"))), (Integer.parseInt(dateValue.substring(dateValue.indexOf("-")+1, dateValue.lastIndexOf("-"))))-1, Integer.parseInt(dateValue.substring(dateValue.lastIndexOf("-")+1, dateValue.length())));
+							birthdateModel.setSelected(true);
+							emp_AddressTxt.setText(rs1.getString("emp_address"));
+							emp_ContactTxt.setText(rs1.getString("emp_contact"));
+							emp_EmailTxt.setText(rs1.getString("emp_email"));	
+						}
+					}catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
 		
 	}
     

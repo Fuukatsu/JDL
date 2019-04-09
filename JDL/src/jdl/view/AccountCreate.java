@@ -57,6 +57,7 @@ public class AccountCreate extends JFrame{
 	private JTextField emp_passwordTxt;
 	private JTextField emp_userIdTxt;
 	private JTextField emp_usernameTxt;
+	private JComboBox comboBox;
 	/**
 	 * Launch the application.
 	 */
@@ -72,6 +73,7 @@ public class AccountCreate extends JFrame{
 			}
 		});
 	}
+	
 
 	/**
 	 * Create the application.
@@ -186,61 +188,40 @@ public class AccountCreate extends JFrame{
 		JButton tables_registerBtn = new JButton("Create this User");
 		tables_registerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
-					String sql = "INSERT INTO jdl_accounts.users (user_username, user_id, user_password, user_ifAdmin) values (?,?,?,?)";
-					PreparedStatement statement = (PreparedStatement) conn.prepareStatement(sql);
-					
-					statement.setString(1, emp_usernameTxt.getText());
-					statement.setInt(2, Integer.parseInt(emp_userIdTxt.getText()));
-					statement.setString(3, emp_passwordTxt.getText());
-					
-					if(comboBox.getSelectedItem().toString()=="Yes") {
-						statement.setInt(4, 1);
-					}
-					else
-						statement.setInt(4, 0);
-					
-	
-					UIManager.put("OptionPane.background",new ColorUIResource(90, 103, 115));
-				 	UIManager.put("Panel.background",new ColorUIResource(90, 103, 115));
-				 	UIManager.put("OptionPane.messageFont", new Font("Segoe UI Semibold", Font.BOLD, 14));
-				 	UIManager.put("Button.background", Color.WHITE);
-				 	UIManager.put("OptionPane.foreground",new ColorUIResource(90, 103, 115));
-				 	
-				 	if(emp_userIdTxt.getText().equals("")) {
-				 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> No USER ID was specified. Kindly fill out the fields. </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
-				 	}
-				 	else if(emp_usernameTxt.getText().equals("")) {
-				 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> No USERNAME was specified. Kindly fill out the fields. </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
-				 	}
-				 	else if(emp_passwordTxt.getText().equals("")) {
-				 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> No PASSWORD was specified. Kindly fill out the fields. </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
-				 	}
-				 	else if(emp_usernameTxt.getText().length() <= 1) {
-				 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> Acceptable usernames must be at least 2 characters and above. Please enter a valid one.  </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
-				 	}
-				 	else if(emp_passwordTxt.getText().length()<=7 ) {
-				 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> Acceptable Passwords must be at least 7 characters and above. Please lengthen your password. </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
-				 	}
-				 	else {
-				 		int message = JOptionPane.showConfirmDialog(null, "<html><font color = #ffffff> Create this user? </br></font color = #ffffff></html>", "Are you sure?", JOptionPane.YES_NO_OPTION);
-				 			if (message == JOptionPane.YES_OPTION) {
-				 				statement.execute();
-			    		
-				 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> User Successfully Created. </font color = #ffffff></html>", "Created Successfully", JOptionPane.INFORMATION_MESSAGE);
-				 				dispose();
-				 				new AccountCreate().setVisible(true);
-							}
-			    	}
-					
-				} 
-				catch (SQLException e1) {
-					e1.printStackTrace();
-				}
-
+				UIManager.put("OptionPane.background",new ColorUIResource(90, 103, 115));
+			 	UIManager.put("Panel.background",new ColorUIResource(90, 103, 115));
+			 	UIManager.put("OptionPane.messageFont", new Font("Segoe UI Semibold", Font.BOLD, 14));
+			 	UIManager.put("Button.background", Color.WHITE);
+			 	UIManager.put("OptionPane.foreground",new ColorUIResource(90, 103, 115));
+			 	
+				if(emp_userIdTxt.getText().equals("")) {
+			 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> No USER ID was specified. Kindly fill out the fields. </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
+			 	}
+			 	else if(emp_usernameTxt.getText().equals("")) {
+			 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> No USERNAME was specified. Kindly fill out the fields. </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
+			 	}
+			 	else if(emp_passwordTxt.getText().equals("")) {
+			 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> No PASSWORD was specified. Kindly fill out the fields. </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
+			 	}
+			 	else if(emp_usernameTxt.getText().length() <= 1) {
+			 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> Acceptable usernames must be at least 2 characters and above. Please enter a valid one.  </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
+			 	}
+			 	else if(emp_passwordTxt.getText().length()<=7 ) {
+			 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> Acceptable Passwords must be at least 7 characters and above. Please lengthen your password. </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
+			 	}
+			 	else {
+			 		//if username exists: True -> Throw Err, False -> 
+			 			//if userID exists: True -> Throw err, False ->
+					 		if(comboBox.getSelectedIndex() == 1 )
+					 			createAccount(1);
+					 		else
+					 			createAccount(0);
+			 	}
+				
 			}
 		});
+		
+		
 		tables_registerBtn.setForeground(new Color(255, 255, 255));
 		tables_registerBtn.setBounds(121, 267, 197, 36);
 		tables_inputPanel.add(tables_registerBtn);
@@ -288,5 +269,25 @@ public class AccountCreate extends JFrame{
 				
 
 	}
+	public void createAccount(Integer admin) {
+		try {
+			Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+			String sql = "INSERT INTO jdl_accounts.users (user_username, user_id, user_password, user_ifAdmin) values (?,?,?,?)";
+			PreparedStatement statement = (PreparedStatement) conn.prepareStatement(sql);
+			
+			statement.setString(1, emp_usernameTxt.getText());
+			statement.setInt(2, Integer.parseInt(emp_userIdTxt.getText()));
+			statement.setString(3, emp_passwordTxt.getText());
+			statement.setInt(4, admin);
+		 	statement.execute();
+		 	
+		 	//DISPOSE
+		 	//GET BACK TO PREVIOUS PAGE.
+	    	
+		} 
+		catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+	};
 }
 
