@@ -5,14 +5,22 @@ import jdl.view.*;
 public class Runner 
 {
 	private static User user = null;
-	private static Splash s;
+	private static AccountCreate ac;
+	private static AccountDelete ad;
+	private static AccountManagement am;
+	private static ActivityHistory aH;
 	private static Login l;
 	private static OptionList ol;
-	private static ViewAdministratorAccount vaa;
+	private static OrderBy ob;
+	private static Splash s;
 	private static Tables t;
-	private static AccountManagement am;
+	private static TablesAddClient tac;
+	private static TablesRemarks tr;
+	private static TablesStatus ts;
+	private static TablesStatusPermits tsp;
 	private static TablesUpdateTransactions tut;
-	private static ActivityHistory aH;
+	private static ViewAdministratorAccount vaa;
+	
     public static void main(String[] args) 
     {
         openSplash();
@@ -96,5 +104,68 @@ public class Runner
 	public static void setUser(User user) {
 		Runner.user = user;
 	}
+    public static void openAC()
+    {
+    	ac = new AccountCreate();
+    }
+    public static void destroyAC()
+    {
+    	ac.setVisible(false);
+    	ac.dispose();
+    }
+    public static void openAD()
+    {
+    	ad = new AccountDelete();
+    }
+    public static void destroyAD()
+    {
+    	ad.setVisible(false);
+    	ad.dispose();
+    }
+    public static void openOB()
+    {
+    	ob = new OrderBy();
+    }
+    public static void destroyOB()
+    {
+    	ob.setVisible(false);
+    	ob.dispose();
+    }
+    public static void openTAC()
+    {
+    	tac = new TablesAddClient();
+    }
+    public static void destroyTAC()
+    {
+    	tac.setVisible(false);
+    	tac.dispose();
+    }
+    public static void openTR()
+    {
+    	tr = new TablesRemarks();
+    }
+    public static void destroyTR()
+    {
+    	tr.setVisible(false);
+    	tr.dispose();
+    }
+    public static void openTS()
+    {
+    	ts = new TablesStatus();
+    }
+    public static void destroyTS()
+    {
+    	ts.setVisible(false);
+    	ts.dispose();
+    }
+    public static void openTSP()
+    {
+    	tsp = new TablesStatusPermits();
+    }
+    public static void destroyTSP()
+    {
+    	tsp.setVisible(false);
+    	tsp.dispose();
+    }
     
 }
