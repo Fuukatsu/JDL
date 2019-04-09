@@ -109,7 +109,7 @@ public class OptionList extends JFrame{
 		options_logout.setIcon(new ImageIcon(OptionList.class.getResource("/jdl/Assets/button_logout.png")));
 		
 		JLabel options_Welcome = new JLabel("Welcome Administrator");
-		options_Welcome.setBounds(256, 0, 168, 46);
+		options_Welcome.setBounds(268, 0, 168, 46);
 		getContentPane().add(options_Welcome);
 		options_Welcome.setForeground(new Color(255, 255, 255));
 		options_Welcome.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
@@ -153,7 +153,7 @@ public class OptionList extends JFrame{
 		JLabel options_instructionLbl = new JLabel("What do you want to do?");
 		options_instructionLbl.setForeground(Color.WHITE);
 		options_instructionLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 20));
-		options_instructionLbl.setBounds(231, 76, 232, 19);
+		options_instructionLbl.setBounds(231, 76, 232, 29);
 		getContentPane().add(options_instructionLbl);
 		
 		JLabel options_seeTablesLbl = new JLabel("SEE TABLES");
