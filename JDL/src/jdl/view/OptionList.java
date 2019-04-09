@@ -119,6 +119,13 @@ public class OptionList extends JFrame{
 		getContentPane().add(options_tableIcon);
 		
 		JLabel options_reportIcon = new JLabel("");
+		options_reportIcon.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Runner.destroyOptionList();
+				Runner.openGR();
+			}
+		});
 		options_reportIcon.setIcon(new ImageIcon(OptionList.class.getResource("/jdl/Assets/options_generateReport.png")));
 		options_reportIcon.setBounds(477, 148, 52, 58);
 		getContentPane().add(options_reportIcon);

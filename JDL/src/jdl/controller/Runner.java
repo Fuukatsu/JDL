@@ -1,5 +1,4 @@
 package jdl.controller;
-
 import jdl.model.User;
 import jdl.view.*;
 public class Runner 
@@ -20,6 +19,9 @@ public class Runner
 	private static TablesStatusPermits tsp;
 	private static TablesUpdateTransactions tut;
 	private static ViewAdministratorAccount vaa;
+	private static GenerateClients gC;
+	private static GenerateReport gR;
+	private static GenerateExpiry gE;
 	
     public static void main(String[] args) 
     {
@@ -166,6 +168,36 @@ public class Runner
     {
     	tsp.setVisible(false);
     	tsp.dispose();
+    }
+    public static void openGR()
+    {
+    	gR = new GenerateReport();
+    	gR.setVisible(true);
+    }
+    public static void destroyGR()
+    {
+    	gR.setVisible(false);
+    	gR.dispose();
+    }
+    public static void openGC()
+    {
+    	gC = new GenerateClients();
+    	gC.setVisible(true);
+    }
+    public static void destroyGC()
+    {
+    	gC.setVisible(false);
+    	gC.dispose();
+    }
+    public static void openGE()
+    {
+    	gE = new GenerateExpiry();
+    	gE.setVisible(true);
+    }
+    public static void destroyGE()
+    {
+    	gE.setVisible(false);
+    	gE.dispose();
     }
     
 }
