@@ -2,9 +2,7 @@ package jdl.view;
 
 import java.awt.EventQueue;
 import java.awt.Toolkit;
-
 import javax.swing.JFrame;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JLabel;
@@ -15,11 +13,9 @@ import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
-
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
-
 import jdl.controller.AutoCompletion;
 import jdl.controller.DateLabelFormatter;
 import jdl.controller.Runner;
@@ -27,15 +23,11 @@ import jdl.controller.TableColumnAdjuster;
 import jdl.controller.objectFilter;
 import jdl.dao.Queries;
 import jdl.model.*;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
 import java.util.Properties;
-
 import net.proteanit.sql.DbUtils;
-
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import java.awt.Font;
@@ -63,13 +55,13 @@ public class Tables extends JFrame{
 	private JTextField tables_passportNoTxt;
 	private JTextField tables_tinIdTxt;
 	//private JTextField tables_visaTypeTxt;
-	private JTextField tables_permitTypeTxt;
+	//private JTextField tables_permitTypeTxt;
 	private JTextField tables_aepIdTxt;
 	private String clientSelectedName;
 	private JTable table_1;
 	private int client_id = 1;
 	private String [] visa_type = {null,"Pre-arranged Employment Visa (9g/Working Visa Commercial)","Pre-arranged Employment Visa (9g/Missionary)","Permanent Resident Visa","Special Non-Immigrant Visa (A2)", "Special Investor's Resident Visa (SIRV)", "Special Resident Retiree's Visa (SRRV)"};
-	private String [] permit_type = {"Special Working Permit (SWP)", "Provisional Work Permit (PWP)"};
+	private String [] permit_type = {null,"Special Working Permit (SWP)", "Provisional Work Permit (PWP)"};
 	
 	public static boolean DateCheck(String date1, String date2) {
 	 	
@@ -412,12 +404,17 @@ public class Tables extends JFrame{
 		tables_permitLbl.setBounds(20, 378, 190, 29);
 		tables_inputPanel.add(tables_permitLbl);
 		
-		tables_permitTypeTxt = new JTextField();
-		tables_permitTypeTxt.setBorder(new EmptyBorder(0, 0, 0, 0));
-		tables_permitTypeTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
-		tables_permitTypeTxt.setColumns(10);
-		tables_permitTypeTxt.setBounds(20, 409, 400, 23);
-		tables_inputPanel.add(tables_permitTypeTxt);
+		JComboBox permit_comboBox = new JComboBox(permit_type);
+		permit_comboBox.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
+		permit_comboBox.setBounds(20, 409, 400, 23);
+		AutoCompletion.enable(permit_comboBox);
+		tables_inputPanel.add(permit_comboBox);
+//		tables_permitTypeTxt = new JTextField();
+//		tables_permitTypeTxt.setBorder(new EmptyBorder(0, 0, 0, 0));
+//		tables_permitTypeTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
+//		tables_permitTypeTxt.setColumns(10);
+//		tables_permitTypeTxt.setBounds(20, 409, 400, 23);
+//		tables_inputPanel.add(tables_permitTypeTxt);
 		
 		JLabel tables_permitStartLbl = new JLabel("Permit Start Date:");
 		tables_permitStartLbl.setForeground(Color.WHITE);
@@ -543,7 +540,8 @@ public class Tables extends JFrame{
 					visa_comboBox.setEnabled(false);
 					visaStartPick.setEnabled(false);
 					visaEndPick.setEnabled(false);
-					tables_permitTypeTxt.setEnabled(false);
+					//tables_permitTypeTxt.setEnabled(false);
+					permit_comboBox.setEnabled(false);
 					permitStartPick.setEnabled(false);
 					permitEndPick.setEnabled(false);
 					tables_aepIdTxt.setEnabled(false);
@@ -560,7 +558,8 @@ public class Tables extends JFrame{
 					visa_comboBox.setEnabled(true);
 					visaStartPick.setEnabled(true);
 					visaEndPick.setEnabled(true);
-					tables_permitTypeTxt.setEnabled(true);
+					//tables_permitTypeTxt.setEnabled(true);
+					permit_comboBox.setEnabled(true);
 					permitStartPick.setEnabled(true);
 					permitEndPick.setEnabled(true);
 					tables_aepIdTxt.setEnabled(true);
@@ -655,15 +654,25 @@ public class Tables extends JFrame{
 //							}
 							
 							
-							if((!(tables_permitTypeTxt.getText().isEmpty()) && !(pe.isEmpty() && ps.isEmpty()) || (tables_permitTypeTxt.getText().isEmpty()) && (pe.isEmpty() && ps.isEmpty())) && DateCheck(ps,pe)) {
+							if((!(permit_comboBox.getSelectedItem().toString().isEmpty()) && !(pe.isEmpty() && ps.isEmpty()) || (permit_comboBox.getSelectedItem().toString().isEmpty()) && (pe.isEmpty() && ps.isEmpty())) && DateCheck(ps,pe)) {
 								permitValid = true;
 							}
-							else if((tables_permitTypeTxt.getText().isEmpty()) && !(pe.isEmpty() && ps.isEmpty())) {
-								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The PERMIT TYPE field must not be empty. Please specify one.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
-							}
-							else if(!(tables_permitTypeTxt.getText().isEmpty()) && (pe.isEmpty() && ps.isEmpty())){
-								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please specify permit start date and expiry date.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
-							}
+//							else if((tables_permitTypeTxt.getText().isEmpty()) && !(pe.isEmpty() && ps.isEmpty())) {
+//								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The PERMIT TYPE field must not be empty. Please specify one.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
+//							}
+//							else if(!(tables_permitTypeTxt.getText().isEmpty()) && (pe.isEmpty() && ps.isEmpty())){
+//								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please specify permit start date and expiry date.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
+//							}
+							
+//							if((!(tables_permitTypeTxt.getText().isEmpty()) && !(pe.isEmpty() && ps.isEmpty()) || (tables_permitTypeTxt.getText().isEmpty()) && (pe.isEmpty() && ps.isEmpty())) && DateCheck(ps,pe)) {
+//								permitValid = true;
+//							}
+//							else if((tables_permitTypeTxt.getText().isEmpty()) && !(pe.isEmpty() && ps.isEmpty())) {
+//								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The PERMIT TYPE field must not be empty. Please specify one.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
+//							}
+//							else if(!(tables_permitTypeTxt.getText().isEmpty()) && (pe.isEmpty() && ps.isEmpty())){
+//								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please specify permit start date and expiry date.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
+//							}
 							
 							
 							if((!(tables_aepIdTxt.getText().isEmpty()) && !(ae.isEmpty() && as.isEmpty()) || (tables_aepIdTxt.getText().isEmpty()) && (ae.isEmpty() && as.isEmpty())) && DateCheck(as,ae)) {
@@ -717,7 +726,7 @@ public class Tables extends JFrame{
 			trans.setTinID(tables_tinIdTxt.getText());
 //			trans.setVisaType(tables_visaTypeTxt.getText());
 			trans.setVisaType(visa_comboBox.getSelectedItem().toString());
-			System.out.print(visa_comboBox.getSelectedItem().toString());
+//			System.out.print(visa_comboBox.getSelectedItem().toString());
 			
 			
 			if(visaStartPick.getJFormattedTextField().getText().toString().equals(""))
@@ -729,7 +738,8 @@ public class Tables extends JFrame{
 				trans.setVisaStartDate(null);
 			else
 				trans.setVisaStartDate(java.sql.Date.valueOf(objectFilter.addDay(visaEndPick.getJFormattedTextField().getText().toString())));
-			trans.setPermitType(tables_permitTypeTxt.getText());
+			//trans.setPermitType(tables_permitTypeTxt.getText());
+			trans.setPermitType(permit_comboBox.getSelectedItem().toString());
 			if(permitStartPick.getJFormattedTextField().getText().toString().equals(""))
 				trans.setPermitStartDate(null);
 			else
@@ -760,7 +770,8 @@ public class Tables extends JFrame{
 			tables_tinIdTxt.setText("");
 //			tables_visaTypeTxt.setText("");
 			visa_comboBox.setSelectedItem("");
-			tables_permitTypeTxt.setText("");
+//			tables_permitTypeTxt.setText("");
+			permit_comboBox.setSelectedItem("");
 			tables_aepIdTxt.setText("");
 			visaStartPick.getJFormattedTextField().setText("");
 			visaEndPick.getJFormattedTextField().setText("");
