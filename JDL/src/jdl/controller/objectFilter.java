@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import jdl.dao.Queries;
 import jdl.model.Client;
@@ -75,5 +76,25 @@ public class objectFilter
 		String newDate = format.format(c.getTime());  
 		return newDate;
 	}
-	
+	public static String addWeek(String date) {
+		//String d = birthdatePicker.getJFormattedTextField().getText().toString();
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd"); 
+		Calendar c = Calendar.getInstance();
+		try {
+			c.setTime(format.parse(date));
+		}catch(ParseException ex) {
+			ex.printStackTrace();
+		}
+		c.add(Calendar.DAY_OF_MONTH, 7);
+		String newDate = format.format(c.getTime());  
+		return newDate;
+	}
+	public static String getDateToday() 
+	{
+		Date date = new Date();
+		//String d = birthdatePicker.getJFormattedTextField().getText().toString();
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd"); 
+		String newDate = format.format(date);
+		return newDate;
+	}
 }
