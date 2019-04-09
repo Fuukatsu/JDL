@@ -12,8 +12,11 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import jdl.model.Email;
+
 public class EmailSender{
-	public static void main(String[] args) {
+	public static void EmailSendFunction(String date, String recipient, String message) 
+	{
 		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 		  // Get a Properties object
 		     Properties props = System.getProperties();
@@ -26,8 +29,12 @@ public class EmailSender{
 		     props.put("mail.debug", "true");
 		     props.put("mail.store.protocol", "pop3");
 		     props.put("mail.transport.protocol", "smtp");
-		     final String username = "testingmoto.jdl@gmail.com";//
-		     final String password = "clockwise2";
+		     Email em = new Email();
+		     em.setEmailCredentials();
+		     final String username = em.getEmail();
+		     final String password = em.getPassword();
+		     //final String username = "testingmoto.jdl@gmail.com";//
+		     //final String password = "clockwise2";
 		     try{
 		     Session session = Session.getDefaultInstance(props, 
 		                          new Authenticator(){
@@ -41,12 +48,12 @@ public class EmailSender{
 		  // -- Set the FROM and TO fields --
 		     msg.setFrom(new InternetAddress("xxxx@gmail.com"));
 		     msg.setRecipients(Message.RecipientType.TO, 
-		                      InternetAddress.parse("mabelski.0305@gmail.com",false));
-		     msg.setSubject("Hello");
-		     msg.setText("How are you");
+		                      InternetAddress.parse(recipient, false));
+		     msg.setSubject("JDL Business and Immigration Consultancy: Expiring Document");
+		     msg.setText(message);
 		     msg.setSentDate(new Date());
 		     Transport.send(msg);
 		     System.out.println("Message sent.");
-	     }catch (MessagingException e){ System.out.println("Erreur d'envoi, cause: " + e);}
+	     }catch (MessagingException e){ e.printStackTrace();}
 	}
 }

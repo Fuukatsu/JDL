@@ -157,6 +157,36 @@ public class Queries
 		}
 		return lists;
 	}
+	public static Client getClient(int id)
+	{
+		Client c = new Client();
+		try (Connection con = DriverManager.getConnection(dP.url, dP.username, dP.password)) 
+		{
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM clients WHERE client_id = ?");
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next())
+			{        
+				c = new Client();
+				c.setClient_id(rs.getInt("client_id"));
+				c.setClient_lastname(rs.getString(2));
+				c.setClient_firstname(rs.getString(3));
+				c.setClient_nationality(rs.getString(4));
+				c.setClient_birthdate(rs.getDate(5));
+				c.setClient_gender(rs.getString(6));
+				c.setClient_company(rs.getString(7));
+				c.setClient_position(rs.getString(8));
+				c.setClient_alias(rs.getString(9));
+				c.setClient_contact(rs.getString(10));
+				c.setClient_email(rs.getString(11));
+			}
+		} catch (SQLException e) 
+		{
+			e.printStackTrace();
+			return null;
+		}
+		return c;
+	}
 	public static TableModel getClientTransactions(String u)
 	{
 		ResultSet rs = null;
@@ -184,5 +214,39 @@ public class Queries
 			e.printStackTrace();
 		}
 		return null;
+	}
+	public static ArrayList<Transaction> getTransactions()
+	{
+		ArrayList<Transaction> tlist = new ArrayList<Transaction>();
+		try (Connection con = DriverManager.getConnection(dP.url, dP.username, dP.password)) 
+		{
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM TRANSACTIONS");
+			ResultSet rs = ps.executeQuery();
+			while(rs.next())
+			{
+				Transaction t = new Transaction();
+				t.setPassportNo(rs.getString(1));
+				t.setTinID(rs.getString(2));
+				t.setVisaType(rs.getString(3));
+				t.setVisaStartDate(rs.getDate(4));
+				t.setVisaEndDate(rs.getDate(5));
+				t.setPermitType(rs.getString(6));
+				t.setPermitStartDate(rs.getDate(7));
+				t.setPermitEndDate(rs.getDate(8));
+				t.setAepID(rs.getString(9));
+				t.setAepStartDate(rs.getDate(10));
+				t.setAepEndDate(rs.getDate(11));
+				t.setTransID(rs.getInt(12));
+				t.setClient_id(rs.getInt(13));
+				t.setTransTimestamp(rs.getDate(14));
+				t.setTransAuthor(rs.getString(15));
+				tlist.add(t);
+			}
+		} catch (SQLException e) 
+		{
+			e.printStackTrace();
+			return null;
+		}
+		return tlist;
 	}
 }
