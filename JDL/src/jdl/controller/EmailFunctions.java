@@ -22,7 +22,15 @@ public class EmailFunctions
 
 		String newMessage = "Good Day, "+c.getClient_lastname()+"\n\n"+
 							"Your "+Document+" is expiring on "+ExpiryDate+"";
-		EmailSender.EmailSendFunction(ExpiryDate, c.getClient_email(), newMessage);
+		String subject = "JDL Business and Immigration Consultancy: Expiring "+Document;
+		EmailSender.EmailSendFunction(ExpiryDate, c.getClient_email(), newMessage, subject);
+	}
+	public static void composeEmailEmployee(Client c, String ExpiryDate, String CurrentDate, String Document)
+	{
+		String subject = "Logs: Sent email to "+c.getClient_email();
+		String newMessage = "Sent email to "+c.getClient_lastname()+", "+c.getClient_firstname()+" about expiring "+Document+" on "+ExpiryDate+", \n"+
+							"Email sent on "+CurrentDate;
+		EmailSender.EmailSendFunction(null, emCredential.getEmail(), newMessage, subject);
 	}
 	public static void checkExpiration()
 	{
@@ -35,17 +43,26 @@ public class EmailFunctions
 			if(t.getVisaEndDate() != null)
 			{
 				if(newweek.equals(t.getVisaEndDate().toString()))
+				{
 					composeEmail(c, newweek, "Visa");
+					composeEmailEmployee(c, newweek, objectFilter.getDateToday(), "Visa");
+				}
 			}
 			if(t.getPermitEndDate() != null)
 			{
-				if(newweek.equals(t.getPermitEndDate()))
+				if(newweek.equals(t.getPermitEndDate().toString()))
+				{
 					composeEmail(c, newweek, "Permit");
+					composeEmailEmployee(c, newweek, objectFilter.getDateToday(), "Permit");
+				}
 			}
 			if(t.getAepEndDate() != null)
 			{
-				if(newweek.equals(t.getAepEndDate()))
-					composeEmail(c, newweek, "AEP");
+				if(newweek.equals(t.getAepEndDate().toString()))
+				{
+					composeEmail(c, newweek, "Aep");
+					composeEmailEmployee(c, newweek, objectFilter.getDateToday(), "Aep");
+				}
 			}
 		}
 	}
