@@ -19,6 +19,10 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
+import jdl.dao.Queries;
+import jdl.model.User;
+
+import java.util.ArrayList;
 import java.util.Properties;
 
 import net.proteanit.sql.DbUtils;
@@ -211,12 +215,35 @@ public class AccountCreate extends JFrame{
 			 	}
 			 	else {
 			 		//if username exists: True -> Throw Err, False -> 
+			 		ArrayList<User> uList = Queries.getUsers();
+			 		boolean usernameExist = false;
+			 		boolean userIdExist = false;
+			 		for(User u:uList)
+			 		{
+			 			if(u.getUser_id() == Integer.parseInt(emp_userIdTxt.getText()))
+			 			{
+			 				userIdExist = true;
+			 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> User ID already exists </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
+			 				break;
+			 			}
+			 			if(u.getUser_username().equals(emp_usernameTxt.getText())) {
+			 				usernameExist = true;
+			 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> Username already exists </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
+			 				break;
+			 			}
+			 		}
 			 			//if userID exists: True -> Throw err, False ->
-					 		if(comboBox.getSelectedIndex() == 1 )
-					 			createAccount(1);
-					 		else
-					 			createAccount(0);
+					 if(comboBox.getSelectedIndex() == 1 && !usernameExist &&!userIdExist) {
+					 	createAccount(1);
+					 	JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>User has been created successfully.</font color = #ffffff></html>", "User Created.", JOptionPane.INFORMATION_MESSAGE);
+					 }	
+					 else if(comboBox.getSelectedIndex() == 0 && !usernameExist &&!userIdExist) {
+					 	createAccount(0);
+					 	JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>User has been created successfully.</font color = #ffffff></html>", "User Created.", JOptionPane.INFORMATION_MESSAGE);
+					 }
 			 	}
+				
+				
 				
 			}
 		});
@@ -281,8 +308,8 @@ public class AccountCreate extends JFrame{
 			statement.setInt(4, admin);
 		 	statement.execute();
 		 	
-		 	//DISPOSE
-		 	//GET BACK TO PREVIOUS PAGE.
+		 	dispose();
+		 	new OptionList().setVisible(true);
 	    	
 		} 
 		catch (SQLException e1) {

@@ -249,4 +249,20 @@ public class Queries
 		}
 		return tlist;
 	}
+	
+	public static void checkNotification() {
+		try (Connection con = DriverManager.getConnection(dP.url, dP.username, dP.password)) 
+		{
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM NOTIFICATIONS");
+			ResultSet rs = ps.executeQuery();
+			while(rs.next())
+			{
+				
+				
+			}
+		} catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+	}
 }
