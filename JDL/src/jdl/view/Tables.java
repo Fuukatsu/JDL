@@ -191,12 +191,6 @@ public class Tables extends JFrame{
 					d = objectFilter.getClientList()[1].split(":")[1].trim();
 				TableModel md = Queries.getTransactions(Integer.parseInt(d));
 				table_1.setModel(md);
-				table_1.setFont(new Font("Calibri", Font.PLAIN, 16));
-				table_1.setRowHeight(32);
-				table_1.setBorder(null);
-				table_1.setBounds(492, 217, 1040, 138);
-				table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-				table_1.setVisible(true);
 				TableColumnAdjuster tca1 = new TableColumnAdjuster(table_1);
 				tca1.adjustColumns();
 				if(md != null)

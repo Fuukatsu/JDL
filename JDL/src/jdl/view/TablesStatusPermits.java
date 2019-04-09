@@ -68,7 +68,7 @@ public class TablesStatusPermits extends JFrame{
 	private JTextField tables_documentationTxt;
 	private JTextField tables_addRequirementsTxt;
 	private JTextField tables_acrICardTxt;
-	private JDatePickerImpl tables_dateReceivedTxt, tables_aepDateFiledTxt, tables_aepdateReleasedTxt, tables_permitDateFiled, tables_permitDateReleased;
+	private JDatePickerImpl tables_dateReceivedTxt, tables_aepDateFiledTxt, tables_aepdateReleasedTxt, tables_permitDateFiledTxt, tables_permitDateReleasedTxt;
 	/**
 	 * Launch the application.
 	 */
@@ -366,7 +366,7 @@ public class TablesStatusPermits extends JFrame{
 		
 		JDatePanelImpl dateFiledPanel = new JDatePanelImpl(dateFiledModel, dateFiled);
 
-		JDatePickerImpl tables_dateReceivedTxt = new JDatePickerImpl(dateFiledPanel, new DateLabelFormatter());
+		tables_dateReceivedTxt = new JDatePickerImpl(dateFiledPanel, new DateLabelFormatter());
 
 		tables_dateReceivedTxt.getJFormattedTextField().setBorder(UIManager.getBorder("TextField.border"));
 		tables_dateReceivedTxt.getJFormattedTextField().setBackground(new Color(255, 255, 255));
@@ -450,7 +450,7 @@ public class TablesStatusPermits extends JFrame{
 		
 		JDatePanelImpl permitDateFiledPanel = new JDatePanelImpl(permitDateFiledModel, permitDateFiled);
 		
-		JDatePickerImpl tables_permitDateFiledTxt = new JDatePickerImpl(permitDateFiledPanel, new DateLabelFormatter());
+		tables_permitDateFiledTxt = new JDatePickerImpl(permitDateFiledPanel, new DateLabelFormatter());
 
 		tables_permitDateFiledTxt.setLocation(17, 522);
 		tables_permitDateFiledTxt.getJFormattedTextField().setBorder(UIManager.getBorder("TextField.border"));
@@ -469,7 +469,7 @@ public class TablesStatusPermits extends JFrame{
 		
 		JDatePanelImpl permitDateReleasedPanel = new JDatePanelImpl(permitDateReleasedModel, permitDateReleased);
 		
-		JDatePickerImpl tables_permitDateReleasedTxt = new JDatePickerImpl(permitDateReleasedPanel, new DateLabelFormatter());
+		tables_permitDateReleasedTxt = new JDatePickerImpl(permitDateReleasedPanel, new DateLabelFormatter());
 
 		tables_permitDateReleasedTxt.setLocation(227, 522);
 		tables_permitDateReleasedTxt.getJFormattedTextField().setBorder(UIManager.getBorder("TextField.border"));
@@ -567,7 +567,7 @@ public class TablesStatusPermits extends JFrame{
 		lblSpecificClient.setForeground(Color.WHITE);
 		lblSpecificClient.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		
-		JDatePickerImpl tables_aepDateFiledTxt = new JDatePickerImpl(earlyHearingDatePanel, new DateLabelFormatter());
+		tables_aepDateFiledTxt = new JDatePickerImpl(earlyHearingDatePanel, new DateLabelFormatter());
 		tables_aepDateFiledTxt.setBounds(17, 470, 202, 23);
 		tables_inputPanel.add(tables_aepDateFiledTxt);
 		tables_aepDateFiledTxt.getJFormattedTextField().setBorder(UIManager.getBorder("TextField.border"));
@@ -575,13 +575,13 @@ public class TablesStatusPermits extends JFrame{
 		tables_aepDateFiledTxt.getJFormattedTextField().setForeground(new Color(220, 20, 60));
 		tables_aepDateFiledTxt.getJFormattedTextField().setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
 		
-				JDatePickerImpl tables_aepDateReleasedTxt = new JDatePickerImpl(hearingDatePanel, new DateLabelFormatter());
-				tables_aepDateReleasedTxt.setBounds(227, 470, 197, 23);
-				tables_inputPanel.add(tables_aepDateReleasedTxt);
-				tables_aepDateReleasedTxt.getJFormattedTextField().setBorder(UIManager.getBorder("TextField.border"));
-				tables_aepDateReleasedTxt.getJFormattedTextField().setBackground(new Color(255, 255, 255));
-				tables_aepDateReleasedTxt.getJFormattedTextField().setForeground(new Color(220, 20, 60));
-				tables_aepDateReleasedTxt.getJFormattedTextField().setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
+				tables_aepdateReleasedTxt = new JDatePickerImpl(hearingDatePanel, new DateLabelFormatter());
+				tables_aepdateReleasedTxt.setBounds(227, 470, 197, 23);
+				tables_inputPanel.add(tables_aepdateReleasedTxt);
+				tables_aepdateReleasedTxt.getJFormattedTextField().setBorder(UIManager.getBorder("TextField.border"));
+				tables_aepdateReleasedTxt.getJFormattedTextField().setBackground(new Color(255, 255, 255));
+				tables_aepdateReleasedTxt.getJFormattedTextField().setForeground(new Color(220, 20, 60));
+				tables_aepdateReleasedTxt.getJFormattedTextField().setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
 				
 				JLabel tables_permitDateReleasedLbl = new JLabel("Permit Date Released:");
 				tables_permitDateReleasedLbl.setForeground(Color.WHITE);
@@ -682,10 +682,10 @@ public class TablesStatusPermits extends JFrame{
 					else
 						statement2.setDate(9, java.sql.Date.valueOf(tables_aepDateFiledTxt.getJFormattedTextField().getText().toString()));
 					
-					if(tables_aepDateReleasedTxt.getJFormattedTextField().getText().toString().equals(""))
+					if(tables_aepdateReleasedTxt.getJFormattedTextField().getText().toString().equals(""))
 						statement2.setDate(10, null);
 					else
-						statement2.setDate(10, java.sql.Date.valueOf(tables_aepDateReleasedTxt.getJFormattedTextField().getText().toString()));
+						statement2.setDate(10, java.sql.Date.valueOf(tables_aepdateReleasedTxt.getJFormattedTextField().getText().toString()));
 					
 					if(tables_permitDateFiledTxt.getJFormattedTextField().getText().toString().equals(""))
 						statement2.setDate(11, null);	
@@ -718,10 +718,10 @@ public class TablesStatusPermits extends JFrame{
 						else
 							statement2.setDate(24, java.sql.Date.valueOf(tables_aepDateFiledTxt.getJFormattedTextField().getText().toString()));
 						
-						if(tables_aepDateReleasedTxt.getJFormattedTextField().getText().toString().equals(""))
+						if(tables_aepdateReleasedTxt.getJFormattedTextField().getText().toString().equals(""))
 							statement2.setDate(25, null);
 						else
-							statement2.setDate(25, java.sql.Date.valueOf(tables_aepDateReleasedTxt.getJFormattedTextField().getText().toString()));
+							statement2.setDate(25, java.sql.Date.valueOf(tables_aepdateReleasedTxt.getJFormattedTextField().getText().toString()));
 						
 						if(tables_permitDateFiledTxt.getJFormattedTextField().getText().toString().equals(""))
 							statement2.setDate(26, null);	
@@ -904,12 +904,13 @@ public class TablesStatusPermits extends JFrame{
 		JDatePickerImpl[] datefieldtexts = {tables_dateReceivedTxt,
 				tables_aepDateFiledTxt, 
 				tables_aepdateReleasedTxt, 
-				tables_permitDateFiled, 
-				tables_permitDateReleased	
+				tables_permitDateFiledTxt, 
+				tables_permitDateReleasedTxt,	
 		};
 		
 		for(JDatePickerImpl jd:datefieldtexts)	
 		{
+			System.out.println(jd == null);
 			if(!jd.getJFormattedTextField().getText().isEmpty())
 				return true;
 		}
