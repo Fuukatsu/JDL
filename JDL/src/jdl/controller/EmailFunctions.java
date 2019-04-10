@@ -1,5 +1,7 @@
 package jdl.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -64,6 +66,23 @@ public class EmailFunctions
 					composeEmailEmployee(c, newweek, objectFilter.getDateToday(), "Aep");
 				}
 			}
+		}
+	}
+	public static void checkTodayNotification()
+	{
+		try {
+		String date = objectFilter.getDateToday();
+		Date d = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+		boolean dateCheck = Queries.checkNotification(new java.sql.Date(d.getTime()));
+		//System.out.println(dateCheck);
+		if(dateCheck)
+		{
+			/checkExpiration();
+			Queries.insertNotification(new java.sql.Date(d.getTime()));
+		}
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }

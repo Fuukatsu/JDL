@@ -3,6 +3,7 @@ package jdl.dao;
 
 import java.awt.Font;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -250,19 +251,34 @@ public class Queries
 		return tlist;
 	}
 	
-	public static void checkNotification() {
+	public static boolean checkNotification(Date date) {
 		try (Connection con = DriverManager.getConnection(dP.url, dP.username, dP.password)) 
 		{
-			PreparedStatement ps = con.prepareStatement("SELECT * FROM NOTIFICATIONS");
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM jdl_accounts.notifications WHERE notif_date = ?");
+			ps.setDate(1, date);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next())
 			{
-				
-				
+				return false;
 			}
 		} catch (SQLException e) 
 		{
 			e.printStackTrace();
 		}
+		return true;
+	}
+	public static boolean insertNotification(Date date)
+	{
+		try (Connection con = DriverManager.getConnection(dP.url, dP.username, dP.password)) 
+		{
+			PreparedStatement ps = con.prepareStatement("INSERT INTO jdl_accounts.notifications (notif_date) values (?)");
+			ps.setDate(1, date);
+			ps.executeUpdate();
+		} catch (SQLException e) 
+		{
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 }
