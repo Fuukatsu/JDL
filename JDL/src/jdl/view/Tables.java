@@ -659,20 +659,23 @@ public class Tables extends JFrame{
 								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please specify AEP start date and expiry date.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
 							}
 							
-							if((tables_passportNoTxt.getText().trim().trim().length() > 25) || (tables_tinIdTxt.getText().trim().trim().length() > 25))
+							if((tables_passportNoTxt.getText().trim().trim().length() > 25) || (tables_tinIdTxt.getText().trim().trim().length() > 25)) {
 								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please limit Passport No./TIN ID to 25 and less characters..</font color = #ffffff></html>", "Detected invalid length for Passport No./TIN ID", JOptionPane.ERROR_MESSAGE);
 							
-							if((tables_aepIdTxt.getText().trim().trim().length() > 25))
-								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please limit AEP ID to 25 and less characters..</font color = #ffffff></html>", "Detected invalid length for AEP ID", JOptionPane.ERROR_MESSAGE);
-							
-							else
-								ptntValid = true;
-							if(visaValid && permitValid && aepValid && ptntValid && (DateCheck(ve,vs) && DateCheck(ps,pe) && DateCheck(as,ae)) ) 
-							{
-								Register();
-								dispose(); 
-								new Tables().setVisible(true);
-							}							
+								if((tables_aepIdTxt.getText().trim().trim().length() > 25)) {
+									JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please limit AEP ID to 25 and less characters..</font color = #ffffff></html>", "Detected invalid length for AEP ID", JOptionPane.ERROR_MESSAGE);
+								
+									if(tables_aepIdTxt.getText().trim().trim().length() < 25 && tables_passportNoTxt.getText().trim().trim().length() > 25 && tables_tinIdTxt.getText().trim().length() > 25) {
+										ptntValid = true;
+										if(visaValid && permitValid && aepValid && ptntValid && (DateCheck(ve,vs) && DateCheck(ps,pe) && DateCheck(as,ae)) ) 
+										{
+											Register();
+											dispose(); 
+											new Tables().setVisible(true);
+										}		
+									}
+								}
+							}
 						}
 						else {
 							JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The TIN ID field must not be empty. Please specify one.</font color = #ffffff></html>", "Detected an empty TIN ID field", JOptionPane.ERROR_MESSAGE);
