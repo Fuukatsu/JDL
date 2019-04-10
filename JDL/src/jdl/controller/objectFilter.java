@@ -105,4 +105,30 @@ public class objectFilter
 		String newDate = format.format(date);
 		return newDate;
 	}
+	public static String addMonth(String date) {
+		//String d = birthdatePicker.getJFormattedTextField().getText().toString();
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd"); 
+		Calendar c = Calendar.getInstance();
+		try {
+			c.setTime(format.parse(date));
+		}catch(ParseException ex) {
+			ex.printStackTrace();
+		}
+		c.add(Calendar.MONTH, 1);
+		String newDate = format.format(c.getTime());  
+		return newDate;
+	}
+	public static String addYear(String date) {
+		//String d = birthdatePicker.getJFormattedTextField().getText().toString();
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd"); 
+		Calendar c = Calendar.getInstance();
+		try {
+			c.setTime(format.parse(date));
+		}catch(ParseException ex) {
+			ex.printStackTrace();
+		}
+		c.add(Calendar.YEAR, 1);
+		String newDate = format.format(c.getTime());  
+		return newDate;
+	}
 }
