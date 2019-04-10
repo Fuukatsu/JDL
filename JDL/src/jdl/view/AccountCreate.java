@@ -197,7 +197,9 @@ public class AccountCreate extends JFrame{
 			 	UIManager.put("OptionPane.messageFont", new Font("Segoe UI Semibold", Font.BOLD, 14));
 			 	UIManager.put("Button.background", Color.WHITE);
 			 	UIManager.put("OptionPane.foreground",new ColorUIResource(90, 103, 115));
-			 	
+			 	emp_userIdTxt.setText(emp_userIdTxt.getText().trim());
+			 	emp_usernameTxt.setText(emp_usernameTxt.getText().trim());
+			 	emp_passwordTxt.setText(emp_passwordTxt.getText().trim());
 				if(emp_userIdTxt.getText().equals("")) {
 			 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> No USER ID was specified. Kindly fill out the fields. </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
 			 	}
