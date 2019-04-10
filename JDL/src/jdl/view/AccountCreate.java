@@ -197,22 +197,22 @@ public class AccountCreate extends JFrame{
 			 	UIManager.put("OptionPane.messageFont", new Font("Segoe UI Semibold", Font.BOLD, 14));
 			 	UIManager.put("Button.background", Color.WHITE);
 			 	UIManager.put("OptionPane.foreground",new ColorUIResource(90, 103, 115));
-			 	emp_userIdTxt.setText(emp_userIdTxt.getText().trim());
-			 	emp_usernameTxt.setText(emp_usernameTxt.getText().trim());
-			 	emp_passwordTxt.setText(emp_passwordTxt.getText().trim());
-				if(emp_userIdTxt.getText().equals("")) {
+			 	emp_userIdTxt.setText(emp_userIdTxt.getText().trim().trim());
+			 	emp_usernameTxt.setText(emp_usernameTxt.getText().trim().trim());
+			 	emp_passwordTxt.setText(emp_passwordTxt.getText().trim().trim());
+				if(emp_userIdTxt.getText().trim().equals("")) {
 			 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> No USER ID was specified. Kindly fill out the fields. </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
 			 	}
-			 	else if(emp_usernameTxt.getText().equals("")) {
+			 	else if(emp_usernameTxt.getText().trim().equals("")) {
 			 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> No USERNAME was specified. Kindly fill out the fields. </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
 			 	}
-			 	else if(emp_passwordTxt.getText().equals("")) {
+			 	else if(emp_passwordTxt.getText().trim().equals("")) {
 			 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> No PASSWORD was specified. Kindly fill out the fields. </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
 			 	}
-			 	else if(emp_usernameTxt.getText().length() <= 1) {
+			 	else if(emp_usernameTxt.getText().trim().length() <= 1) {
 			 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> Acceptable usernames must be at least 2 characters and above. Please enter a valid one.  </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
 			 	}
-			 	else if(emp_passwordTxt.getText().length()<=7 ) {
+			 	else if(emp_passwordTxt.getText().trim().length()<=7 ) {
 			 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> Acceptable Passwords must be at least 7 characters and above. Please lengthen your password. </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
 			 	}
 			 	else {
@@ -222,13 +222,13 @@ public class AccountCreate extends JFrame{
 			 		boolean userIdExist = false;
 			 		for(User u:uList)
 			 		{
-			 			if(u.getUser_id() == Integer.parseInt(emp_userIdTxt.getText()))
+			 			if(u.getUser_id() == Integer.parseInt(emp_userIdTxt.getText().trim()))
 			 			{
 			 				userIdExist = true;
 			 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> User ID already exists </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
 			 				break;
 			 			}
-			 			if(u.getUser_username().equals(emp_usernameTxt.getText())) {
+			 			if(u.getUser_username().equals(emp_usernameTxt.getText().trim())) {
 			 				usernameExist = true;
 			 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> Username already exists </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
 			 				break;
@@ -304,9 +304,9 @@ public class AccountCreate extends JFrame{
 			String sql = "INSERT INTO jdl_accounts.users (user_username, user_id, user_password, user_ifAdmin) values (?,?,?,?)";
 			PreparedStatement statement = (PreparedStatement) conn.prepareStatement(sql);
 			
-			statement.setString(1, emp_usernameTxt.getText());
-			statement.setInt(2, Integer.parseInt(emp_userIdTxt.getText()));
-			statement.setString(3, emp_passwordTxt.getText());
+			statement.setString(1, emp_usernameTxt.getText().trim());
+			statement.setInt(2, Integer.parseInt(emp_userIdTxt.getText().trim()));
+			statement.setString(3, emp_passwordTxt.getText().trim());
 			statement.setInt(4, admin);
 		 	statement.execute();
 		 	

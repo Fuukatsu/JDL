@@ -123,7 +123,7 @@ public class AccountDelete extends JFrame{
 					emp_userIdTxt.setText(rs.getString("user_id"));	
 					}
 					
-					statement1.setInt(1, Integer.parseInt(emp_userIdTxt.getText()));
+					statement1.setInt(1, Integer.parseInt(emp_userIdTxt.getText().trim()));
 					ResultSet rs1 = statement1.executeQuery();
 					
 					while (rs1.next()) {
@@ -255,13 +255,13 @@ public class AccountDelete extends JFrame{
 					PreparedStatement statement = (PreparedStatement) conn.prepareStatement(sql);
 					PreparedStatement statement1 = (PreparedStatement) conn.prepareStatement(sql1);
 					
-					if(emp_userIdTxt.getText().equals("")) {
+					if(emp_userIdTxt.getText().trim().equals("")) {
 						statement.setString(1, null);
 						statement1.setString(1, null);
 					}
 					else {
-						statement.setInt(1, Integer.parseInt(emp_userIdTxt.getText()));
-						statement1.setInt(1, Integer.parseInt(emp_userIdTxt.getText()));
+						statement.setInt(1, Integer.parseInt(emp_userIdTxt.getText().trim()));
+						statement1.setInt(1, Integer.parseInt(emp_userIdTxt.getText().trim()));
 					}
 					
 					UIManager.put("OptionPane.background",new ColorUIResource(90, 103, 115));
@@ -270,7 +270,7 @@ public class AccountDelete extends JFrame{
 				 	UIManager.put("Button.background", Color.WHITE);
 				 	UIManager.put("OptionPane.foreground",new ColorUIResource(90, 103, 115));
 				 	
-				 	if(emp_userIdTxt.getText().equals("")) {
+				 	if(emp_userIdTxt.getText().trim().equals("")) {
 				 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> No user is specified. Please select one. </font color = #ffffff></html>", "Error in Deletion", JOptionPane.INFORMATION_MESSAGE);
 				 	}
 				 	else {

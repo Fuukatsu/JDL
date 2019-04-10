@@ -664,75 +664,75 @@ public class TablesStatusPermits extends JFrame{
 					conn3 = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&compensateOnDuplicateKeyUpdateCounts=false","root","password");
 					PreparedStatement statement2= conn3.prepareStatement(sql);
 					
-					if(tables_dateReceivedTxt.getJFormattedTextField().getText().toString().equals("")) 
+					if(tables_dateReceivedTxt.getJFormattedTextField().getText().trim().toString().equals("")) 
 						statement2.setDate(1, null);
 					else
-						statement2.setDate(1, java.sql.Date.valueOf(tables_dateReceivedTxt.getJFormattedTextField().getText().toString()));
+						statement2.setDate(1, java.sql.Date.valueOf(tables_dateReceivedTxt.getJFormattedTextField().getText().trim().toString()));
 					
-						statement2.setString(2, tables_instructionsTxt.getText());
-						statement2.setString(3, tables_aepCancellationTxt.getText());
-						statement2.setString(4, tables_downgradingTxt.getText());
-						statement2.setString(5, tables_aepExitClearanceTxt.getText());
-						statement2.setString(6, tables_updatedVisaExtendTxt.getText());
-						statement2.setString(7, tables_documentationTxt.getText());
-						statement2.setString(8, tables_addRequirementsTxt.getText());
+						statement2.setString(2, tables_instructionsTxt.getText().trim());
+						statement2.setString(3, tables_aepCancellationTxt.getText().trim());
+						statement2.setString(4, tables_downgradingTxt.getText().trim());
+						statement2.setString(5, tables_aepExitClearanceTxt.getText().trim());
+						statement2.setString(6, tables_updatedVisaExtendTxt.getText().trim());
+						statement2.setString(7, tables_documentationTxt.getText().trim());
+						statement2.setString(8, tables_addRequirementsTxt.getText().trim());
 					
-					if(tables_aepDateFiledTxt.getJFormattedTextField().getText().toString().equals(""))
+					if(tables_aepDateFiledTxt.getJFormattedTextField().getText().trim().toString().equals(""))
 						statement2.setDate(9, null);
 					else
-						statement2.setDate(9, java.sql.Date.valueOf(tables_aepDateFiledTxt.getJFormattedTextField().getText().toString()));
+						statement2.setDate(9, java.sql.Date.valueOf(tables_aepDateFiledTxt.getJFormattedTextField().getText().trim().toString()));
 					
-					if(tables_aepdateReleasedTxt.getJFormattedTextField().getText().toString().equals(""))
+					if(tables_aepdateReleasedTxt.getJFormattedTextField().getText().trim().toString().equals(""))
 						statement2.setDate(10, null);
 					else
-						statement2.setDate(10, java.sql.Date.valueOf(tables_aepdateReleasedTxt.getJFormattedTextField().getText().toString()));
+						statement2.setDate(10, java.sql.Date.valueOf(tables_aepdateReleasedTxt.getJFormattedTextField().getText().trim().toString()));
 					
-					if(tables_permitDateFiledTxt.getJFormattedTextField().getText().toString().equals(""))
+					if(tables_permitDateFiledTxt.getJFormattedTextField().getText().trim().toString().equals(""))
 						statement2.setDate(11, null);	
 					else
-						statement2.setDate(11, java.sql.Date.valueOf(tables_permitDateFiledTxt.getJFormattedTextField().getText().toString()));
+						statement2.setDate(11, java.sql.Date.valueOf(tables_permitDateFiledTxt.getJFormattedTextField().getText().trim().toString()));
 					
-					if(tables_permitDateReleasedTxt.getJFormattedTextField().getText().toString().equals(""))
+					if(tables_permitDateReleasedTxt.getJFormattedTextField().getText().trim().toString().equals(""))
 						statement2.setDate(12, null);
 					else
-						statement2.setDate(12, java.sql.Date.valueOf(tables_permitDateReleasedTxt.getJFormattedTextField().getText().toString()));
-						statement2.setString(13, tables_acrICardTxt.getText());
+						statement2.setDate(12, java.sql.Date.valueOf(tables_permitDateReleasedTxt.getJFormattedTextField().getText().trim().toString()));
+						statement2.setString(13, tables_acrICardTxt.getText().trim());
 						statement2.setString(14, client_id);
 						statement2.setString(15, tables_comboBox1.getSelectedItem().toString());
 						
-						if(tables_dateReceivedTxt.getJFormattedTextField().getText().toString().equals("")) 
+						if(tables_dateReceivedTxt.getJFormattedTextField().getText().trim().toString().equals("")) 
 							statement2.setDate(16, null);
 						else
-							statement2.setDate(16, java.sql.Date.valueOf(tables_dateReceivedTxt.getJFormattedTextField().getText().toString()));
+							statement2.setDate(16, java.sql.Date.valueOf(tables_dateReceivedTxt.getJFormattedTextField().getText().trim().toString()));
 						
-							statement2.setString(17, tables_instructionsTxt.getText());
-							statement2.setString(18, tables_aepCancellationTxt.getText());
-							statement2.setString(19, tables_downgradingTxt.getText());
-							statement2.setString(20, tables_aepExitClearanceTxt.getText());
-							statement2.setString(21, tables_updatedVisaExtendTxt.getText());
-							statement2.setString(22, tables_documentationTxt.getText());
-							statement2.setString(23, tables_addRequirementsTxt.getText());
+							statement2.setString(17, tables_instructionsTxt.getText().trim());
+							statement2.setString(18, tables_aepCancellationTxt.getText().trim());
+							statement2.setString(19, tables_downgradingTxt.getText().trim());
+							statement2.setString(20, tables_aepExitClearanceTxt.getText().trim());
+							statement2.setString(21, tables_updatedVisaExtendTxt.getText().trim());
+							statement2.setString(22, tables_documentationTxt.getText().trim());
+							statement2.setString(23, tables_addRequirementsTxt.getText().trim());
 						
-						if(tables_aepDateFiledTxt.getJFormattedTextField().getText().toString().equals(""))
+						if(tables_aepDateFiledTxt.getJFormattedTextField().getText().trim().toString().equals(""))
 							statement2.setDate(24, null);
 						else
-							statement2.setDate(24, java.sql.Date.valueOf(tables_aepDateFiledTxt.getJFormattedTextField().getText().toString()));
+							statement2.setDate(24, java.sql.Date.valueOf(tables_aepDateFiledTxt.getJFormattedTextField().getText().trim().toString()));
 						
-						if(tables_aepdateReleasedTxt.getJFormattedTextField().getText().toString().equals(""))
+						if(tables_aepdateReleasedTxt.getJFormattedTextField().getText().trim().toString().equals(""))
 							statement2.setDate(25, null);
 						else
-							statement2.setDate(25, java.sql.Date.valueOf(tables_aepdateReleasedTxt.getJFormattedTextField().getText().toString()));
+							statement2.setDate(25, java.sql.Date.valueOf(tables_aepdateReleasedTxt.getJFormattedTextField().getText().trim().toString()));
 						
-						if(tables_permitDateFiledTxt.getJFormattedTextField().getText().toString().equals(""))
+						if(tables_permitDateFiledTxt.getJFormattedTextField().getText().trim().toString().equals(""))
 							statement2.setDate(26, null);	
 						else
-							statement2.setDate(26, java.sql.Date.valueOf(tables_permitDateFiledTxt.getJFormattedTextField().getText().toString()));
+							statement2.setDate(26, java.sql.Date.valueOf(tables_permitDateFiledTxt.getJFormattedTextField().getText().trim().toString()));
 						
-						if(tables_permitDateReleasedTxt.getJFormattedTextField().getText().toString().equals(""))
+						if(tables_permitDateReleasedTxt.getJFormattedTextField().getText().trim().toString().equals(""))
 							statement2.setDate(27, null);
 						else
-							statement2.setDate(27, java.sql.Date.valueOf(tables_permitDateReleasedTxt.getJFormattedTextField().getText().toString()));
-							statement2.setString(28, tables_acrICardTxt.getText());
+							statement2.setDate(27, java.sql.Date.valueOf(tables_permitDateReleasedTxt.getJFormattedTextField().getText().trim().toString()));
+							statement2.setString(28, tables_acrICardTxt.getText().trim());
 							statement2.setString(29, client_id);
 							statement2.setString(30, tables_comboBox1.getSelectedItem().toString());
 						
@@ -897,7 +897,7 @@ public class TablesStatusPermits extends JFrame{
 		
 		for(JTextField s:fieldtexts)
 		{
-			if(!s.getText().isEmpty())
+			if(!s.getText().trim().isEmpty())
 				return true;
 		}
 		
@@ -911,7 +911,7 @@ public class TablesStatusPermits extends JFrame{
 		for(JDatePickerImpl jd:datefieldtexts)	
 		{
 			System.out.println(jd == null);
-			if(!jd.getJFormattedTextField().getText().isEmpty())
+			if(!jd.getJFormattedTextField().getText().trim().isEmpty())
 				return true;
 		}
 		return false;

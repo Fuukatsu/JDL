@@ -527,37 +527,37 @@ public class TablesRemarks extends JFrame{
 					conn3 = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&compensateOnDuplicateKeyUpdateCounts=false","root","password");
 					PreparedStatement statement2= conn3.prepareStatement(sql);
 					
-					if(tables_dateReceivedTxt.getJFormattedTextField().getText().toString().equals("")) 
+					if(tables_dateReceivedTxt.getJFormattedTextField().getText().trim().toString().equals("")) 
 						statement2.setDate(1, null);
 					else
-						statement2.setDate(1, java.sql.Date.valueOf(tables_dateReceivedTxt.getJFormattedTextField().getText().toString()));
+						statement2.setDate(1, java.sql.Date.valueOf(tables_dateReceivedTxt.getJFormattedTextField().getText().trim().toString()));
 
 					
-					if(tables_dateUpdatedTxt.getJFormattedTextField().getText().toString().equals(""))
+					if(tables_dateUpdatedTxt.getJFormattedTextField().getText().trim().toString().equals(""))
 						statement2.setDate(2, null);
 					else
-						statement2.setDate(2, java.sql.Date.valueOf(tables_dateUpdatedTxt.getJFormattedTextField().getText().toString()));
+						statement2.setDate(2, java.sql.Date.valueOf(tables_dateUpdatedTxt.getJFormattedTextField().getText().trim().toString()));
 				
-					statement2.setString(3, tables_remindersTxt.getText());
-					statement2.setString(4, tables_toDoTxt.getText());
-					statement2.setString(5, tables_remarksTxt.getText());
+					statement2.setString(3, tables_remindersTxt.getText().trim());
+					statement2.setString(4, tables_toDoTxt.getText().trim());
+					statement2.setString(5, tables_remarksTxt.getText().trim());
 					statement2.setString(6, client_id);
 					statement2.setString(7, tables_comboBox1.getSelectedItem().toString());
 					
-					if(tables_dateReceivedTxt.getJFormattedTextField().getText().toString().equals("")) 
+					if(tables_dateReceivedTxt.getJFormattedTextField().getText().trim().toString().equals("")) 
 						statement2.setDate(8, null);
 					else
-						statement2.setDate(8, java.sql.Date.valueOf(tables_dateReceivedTxt.getJFormattedTextField().getText().toString()));
+						statement2.setDate(8, java.sql.Date.valueOf(tables_dateReceivedTxt.getJFormattedTextField().getText().trim().toString()));
 
 					
-					if(tables_dateUpdatedTxt.getJFormattedTextField().getText().toString().equals(""))
+					if(tables_dateUpdatedTxt.getJFormattedTextField().getText().trim().toString().equals(""))
 						statement2.setDate(9, null);
 					else
-						statement2.setDate(9, java.sql.Date.valueOf(tables_dateUpdatedTxt.getJFormattedTextField().getText().toString()));
+						statement2.setDate(9, java.sql.Date.valueOf(tables_dateUpdatedTxt.getJFormattedTextField().getText().trim().toString()));
 				
-					statement2.setString(10, tables_remindersTxt.getText());
-					statement2.setString(11, tables_toDoTxt.getText());
-					statement2.setString(12, tables_remarksTxt.getText());
+					statement2.setString(10, tables_remindersTxt.getText().trim());
+					statement2.setString(11, tables_toDoTxt.getText().trim());
+					statement2.setString(12, tables_remarksTxt.getText().trim());
 					statement2.setString(13, client_id);
 					statement2.setString(14, tables_comboBox1.getSelectedItem().toString());
 					

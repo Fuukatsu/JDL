@@ -81,7 +81,7 @@ public class AccountManagement extends JFrame{
     	this.adminAcc_usernameTxt.setText(user);
     	}
     public String getUser() {
-    	return this.adminAcc_usernameTxt.getText();
+    	return this.adminAcc_usernameTxt.getText().trim();
     	}
     
     //Password
@@ -463,48 +463,48 @@ public class AccountManagement extends JFrame{
 					
 					conn2 = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
 					PreparedStatement statement1 = conn2.prepareStatement(sql);
-					emp_LastnameTxt.setText(emp_LastnameTxt.getText().trim());
-					emp_FirstnameTxt.setText(emp_FirstnameTxt.getText().trim());
-					emp_PositionTxt.setText(emp_PositionTxt.getText().trim());
-					emp_GenderTxt.setText(emp_GenderTxt.getText().trim());
-					emp_ContactTxt.setText(emp_ContactTxt.getText().trim());
-					emp_EmailTxt.setText(emp_EmailTxt.getText().trim());
-					if(emp_LastnameTxt.getText().equals("")) {
+					emp_LastnameTxt.setText(emp_LastnameTxt.getText().trim().trim());
+					emp_FirstnameTxt.setText(emp_FirstnameTxt.getText().trim().trim());
+					emp_PositionTxt.setText(emp_PositionTxt.getText().trim().trim());
+					emp_GenderTxt.setText(emp_GenderTxt.getText().trim().trim());
+					emp_ContactTxt.setText(emp_ContactTxt.getText().trim().trim());
+					emp_EmailTxt.setText(emp_EmailTxt.getText().trim().trim());
+					if(emp_LastnameTxt.getText().trim().equals("")) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employee's Lastname must not be empty.</font color = #ffffff></html>", "Detected an empty Employee's lastname", JOptionPane.ERROR_MESSAGE);
-					}else if (emp_FirstnameTxt.getText().equals("")) {
+					}else if (emp_FirstnameTxt.getText().trim().equals("")) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employee's Firstname must not be empty.</font color = #ffffff></html>", "Detected an empty Employee's firstname", JOptionPane.ERROR_MESSAGE);
-					}else if(emp_PositionTxt.getText().equals("")) {
+					}else if(emp_PositionTxt.getText().trim().equals("")) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employee's Position must not be empty.</font color = #ffffff></html>", "Detected an empty or undefinable company position ", JOptionPane.ERROR_MESSAGE);
-					}else if(emp_GenderTxt.getText().equals("")) {
+					}else if(emp_GenderTxt.getText().trim().equals("")) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employee's Gender must not be empty.</font color = #ffffff></html>", "Detected an empty or undefinable gender", JOptionPane.ERROR_MESSAGE);
-					}else if(birthdatePicker.getJFormattedTextField().getText().toString().equals("")) {
+					}else if(birthdatePicker.getJFormattedTextField().getText().trim().toString().equals("")) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employee's Birthdate must not be empty.</font color = #ffffff></html>", "Detected an empty Employee's birthdate", JOptionPane.ERROR_MESSAGE);
-					}else if((emp_ContactTxt.getText().equals("") && emp_EmailTxt.getText() .equals("") )) {
+					}else if((emp_ContactTxt.getText().trim().equals("") && emp_EmailTxt.getText().trim() .equals("") )) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>There should at least one contact information available for an employee</font color = #ffffff></html>", "Detected an empty contact no. or email", JOptionPane.ERROR_MESSAGE);
-					}else if(objectFilter.checkEmail(emp_EmailTxt.getText().trim().toString())){
+					}else if(objectFilter.checkEmail(emp_EmailTxt.getText().trim().trim().toString())){
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please Enter a valid email</font color = #ffffff></html>", "Invalid Email", JOptionPane.ERROR_MESSAGE);
-					}else if(objectFilter.containsAlpha(emp_ContactTxt.getText().trim() )) {
+					}else if(objectFilter.containsAlpha(emp_ContactTxt.getText().trim().trim() )) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employees's contact number must not contain alphabet characters.</font color = #ffffff></html>", "Detected an alphabet character in employees's contact number", JOptionPane.ERROR_MESSAGE);
 					}
 					else {
-						statement1.setString(1, emp_LastnameTxt.getText());
-						statement1.setString(2, emp_FirstnameTxt.getText());
-						statement1.setString(3, emp_PositionTxt.getText());
-						statement1.setString(4, emp_GenderTxt.getText());
-						statement1.setDate(5, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().toString())));
-						statement1.setString(6, emp_AddressTxt.getText());
-						statement1.setString(7, emp_ContactTxt.getText());
-						statement1.setString(8, emp_EmailTxt.getText());
-						statement1.setString(9, emp_userIdTxt.getText());
-						statement1.setString(10, emp_LastnameTxt.getText());
-						statement1.setString(11, emp_FirstnameTxt.getText());
-						statement1.setString(12, emp_PositionTxt.getText());
-						statement1.setString(13, emp_GenderTxt.getText());
-						statement1.setDate(14, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().toString())));
-						statement1.setString(15, emp_AddressTxt.getText());
-						statement1.setString(16, emp_ContactTxt.getText());
-						statement1.setString(17, emp_EmailTxt.getText());
-						statement1.setString(18, emp_userIdTxt.getText());
+						statement1.setString(1, emp_LastnameTxt.getText().trim());
+						statement1.setString(2, emp_FirstnameTxt.getText().trim());
+						statement1.setString(3, emp_PositionTxt.getText().trim());
+						statement1.setString(4, emp_GenderTxt.getText().trim());
+						statement1.setDate(5, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().trim().toString())));
+						statement1.setString(6, emp_AddressTxt.getText().trim());
+						statement1.setString(7, emp_ContactTxt.getText().trim());
+						statement1.setString(8, emp_EmailTxt.getText().trim());
+						statement1.setString(9, emp_userIdTxt.getText().trim());
+						statement1.setString(10, emp_LastnameTxt.getText().trim());
+						statement1.setString(11, emp_FirstnameTxt.getText().trim());
+						statement1.setString(12, emp_PositionTxt.getText().trim());
+						statement1.setString(13, emp_GenderTxt.getText().trim());
+						statement1.setDate(14, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().trim().toString())));
+						statement1.setString(15, emp_AddressTxt.getText().trim());
+						statement1.setString(16, emp_ContactTxt.getText().trim());
+						statement1.setString(17, emp_EmailTxt.getText().trim());
+						statement1.setString(18, emp_userIdTxt.getText().trim());
 						
 						statement1.executeUpdate();
 						tables_inputPanel.revalidate();
@@ -627,7 +627,7 @@ public class AccountManagement extends JFrame{
 							emp_userIdTxt.setText(rs.getString("user_id"));
 					} 
 						
-						statement1.setInt(1, Integer.parseInt(emp_userIdTxt.getText()));
+						statement1.setInt(1, Integer.parseInt(emp_userIdTxt.getText().trim()));
 						ResultSet rs1 = statement1.executeQuery();
 						
 						while (rs1.next()) {

@@ -739,48 +739,48 @@ public class TablesUpdateTransactions extends JFrame{
 			 	UIManager.put("Button.background", Color.WHITE);
 			 	UIManager.put("OptionPane.foreground",new ColorUIResource(90, 103, 115));
 				
-				String vs = visaStartPick.getJFormattedTextField().getText().toString();
-				String ve = visaEndPick.getJFormattedTextField().getText().toString();
-				String ps = permitStartPick.getJFormattedTextField().getText().toString();
-				String pe = permitEndPick.getJFormattedTextField().getText().toString();
-				String as = aepStartPick.getJFormattedTextField().getText().toString();
-				String ae = aepEndPick.getJFormattedTextField().getText().toString();
+				String vs = visaStartPick.getJFormattedTextField().getText().trim().toString();
+				String ve = visaEndPick.getJFormattedTextField().getText().trim().toString();
+				String ps = permitStartPick.getJFormattedTextField().getText().trim().toString();
+				String pe = permitEndPick.getJFormattedTextField().getText().trim().toString();
+				String as = aepStartPick.getJFormattedTextField().getText().trim().toString();
+				String ae = aepEndPick.getJFormattedTextField().getText().trim().toString();
 				try {
 					boolean visaValid = false;
 					boolean permitValid = false;
 					boolean aepValid = false;
 				
-					if(tables_passportNoTxt.getText() != "") {
-						if(tables_tinIdTxt.getText() != "") {
-							if((!(tables_visaTypeTxt.getText().trim().isEmpty()) && !(ve.isEmpty() && vs.isEmpty()) || (tables_visaTypeTxt.getText().isEmpty()) && (ve.isEmpty() && vs.isEmpty())) && DateCheck(ve,vs)) {
+					if(tables_passportNoTxt.getText().trim() != "") {
+						if(tables_tinIdTxt.getText().trim() != "") {
+							if((!(tables_visaTypeTxt.getText().trim().trim().isEmpty()) && !(ve.isEmpty() && vs.isEmpty()) || (tables_visaTypeTxt.getText().trim().isEmpty()) && (ve.isEmpty() && vs.isEmpty())) && DateCheck(ve,vs)) {
 								visaValid = true;
 							}
-							else if((tables_visaTypeTxt.getText().trim().isEmpty()) && !(ve.isEmpty() && vs.isEmpty())) {
+							else if((tables_visaTypeTxt.getText().trim().trim().isEmpty()) && !(ve.isEmpty() && vs.isEmpty())) {
 								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The VISA TYPE field must not be empty. Please specify one.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
 							}
-							else if(!(tables_visaTypeTxt.getText().trim().isEmpty()) && (ve.isEmpty() && vs.isEmpty())){
+							else if(!(tables_visaTypeTxt.getText().trim().trim().isEmpty()) && (ve.isEmpty() && vs.isEmpty())){
 								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please specify visa start date and expiry date.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
 							}
 							
 							
-							if((!(tables_permitTypeTxt.getText().trim().isEmpty()) && !(pe.isEmpty() && ps.isEmpty()) || (tables_permitTypeTxt.getText().isEmpty()) && (pe.isEmpty() && ps.isEmpty())) && DateCheck(ps,pe)) {
+							if((!(tables_permitTypeTxt.getText().trim().trim().isEmpty()) && !(pe.isEmpty() && ps.isEmpty()) || (tables_permitTypeTxt.getText().trim().isEmpty()) && (pe.isEmpty() && ps.isEmpty())) && DateCheck(ps,pe)) {
 								permitValid = true;
 							}
-							else if((tables_permitTypeTxt.getText().trim().isEmpty()) && !(pe.isEmpty() && ps.isEmpty())) {
+							else if((tables_permitTypeTxt.getText().trim().trim().isEmpty()) && !(pe.isEmpty() && ps.isEmpty())) {
 								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The PERMIT TYPE field must not be empty. Please specify one.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
 							}
-							else if(!(tables_permitTypeTxt.getText().trim().isEmpty()) && (pe.isEmpty() && ps.isEmpty())){
+							else if(!(tables_permitTypeTxt.getText().trim().trim().isEmpty()) && (pe.isEmpty() && ps.isEmpty())){
 								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please specify permit start date and expiry date.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
 							}
 							
 							
-							if((!(tables_aepIdTxt.getText().trim().isEmpty()) && !(ae.isEmpty() && as.isEmpty()) || (tables_aepIdTxt.getText().isEmpty()) && (ae.isEmpty() && as.isEmpty())) && DateCheck(as,ae)) {
+							if((!(tables_aepIdTxt.getText().trim().trim().isEmpty()) && !(ae.isEmpty() && as.isEmpty()) || (tables_aepIdTxt.getText().trim().isEmpty()) && (ae.isEmpty() && as.isEmpty())) && DateCheck(as,ae)) {
 								aepValid = true;
 							}
-							else if((tables_aepIdTxt.getText().trim().isEmpty()) && !(ae.isEmpty() && as.isEmpty())) {
+							else if((tables_aepIdTxt.getText().trim().trim().isEmpty()) && !(ae.isEmpty() && as.isEmpty())) {
 								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The AEP ID field must not be empty. Please specify one.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
 							}
-							else if(!(tables_aepIdTxt.getText().trim().isEmpty()) && (ae.isEmpty() && as.isEmpty())){
+							else if(!(tables_aepIdTxt.getText().trim().trim().isEmpty()) && (ae.isEmpty() && as.isEmpty())){
 								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please specify AEP start date and expiry date.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
 							}
 							
@@ -822,48 +822,48 @@ public class TablesUpdateTransactions extends JFrame{
 				conn2 = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
 				PreparedStatement statement1 = conn2.prepareStatement(sql);
 				
-				statement1.setString(1, tables_passportNoTxt.getText());
-				statement1.setString(2, tables_tinIdTxt.getText());
-				statement1.setString(3, tables_visaTypeTxt.getText());
+				statement1.setString(1, tables_passportNoTxt.getText().trim());
+				statement1.setString(2, tables_tinIdTxt.getText().trim());
+				statement1.setString(3, tables_visaTypeTxt.getText().trim());
 				
 				
-				if(visaStartPick.getJFormattedTextField().getText().toString().equals(""))
+				if(visaStartPick.getJFormattedTextField().getText().trim().toString().equals(""))
 					statement1.setDate(5, null);
 				else
-					statement1.setDate(5, java.sql.Date.valueOf(objectFilter.addDay(visaStartPick.getJFormattedTextField().getText().toString())));
+					statement1.setDate(5, java.sql.Date.valueOf(objectFilter.addDay(visaStartPick.getJFormattedTextField().getText().trim().toString())));
 				
 				
-				if(visaEndPick.getJFormattedTextField().getText().toString().equals(""))
+				if(visaEndPick.getJFormattedTextField().getText().trim().toString().equals(""))
 					statement1.setDate(4, null);
 				else
-					statement1.setDate(4, java.sql.Date.valueOf(objectFilter.addDay(visaEndPick.getJFormattedTextField().getText().toString())));
+					statement1.setDate(4, java.sql.Date.valueOf(objectFilter.addDay(visaEndPick.getJFormattedTextField().getText().trim().toString())));
 				
-				statement1.setString(6, tables_permitTypeTxt.getText());
+				statement1.setString(6, tables_permitTypeTxt.getText().trim());
 				
-				if(permitStartPick.getJFormattedTextField().getText().toString().equals(""))
+				if(permitStartPick.getJFormattedTextField().getText().trim().toString().equals(""))
 					statement1.setDate(7, null);
 				else
-					statement1.setDate(7, java.sql.Date.valueOf(objectFilter.addDay(permitStartPick.getJFormattedTextField().getText().toString())));
+					statement1.setDate(7, java.sql.Date.valueOf(objectFilter.addDay(permitStartPick.getJFormattedTextField().getText().trim().toString())));
 				
 				
-				if(permitEndPick.getJFormattedTextField().getText().toString().equals(""))
+				if(permitEndPick.getJFormattedTextField().getText().trim().toString().equals(""))
 					statement1.setDate(8, null);
 				else
-					statement1.setDate(8, java.sql.Date.valueOf(objectFilter.addDay(permitEndPick.getJFormattedTextField().getText().toString())));
+					statement1.setDate(8, java.sql.Date.valueOf(objectFilter.addDay(permitEndPick.getJFormattedTextField().getText().trim().toString())));
 				
 				
-				statement1.setString(9, tables_aepIdTxt.getText());
+				statement1.setString(9, tables_aepIdTxt.getText().trim());
 				
-				if(aepStartPick.getJFormattedTextField().getText().toString().equals(""))
+				if(aepStartPick.getJFormattedTextField().getText().trim().toString().equals(""))
 					statement1.setDate(10, null);
 				else
-					statement1.setDate(10, java.sql.Date.valueOf(objectFilter.addDay(aepStartPick.getJFormattedTextField().getText().toString())));
+					statement1.setDate(10, java.sql.Date.valueOf(objectFilter.addDay(aepStartPick.getJFormattedTextField().getText().trim().toString())));
 				
 				
-				if(aepEndPick.getJFormattedTextField().getText().toString().equals(""))
+				if(aepEndPick.getJFormattedTextField().getText().trim().toString().equals(""))
 					statement1.setDate(11, null);
 				else
-					statement1.setDate(11, java.sql.Date.valueOf(objectFilter.addDay(aepEndPick.getJFormattedTextField().getText().toString())));
+					statement1.setDate(11, java.sql.Date.valueOf(objectFilter.addDay(aepEndPick.getJFormattedTextField().getText().trim().toString())));
 				
 				
 				statement1.setInt(12, Integer.parseInt(client_id));
@@ -872,7 +872,7 @@ public class TablesUpdateTransactions extends JFrame{
 				java.sql.Date currentDate = new java.sql.Date(calendar.getTime().getTime());
 				    
 				statement1.setDate(13, currentDate);
-				statement1.setString(14, adminAcc_usernameTxt.getText());
+				statement1.setString(14, adminAcc_usernameTxt.getText().trim());
 				statement1.setInt(15, Integer.parseInt(tables_comboBox1.getSelectedItem().toString()));
 				
 				
@@ -1072,14 +1072,14 @@ public class TablesUpdateTransactions extends JFrame{
     	this.adminAcc_usernameTxt.setText(user);
     	}
     public String getUser() {
-    	return this.adminAcc_usernameTxt.getText();
+    	return this.adminAcc_usernameTxt.getText().trim();
     	}
     //Password
     public void setPass(String pass) {
     	this.adminAcc_passwordTxt.setText(pass);
     	}
     public String getPass() {
-    	return this.adminAcc_passwordTxt.getText();
+    	return this.adminAcc_passwordTxt.getText().trim();
     	}
 	
     

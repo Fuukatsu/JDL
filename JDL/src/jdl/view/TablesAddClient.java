@@ -530,16 +530,16 @@ public class TablesAddClient extends JFrame{
 					}
 					else {
 						
-						statement1.setString(1, tables_clientLastnameTxt.getText());
-						statement1.setString(2, tables_clientFirstnameTxt.getText());
+						statement1.setString(1, tables_clientLastnameTxt.getText().trim());
+						statement1.setString(2, tables_clientFirstnameTxt.getText().trim());
 						statement1.setString(3, tables_nationalityBox.getSelectedItem().toString());
 						statement1.setDate(4, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().toString())));
 						statement1.setString(5, tables_genderBox.getSelectedItem().toString());
-						statement1.setString(6, tables_clientCompanyTxt.getText());
-						statement1.setString(7, tables_clientPositionTxt.getText());
-						statement1.setString(8, tables_clientAliasTxt.getText());
-						statement1.setString(9, tables_clientContactTxt.getText());
-						statement1.setString(10, tables_clientEmailTxt.getText());
+						statement1.setString(6, tables_clientCompanyTxt.getText().trim());
+						statement1.setString(7, tables_clientPositionTxt.getText().trim());
+						statement1.setString(8, tables_clientAliasTxt.getText().trim());
+						statement1.setString(9, tables_clientContactTxt.getText().trim());
+						statement1.setString(10, tables_clientEmailTxt.getText().trim());
 						statement1.executeUpdate();
 						tables_reloadBtn.doClick();
 						

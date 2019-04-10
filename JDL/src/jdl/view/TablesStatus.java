@@ -636,56 +636,56 @@ public class TablesStatus extends JFrame{
 					conn3 = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&compensateOnDuplicateKeyUpdateCounts=false","root","password");
 					PreparedStatement statement2= conn3.prepareStatement(sql);
 					
-					statement2.setString(1, tables_documentationTxt.getText());
+					statement2.setString(1, tables_documentationTxt.getText().trim());
 					
-					if(dateFiledPicker.getJFormattedTextField().getText().toString().equals("")) 
+					if(dateFiledPicker.getJFormattedTextField().getText().trim().toString().equals("")) 
 						statement2.setDate(2, null);
 					else
-						statement2.setDate(2, java.sql.Date.valueOf(dateFiledPicker.getJFormattedTextField().getText().toString()));
+						statement2.setDate(2, java.sql.Date.valueOf(dateFiledPicker.getJFormattedTextField().getText().trim().toString()));
 					
-					statement2.setString(3, tables_immigrantTxt.getText());
+					statement2.setString(3, tables_immigrantTxt.getText().trim());
 					
-					if(earlyHearingDatePicker.getJFormattedTextField().getText().toString().equals("")) 
+					if(earlyHearingDatePicker.getJFormattedTextField().getText().trim().toString().equals("")) 
 						statement2.setDate(4, null);
 					else
-						statement2.setDate(4, java.sql.Date.valueOf(earlyHearingDatePicker.getJFormattedTextField().getText().toString()));
+						statement2.setDate(4, java.sql.Date.valueOf(earlyHearingDatePicker.getJFormattedTextField().getText().trim().toString()));
 					
-					if(hearingDatePicker.getJFormattedTextField().getText().toString().equals("")) 
+					if(hearingDatePicker.getJFormattedTextField().getText().trim().toString().equals("")) 
 						statement2.setDate(5, null);
 					else
-						statement2.setDate(5, java.sql.Date.valueOf(hearingDatePicker.getJFormattedTextField().getText().toString()));
+						statement2.setDate(5, java.sql.Date.valueOf(hearingDatePicker.getJFormattedTextField().getText().trim().toString()));
 					
-					statement2.setString(6, tables_agendaTxt.getText());
-					statement2.setString(7, tables_visaReleaseTxt.getText());
-					statement2.setString(8, tables_waiverEccTxt.getText());
-					statement2.setString(9, tables_acrReleaseTxt.getText());
-					statement2.setString(10, tables_documentationCompleteTxt.getText());
+					statement2.setString(6, tables_agendaTxt.getText().trim());
+					statement2.setString(7, tables_visaReleaseTxt.getText().trim());
+					statement2.setString(8, tables_waiverEccTxt.getText().trim());
+					statement2.setString(9, tables_acrReleaseTxt.getText().trim());
+					statement2.setString(10, tables_documentationCompleteTxt.getText().trim());
 					statement2.setString(11, client_id);
 					statement2.setString(12, tables_comboBox1.getSelectedItem().toString());
-					statement2.setString(13, tables_documentationTxt.getText());
+					statement2.setString(13, tables_documentationTxt.getText().trim());
 					
-					if(dateFiledPicker.getJFormattedTextField().getText().toString().equals("")) 
+					if(dateFiledPicker.getJFormattedTextField().getText().trim().toString().equals("")) 
 						statement2.setDate(14, null);
 					else
-						statement2.setDate(14, java.sql.Date.valueOf(dateFiledPicker.getJFormattedTextField().getText().toString()));
+						statement2.setDate(14, java.sql.Date.valueOf(dateFiledPicker.getJFormattedTextField().getText().trim().toString()));
 					
-					statement2.setString(15, tables_immigrantTxt.getText());
+					statement2.setString(15, tables_immigrantTxt.getText().trim());
 					
-					if(earlyHearingDatePicker.getJFormattedTextField().getText().toString().equals("")) 
+					if(earlyHearingDatePicker.getJFormattedTextField().getText().trim().toString().equals("")) 
 						statement2.setDate(16, null);
 					else
-						statement2.setDate(16, java.sql.Date.valueOf(earlyHearingDatePicker.getJFormattedTextField().getText().toString()));
+						statement2.setDate(16, java.sql.Date.valueOf(earlyHearingDatePicker.getJFormattedTextField().getText().trim().toString()));
 					
-					if(hearingDatePicker.getJFormattedTextField().getText().toString().equals(""))
+					if(hearingDatePicker.getJFormattedTextField().getText().trim().toString().equals(""))
 						statement2.setDate(17, null);
 					else
-						statement2.setDate(17, java.sql.Date.valueOf(hearingDatePicker.getJFormattedTextField().getText().toString()));
+						statement2.setDate(17, java.sql.Date.valueOf(hearingDatePicker.getJFormattedTextField().getText().trim().toString()));
 					
-					statement2.setString(18, tables_agendaTxt.getText());
-					statement2.setString(19, tables_visaReleaseTxt.getText());
-					statement2.setString(20, tables_waiverEccTxt.getText());
-					statement2.setString(21, tables_acrReleaseTxt.getText());
-					statement2.setString(22, tables_documentationCompleteTxt.getText());
+					statement2.setString(18, tables_agendaTxt.getText().trim());
+					statement2.setString(19, tables_visaReleaseTxt.getText().trim());
+					statement2.setString(20, tables_waiverEccTxt.getText().trim());
+					statement2.setString(21, tables_acrReleaseTxt.getText().trim());
+					statement2.setString(22, tables_documentationCompleteTxt.getText().trim());
 					statement2.setString(23, client_id);
 					statement2.setString(24, tables_comboBox1.getSelectedItem().toString());
 					
@@ -875,7 +875,7 @@ public class TablesStatus extends JFrame{
 		tables_documentationCompleteTxt};
 		for(JTextField s:fieldtexts)
 		{
-			if(!s.getText().isEmpty())
+			if(!s.getText().trim().isEmpty())
 				return true;
 		}
 		JDatePickerImpl[] datefieldtexts = {dateFiledPicker,
@@ -883,7 +883,7 @@ public class TablesStatus extends JFrame{
 				hearingDatePicker};
 		for(JDatePickerImpl jd:datefieldtexts)
 		{
-			if(!jd.getJFormattedTextField().getText().isEmpty())
+			if(!jd.getJFormattedTextField().getText().trim().isEmpty())
 				return true;
 		}
 		return false;

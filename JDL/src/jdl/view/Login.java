@@ -135,7 +135,7 @@ public class Login extends JFrame {
 		login_loginBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				String tUsername = login_usernameTxt.getText();
+				String tUsername = login_usernameTxt.getText().trim();
 				String tPassword = new String(login_passwordTxt.getPassword());
 				Runner.setUser(loginFunction.attemptLogin(tUsername, tPassword));
 				if(Runner.getUser() != null)
