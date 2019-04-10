@@ -311,6 +311,7 @@ public class TablesUpdateTransactions extends JFrame{
 		tables_inputPanel.add(tables_visaLbl);
 		
 		tables_visaTypeTxt = new JTextField();
+		tables_visaTypeTxt.setToolTipText("Choose and Insert from the following Visa Types:\r\n\r\nPre-Arranged Employment Visa - Missionary\r\n(9G) Pre-Arranged Employment Visa - Working Visa Commercial\r\nPermanent Resident's Visa - Section 13 Series\r\nSpecial Non-Immigrant Visa - Section 47 (a)(2)\r\nSpecial Investor's Resident Visa (SIRV)\r\nSpecial President Retiree's Visa (E.O 1037)");
 		tables_visaTypeTxt.setBorder(new EmptyBorder(0, 0, 0, 0));
 		tables_visaTypeTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
 		tables_visaTypeTxt.setColumns(10);
@@ -464,6 +465,7 @@ public class TablesUpdateTransactions extends JFrame{
 		tables_inputPanel.add(tables_permitLbl);
 		
 		tables_permitTypeTxt = new JTextField();
+		tables_permitTypeTxt.setToolTipText("Choose and Insert the following Permit Types:\r\n\r\nSpecial Working Permit (SWP)\r\nProvisional Work Permit (PWP)");
 		tables_permitTypeTxt.setBorder(new EmptyBorder(0, 0, 0, 0));
 		tables_permitTypeTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
 		tables_permitTypeTxt.setColumns(10);
