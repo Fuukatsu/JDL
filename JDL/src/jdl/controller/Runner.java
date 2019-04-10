@@ -112,7 +112,6 @@ public class Runner
     }
     public static void destroyAC()
     {
-    	ac.setVisible(false);
     	ac.dispose();
     }
     public static void openAD()
