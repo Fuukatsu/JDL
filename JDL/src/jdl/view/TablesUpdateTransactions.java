@@ -752,35 +752,35 @@ public class TablesUpdateTransactions extends JFrame{
 				
 					if(tables_passportNoTxt.getText() != "") {
 						if(tables_tinIdTxt.getText() != "") {
-							if((!(tables_visaTypeTxt.getText().isEmpty()) && !(ve.isEmpty() && vs.isEmpty()) || (tables_visaTypeTxt.getText().isEmpty()) && (ve.isEmpty() && vs.isEmpty())) && DateCheck(ve,vs)) {
+							if((!(tables_visaTypeTxt.getText().trim().isEmpty()) && !(ve.isEmpty() && vs.isEmpty()) || (tables_visaTypeTxt.getText().isEmpty()) && (ve.isEmpty() && vs.isEmpty())) && DateCheck(ve,vs)) {
 								visaValid = true;
 							}
-							else if((tables_visaTypeTxt.getText().isEmpty()) && !(ve.isEmpty() && vs.isEmpty())) {
+							else if((tables_visaTypeTxt.getText().trim().isEmpty()) && !(ve.isEmpty() && vs.isEmpty())) {
 								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The VISA TYPE field must not be empty. Please specify one.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
 							}
-							else if(!(tables_visaTypeTxt.getText().isEmpty()) && (ve.isEmpty() && vs.isEmpty())){
+							else if(!(tables_visaTypeTxt.getText().trim().isEmpty()) && (ve.isEmpty() && vs.isEmpty())){
 								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please specify visa start date and expiry date.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
 							}
 							
 							
-							if((!(tables_permitTypeTxt.getText().isEmpty()) && !(pe.isEmpty() && ps.isEmpty()) || (tables_permitTypeTxt.getText().isEmpty()) && (pe.isEmpty() && ps.isEmpty())) && DateCheck(ps,pe)) {
+							if((!(tables_permitTypeTxt.getText().trim().isEmpty()) && !(pe.isEmpty() && ps.isEmpty()) || (tables_permitTypeTxt.getText().isEmpty()) && (pe.isEmpty() && ps.isEmpty())) && DateCheck(ps,pe)) {
 								permitValid = true;
 							}
-							else if((tables_permitTypeTxt.getText().isEmpty()) && !(pe.isEmpty() && ps.isEmpty())) {
+							else if((tables_permitTypeTxt.getText().trim().isEmpty()) && !(pe.isEmpty() && ps.isEmpty())) {
 								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The PERMIT TYPE field must not be empty. Please specify one.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
 							}
-							else if(!(tables_permitTypeTxt.getText().isEmpty()) && (pe.isEmpty() && ps.isEmpty())){
+							else if(!(tables_permitTypeTxt.getText().trim().isEmpty()) && (pe.isEmpty() && ps.isEmpty())){
 								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please specify permit start date and expiry date.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
 							}
 							
 							
-							if((!(tables_aepIdTxt.getText().isEmpty()) && !(ae.isEmpty() && as.isEmpty()) || (tables_aepIdTxt.getText().isEmpty()) && (ae.isEmpty() && as.isEmpty())) && DateCheck(as,ae)) {
+							if((!(tables_aepIdTxt.getText().trim().isEmpty()) && !(ae.isEmpty() && as.isEmpty()) || (tables_aepIdTxt.getText().isEmpty()) && (ae.isEmpty() && as.isEmpty())) && DateCheck(as,ae)) {
 								aepValid = true;
 							}
-							else if((tables_aepIdTxt.getText().isEmpty()) && !(ae.isEmpty() && as.isEmpty())) {
+							else if((tables_aepIdTxt.getText().trim().isEmpty()) && !(ae.isEmpty() && as.isEmpty())) {
 								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The AEP ID field must not be empty. Please specify one.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
 							}
-							else if(!(tables_aepIdTxt.getText().isEmpty()) && (ae.isEmpty() && as.isEmpty())){
+							else if(!(tables_aepIdTxt.getText().trim().isEmpty()) && (ae.isEmpty() && as.isEmpty())){
 								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please specify AEP start date and expiry date.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
 							}
 							
