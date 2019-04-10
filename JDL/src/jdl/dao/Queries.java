@@ -254,11 +254,13 @@ public class Queries
 	public static boolean checkNotification(Date date) {
 		try (Connection con = DriverManager.getConnection(dP.url, dP.username, dP.password)) 
 		{
-			PreparedStatement ps = con.prepareStatement("SELECT * FROM NOTIFICATIONS WHERE notif_date = ?");
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM jdl_accounts.notifications WHERE notif_date = ?");
 			ps.setDate(1, date);
 			ResultSet rs = ps.executeQuery();
-			if(rs.getRow() != 0)
+			while(rs.next())
+			{
 				return false;
+			}
 		} catch (SQLException e) 
 		{
 			e.printStackTrace();

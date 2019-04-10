@@ -73,9 +73,11 @@ public class EmailFunctions
 		try {
 		String date = objectFilter.getDateToday();
 		Date d = new SimpleDateFormat("yyyy-MM-dd").parse(date);
-		if(Queries.checkNotification(new java.sql.Date(d.getTime())))
+		boolean dateCheck = Queries.checkNotification(new java.sql.Date(d.getTime()));
+		//System.out.println(dateCheck);
+		if(dateCheck)
 		{
-			checkExpiration();
+			/checkExpiration();
 			Queries.insertNotification(new java.sql.Date(d.getTime()));
 		}
 		} catch (ParseException e) {
