@@ -509,9 +509,9 @@ public class TablesAddClient extends JFrame{
 					conn2 = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
 					PreparedStatement statement1 = conn2.prepareStatement(sql);
 					
-					if(tables_clientLastnameTxt.getText().equals("")) {
+					if(tables_clientLastnameTxt.getText().trim().equals("")) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Client's Lastname must not be empty.</font color = #ffffff></html>", "Detected an empty client's lastname", JOptionPane.ERROR_MESSAGE);
-					}else if (tables_clientFirstnameTxt.getText().equals("")) {
+					}else if (tables_clientFirstnameTxt.getText().trim().equals("")) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Client's Firstname must not be empty.</font color = #ffffff></html>", "Detected an empty client's firstname", JOptionPane.ERROR_MESSAGE);
 					}else if((tables_nationalityBox.getSelectedItem().toString()).equals("")) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Client's Nationality must not be empty.</font color = #ffffff></html>", "Detected an empty or undefinable nationality ", JOptionPane.ERROR_MESSAGE);
@@ -519,13 +519,13 @@ public class TablesAddClient extends JFrame{
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Client's Birthdate must not be empty.</font color = #ffffff></html>", "Detected an empty client's birthdate", JOptionPane.ERROR_MESSAGE);
 					}else if(tables_genderBox.getSelectedItem().toString().equals("")) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Client's Gender must not be empty.</font color = #ffffff></html>", "Detected an empty or undefinable gender", JOptionPane.ERROR_MESSAGE);
-					}else if(tables_clientContactTxt.getText().equals("") && tables_clientEmailTxt.getText().equals("")) {
+					}else if(tables_clientContactTxt.getText().trim().equals("") && tables_clientEmailTxt.getText().trim().equals("")) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>There should at least one contact information available for a client</font color = #ffffff></html>", "Detected an empty contact no or email", JOptionPane.ERROR_MESSAGE);
-					}else if(objectFilter.containsDigit(tables_clientAliasTxt.getText()) || objectFilter.containsDigit(tables_clientFirstnameTxt.getText()) || objectFilter.containsDigit(tables_clientLastnameTxt.getText())) {
+					}else if(objectFilter.containsDigit(tables_clientAliasTxt.getText().trim()) || objectFilter.containsDigit(tables_clientFirstnameTxt.getText()) || objectFilter.containsDigit(tables_clientLastnameTxt.getText())) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Client's names or alias must not contain numeric character.</font color = #ffffff></html>", "Detected an numerical character in client's names/alias", JOptionPane.ERROR_MESSAGE);
-					}else if(objectFilter.containsAlpha(tables_clientContactTxt.getText() )) {
+					}else if(objectFilter.containsAlpha(tables_clientContactTxt.getText().trim() )) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Client's contact number must not contain alphabet characters.</font color = #ffffff></html>", "Detected an alphabet character in client's contact number", JOptionPane.ERROR_MESSAGE);
-					}else if((!(objectFilter.checkEmail(tables_clientEmailTxt.getText())) && !(tables_clientEmailTxt.getText().equals(""))) &&  (tables_clientContactTxt.getText().equals("")|| !(tables_clientContactTxt.getText().equals("")) )) {
+					}else if((!(objectFilter.checkEmail(tables_clientEmailTxt.getText().trim())) && !(tables_clientEmailTxt.getText().equals(""))) &&  (tables_clientContactTxt.getText().equals("")|| !(tables_clientContactTxt.getText().equals("")) )) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Client's email is not valid</font color = #ffffff></html>", "Detected an invalid email", JOptionPane.ERROR_MESSAGE);
 					}
 					else {
