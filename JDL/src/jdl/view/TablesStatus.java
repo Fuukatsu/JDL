@@ -21,6 +21,7 @@ import org.jdatepicker.impl.UtilDateModel;
 
 import jdl.controller.AutoCompletion;
 import jdl.controller.DateLabelFormatter;
+import jdl.controller.Runner;
 import jdl.controller.TableColumnAdjuster;
 
 import java.util.Properties;
@@ -480,8 +481,8 @@ public class TablesStatus extends JFrame{
 		tables_clientCreateTransactionLbl.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new Tables().setVisible(true);
-				dispose();
+				Runner.openTables();
+				Runner.destroyTS();
 			}
 		});
 		tables_clientCreateTransactionLbl.setBounds(330, 48, 227, 37);
@@ -490,12 +491,7 @@ public class TablesStatus extends JFrame{
 		
 		JLabel tables_clientStatusTableLbl = new JLabel("Client Status Table", SwingConstants.CENTER);
 		tables_clientStatusTableLbl.setBounds(929, 48, 243, 37);
-		tables_clientStatusTableLbl.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				new TablesStatus().setVisible(true);
-				dispose();
-			}
-		});
+
 		tables_clientStatusTableLbl.setForeground(Color.WHITE);
 		tables_clientStatusTableLbl.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		
@@ -503,8 +499,8 @@ public class TablesStatus extends JFrame{
 		tables_clientRemarksTableLbl.setBounds(1241, 48, 230, 37);
 		tables_clientRemarksTableLbl.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				new TablesRemarks().setVisible(true);
-				dispose();
+				Runner.openTR();
+				Runner.destroyTS();
 			}
 		});
 		tables_clientRemarksTableLbl.setForeground(Color.LIGHT_GRAY);
@@ -527,8 +523,8 @@ public class TablesStatus extends JFrame{
 		tables_updateTransactionLbl.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new TablesUpdateTransactions().setVisible(true);
-				dispose();
+				Runner.openTUT();
+				Runner.destroyTS();
 			}
 		});
 		tables_updateTransactionLbl.setBounds(626, 48, 249, 37);
@@ -539,8 +535,9 @@ public class TablesStatus extends JFrame{
 		tables_addClientLbl.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new TablesAddClient().setVisible(true);
-				dispose();
+				
+				Runner.openTAC();
+				Runner.destroyTS();
 			}
 		});
 		tables_addClientLbl.setBounds(25, 48, 295, 37);
@@ -727,8 +724,9 @@ public class TablesStatus extends JFrame{
 		JButton btnPermit = new JButton("Permits");
 		btnPermit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new TablesStatusPermits().setVisible(true);
-				dispose();
+
+				Runner.openTSP();
+				Runner.destroyTS();
 			}
 		});
 		btnPermit.setForeground(Color.WHITE);
@@ -770,8 +768,8 @@ public class TablesStatus extends JFrame{
 		getContentPane().add(tables_back);
 		tables_back.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-				new OptionList().setVisible(true);
+				Runner.destroyTS();
+				Runner.openOptionList();
 			}
 		});
 		tables_back.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/button_back.png")));

@@ -526,8 +526,9 @@ public class AccountManagement extends JFrame{
 		JButton emp_deleteBtn = new JButton("Delete a User");
 		emp_deleteBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				new AccountDelete().setVisible(true);
+
+				Runner.destroyAccountManagement();
+				Runner.openAD();
 			}
 		});
 		emp_deleteBtn.setIcon(new ImageIcon(AccountManagement.class.getResource("/jdl/Assets/button_delete.png")));
@@ -541,8 +542,9 @@ public class AccountManagement extends JFrame{
 		JButton emp_createBtn = new JButton(" Create a User");
 		emp_createBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new AccountCreate().setVisible(true);
-				dispose();
+
+				Runner.destroyAccountManagement();
+				Runner.openAC();
 			}
 		});
 		emp_createBtn.setIcon(new ImageIcon(AccountManagement.class.getResource("/jdl/Assets/button_add.png")));
@@ -558,8 +560,8 @@ public class AccountManagement extends JFrame{
 		getContentPane().add(emp_back);
 		emp_back.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				dispose();
-				new OptionList().setVisible(true);
+				Runner.destroyAccountManagement();
+				Runner.openOptionList();
 			}
 		});
 		emp_back.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/button_back.png")));

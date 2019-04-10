@@ -72,22 +72,7 @@ public class TablesUpdateTransactions extends JFrame{
 	private JTextField adminAcc_passwordTxt;
 	private JComboBox tables_comboBox1;
 	private TableModel tm;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Tables window = new Tables();
-					window.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
+
 	public static boolean DateCheck(String date1, String date2) {
 	 	
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -918,8 +903,9 @@ public class TablesUpdateTransactions extends JFrame{
 		tables_clientStatusTableLbl.setBounds(929, 48, 243, 37);
 		tables_clientStatusTableLbl.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				new TablesStatus().setVisible(true);
-				dispose();
+				
+				Runner.openTS();
+				Runner.destroyTUT();
 			}
 		});
 		tables_clientStatusTableLbl.setForeground(Color.LIGHT_GRAY);
@@ -929,8 +915,9 @@ public class TablesUpdateTransactions extends JFrame{
 		tables_clientRemarksTableLbl.setBounds(1241, 48, 230, 37);
 		tables_clientRemarksTableLbl.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				new TablesRemarks().setVisible(true);
-				dispose();
+
+				Runner.openTR();
+				Runner.destroyTUT();
 			}
 		});
 		tables_clientRemarksTableLbl.setForeground(Color.LIGHT_GRAY);
@@ -950,13 +937,7 @@ public class TablesUpdateTransactions extends JFrame{
 		tables_line.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
 		
 		JLabel tables_updateTransactionLbl = new JLabel("Update Transaction", SwingConstants.CENTER);
-		tables_updateTransactionLbl.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				new TablesUpdateTransactions().setVisible(true);
-				dispose();
-			}
-		});
+
 		tables_updateTransactionLbl.setBounds(626, 48, 249, 37);
 		tables_updateTransactionLbl.setForeground(Color.WHITE);
 		tables_updateTransactionLbl.setFont(new Font("Segoe UI", Font.BOLD, 20));
@@ -964,8 +945,9 @@ public class TablesUpdateTransactions extends JFrame{
 		JLabel tables_addClientLbl = new JLabel("Add New Client", SwingConstants.CENTER);
 		tables_addClientLbl.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				new TablesAddClient().setVisible(true);
-				dispose();
+
+				Runner.openTAC();
+				Runner.destroyTUT();
 			}
 		});
 		tables_addClientLbl.setBounds(25, 48, 295, 37);
@@ -1032,8 +1014,8 @@ public class TablesUpdateTransactions extends JFrame{
 		getContentPane().add(tables_back);
 		tables_back.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-				new OptionList().setVisible(true);
+				Runner.destroyTUT();
+				Runner.openOptionList();
 			}
 		});
 		tables_back.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/button_back.png")));

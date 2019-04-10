@@ -28,25 +28,7 @@ public class GenerateClients extends JFrame{
 	private String admin_password;
 
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GenerateClients window = new GenerateClients();
-					window.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
-	/**
-	 * Create the application.
-	 */
 	public GenerateClients() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(GenerateClients.class.getResource("/jdl/Assets/login_small.png")));
 		

@@ -28,25 +28,7 @@ public class GenerateExpiry extends JFrame{
 	private String admin_password;
 
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GenerateExpiry window = new GenerateExpiry();
-					window.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
-	/**
-	 * Create the application.
-	 */
 	public GenerateExpiry() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(GenerateExpiry.class.getResource("/jdl/Assets/login_small.png")));
 		

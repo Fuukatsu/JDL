@@ -21,6 +21,7 @@ import org.jdatepicker.impl.UtilDateModel;
 
 import jdl.controller.AutoCompletion;
 import jdl.controller.DateLabelFormatter;
+import jdl.controller.Runner;
 import jdl.controller.TableColumnAdjuster;
 
 import java.util.Properties;
@@ -69,25 +70,7 @@ public class TablesStatusPermits extends JFrame{
 	private JTextField tables_addRequirementsTxt;
 	private JTextField tables_acrICardTxt;
 	private JDatePickerImpl tables_dateReceivedTxt, tables_aepDateFiledTxt, tables_aepdateReleasedTxt, tables_permitDateFiledTxt, tables_permitDateReleasedTxt;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Tables window = new Tables();
-					window.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
-	/**
-	 * Create the application.
-	 */
 	public TablesStatusPermits() {
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Tables.class.getResource("/jdl/Assets/login_small.png")));	
@@ -494,8 +477,8 @@ public class TablesStatusPermits extends JFrame{
 		tables_clientCreateTransactionLbl.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new Tables().setVisible(true);
-				dispose();
+				Runner.openTables();
+				Runner.destroyTSP();
 			}
 		});
 		tables_clientCreateTransactionLbl.setBounds(330, 48, 227, 37);
@@ -504,12 +487,7 @@ public class TablesStatusPermits extends JFrame{
 		
 		JLabel tables_clientStatusTableLbl = new JLabel("Client Status Table", SwingConstants.CENTER);
 		tables_clientStatusTableLbl.setBounds(929, 48, 243, 37);
-		tables_clientStatusTableLbl.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				new TablesStatusPermits().setVisible(true);
-				dispose();
-			}
-		});
+
 		tables_clientStatusTableLbl.setForeground(Color.WHITE);
 		tables_clientStatusTableLbl.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		
@@ -517,8 +495,9 @@ public class TablesStatusPermits extends JFrame{
 		tables_clientRemarksTableLbl.setBounds(1241, 48, 230, 37);
 		tables_clientRemarksTableLbl.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				new TablesRemarks().setVisible(true);
-				dispose();
+				
+				Runner.openTR();
+				Runner.destroyTSP();
 			}
 		});
 		tables_clientRemarksTableLbl.setForeground(Color.LIGHT_GRAY);
@@ -541,8 +520,9 @@ public class TablesStatusPermits extends JFrame{
 		tables_updateTransactionLbl.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new TablesUpdateTransactions().setVisible(true);
-				dispose();
+
+				Runner.openTUT();
+				Runner.destroyTSP();
 			}
 		});
 		tables_updateTransactionLbl.setBounds(626, 48, 249, 37);
@@ -553,8 +533,9 @@ public class TablesStatusPermits extends JFrame{
 		tables_addClientLbl.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new TablesAddClient().setVisible(true);
-				dispose();
+
+				Runner.openTAC();
+				Runner.destroyTSP();
 			}
 		});
 
@@ -816,8 +797,8 @@ public class TablesStatusPermits extends JFrame{
 		JButton btnVisa = new JButton("Visa");
 		btnVisa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new TablesStatus().setVisible(true);
-				dispose();
+				Runner.openTS();
+				Runner.destroyTSP();
 			}
 		});
 		btnVisa.setForeground(Color.WHITE);
@@ -828,12 +809,7 @@ public class TablesStatusPermits extends JFrame{
 		getContentPane().add(btnVisa);
 		
 		JButton btnPermit = new JButton("Permits");
-		btnPermit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new TablesStatusPermits().setVisible(true);
-				dispose();
-			}
-		});
+
 		btnPermit.setForeground(Color.WHITE);
 		btnPermit.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
 		btnPermit.setBorder(null);
@@ -846,8 +822,8 @@ public class TablesStatusPermits extends JFrame{
 		getContentPane().add(tables_back);
 		tables_back.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-				new OptionList().setVisible(true);
+				Runner.destroyTSP();
+				Runner.openOptionList();
 			}
 		});
 		tables_back.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/button_back.png")));

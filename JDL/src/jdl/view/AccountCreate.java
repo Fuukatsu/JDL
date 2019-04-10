@@ -19,6 +19,7 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
+import jdl.controller.Runner;
 import jdl.dao.Queries;
 import jdl.model.User;
 
@@ -62,26 +63,7 @@ public class AccountCreate extends JFrame{
 	private JTextField emp_userIdTxt;
 	private JTextField emp_usernameTxt;
 	private JComboBox comboBox;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Tables window = new Tables();
-					window.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
 
-	/**
-	 * Create the application.
-	 */
 	public AccountCreate() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Tables.class.getResource("/jdl/Assets/login_small.png")));	
 		
@@ -238,10 +220,14 @@ public class AccountCreate extends JFrame{
 					 if(comboBox.getSelectedIndex() == 1 && !usernameExist &&!userIdExist) {
 					 	createAccount(1);
 					 	JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>User has been created successfully.</font color = #ffffff></html>", "User Created.", JOptionPane.INFORMATION_MESSAGE);
+					 	//Runner.destroyAC();
+					 	//Runner.openAC();
 					 }	
 					 else if(comboBox.getSelectedIndex() == 0 && !usernameExist &&!userIdExist) {
 					 	createAccount(0);
 					 	JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>User has been created successfully.</font color = #ffffff></html>", "User Created.", JOptionPane.INFORMATION_MESSAGE);
+					 	//Runner.destroyAC();
+					 	//Runner.openAC();
 					 }
 			 	}
 				
@@ -277,8 +263,8 @@ public class AccountCreate extends JFrame{
 		emp_close.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new AccountManagement().setVisible(true);
-				dispose();
+				Runner.destroyAC();
+				Runner.openAccountManagement();
 			}
 		});
 		emp_close.setIcon(new ImageIcon(AccountCreate.class.getResource("/jdl/Assets/button_back.png")));
@@ -310,9 +296,10 @@ public class AccountCreate extends JFrame{
 			statement.setInt(4, admin);
 		 	statement.execute();
 		 	
-		 	dispose();
-		 	new OptionList().setVisible(true);
-	    	
+		 	///dispose();
+		 	//new OptionList().setVisible(true);
+	    	Runner.destroyAC();
+	    	Runner.openAC();
 		} 
 		catch (SQLException e1) {
 			e1.printStackTrace();

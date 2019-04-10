@@ -21,6 +21,7 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
+import jdl.controller.Runner;
 import jdl.controller.objectFilter;
 import jdl.dao.Queries;
 
@@ -113,9 +114,8 @@ public class ActivityHistory extends JFrame{
 		getContentPane().add(emp_back);
 		emp_back.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				dispose();
-				new OptionList().setVisible(true);
-				dispose();
+				Runner.destroyAH();
+				Runner.openOptionList();
 			}
 		});
 		emp_back.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/button_back.png")));

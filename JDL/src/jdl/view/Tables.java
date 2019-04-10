@@ -771,13 +771,15 @@ public class Tables extends JFrame{
 		tables_clientCreateTransactionLbl.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		
 		JLabel tables_clientStatusTableLbl = new JLabel("Client Status Table", SwingConstants.CENTER);
-		tables_clientStatusTableLbl.setBounds(929, 48, 243, 37);
 		tables_clientStatusTableLbl.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
-				new TablesStatus().setVisible(true);
-				dispose();
+				Runner.openTS();
+				Runner.destroyTables();
 			}
 		});
+		tables_clientStatusTableLbl.setBounds(929, 48, 243, 37);
+
 		tables_clientStatusTableLbl.setForeground(Color.LIGHT_GRAY);
 		tables_clientStatusTableLbl.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		
@@ -785,8 +787,8 @@ public class Tables extends JFrame{
 		tables_clientRemarksTableLbl.setBounds(1241, 48, 230, 37);
 		tables_clientRemarksTableLbl.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				new TablesRemarks().setVisible(true);
-				dispose();
+				Runner.openTR();
+				Runner.destroyTables();
 			}
 		});
 		tables_clientRemarksTableLbl.setForeground(Color.LIGHT_GRAY);
@@ -811,7 +813,7 @@ public class Tables extends JFrame{
 			public void mouseClicked(MouseEvent e) 
 			{
 				Runner.openTUT();
-				setVisible(false);
+				Runner.destroyTables();
 			}
 		});
 		tables_updateTransactionLbl.setBounds(626, 48, 249, 37);
@@ -821,8 +823,8 @@ public class Tables extends JFrame{
 		JLabel tables_addClientLbl = new JLabel("Add New Client", SwingConstants.CENTER);
 		tables_addClientLbl.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				new TablesAddClient().setVisible(true);
-				dispose();
+				Runner.openTAC();
+				Runner.destroyTables();
 			}
 		});
 		tables_addClientLbl.setBounds(25, 48, 295, 37);

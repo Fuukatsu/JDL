@@ -59,25 +59,7 @@ public class AccountDelete extends JFrame{
 	private boolean tables_validator = true;
 	private JTextField emp_LastnameTxt;
 	private JTextField emp_userIdTxt;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Tables window = new Tables();
-					window.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
-	/**
-	 * Create the application.
-	 */
 	public AccountDelete() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Tables.class.getResource("/jdl/Assets/login_small.png")));	
 		
@@ -281,8 +263,8 @@ public class AccountDelete extends JFrame{
 				 				statement1.executeUpdate();
 			    		
 				 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> User Successfully deleted. </font color = #ffffff></html>", "Deleted Successfully", JOptionPane.INFORMATION_MESSAGE);
-				 				dispose();
-				 				new AccountDelete().setVisible(true);
+				 				Runner.destroyAD();
+				 				Runner.openAD();
 			    	}
 					
 				} 
@@ -312,8 +294,9 @@ public class AccountDelete extends JFrame{
 		emp_close.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new AccountManagement().setVisible(true);
-				dispose();
+
+				Runner.destroyAD();
+				Runner.openAccountManagement();
 			}
 		});
 		emp_close.setIcon(new ImageIcon(AccountDelete.class.getResource("/jdl/Assets/button_back.png")));
