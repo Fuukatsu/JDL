@@ -783,11 +783,6 @@ public class TablesUpdateTransactions extends JFrame{
 							else if(!(tables_aepIdTxt.getText().trim().trim().isEmpty()) && (ae.isEmpty() && as.isEmpty())){
 								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please specify AEP start date and expiry date.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
 							}
-							
-							
-							if(visaValid && permitValid && aepValid) {
-								Register();
-							}
 							if((tables_passportNoTxt.getText().trim().trim().length() > 25) || (tables_tinIdTxt.getText().trim().trim().length() > 25)) {
 								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please limit Passport No./TIN ID to 25 and less characters..</font color = #ffffff></html>", "Detected invalid length for Passport No./TIN ID", JOptionPane.ERROR_MESSAGE);
 							
