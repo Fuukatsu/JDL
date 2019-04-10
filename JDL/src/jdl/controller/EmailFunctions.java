@@ -77,7 +77,7 @@ public class EmailFunctions
 		//System.out.println(dateCheck);
 		if(dateCheck)
 		{
-			/checkExpiration();
+			checkExpiration();
 			Queries.insertNotification(new java.sql.Date(d.getTime()));
 		}
 		} catch (ParseException e) {
