@@ -281,4 +281,51 @@ public class Queries
 		}
 		return true;
 	}
+	public static ArrayList<Transaction> getTransactionsBetweenDate(Date startDate, Date endDate)
+	{
+		ArrayList<Transaction> tlist = new ArrayList<Transaction>();
+		try (Connection con = DriverManager.getConnection(dP.url, dP.username, dP.password)) 
+		{
+			String sql = "SELECT * FROM jdl_accounts.transactions WHERE trans_visaEndDate "+
+					"BETWEEN ? AND ? "+
+					"UNION "+
+					"SELECT * FROM jdl_accounts.transactions WHERE trans_permitEndDate "+
+					"BETWEEN ? AND ? "+
+					"UNION "+
+					"SELECT * FROM jdl_accounts.transactions WHERE trans_aepEndDate "+
+					"BETWEEN ? AND ? ";
+			PreparedStatement ps = con.prepareStatement(sql);
+			for(int i = 0; i < 6; i+=2)
+			{
+				ps.setDate(1+i, startDate);
+				ps.setDate(2+i, endDate);	
+			}
+			ResultSet rs = ps.executeQuery();
+			while(rs.next())
+			{
+				Transaction t = new Transaction();
+				t.setPassportNo(rs.getString(1));
+				t.setTinID(rs.getString(2));
+				t.setVisaType(rs.getString(3));
+				t.setVisaStartDate(rs.getDate(4));
+				t.setVisaEndDate(rs.getDate(5));
+				t.setPermitType(rs.getString(6));
+				t.setPermitStartDate(rs.getDate(7));
+				t.setPermitEndDate(rs.getDate(8));
+				t.setAepID(rs.getString(9));
+				t.setAepStartDate(rs.getDate(10));
+				t.setAepEndDate(rs.getDate(11));
+				t.setTransID(rs.getInt(12));
+				t.setClient_id(rs.getInt(13));
+				t.setTransTimestamp(rs.getDate(14));
+				t.setTransAuthor(rs.getString(15));
+				tlist.add(t);
+			}
+		} catch (SQLException e) 
+		{
+			e.printStackTrace();
+			return null;
+		}
+		return tlist;
+	}
 }
