@@ -22,6 +22,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 
 public class GenerateExpiry extends JFrame{
 	private String admin_username;
@@ -65,48 +66,6 @@ public class GenerateExpiry extends JFrame{
 		getContentPane().setBackground(new Color(90, 103, 115));
 		getContentPane().setLayout(null);
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255,255,255,60));
-		panel.setBounds(29, 69, 188, 238);
-		getContentPane().add(panel);
-		panel.setLayout(null);
-		
-		JLabel generate_selectSpanLbl = new JLabel("Select Range:");
-		generate_selectSpanLbl.setBounds(20, 9, 99, 20);
-		panel.add(generate_selectSpanLbl);
-		generate_selectSpanLbl.setForeground(Color.WHITE);
-		generate_selectSpanLbl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
-		
-		JComboBox comboBox_selectSpan = new JComboBox();
-		comboBox_selectSpan.setBounds(20, 40, 149, 28);
-		panel.add(comboBox_selectSpan);
-		comboBox_selectSpan.setForeground(Color.BLACK);
-		comboBox_selectSpan.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
-		
-		JComboBox comboBox_selectMonthWeek = new JComboBox();
-		comboBox_selectMonthWeek.setBounds(20, 110, 149, 28);
-		panel.add(comboBox_selectMonthWeek);
-		comboBox_selectMonthWeek.setForeground(Color.BLACK);
-		comboBox_selectMonthWeek.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
-		
-		JLabel generate_selectMonthWeekLbl = new JLabel("Select Month/Week:");
-		generate_selectMonthWeekLbl.setBounds(20, 79, 149, 20);
-		panel.add(generate_selectMonthWeekLbl);
-		generate_selectMonthWeekLbl.setForeground(Color.WHITE);
-		generate_selectMonthWeekLbl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
-		
-		JComboBox comboBox_selectYear = new JComboBox();
-		comboBox_selectYear.setBounds(20, 186, 149, 28);
-		panel.add(comboBox_selectYear);
-		comboBox_selectYear.setForeground(Color.BLACK);
-		comboBox_selectYear.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
-		
-		JLabel generate_selectYearLbl = new JLabel("Select Year:");
-		generate_selectYearLbl.setBounds(20, 155, 86, 20);
-		panel.add(generate_selectYearLbl);
-		generate_selectYearLbl.setForeground(Color.WHITE);
-		generate_selectYearLbl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
-		
 		JLabel generate_minimizeBtn = new JLabel("");
 		generate_minimizeBtn.setBounds(654, 0, 26, 46);
 		getContentPane().add(generate_minimizeBtn);
@@ -136,17 +95,65 @@ public class GenerateExpiry extends JFrame{
 		generate_reportBackBtn.setBounds(10, 15, 48, 14);
 		getContentPane().add(generate_reportBackBtn);
 		
-		JLabel generate_countExpiryLbl = new JLabel("");
-		generate_countExpiryLbl.setForeground(Color.WHITE);
-		generate_countExpiryLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 99));
-		generate_countExpiryLbl.setBounds(70, 318, 110, 95);
-		getContentPane().add(generate_countExpiryLbl);
+		JLabel label = new JLabel("SELECT A RANGE OF TIME YOU WANT TO TOTALIZE");
+		label.setForeground(Color.WHITE);
+		label.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
+		label.setBounds(173, 64, 360, 34);
+		getContentPane().add(label);
 		
-		JLabel generate_countExpiryNameLbl = new JLabel("TOTAL EXPIRY");
-		generate_countExpiryNameLbl.setForeground(Color.WHITE);
-		generate_countExpiryNameLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
-		generate_countExpiryNameLbl.setBounds(72, 420, 110, 14);
-		getContentPane().add(generate_countExpiryNameLbl);
+		JLabel icon_weekly = new JLabel("");
+		icon_weekly.setIcon(new ImageIcon(GenerateExpiry.class.getResource("/jdl/Assets/generate_weekly2.png")));
+		icon_weekly.setBounds(116, 135, 52, 50);
+		getContentPane().add(icon_weekly);
+		
+		JButton expiry_weeklyBtn = new JButton("Weekly");
+		expiry_weeklyBtn.setForeground(Color.WHITE);
+		expiry_weeklyBtn.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
+		expiry_weeklyBtn.setBackground(new Color(0, 102, 102));
+		expiry_weeklyBtn.setBounds(80, 196, 131, 34);
+		getContentPane().add(expiry_weeklyBtn);
+		
+		JLabel icon_monthly = new JLabel("");
+		icon_monthly.setIcon(new ImageIcon(GenerateExpiry.class.getResource("/jdl/Assets/generate_month.png")));
+		icon_monthly.setBounds(319, 135, 52, 50);
+		getContentPane().add(icon_monthly);
+		
+		JButton expiry_monthlyBtn = new JButton("Monthly");
+		expiry_monthlyBtn.setForeground(Color.WHITE);
+		expiry_monthlyBtn.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
+		expiry_monthlyBtn.setBackground(new Color(0, 102, 102));
+		expiry_monthlyBtn.setBounds(281, 196, 131, 34);
+		getContentPane().add(expiry_monthlyBtn);
+		
+		JLabel icon_yearly = new JLabel("");
+		icon_yearly.setIcon(new ImageIcon(GenerateExpiry.class.getResource("/jdl/Assets/generate_yearly.png")));
+		icon_yearly.setBounds(520, 135, 52, 50);
+		getContentPane().add(icon_yearly);
+		
+		JButton expiry_yearlyBtn = new JButton("Yearly");
+		expiry_yearlyBtn.setForeground(Color.WHITE);
+		expiry_yearlyBtn.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
+		expiry_yearlyBtn.setBackground(new Color(0, 102, 102));
+		expiry_yearlyBtn.setBounds(481, 196, 131, 34);
+		getContentPane().add(expiry_yearlyBtn);
+		
+		JPanel panel = new JPanel();
+		panel.setLayout(null);
+		panel.setBackground(new Color(255, 255, 255, 60));
+		panel.setBounds(249, 259, 188, 195);
+		getContentPane().add(panel);
+		
+		JLabel expiry_countName = new JLabel("<html><center>TOTAL  NO. OF EXPIRING VISAS</center></html>");
+		expiry_countName.setForeground(Color.WHITE);
+		expiry_countName.setFont(new Font("Segoe UI Semibold", Font.BOLD, 16));
+		expiry_countName.setBounds(33, 143, 126, 41);
+		panel.add(expiry_countName);
+		
+		JLabel expiry_countLbl = new JLabel("");
+		expiry_countLbl.setForeground(Color.WHITE);
+		expiry_countLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 99));
+		expiry_countLbl.setBounds(10, 26, 168, 105);
+		panel.add(expiry_countLbl);
 		
 		JLabel options_background = new JLabel("");
 		options_background.setIcon(new ImageIcon(GenerateExpiry.class.getResource("/jdl/Assets/background_optionList4.jpg")));

@@ -219,6 +219,7 @@ public class TablesAddClient extends JFrame{
 
 		JDatePanelImpl BirthdatePanel = new JDatePanelImpl(birthdateModel, birthdate);
 		JDatePickerImpl birthdatePicker = new JDatePickerImpl(BirthdatePanel, new DateLabelFormatter());
+		birthdatePicker.getJFormattedTextField().setForeground(new Color(220, 20, 60));
 
 		birthdatePicker.setLocation(20, 350);
 		birthdatePicker.getJFormattedTextField().setBorder(UIManager.getBorder("TextField.border"));
