@@ -533,8 +533,8 @@ public class TablesAddClient extends JFrame{
 						
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Client has been added successfully.</font color = #ffffff></html>", "Client recorded.", JOptionPane.INFORMATION_MESSAGE);
 						
-						dispose();
-						new TablesAddClient().setVisible(true);
+						Runner.destroyTAC();
+						Runner.openTAC();
 					}
 				}
 
