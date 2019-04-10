@@ -479,9 +479,14 @@ public class AccountManagement extends JFrame{
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employee's Gender must not be empty.</font color = #ffffff></html>", "Detected an empty or undefinable gender", JOptionPane.ERROR_MESSAGE);
 					}else if(birthdatePicker.getJFormattedTextField().getText().toString().equals("")) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employee's Birthdate must not be empty.</font color = #ffffff></html>", "Detected an empty Employee's birthdate", JOptionPane.ERROR_MESSAGE);
-					}else if(emp_ContactTxt.getText().equals("") && emp_EmailTxt.getText() .equals("")) {
+					}else if((emp_ContactTxt.getText().equals("") && emp_EmailTxt.getText() .equals("") )) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>There should at least one contact information available for an employee</font color = #ffffff></html>", "Detected an empty contact no. or email", JOptionPane.ERROR_MESSAGE);
-					}else {
+					}else if(objectFilter.checkEmail(emp_EmailTxt.getText().trim().toString())){
+						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please Enter a valid email</font color = #ffffff></html>", "Invalid Email", JOptionPane.ERROR_MESSAGE);
+					}else if(objectFilter.containsAlpha(emp_ContactTxt.getText().trim() )) {
+						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employees's contact number must not contain alphabet characters.</font color = #ffffff></html>", "Detected an alphabet character in employees's contact number", JOptionPane.ERROR_MESSAGE);
+					}
+					else {
 						statement1.setString(1, emp_LastnameTxt.getText());
 						statement1.setString(2, emp_FirstnameTxt.getText());
 						statement1.setString(3, emp_PositionTxt.getText());

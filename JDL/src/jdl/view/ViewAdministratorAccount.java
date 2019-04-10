@@ -23,6 +23,7 @@ import org.jdatepicker.impl.UtilDateModel;
 
 import jdl.controller.DateLabelFormatter;
 import jdl.controller.Runner;
+import jdl.controller.objectFilter;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -399,24 +400,30 @@ public class ViewAdministratorAccount extends JFrame{
 					PreparedStatement statement2 = conn2.prepareStatement(sql1);
 					PreparedStatement statement3 = conn2.prepareStatement(sql2);
 					
-					if(adminAcc_lastnameTxt.getText().equals("")) {
+					if(adminAcc_lastnameTxt.getText().trim().equals("")) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Administrator's Lastname must not be empty.</font color = #ffffff></html>", "Detected an empty Administrator's lastname", JOptionPane.ERROR_MESSAGE);
-					}else if (adminAcc_firstnameTxt.getText().equals("")) {
+					}else if (adminAcc_firstnameTxt.getText().trim().equals("")) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Administrator's Firstname must not be empty.</font color = #ffffff></html>", "Detected an empty Administrator's firstname", JOptionPane.ERROR_MESSAGE);
-					}else if(adminAcc_positionTxt.getText().equals("")) {
+					}else if(adminAcc_positionTxt.getText().trim().equals("")) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Administrator's Position must not be empty.</font color = #ffffff></html>", "Detected an empty or undefinable company position ", JOptionPane.ERROR_MESSAGE);
-					}else if(adminAcc_genderTxt.getText().equals("")) {
+					}else if(adminAcc_genderTxt.getText().trim().equals("")) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Administrator's Gender must not be empty.</font color = #ffffff></html>", "Detected an empty or undefinable gender", JOptionPane.ERROR_MESSAGE);
 					}else if(birthdatePicker.getJFormattedTextField().getText().toString().equals("")) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Administrator's Birthdate must not be empty.</font color = #ffffff></html>", "Detected an empty Administrator's birthdate", JOptionPane.ERROR_MESSAGE);
-					}else if(adminAcc_contactTxt.getText().equals("") || adminAcc_emailTxt.getText() .equals("")) {
+					}else if(adminAcc_contactTxt.getText().trim().equals("") || adminAcc_emailTxt.getText().trim() .equals("")) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>There should at least one contact information available for an employee</font color = #ffffff></html>", "Detected an empty contact no. or email", JOptionPane.ERROR_MESSAGE);
-					}else {
+					}else if(objectFilter.checkEmail(adminAcc_emailTxt.getText().trim().toString())){
+						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please Enter a valid email</font color = #ffffff></html>", "Invalid Email", JOptionPane.ERROR_MESSAGE);
+					}else if(objectFilter.containsAlpha(adminAcc_contactTxt.getText().trim() )) {
+						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Your contact number must not contain alphabet characters.</font color = #ffffff></html>", "Detected an alphabet character in your contact number", JOptionPane.ERROR_MESSAGE);
+					}
+					
+					else {
 						statement1.setString(1, adminAcc_lastnameTxt.getText());
 						statement1.setString(2, adminAcc_firstnameTxt.getText());
 						statement1.setString(3, adminAcc_positionTxt.getText());
 						statement1.setString(4, adminAcc_genderTxt.getText());
-						statement1.setDate(5, java.sql.Date.valueOf(birthdatePicker.getJFormattedTextField().getText().toString()));
+						statement1.setDate(5, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().toString())));
 						statement1.setString(6, adminAcc_addressTxt.getText());
 						statement1.setString(7, adminAcc_contactTxt.getText());
 						statement1.setString(8, adminAcc_emailTxt.getText());
@@ -425,7 +432,7 @@ public class ViewAdministratorAccount extends JFrame{
 						statement1.setString(11, adminAcc_firstnameTxt.getText());
 						statement1.setString(12, adminAcc_positionTxt.getText());
 						statement1.setString(13, adminAcc_genderTxt.getText());
-						statement1.setDate(14, java.sql.Date.valueOf(birthdatePicker.getJFormattedTextField().getText().toString()));
+						statement1.setDate(14, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().toString())));
 						statement1.setString(15, adminAcc_addressTxt.getText());
 						statement1.setString(16, adminAcc_contactTxt.getText());
 						statement1.setString(17, adminAcc_emailTxt.getText());
