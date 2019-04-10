@@ -788,6 +788,22 @@ public class TablesUpdateTransactions extends JFrame{
 							if(visaValid && permitValid && aepValid) {
 								Register();
 							}
+							if((tables_passportNoTxt.getText().trim().trim().length() > 25) || (tables_tinIdTxt.getText().trim().trim().length() > 25)) {
+								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please limit Passport No./TIN ID to 25 and less characters..</font color = #ffffff></html>", "Detected invalid length for Passport No./TIN ID", JOptionPane.ERROR_MESSAGE);
+							
+								if((tables_aepIdTxt.getText().trim().trim().length() > 25)) {
+									JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please limit AEP ID to 25 and less characters..</font color = #ffffff></html>", "Detected invalid length for AEP ID", JOptionPane.ERROR_MESSAGE);
+								
+									if(tables_aepIdTxt.getText().trim().trim().length() < 25 && tables_passportNoTxt.getText().trim().trim().length() > 25 && tables_tinIdTxt.getText().trim().length() > 25) {
+										if(visaValid && permitValid && aepValid && (DateCheck(ve,vs) && DateCheck(ps,pe) && DateCheck(as,ae)) ) 
+										{
+											Register();
+											dispose(); 
+											new Tables().setVisible(true);
+										}		
+									}
+								}
+							}
 							
 							
 							
