@@ -21,10 +21,9 @@ import org.jdatepicker.impl.UtilDateModel;
 
 import jdl.controller.AutoCompletion;
 import jdl.controller.DateLabelFormatter;
+import jdl.controller.Runner;
 import jdl.controller.TableColumnAdjuster;
-import jdl.controller.objectFilter;
 
-import java.util.Date;
 import java.util.Properties;
 
 import net.proteanit.sql.DbUtils;
@@ -39,8 +38,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
@@ -67,56 +64,7 @@ public class TablesRemarks extends JFrame{
 	private JTextField tables_remindersTxt;
 	private JTextField tables_remarksTxt;
 	private JTextField tables_toDoTxt;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Tables window = new Tables();
-					window.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	public static boolean DateCheck(String date1, String date2) {
-	 	
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		boolean approved = false;
-		if((date1.isEmpty()) && (date2.isEmpty())) {
-			return approved = true;
-		}
-		else if (!date1.isEmpty() && !date2.isEmpty()){
-			try {
-				Date datex = sdf.parse(date1);
-				Date datey = sdf.parse(date2);
-				if (datex.compareTo(datey) > 0) {
-					//System.out.println("Date1 is after Date2"); FALSE
-					JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Early hearing date must be before hearing date</font color = #ffffff></html>", "Detected an error in date fields", JOptionPane.ERROR_MESSAGE);
-					approved = false;
-				} else if (datex.compareTo(datey) < 0) {
-					//System.out.println("Date1 is before Date2");TRUE
-					approved = true;
-				} else if (datex.compareTo(datey) == 0) {
-					//System.out.println("Date1 is equal to Date2"); FALSE
-					approved = true;
-				}
-				
-			}
-			catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return approved;
-	}
 
-	/**
-	 * Create the application.
-	 */
 	public TablesRemarks() {
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Tables.class.getResource("/jdl/Assets/login_small.png")));	
@@ -430,8 +378,9 @@ public class TablesRemarks extends JFrame{
 		tables_clientCreateTransactionLbl.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new Tables().setVisible(true);
-				dispose();
+				Runner.openTables();
+				Runner.destroyTR();
+				
 			}
 		});
 		tables_clientCreateTransactionLbl.setBounds(330, 48, 227, 37);
@@ -443,8 +392,9 @@ public class TablesRemarks extends JFrame{
 		tables_clientStatusTableLbl.setBounds(929, 48, 243, 37);
 		tables_clientStatusTableLbl.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				new TablesStatus().setVisible(true);
-				dispose();
+				
+				Runner.openTS();
+				Runner.destroyTR();
 			}
 		});
 		tables_clientStatusTableLbl.setForeground(Color.LIGHT_GRAY);
@@ -452,12 +402,7 @@ public class TablesRemarks extends JFrame{
 		
 		JLabel tables_clientRemarksTableLbl = new JLabel("Client Remarks Table", SwingConstants.CENTER);
 		tables_clientRemarksTableLbl.setBounds(1241, 48, 230, 37);
-		tables_clientRemarksTableLbl.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				new TablesRemarks().setVisible(true);
-				dispose();
-			}
-		});
+
 		tables_clientRemarksTableLbl.setForeground(Color.WHITE);
 		tables_clientRemarksTableLbl.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		
@@ -478,8 +423,9 @@ public class TablesRemarks extends JFrame{
 		tables_updateTransactionLbl.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new TablesUpdateTransactions().setVisible(true);
-				dispose();
+				
+				Runner.openTUT();
+				Runner.destroyTR();
 			}
 		});
 		tables_updateTransactionLbl.setBounds(626, 48, 249, 37);
@@ -490,8 +436,8 @@ public class TablesRemarks extends JFrame{
 		tables_addClientLbl.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new TablesAddClient().setVisible(true);
-				dispose();
+				Runner.openTAC();
+				Runner.destroyTR();
 			}
 		});
 
@@ -549,62 +495,61 @@ public class TablesRemarks extends JFrame{
 		tables_registerBtn.setForeground(new Color(255, 255, 255));
 		tables_registerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(DateCheck(tables_dateReceivedTxt.getJFormattedTextField().getText().trim().toString(), tables_dateUpdatedTxt.getJFormattedTextField().getText().trim().toString())) {
-					UIManager.put("OptionPane.background",new ColorUIResource(90, 103, 115));
-				 	UIManager.put("Panel.background",new ColorUIResource(90, 103, 115));
-				 	UIManager.put("OptionPane.messageFont", new Font("Segoe UI Semibold", Font.BOLD, 14));
-				 	UIManager.put("Button.background", Color.WHITE);
-				 	UIManager.put("OptionPane.foreground",new ColorUIResource(90, 103, 115));
-					Connection conn3;
-					try {
-						String sql = "INSERT INTO jdl_accounts.remarks (remarks_dateReceived, remarks_dateUpdated, remarks_reminders, remarks_toDo, remarks_transaction, client_id, trans_transId)  values (?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE remarks_dateReceived = ?, remarks_dateUpdated = ?, remarks_reminders = ?,  remarks_toDo = ?, remarks_transaction = ?, "
-								+ " client_id = ?, trans_transId = ? ";
-						conn3 = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&compensateOnDuplicateKeyUpdateCounts=false","root","password");
-						PreparedStatement statement2= conn3.prepareStatement(sql);
-						
-						if(tables_dateReceivedTxt.getJFormattedTextField().getText().trim().toString().equals("")) 
-							statement2.setDate(1, null);
-						else
-							statement2.setDate(1, java.sql.Date.valueOf(objectFilter.addDay( tables_dateReceivedTxt.getJFormattedTextField().getText().trim().toString())));
-
-						
-						if(tables_dateUpdatedTxt.getJFormattedTextField().getText().trim().toString().equals(""))
-							statement2.setDate(2, null);
-						else
-							statement2.setDate(2, java.sql.Date.valueOf(objectFilter.addDay( tables_dateUpdatedTxt.getJFormattedTextField().getText().trim().toString())));
+				
+				UIManager.put("OptionPane.background",new ColorUIResource(90, 103, 115));
+			 	UIManager.put("Panel.background",new ColorUIResource(90, 103, 115));
+			 	UIManager.put("OptionPane.messageFont", new Font("Segoe UI Semibold", Font.BOLD, 14));
+			 	UIManager.put("Button.background", Color.WHITE);
+			 	UIManager.put("OptionPane.foreground",new ColorUIResource(90, 103, 115));
+				Connection conn3;
+				try {
+					String sql = "INSERT INTO jdl_accounts.remarks (remarks_dateReceived, remarks_dateUpdated, remarks_reminders, remarks_toDo, remarks_transaction, client_id, trans_transId)  values (?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE remarks_dateReceived = ?, remarks_dateUpdated = ?, remarks_reminders = ?,  remarks_toDo = ?, remarks_transaction = ?, "
+							+ " client_id = ?, trans_transId = ? ";
+					conn3 = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&compensateOnDuplicateKeyUpdateCounts=false","root","password");
+					PreparedStatement statement2= conn3.prepareStatement(sql);
 					
-						statement2.setString(3, tables_remindersTxt.getText().trim());
-						statement2.setString(4, tables_toDoTxt.getText().trim());
-						statement2.setString(5, tables_remarksTxt.getText().trim());
-						statement2.setString(6, client_id);
-						statement2.setString(7, tables_comboBox1.getSelectedItem().toString());
-						
-						if(tables_dateReceivedTxt.getJFormattedTextField().getText().trim().toString().equals("")) 
-							statement2.setDate(8, null);
-						else
-							statement2.setDate(8, java.sql.Date.valueOf(objectFilter.addDay( tables_dateReceivedTxt.getJFormattedTextField().getText().trim().toString())));
+					if(tables_dateReceivedTxt.getJFormattedTextField().getText().toString().equals("")) 
+						statement2.setDate(1, null);
+					else
+						statement2.setDate(1, java.sql.Date.valueOf(tables_dateReceivedTxt.getJFormattedTextField().getText().toString()));
 
-						
-						if(tables_dateUpdatedTxt.getJFormattedTextField().getText().trim().toString().equals(""))
-							statement2.setDate(9, null);
-						else
-							statement2.setDate(9, java.sql.Date.valueOf(objectFilter.addDay(tables_dateUpdatedTxt.getJFormattedTextField().getText().trim().toString())));
 					
-						statement2.setString(10, tables_remindersTxt.getText().trim());
-						statement2.setString(11, tables_toDoTxt.getText().trim());
-						statement2.setString(12, tables_remarksTxt.getText().trim());
-						statement2.setString(13, client_id);
-						statement2.setString(14, tables_comboBox1.getSelectedItem().toString());
-						
-						statement2.executeUpdate();
-						tables_inputPanel.revalidate();
-						tables_reloadBtn.doClick();
-						
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Remark has been made to this transaction.</font color = #ffffff></html>", "Remark Inserted", JOptionPane.INFORMATION_MESSAGE);
-						
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
+					if(tables_dateUpdatedTxt.getJFormattedTextField().getText().toString().equals(""))
+						statement2.setDate(2, null);
+					else
+						statement2.setDate(2, java.sql.Date.valueOf(tables_dateUpdatedTxt.getJFormattedTextField().getText().toString()));
+				
+					statement2.setString(3, tables_remindersTxt.getText());
+					statement2.setString(4, tables_toDoTxt.getText());
+					statement2.setString(5, tables_remarksTxt.getText());
+					statement2.setString(6, client_id);
+					statement2.setString(7, tables_comboBox1.getSelectedItem().toString());
+					
+					if(tables_dateReceivedTxt.getJFormattedTextField().getText().toString().equals("")) 
+						statement2.setDate(8, null);
+					else
+						statement2.setDate(8, java.sql.Date.valueOf(tables_dateReceivedTxt.getJFormattedTextField().getText().toString()));
+
+					
+					if(tables_dateUpdatedTxt.getJFormattedTextField().getText().toString().equals(""))
+						statement2.setDate(9, null);
+					else
+						statement2.setDate(9, java.sql.Date.valueOf(tables_dateUpdatedTxt.getJFormattedTextField().getText().toString()));
+				
+					statement2.setString(10, tables_remindersTxt.getText());
+					statement2.setString(11, tables_toDoTxt.getText());
+					statement2.setString(12, tables_remarksTxt.getText());
+					statement2.setString(13, client_id);
+					statement2.setString(14, tables_comboBox1.getSelectedItem().toString());
+					
+					statement2.executeUpdate();
+					tables_inputPanel.revalidate();
+					tables_reloadBtn.doClick();
+					
+					JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Remark has been made to this transaction.</font color = #ffffff></html>", "Remark Inserted", JOptionPane.INFORMATION_MESSAGE);
+					
+				} catch (SQLException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -661,8 +606,8 @@ public class TablesRemarks extends JFrame{
 		getContentPane().add(tables_back);
 		tables_back.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-				new OptionList().setVisible(true);
+				Runner.destroyTR();
+				Runner.openOptionList();
 			}
 		});
 		tables_back.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/button_back.png")));
