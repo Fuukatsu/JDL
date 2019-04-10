@@ -463,7 +463,12 @@ public class AccountManagement extends JFrame{
 					
 					conn2 = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
 					PreparedStatement statement1 = conn2.prepareStatement(sql);
-					
+					emp_LastnameTxt.setText(emp_LastnameTxt.getText().trim());
+					emp_FirstnameTxt.setText(emp_FirstnameTxt.getText().trim());
+					emp_PositionTxt.setText(emp_PositionTxt.getText().trim());
+					emp_GenderTxt.setText(emp_GenderTxt.getText().trim());
+					emp_ContactTxt.setText(emp_ContactTxt.getText().trim());
+					emp_EmailTxt.setText(emp_EmailTxt.getText().trim());
 					if(emp_LastnameTxt.getText().equals("")) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employee's Lastname must not be empty.</font color = #ffffff></html>", "Detected an empty Employee's lastname", JOptionPane.ERROR_MESSAGE);
 					}else if (emp_FirstnameTxt.getText().equals("")) {
@@ -474,7 +479,7 @@ public class AccountManagement extends JFrame{
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employee's Gender must not be empty.</font color = #ffffff></html>", "Detected an empty or undefinable gender", JOptionPane.ERROR_MESSAGE);
 					}else if(birthdatePicker.getJFormattedTextField().getText().toString().equals("")) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employee's Birthdate must not be empty.</font color = #ffffff></html>", "Detected an empty Employee's birthdate", JOptionPane.ERROR_MESSAGE);
-					}else if(emp_ContactTxt.getText().equals("") || emp_EmailTxt.getText() .equals("")) {
+					}else if(emp_ContactTxt.getText().equals("") && emp_EmailTxt.getText() .equals("")) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>There should at least one contact information available for an employee</font color = #ffffff></html>", "Detected an empty contact no. or email", JOptionPane.ERROR_MESSAGE);
 					}else {
 						statement1.setString(1, emp_LastnameTxt.getText());
