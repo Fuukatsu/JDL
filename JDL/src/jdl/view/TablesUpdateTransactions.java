@@ -184,7 +184,7 @@ public class TablesUpdateTransactions extends JFrame{
 		tables_comboBox.addItem("Click to see the list of registered client");
 		Connection conn1;
 		try {
-			conn1 = DriverManager.getConnection("jdbc:mysql://localhost:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+			conn1 = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
 			Statement stat=conn1.createStatement();
 			ResultSet rs1=stat.executeQuery("SELECT * FROM jdl_accounts.clients");
 			 while(rs1.next()){        
@@ -224,7 +224,7 @@ public class TablesUpdateTransactions extends JFrame{
 				//System.out.println(tables_comboBox1.getSelectedItem().toString());
 				try 
 				{
-					Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+					Connection conn=DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
 					Statement stat=conn.createStatement();
 					Statement stat1=conn.createStatement();
 	
@@ -668,7 +668,7 @@ public class TablesUpdateTransactions extends JFrame{
 					
 				Connection conn;
 				try {
-					conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+					conn = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
 					String sql = "SELECT * FROM jdl_accounts.clients WHERE client_id=?";
 					String sql1 = "SELECT * FROM jdl_accounts.transactions WHERE client_id=?";
 					PreparedStatement statement = (PreparedStatement) conn.prepareStatement(sql);
@@ -819,7 +819,7 @@ public class TablesUpdateTransactions extends JFrame{
 				String sql = "UPDATE jdl_accounts.transactions SET trans_passportNo = ?, trans_tinID = ?, trans_visaType = ?, trans_visaStartDate = ?, trans_visaEndDate = ?, trans_permitType = ?, trans_permitStartDate = ?, trans_permitEndDate = ?, trans_aepID = ?, "
 						+ "trans_aepStartDate = ?, trans_aepEndDate = ?, client_id = ?, trans_transTimestamp = ?, trans_transAuthor = ? WHERE trans_transId = ?";
 				
-				conn2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+				conn2 = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
 				PreparedStatement statement1 = conn2.prepareStatement(sql);
 				
 				statement1.setString(1, tables_passportNoTxt.getText());

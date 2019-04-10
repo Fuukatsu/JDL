@@ -298,7 +298,7 @@ public class AccountCreate extends JFrame{
 	}
 	public void createAccount(Integer admin) {
 		try {
-			Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+			Connection conn=DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
 			String sql = "INSERT INTO jdl_accounts.users (user_username, user_id, user_password, user_ifAdmin) values (?,?,?,?)";
 			PreparedStatement statement = (PreparedStatement) conn.prepareStatement(sql);
 			

@@ -168,8 +168,8 @@ public class TablesRemarks extends JFrame{
 				Connection conn2;
 				
 				try {
-					conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
-					conn2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+					conn = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+					conn2 = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
 					String sql = "SELECT * FROM jdl_accounts.clients WHERE client_id=?";
 					String sql2 = "SELECT * FROM jdl_accounts.transactions WHERE client_id=?";
 					PreparedStatement statement = (PreparedStatement) conn.prepareStatement(sql);
@@ -206,7 +206,7 @@ public class TablesRemarks extends JFrame{
 			
 		Connection conn1;
 		try {
-			conn1 = DriverManager.getConnection("jdbc:mysql://localhost:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+			conn1 = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
 			Statement stat=conn1.createStatement();
 			ResultSet rs1=stat.executeQuery("SELECT * FROM jdl_accounts.clients");
 			 while(rs1.next()){        
@@ -232,7 +232,7 @@ public class TablesRemarks extends JFrame{
 		tables_reloadBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+					Connection conn=DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
 					Statement stat1=conn.createStatement();
 	
 					ResultSet rs1 = stat1.executeQuery("SELECT client_id AS 'Client ID' "
@@ -524,7 +524,7 @@ public class TablesRemarks extends JFrame{
 				try {
 					String sql = "INSERT INTO jdl_accounts.remarks (remarks_dateReceived, remarks_dateUpdated, remarks_reminders, remarks_toDo, remarks_transaction, client_id, trans_transId)  values (?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE remarks_dateReceived = ?, remarks_dateUpdated = ?, remarks_reminders = ?,  remarks_toDo = ?, remarks_transaction = ?, "
 							+ " client_id = ?, trans_transId = ? ";
-					conn3 = DriverManager.getConnection("jdbc:mysql://localhost:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&compensateOnDuplicateKeyUpdateCounts=false","root","password");
+					conn3 = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&compensateOnDuplicateKeyUpdateCounts=false","root","password");
 					PreparedStatement statement2= conn3.prepareStatement(sql);
 					
 					if(tables_dateReceivedTxt.getJFormattedTextField().getText().toString().equals("")) 
