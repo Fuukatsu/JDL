@@ -22,7 +22,9 @@ import org.jdatepicker.impl.UtilDateModel;
 import jdl.controller.AutoCompletion;
 import jdl.controller.DateLabelFormatter;
 import jdl.controller.TableColumnAdjuster;
+import jdl.controller.objectFilter;
 
+import java.util.Date;
 import java.util.Properties;
 
 import net.proteanit.sql.DbUtils;
@@ -37,6 +39,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
@@ -77,6 +81,9 @@ public class TablesStatus extends JFrame{
 	private static JComboBox tables_comboBox;
 	private static JLabel tables_clientTransactionsLbl;
 	public TablesStatus() {
+		
+	
+	
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Tables.class.getResource("/jdl/Assets/login_small.png")));	
 		
@@ -622,81 +629,85 @@ public class TablesStatus extends JFrame{
 					JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>There should be at least one input to record a status.</font color = #ffffff></html>", "Detected no entries", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				UIManager.put("OptionPane.background",new ColorUIResource(90, 103, 115));
-			 	UIManager.put("Panel.background",new ColorUIResource(90, 103, 115));
-			 	UIManager.put("OptionPane.messageFont", new Font("Segoe UI Semibold", Font.BOLD, 14));
-			 	UIManager.put("Button.background", Color.WHITE);
-			 	UIManager.put("OptionPane.foreground",new ColorUIResource(90, 103, 115));
-			 	
-				Connection conn3;
-				try {
-					String sql = "INSERT INTO jdl_accounts.status_visa (statusV_documentation, statusV_dateFiled, statusV_immigrant, statusV_earlyHearing, statusV_hearingDate, statusV_agenda, statusV_visaReleased, statusV_waiverECC, statusV_acrIcard, "
-							+ "statusV_docComplete, client_id, trans_transId)  values (?,?,?,?,?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE statusV_documentation = ?, statusV_dateFiled = ?, statusV_immigrant = ?, statusV_earlyHearing = ?, statusV_hearingDate = ?, statusV_agenda = ?, statusV_visaReleased = ?, statusV_waiverECC = ?, statusV_acrIcard = ?," 
-							+ "statusV_docComplete = ?, client_id = ?, trans_transId = ? ";
-					conn3 = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&compensateOnDuplicateKeyUpdateCounts=false","root","password");
-					PreparedStatement statement2= conn3.prepareStatement(sql);
-					
-					statement2.setString(1, tables_documentationTxt.getText().trim());
-					
-					if(dateFiledPicker.getJFormattedTextField().getText().trim().toString().equals("")) 
-						statement2.setDate(2, null);
-					else
-						statement2.setDate(2, java.sql.Date.valueOf(dateFiledPicker.getJFormattedTextField().getText().trim().toString()));
-					
-					statement2.setString(3, tables_immigrantTxt.getText().trim());
-					
-					if(earlyHearingDatePicker.getJFormattedTextField().getText().trim().toString().equals("")) 
-						statement2.setDate(4, null);
-					else
-						statement2.setDate(4, java.sql.Date.valueOf(earlyHearingDatePicker.getJFormattedTextField().getText().trim().toString()));
-					
-					if(hearingDatePicker.getJFormattedTextField().getText().trim().toString().equals("")) 
-						statement2.setDate(5, null);
-					else
-						statement2.setDate(5, java.sql.Date.valueOf(hearingDatePicker.getJFormattedTextField().getText().trim().toString()));
-					
-					statement2.setString(6, tables_agendaTxt.getText().trim());
-					statement2.setString(7, tables_visaReleaseTxt.getText().trim());
-					statement2.setString(8, tables_waiverEccTxt.getText().trim());
-					statement2.setString(9, tables_acrReleaseTxt.getText().trim());
-					statement2.setString(10, tables_documentationCompleteTxt.getText().trim());
-					statement2.setString(11, client_id);
-					statement2.setString(12, tables_comboBox1.getSelectedItem().toString());
-					statement2.setString(13, tables_documentationTxt.getText().trim());
-					
-					if(dateFiledPicker.getJFormattedTextField().getText().trim().toString().equals("")) 
-						statement2.setDate(14, null);
-					else
-						statement2.setDate(14, java.sql.Date.valueOf(dateFiledPicker.getJFormattedTextField().getText().trim().toString()));
-					
-					statement2.setString(15, tables_immigrantTxt.getText().trim());
-					
-					if(earlyHearingDatePicker.getJFormattedTextField().getText().trim().toString().equals("")) 
-						statement2.setDate(16, null);
-					else
-						statement2.setDate(16, java.sql.Date.valueOf(earlyHearingDatePicker.getJFormattedTextField().getText().trim().toString()));
-					
-					if(hearingDatePicker.getJFormattedTextField().getText().trim().toString().equals(""))
-						statement2.setDate(17, null);
-					else
-						statement2.setDate(17, java.sql.Date.valueOf(hearingDatePicker.getJFormattedTextField().getText().trim().toString()));
-					
-					statement2.setString(18, tables_agendaTxt.getText().trim());
-					statement2.setString(19, tables_visaReleaseTxt.getText().trim());
-					statement2.setString(20, tables_waiverEccTxt.getText().trim());
-					statement2.setString(21, tables_acrReleaseTxt.getText().trim());
-					statement2.setString(22, tables_documentationCompleteTxt.getText().trim());
-					statement2.setString(23, client_id);
-					statement2.setString(24, tables_comboBox1.getSelectedItem().toString());
-					
-					statement2.executeUpdate();
-					tables_inputPanel.revalidate();
-					tables_reloadBtn.doClick();
-					
-					JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Visa Status has been made to this transaction.</font color = #ffffff></html>", "Visa Status Inserted", JOptionPane.INFORMATION_MESSAGE);
-					
-				} catch (SQLException e1) {
-					e1.printStackTrace();
+				
+				if(DateCheck(earlyHearingDatePicker.getJFormattedTextField().getText().trim().toString(), hearingDatePicker.getJFormattedTextField().getText().trim().toString())){
+					UIManager.put("OptionPane.background",new ColorUIResource(90, 103, 115));
+				 	UIManager.put("Panel.background",new ColorUIResource(90, 103, 115));
+				 	UIManager.put("OptionPane.messageFont", new Font("Segoe UI Semibold", Font.BOLD, 14));
+				 	UIManager.put("Button.background", Color.WHITE);
+				 	UIManager.put("OptionPane.foreground",new ColorUIResource(90, 103, 115));
+				 	
+					Connection conn3;
+					try {
+						String sql = "INSERT INTO jdl_accounts.status_visa (statusV_documentation, statusV_dateFiled, statusV_immigrant, statusV_earlyHearing, statusV_hearingDate, statusV_agenda, statusV_visaReleased, statusV_waiverECC, statusV_acrIcard, "
+								+ "statusV_docComplete, client_id, trans_transId)  values (?,?,?,?,?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE statusV_documentation = ?, statusV_dateFiled = ?, statusV_immigrant = ?, statusV_earlyHearing = ?, statusV_hearingDate = ?, statusV_agenda = ?, statusV_visaReleased = ?, statusV_waiverECC = ?, statusV_acrIcard = ?," 
+								+ "statusV_docComplete = ?, client_id = ?, trans_transId = ? ";
+						conn3 = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&compensateOnDuplicateKeyUpdateCounts=false","root","password");
+						PreparedStatement statement2= conn3.prepareStatement(sql);
+						
+						statement2.setString(1, tables_documentationTxt.getText().trim());
+						
+						if(dateFiledPicker.getJFormattedTextField().getText().trim().toString().equals("")) 
+							statement2.setDate(2, null);
+						else
+							statement2.setDate(2, java.sql.Date.valueOf(objectFilter.addDay( dateFiledPicker.getJFormattedTextField().getText().trim().toString())));
+						
+						statement2.setString(3, tables_immigrantTxt.getText().trim());
+						
+						if(earlyHearingDatePicker.getJFormattedTextField().getText().trim().toString().equals("")) 
+							statement2.setDate(4, null);
+						else
+							statement2.setDate(4, java.sql.Date.valueOf(objectFilter.addDay( earlyHearingDatePicker.getJFormattedTextField().getText().trim().toString())));
+						
+						
+						if(hearingDatePicker.getJFormattedTextField().getText().trim().toString().equals("")) 
+							statement2.setDate(5, null);
+						else
+							statement2.setDate(5, java.sql.Date.valueOf(objectFilter.addDay( hearingDatePicker.getJFormattedTextField().getText().trim().toString())));
+						
+						statement2.setString(6, tables_agendaTxt.getText().trim());
+						statement2.setString(7, tables_visaReleaseTxt.getText().trim());
+						statement2.setString(8, tables_waiverEccTxt.getText().trim());
+						statement2.setString(9, tables_acrReleaseTxt.getText().trim());
+						statement2.setString(10, tables_documentationCompleteTxt.getText().trim());
+						statement2.setString(11, client_id);
+						statement2.setString(12, tables_comboBox1.getSelectedItem().toString());
+						statement2.setString(13, tables_documentationTxt.getText().trim());
+						
+						if(dateFiledPicker.getJFormattedTextField().getText().trim().toString().equals("")) 
+							statement2.setDate(14, null);
+						else
+							statement2.setDate(14, java.sql.Date.valueOf(objectFilter.addDay( dateFiledPicker.getJFormattedTextField().getText().trim().toString())));
+						
+						statement2.setString(15, tables_immigrantTxt.getText().trim());
+						
+						if(earlyHearingDatePicker.getJFormattedTextField().getText().trim().toString().equals("")) 
+							statement2.setDate(16, null);
+						else
+							statement2.setDate(16, java.sql.Date.valueOf(objectFilter.addDay( earlyHearingDatePicker.getJFormattedTextField().getText().trim().toString())));
+						
+						if(hearingDatePicker.getJFormattedTextField().getText().trim().toString().equals(""))
+							statement2.setDate(17, null);
+						else
+							statement2.setDate(17, java.sql.Date.valueOf(objectFilter.addDay( hearingDatePicker.getJFormattedTextField().getText().trim().toString())));
+						
+						statement2.setString(18, tables_agendaTxt.getText().trim());
+						statement2.setString(19, tables_visaReleaseTxt.getText().trim());
+						statement2.setString(20, tables_waiverEccTxt.getText().trim());
+						statement2.setString(21, tables_acrReleaseTxt.getText().trim());
+						statement2.setString(22, tables_documentationCompleteTxt.getText().trim());
+						statement2.setString(23, client_id);
+						statement2.setString(24, tables_comboBox1.getSelectedItem().toString());
+						
+						statement2.executeUpdate();
+						tables_inputPanel.revalidate();
+						tables_reloadBtn.doClick();
+						
+						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Visa Status has been made to this transaction.</font color = #ffffff></html>", "Visa Status Inserted", JOptionPane.INFORMATION_MESSAGE);
+						
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
 				}
 			}
 		});
@@ -887,6 +898,36 @@ public class TablesStatus extends JFrame{
 				return true;
 		}
 		return false;
+	}
+	
+	
+	public static boolean DateCheck(String date1, String date2) {
+	 	
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		boolean approved = false;
+		if((date1.isEmpty()) && (date2.isEmpty())) {
+			return approved = true;
+		}
+		else if (!date1.isEmpty() && !date2.isEmpty()){
+			try {
+				Date datex = sdf.parse(date1);
+				Date datey = sdf.parse(date2);
+				if (datex.compareTo(datey) > 0) {
+					//System.out.println("Date1 is after Date2"); FALSE
+					JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Early hearing date must be before hearing date</font color = #ffffff></html>", "Detected an error in date fields", JOptionPane.ERROR_MESSAGE);
+					approved = false;
+				} else if (datex.compareTo(datey) < 0) {
+					//System.out.println("Date1 is before Date2");TRUE
+					approved = true;
+				}
+				
+			}
+			catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return approved;
 	}
 }
 
