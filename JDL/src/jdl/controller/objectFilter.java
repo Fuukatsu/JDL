@@ -60,7 +60,15 @@ public class objectFilter
 	}
 	
 	public static boolean checkEmail(String email) {
-		return email.contains("@");
+		boolean t = false;
+		final String EMAIL_PATTERN = 
+			    "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+			    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+		if (email.matches(EMAIL_PATTERN)) {
+			t = true;
+		}
+		return t;
 	}
 	
 	public static String addDay(String date) {
