@@ -155,6 +155,19 @@ public class ActivityHistory extends JFrame{
 		
 		
 		JComboBox comboBox = new JComboBox(objectFilter.getUsernames());
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				TableModel md = Queries.getClientTransactions(comboBox.getSelectedItem().toString());
+				table.setModel(md);
+				table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+				scrollPane.setViewportView(table);
+				
+				TableColumnAdjuster tca = new TableColumnAdjuster(table);
+				tca.adjustColumns();
+
+			}
+		});
 		comboBox.setBounds(477, 634, 302, 28);
 		comboBox.setFont(new Font("Segoe UI Semibold", Font.BOLD, 16));
 		
@@ -167,21 +180,6 @@ public class ActivityHistory extends JFrame{
 		table.setRowHeight(25);
 		table.setBorder(null);
 		scrollPane.setViewportView(table);
-
-		comboBox.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				TableModel md = Queries.getClientTransactions(comboBox.getSelectedItem().toString());
-				table.setModel(md);
-				table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-				scrollPane.setViewportView(table);
-				
-				TableColumnAdjuster tca = new TableColumnAdjuster(table);
-				tca.adjustColumns();
-
-			}
-		});
 		
 		for(String s:objectFilter.getUsernames())
 			System.out.println(s);
