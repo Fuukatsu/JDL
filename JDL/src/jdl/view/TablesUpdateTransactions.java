@@ -26,7 +26,9 @@ import jdl.controller.DateLabelFormatter;
 import jdl.controller.Runner;
 import jdl.controller.TableColumnAdjuster;
 import jdl.controller.objectFilter;
+import jdl.dao.Queries;
 import jdl.dao.databaseProperties;
+import jdl.model.Transaction;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -74,46 +76,6 @@ public class TablesUpdateTransactions extends JFrame{
 	private JComboBox tables_comboBox1;
 	private TableModel tm;
 	private databaseProperties dP = new databaseProperties();
-	public static boolean DateCheck(String date1, String date2) {
-	 	
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		boolean approved = false;
-		if((date1.isEmpty()) && (date2.isEmpty())) {
-			return approved = true;
-		}
-		else if(!date1.isEmpty() && date2.isEmpty()) {
-			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>End date must not be empty</font color = #ffffff></html>", "Detected an error in date fields", JOptionPane.ERROR_MESSAGE);
-			return approved = false;
-		}
-		else if(date1.isEmpty() && !date2.isEmpty()) {
-			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Start date must not be empty</font color = #ffffff></html>", "Detected an error in date fields", JOptionPane.ERROR_MESSAGE);
-			return approved = false;
-		}
-		else if (!date1.isEmpty() && !date2.isEmpty()){
-			try {
-				Date datex = sdf.parse(date1);
-				Date datey = sdf.parse(date2);
-				if (datex.compareTo(datey) > 0) {
-					//System.out.println("Date1 is after Date2"); FALSE
-					JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Start date must be before expiry date</font color = #ffffff></html>", "Detected an error in date fields", JOptionPane.ERROR_MESSAGE);
-					approved = false;
-				} else if (datex.compareTo(datey) < 0) {
-					//System.out.println("Date1 is before Date2");TRUE
-					approved = true;
-				} else if (datex.compareTo(datey) == 0) {
-					//System.out.println("Date1 is equal to Date2"); FALSE
-					JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Start date cannot be equal to expiry date</font color = #ffffff></html>", "Detected an error in date fields", JOptionPane.ERROR_MESSAGE);
-					approved = false;
-				}
-				
-			}
-			catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return approved;
-	}
 
 	/**
 	 * Create the application.
@@ -734,70 +696,21 @@ public class TablesUpdateTransactions extends JFrame{
 				String as = aepStartPick.getJFormattedTextField().getText().trim().toString();
 				String ae = aepEndPick.getJFormattedTextField().getText().trim().toString();
 				try {
-					boolean visaValid = false;
-					boolean permitValid = false;
-					boolean aepValid = false;
-				
-					if(tables_passportNoTxt.getText().trim() != "") {
-						if(tables_tinIdTxt.getText().trim() != "") {
-							if((!(tables_visaTypeTxt.getText().trim().trim().isEmpty()) && !(ve.isEmpty() && vs.isEmpty()) || (tables_visaTypeTxt.getText().trim().isEmpty()) && (ve.isEmpty() && vs.isEmpty())) && DateCheck(ve,vs)) {
-								visaValid = true;
-							}
-							else if((tables_visaTypeTxt.getText().trim().trim().isEmpty()) && !(ve.isEmpty() && vs.isEmpty())) {
-								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The VISA TYPE field must not be empty. Please specify one.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
-							}
-							else if(!(tables_visaTypeTxt.getText().trim().trim().isEmpty()) && (ve.isEmpty() && vs.isEmpty())){
-								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please specify visa start date and expiry date.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
-							}
-							
-							
-							if((!(tables_permitTypeTxt.getText().trim().trim().isEmpty()) && !(pe.isEmpty() && ps.isEmpty()) || (tables_permitTypeTxt.getText().trim().isEmpty()) && (pe.isEmpty() && ps.isEmpty())) && DateCheck(ps,pe)) {
-								permitValid = true;
-							}
-							else if((tables_permitTypeTxt.getText().trim().trim().isEmpty()) && !(pe.isEmpty() && ps.isEmpty())) {
-								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The PERMIT TYPE field must not be empty. Please specify one.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
-							}
-							else if(!(tables_permitTypeTxt.getText().trim().trim().isEmpty()) && (pe.isEmpty() && ps.isEmpty())){
-								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please specify permit start date and expiry date.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
-							}
-							
-							
-							if((!(tables_aepIdTxt.getText().trim().trim().isEmpty()) && !(ae.isEmpty() && as.isEmpty()) || (tables_aepIdTxt.getText().trim().isEmpty()) && (ae.isEmpty() && as.isEmpty())) && DateCheck(as,ae)) {
-								aepValid = true;
-							}
-							else if((tables_aepIdTxt.getText().trim().trim().isEmpty()) && !(ae.isEmpty() && as.isEmpty())) {
-								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The AEP ID field must not be empty. Please specify one.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
-							}
-							else if(!(tables_aepIdTxt.getText().trim().trim().isEmpty()) && (ae.isEmpty() && as.isEmpty())){
-								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please specify AEP start date and expiry date.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
-							}
-							if((tables_passportNoTxt.getText().trim().trim().length() > 25) || (tables_tinIdTxt.getText().trim().trim().length() > 25)) {
-								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please limit Passport No./TIN ID to 25 and less characters..</font color = #ffffff></html>", "Detected invalid length for Passport No./TIN ID", JOptionPane.ERROR_MESSAGE);
-							
-								if((tables_aepIdTxt.getText().trim().trim().length() > 25)) {
-									JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please limit AEP ID to 25 and less characters..</font color = #ffffff></html>", "Detected invalid length for AEP ID", JOptionPane.ERROR_MESSAGE);
-								
-									if(tables_aepIdTxt.getText().trim().trim().length() < 25 && tables_passportNoTxt.getText().trim().trim().length() > 25 && tables_tinIdTxt.getText().trim().length() > 25) {
-										if(visaValid && permitValid && aepValid && (DateCheck(ve,vs) && DateCheck(ps,pe) && DateCheck(as,ae)) ) 
-										{
-											Register();
-											dispose(); 
-											new Tables().setVisible(true);
-										}		
+						
+					if(objectFilter.inputCheck("Passport No.",tables_passportNoTxt.getText())){
+						if(objectFilter.inputCheck("TIN ID",tables_tinIdTxt.getText())) {
+							if(objectFilter.dateCheckTransaction("Visa", tables_visaTypeTxt.getText(), ve, vs)) {
+								if(objectFilter.dateCheckTransaction("AEP", tables_aepIdTxt.getText(), as, ae)) {
+									if(objectFilter.dateCheckTransaction("Permit", tables_permitTypeTxt.getText(), ps, pe)) {
+										Register();
+										Runner.destroyTUT();
+										Runner.openTUT();
 									}
 								}
 							}
-							
-							
-							
 						}
-						else {
-							JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The TIN ID field must not be empty. Please specify one.</font color = #ffffff></html>", "Detected an empty TIN ID field", JOptionPane.ERROR_MESSAGE);
-						}
-					}
-					else {
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The Passport No. field must not be empty. Please specify one.</font color = #ffffff></html>", "Detected an empty Passport No. field", JOptionPane.ERROR_MESSAGE);
-					}
+					}			
+					
 				}catch (Exception e3) {
 					e3.printStackTrace();
 				}
@@ -813,75 +726,37 @@ public class TablesUpdateTransactions extends JFrame{
 		 	UIManager.put("Button.background", Color.WHITE);
 		 	UIManager.put("OptionPane.foreground",new ColorUIResource(90, 103, 115));
 		 	
-			Connection conn2;
 			try {
-				String sql = "UPDATE jdl_accounts.transactions SET trans_passportNo = ?, trans_tinID = ?, trans_visaType = ?, trans_visaStartDate = ?, trans_visaEndDate = ?, trans_permitType = ?, trans_permitStartDate = ?, trans_permitEndDate = ?, trans_aepID = ?, "
-						+ "trans_aepStartDate = ?, trans_aepEndDate = ?, client_id = ?, trans_transTimestamp = ?, trans_transAuthor = ? WHERE trans_transId = ?";
-				
-				conn2 = DriverManager.getConnection(dP.url, dP.username, dP.password);
-				PreparedStatement statement1 = conn2.prepareStatement(sql);
-				
-				statement1.setString(1, tables_passportNoTxt.getText().trim());
-				statement1.setString(2, tables_tinIdTxt.getText().trim());
-				statement1.setString(3, tables_visaTypeTxt.getText().trim());
-				
-				
-				if(visaStartPick.getJFormattedTextField().getText().trim().toString().equals(""))
-					statement1.setDate(5, null);
-				else
-					statement1.setDate(5, java.sql.Date.valueOf(objectFilter.addDay(visaStartPick.getJFormattedTextField().getText().trim().toString())));
-				
-				
-				if(visaEndPick.getJFormattedTextField().getText().trim().toString().equals(""))
-					statement1.setDate(4, null);
-				else
-					statement1.setDate(4, java.sql.Date.valueOf(objectFilter.addDay(visaEndPick.getJFormattedTextField().getText().trim().toString())));
-				
-				statement1.setString(6, tables_permitTypeTxt.getText().trim());
-				
-				if(permitStartPick.getJFormattedTextField().getText().trim().toString().equals(""))
-					statement1.setDate(7, null);
-				else
-					statement1.setDate(7, java.sql.Date.valueOf(objectFilter.addDay(permitStartPick.getJFormattedTextField().getText().trim().toString())));
-				
-				
-				if(permitEndPick.getJFormattedTextField().getText().trim().toString().equals(""))
-					statement1.setDate(8, null);
-				else
-					statement1.setDate(8, java.sql.Date.valueOf(objectFilter.addDay(permitEndPick.getJFormattedTextField().getText().trim().toString())));
-				
-				
-				statement1.setString(9, tables_aepIdTxt.getText().trim());
-				
-				if(aepStartPick.getJFormattedTextField().getText().trim().toString().equals(""))
-					statement1.setDate(10, null);
-				else
-					statement1.setDate(10, java.sql.Date.valueOf(objectFilter.addDay(aepStartPick.getJFormattedTextField().getText().trim().toString())));
-				
-				
-				if(aepEndPick.getJFormattedTextField().getText().trim().toString().equals(""))
-					statement1.setDate(11, null);
-				else
-					statement1.setDate(11, java.sql.Date.valueOf(objectFilter.addDay(aepEndPick.getJFormattedTextField().getText().trim().toString())));
-				
-				
-				statement1.setInt(12, Integer.parseInt(client_id));
-				
 				Calendar calendar = Calendar.getInstance();
 				java.sql.Date currentDate = new java.sql.Date(calendar.getTime().getTime());
-				    
-				statement1.setDate(13, currentDate);
-				statement1.setString(14, adminAcc_usernameTxt.getText().trim());
-				statement1.setInt(15, Integer.parseInt(tables_comboBox1.getSelectedItem().toString()));
+				Transaction trans = new Transaction();
+				String[] in = new String[6];
 				
+				in[0] = visaStartPick.getJFormattedTextField().getText().trim().toString();
+				in[1] = visaEndPick.getJFormattedTextField().getText().trim().toString();
+				in[2] = permitStartPick.getJFormattedTextField().getText().trim().toString();
+				in[3] = permitEndPick.getJFormattedTextField().getText().trim().toString();
+				in[4] = aepStartPick.getJFormattedTextField().getText().trim().toString();
+				in[5] = aepEndPick.getJFormattedTextField().getText().trim().toString();
+				objectFilter.writeDates(trans, in);
 				
-				statement1.executeUpdate();
+				trans.setPassportNo(tables_passportNoTxt.getText().trim());
+				trans.setTinID(tables_tinIdTxt.getText().trim());
+				trans.setVisaType(tables_visaTypeTxt.getText().trim());			
+				trans.setPermitType(tables_permitTypeTxt.getText().trim());
+				trans.setAepID(tables_aepIdTxt.getText().trim());
+				trans.setTransTimestamp(currentDate);
+				trans.setClient_id(Integer.parseInt(client_id));
+				trans.setTransAuthor(adminAcc_usernameTxt.getText().trim());
+				trans.setTransID(Integer.parseInt(tables_comboBox1.getSelectedItem().toString()));
+				
+				Queries.updateTransaction(trans);
 				tables_inputPanel.revalidate();
 				
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Transaction has been updated.</font color = #ffffff></html>", "Update Successful", JOptionPane.INFORMATION_MESSAGE);
 			}
 
-			 catch (SQLException e1) {
+			 catch (Exception e1) {
 				e1.printStackTrace();
 				
 			}
