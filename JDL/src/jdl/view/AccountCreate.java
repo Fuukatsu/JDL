@@ -21,6 +21,7 @@ import org.jdatepicker.impl.UtilDateModel;
 
 import jdl.controller.Runner;
 import jdl.dao.Queries;
+import jdl.dao.databaseProperties;
 import jdl.model.User;
 
 import java.util.ArrayList;
@@ -63,8 +64,9 @@ public class AccountCreate extends JFrame{
 	private JTextField emp_userIdTxt;
 	private JTextField emp_usernameTxt;
 	private JComboBox comboBox;
-
-	public AccountCreate() {
+	private databaseProperties dP = new databaseProperties();
+	public AccountCreate() 
+	{
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Tables.class.getResource("/jdl/Assets/login_small.png")));	
 		
 		//Main Panel
@@ -286,7 +288,7 @@ public class AccountCreate extends JFrame{
 	}
 	public void createAccount(Integer admin) {
 		try {
-			Connection conn=DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+			Connection conn=DriverManager.getConnection(dP.url, dP.username, dP.password);
 			String sql = "INSERT INTO jdl_accounts.users (user_username, user_id, user_password, user_ifAdmin) values (?,?,?,?)";
 			PreparedStatement statement = (PreparedStatement) conn.prepareStatement(sql);
 			

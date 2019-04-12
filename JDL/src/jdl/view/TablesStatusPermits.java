@@ -23,6 +23,7 @@ import jdl.controller.AutoCompletion;
 import jdl.controller.DateLabelFormatter;
 import jdl.controller.Runner;
 import jdl.controller.TableColumnAdjuster;
+import jdl.dao.databaseProperties;
 
 import java.util.Properties;
 
@@ -70,7 +71,7 @@ public class TablesStatusPermits extends JFrame{
 	private JTextField tables_addRequirementsTxt;
 	private JTextField tables_acrICardTxt;
 	private JDatePickerImpl tables_dateReceivedTxt, tables_aepDateFiledTxt, tables_aepdateReleasedTxt, tables_permitDateFiledTxt, tables_permitDateReleasedTxt;
-
+	private databaseProperties dP = new databaseProperties();
 	public TablesStatusPermits() {
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Tables.class.getResource("/jdl/Assets/login_small.png")));	
@@ -163,7 +164,7 @@ public class TablesStatusPermits extends JFrame{
 				Connection conn2;
 				
 				try {
-					conn = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+					conn = DriverManager.getConnection(dP.url, dP.username, dP.password);
 					String sql = "SELECT * FROM jdl_accounts.clients WHERE client_id=?";
 					String sql2 = "SELECT * FROM jdl_accounts.transactions WHERE client_id=?";
 					String sql3 = "SELECT client_id AS 'Client ID' "
@@ -222,7 +223,7 @@ public class TablesStatusPermits extends JFrame{
 			
 		Connection conn1;
 		try {
-			conn1 = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+			conn1 = DriverManager.getConnection(dP.url, dP.username, dP.password);
 			Statement stat=conn1.createStatement();
 			ResultSet rs1=stat.executeQuery("SELECT * FROM jdl_accounts.clients");
 			 while(rs1.next()){        
@@ -248,7 +249,7 @@ public class TablesStatusPermits extends JFrame{
 		tables_reloadBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Connection conn=DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+					Connection conn=DriverManager.getConnection(dP.url, dP.username, dP.password);
 					Statement stat1=conn.createStatement();
 	
 					ResultSet rs1 = stat1.executeQuery("SELECT client_id AS 'Client ID' "

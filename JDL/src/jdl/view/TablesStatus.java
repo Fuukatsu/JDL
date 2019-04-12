@@ -24,6 +24,7 @@ import jdl.controller.DateLabelFormatter;
 import jdl.controller.Runner;
 import jdl.controller.TableColumnAdjuster;
 import jdl.controller.objectFilter;
+import jdl.dao.databaseProperties;
 
 import java.util.Date;
 import java.util.Properties;
@@ -81,6 +82,7 @@ public class TablesStatus extends JFrame{
 	private static JComboBox tables_comboBox1;
 	private static JComboBox tables_comboBox;
 	private static JLabel tables_clientTransactionsLbl;
+	private databaseProperties dP = new databaseProperties();
 	public TablesStatus() {
 		
 	
@@ -165,7 +167,7 @@ public class TablesStatus extends JFrame{
 		tables_comboBox = new JComboBox();
 		Connection conn1;
 		try {
-			conn1 = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+			conn1 = DriverManager.getConnection(dP.url, dP.username, dP.password);
 			Statement stat=conn1.createStatement();
 			ResultSet rs1=stat.executeQuery("SELECT * FROM jdl_accounts.clients");
 			 while(rs1.next()){        
@@ -197,7 +199,7 @@ public class TablesStatus extends JFrame{
 			public void actionPerformed(ActionEvent e) 
 			{
 				try {
-					Connection conn=DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+					Connection conn=DriverManager.getConnection(dP.url, dP.username, dP.password);
 					Statement stat1=conn.createStatement();
 	
 					ResultSet rs1 = stat1.executeQuery("SELECT client_id AS 'Client ID' "
@@ -807,7 +809,7 @@ public class TablesStatus extends JFrame{
 				Connection conn2;
 				
 				try {
-					conn = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+					conn = DriverManager.getConnection(dP.url, dP.username, dP.password);
 					String sql = "SELECT * FROM jdl_accounts.clients WHERE client_id=?";
 					String sql2 = "SELECT * FROM jdl_accounts.transactions WHERE client_id=?";
 					String sql3 = "SELECT client_id AS 'Client ID' "

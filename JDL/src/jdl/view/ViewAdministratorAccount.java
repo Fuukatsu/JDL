@@ -24,6 +24,7 @@ import org.jdatepicker.impl.UtilDateModel;
 import jdl.controller.DateLabelFormatter;
 import jdl.controller.Runner;
 import jdl.controller.objectFilter;
+import jdl.dao.databaseProperties;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -55,7 +56,7 @@ public class ViewAdministratorAccount extends JFrame{
 	private JTextField adminAcc_emailTxt;
 	private JTextField adminAcc_genderTxt;
 	private JTextField adminAcc_addressTxt;
-
+	private databaseProperties dP = new databaseProperties();
 	/**
 	 * Create the application.
 	 */
@@ -395,7 +396,7 @@ public class ViewAdministratorAccount extends JFrame{
 							+ " values (?,?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE emp_lastname = ?, emp_firstname = ?, emp_position = ?, emp_gender = ?, emp_birthdate = ?, emp_address = ?, emp_contact = ?, emp_email = ?, user_id = ?";
 					String sql1 = "UPDATE users set user_username = ?, user_password = ? WHERE user_id = ?";
 					String sql2 = "SELECT * FROM jdl_accounts.employees WHERE user_id=?";
-					conn2 = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+					conn2 = DriverManager.getConnection(dP.url, dP.username, dP.password);
 					PreparedStatement statement1 = conn2.prepareStatement(sql);
 					PreparedStatement statement2 = conn2.prepareStatement(sql1);
 					PreparedStatement statement3 = conn2.prepareStatement(sql2);
@@ -537,7 +538,7 @@ public class ViewAdministratorAccount extends JFrame{
 				adminAcc_passwordTxt2.setVisible(true);
 				Connection conn;
 				try {
-					conn = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+					conn = DriverManager.getConnection(dP.url, dP.username, dP.password);
 					String sql = "SELECT user_id FROM jdl_accounts.users WHERE user_username=?";
 					String sql1 = "SELECT * FROM jdl_accounts.employees WHERE user_id=?";
 					PreparedStatement statement = (PreparedStatement) conn.prepareStatement(sql);

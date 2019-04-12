@@ -25,6 +25,7 @@ import jdl.controller.DateLabelFormatter;
 import jdl.controller.Runner;
 import jdl.controller.TableColumnAdjuster;
 import jdl.controller.objectFilter;
+import jdl.dao.databaseProperties;
 
 import java.text.ParseException;
 import java.util.Calendar;
@@ -72,7 +73,7 @@ public class TablesAddClient extends JFrame{
 	private JTextField tables_clientEmailTxt;
 	private JTable table_1;
 	private JTextField tables_clientCompanyTxt;
-
+	private databaseProperties dP = new databaseProperties();
 	public TablesAddClient() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Tables.class.getResource("/jdl/Assets/login_small.png")));	
 		
@@ -126,7 +127,7 @@ public class TablesAddClient extends JFrame{
 		tables_reloadBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Connection conn=DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+					Connection conn=DriverManager.getConnection(dP.url, dP.username, dP.password);
 					Statement stat=conn.createStatement();
 					Statement stat1=conn.createStatement();
 					
@@ -494,7 +495,7 @@ public class TablesAddClient extends JFrame{
 					String sql = "INSERT INTO jdl_accounts.clients (client_lastname, client_firstname, client_nationality, client_birthdate, client_gender, client_company, client_position, client_alias, client_contact, client_email)"
 							+ " values (?,?,?,?,?,?,?,?,?,?)";
 					
-					conn2 = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+					conn2 = DriverManager.getConnection(dP.url, dP.username, dP.password);
 					PreparedStatement statement1 = conn2.prepareStatement(sql);
 					
 					if(tables_clientLastnameTxt.getText().trim().equals("")) {
