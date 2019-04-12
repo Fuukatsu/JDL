@@ -125,8 +125,7 @@ public class GenerateExpiry extends JFrame{
 				ArrayList<Transaction> tlist;
 				try {
 				String date = objectFilter.getDateToday();
-				Date d;
-					d = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+				Date d= new SimpleDateFormat("yyyy-MM-dd").parse(date);
 				date = objectFilter.addYear(date);
 				Date dd = new SimpleDateFormat("yyyy-MM-dd").parse(date);
 				tlist = Queries.getTransactionsBetweenDate(new java.sql.Date(d.getTime()), new java.sql.Date(dd.getTime()));
