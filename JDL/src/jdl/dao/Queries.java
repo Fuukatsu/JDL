@@ -69,8 +69,8 @@ public class Queries
 				c.setClient_contact(rs.getString(10));
 				c.setClient_email(rs.getString(11));
 				lists.add(c);
-				con.close();
 			}
+			con.close();
 		} catch (SQLException e) 
 		{
 			e.printStackTrace();
@@ -100,8 +100,9 @@ public class Queries
 					" FROM transactions WHERE client_id = ? ORDER BY trans_transId DESC");
 			ps.setInt(1, id);
 			rs = ps.executeQuery();
+			TableModel tm = DbUtils.resultSetToTableModel(rs);
 			con.close();
-			return DbUtils.resultSetToTableModel(rs);
+			return tm;
 		} catch (SQLException e) 
 		{
 			e.printStackTrace();
@@ -152,8 +153,8 @@ public class Queries
 				u.setUser_password(rs.getString("user_password"));
 				u.setUser_ifAdmin(rs.getInt("user_ifAdmin"));
 				lists.add(u);
-				con.close();
 			}
+			con.close();
 		} catch (SQLException e) 
 		{
 			e.printStackTrace();
@@ -214,8 +215,9 @@ public class Queries
 					" FROM transactions WHERE trans_transAuthor = ? ORDER BY trans_transId DESC");
 			ps.setString(1, u);
 			rs = ps.executeQuery();
+			TableModel tm = DbUtils.resultSetToTableModel(rs);
 			con.close();
-			return DbUtils.resultSetToTableModel(rs);
+			return tm;
 		} catch (SQLException e) 
 		{
 			e.printStackTrace();
