@@ -59,6 +59,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.JComboBox;
+import javax.swing.ScrollPaneConstants;
 
 public class Tables extends JFrame{
 	private JTextField tables_passportNoTxt;
@@ -156,8 +157,8 @@ public class Tables extends JFrame{
 				{
 					if(md.getRowCount() > 0 && tables_comboBox.getSelectedIndex() != 0)
 					{
-						tables_tinIdTxt.setText(md.getValueAt(0, 3).toString());
-						tables_tinIdTxt.setEditable(true);
+						//tables_tinIdTxt.setText(md.getValueAt(0, 3).toString());
+						//tables_tinIdTxt.setEditable(true);
 						//System.out.println(md.getValueAt(0, 3));		
 					}
 					else
