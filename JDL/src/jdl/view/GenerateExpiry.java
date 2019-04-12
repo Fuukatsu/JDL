@@ -2,7 +2,8 @@ package jdl.view;
 
 import java.awt.EventQueue;
 import java.awt.Toolkit;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import javax.swing.JFrame;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -22,9 +23,16 @@ import javax.swing.plaf.ColorUIResource;
 import javax.swing.table.JTableHeader;
 
 import jdl.controller.Runner;
+import jdl.controller.objectFilter;
+import jdl.dao.Queries;
+import jdl.model.Transaction;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -112,9 +120,20 @@ public class GenerateExpiry extends JFrame{
 		JButton generate_weeklyBtn = new JButton("Weekly");
 		generate_weeklyBtn.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				//Query nung table with constraints to weekly
+			public void mouseClicked(MouseEvent e) 
+			{
+				ArrayList<Transaction> tlist;
+				try {
+				String date = objectFilter.getDateToday();
+				Date d;
+					d = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+				date = objectFilter.addYear(date);
+				Date dd = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+				tlist = Queries.getTransactionsBetweenDate(new java.sql.Date(d.getTime()), new java.sql.Date(dd.getTime()));
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		generate_weeklyBtn.setBackground(new Color(0, 102, 102));
