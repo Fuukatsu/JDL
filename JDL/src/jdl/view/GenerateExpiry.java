@@ -190,12 +190,12 @@ public class GenerateExpiry extends JFrame{
 		JLabel generate_clientListLbl = new JLabel("LIST OF EXPIRING VISAS\r\n");
 		generate_clientListLbl.setForeground(Color.WHITE);
 		generate_clientListLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
-		generate_clientListLbl.setBounds(245, 67, 202, 34);
+		generate_clientListLbl.setBounds(243, 57, 202, 34);
 		getContentPane().add(generate_clientListLbl);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBorder(new EmptyBorder(0, 0, 0, 0));
-		scrollPane_1.setBounds(243, 101, 747, 578);
+		scrollPane_1.setBounds(243, 101, 735, 566);
 		getContentPane().add(scrollPane_1);
 		
 		table_1 = new JTable();
