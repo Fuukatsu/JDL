@@ -580,7 +580,7 @@ public class Tables extends JFrame{
 				String as = aepStartPick.getJFormattedTextField().getText().trim().toString();
 				String ae = aepEndPick.getJFormattedTextField().getText().trim().toString();
 				try {
-					
+						
 					if(objectFilter.inputCheck("Passport No.",tables_passportNoTxt.getText())){
 						if(objectFilter.inputCheck("TIN ID",tables_tinIdTxt.getText())) {
 							if(objectFilter.dateCheckTransaction("Visa", tables_visaTypeTxt.getText(), ve, vs)) {
@@ -593,7 +593,8 @@ public class Tables extends JFrame{
 								}
 							}
 						}
-					}
+					}			
+					
 				}catch (Exception e3) {
 					e3.printStackTrace();
 				}
@@ -609,39 +610,22 @@ public class Tables extends JFrame{
 		 	UIManager.put("Button.background", Color.WHITE);
 		 	UIManager.put("OptionPane.foreground",new ColorUIResource(90, 103, 115));
 			Transaction trans = new Transaction();
+			
+			String[] in = new String[6];
+			in[0] = visaStartPick.getJFormattedTextField().getText().trim().toString();
+			in[1] = visaEndPick.getJFormattedTextField().getText().trim().toString();
+			in[2] = permitStartPick.getJFormattedTextField().getText().trim().toString();
+			in[3] = permitEndPick.getJFormattedTextField().getText().trim().toString();
+			in[4] = aepStartPick.getJFormattedTextField().getText().trim().toString();
+			in[5] = aepEndPick.getJFormattedTextField().getText().trim().toString();
+			
+			objectFilter.writeDates(trans, in);
+			
 			trans.setPassportNo(tables_passportNoTxt.getText().trim().trim());
 			trans.setTinID(tables_tinIdTxt.getText().trim().trim());
 			trans.setVisaType(tables_visaTypeTxt.getText().trim().trim());			
-			
-			
-			
-			if(visaStartPick.getJFormattedTextField().getText().trim().toString().equals(""))
-				trans.setVisaEndDate(null);
-			else
-				trans.setVisaEndDate(java.sql.Date.valueOf(objectFilter.addDay(visaStartPick.getJFormattedTextField().getText().trim().toString())));		
-			
-			if(visaEndPick.getJFormattedTextField().getText().trim().toString().equals(""))
-				trans.setVisaStartDate(null);
-			else
-				trans.setVisaStartDate(java.sql.Date.valueOf(objectFilter.addDay(visaEndPick.getJFormattedTextField().getText().trim().toString())));
 			trans.setPermitType(tables_permitTypeTxt.getText().trim());
-			if(permitStartPick.getJFormattedTextField().getText().trim().toString().equals(""))
-				trans.setPermitStartDate(null);
-			else
-				trans.setPermitStartDate(java.sql.Date.valueOf(objectFilter.addDay(permitStartPick.getJFormattedTextField().getText().trim().toString())));
-			if(permitEndPick.getJFormattedTextField().getText().trim().toString().equals(""))
-				trans.setPermitEndDate(null);
-			else
-				trans.setPermitEndDate(java.sql.Date.valueOf(objectFilter.addDay(permitEndPick.getJFormattedTextField().getText().trim().toString())));
 			trans.setAepID(tables_aepIdTxt.getText().trim());
-			if(aepStartPick.getJFormattedTextField().getText().trim().toString().equals(""))
-				trans.setAepStartDate(null);
-			else
-				trans.setAepStartDate(java.sql.Date.valueOf(objectFilter.addDay(aepStartPick.getJFormattedTextField().getText().trim().toString())));		
-			if(aepEndPick.getJFormattedTextField().getText().trim().toString().equals(""))
-				trans.setAepEndDate(null);
-			else
-				trans.setAepEndDate(java.sql.Date.valueOf(objectFilter.addDay(aepEndPick.getJFormattedTextField().getText().trim().toString())));
 			trans.setClient_id(Integer.parseInt(objectFilter.getClientList()[client_id].split(":")[1].trim()));
 			Calendar calendar = Calendar.getInstance();
 			java.sql.Date currentDate = new java.sql.Date(calendar.getTime().getTime());

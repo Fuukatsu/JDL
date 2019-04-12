@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 
 import jdl.dao.Queries;
 import jdl.model.Client;
+import jdl.model.Transaction;
 import jdl.model.User;
 
 public class objectFilter 
@@ -139,23 +140,28 @@ public class objectFilter
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		boolean approved = false;
 		type = type.trim();
+		
 		if((date1.isEmpty()) && (date2.isEmpty()) && type.isEmpty()) {
-			return approved = true;
+			approved = true;
+			return approved;
 		}
-		else if((!date1.isEmpty() && date2.isEmpty()) && type.isEmpty() ) {
+		if(type.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+typeName+" type must not be empty</font color = #ffffff></html>", "Detected an error in "+type+" type", JOptionPane.ERROR_MESSAGE);
+		}
+		else if((!date1.isEmpty() && date2.isEmpty())) {
 			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+typeName+" end date must not be empty</font color = #ffffff></html>", "Detected an error in date fields", JOptionPane.ERROR_MESSAGE);
 			return approved = false;
 		}
-		else if((date1.isEmpty() && !date2.isEmpty()) && type.isEmpty()){
+		else if((date1.isEmpty() && !date2.isEmpty())){
 			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+typeName+" start date must not be empty</font color = #ffffff></html>", "Detected an error in date fields", JOptionPane.ERROR_MESSAGE);
 			return approved = false;
 		}
-		else if((!date1.isEmpty() && !date2.isEmpty()) && type.isEmpty()) {
-			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+typeName+" type must not be empty</font color = #ffffff></html>", "Detected an error in "+type+" type", JOptionPane.ERROR_MESSAGE);
+		else if((date1.isEmpty() && date2.isEmpty())){
+			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+typeName+" start and end dates must not be empty</font color = #ffffff></html>", "Detected an error in date fields", JOptionPane.ERROR_MESSAGE);
 			return approved = false;
 		}
 		
-		else if ((!date1.isEmpty() && !date2.isEmpty()) && !type.isEmpty() ){
+		else if ((!date1.isEmpty() && !date2.isEmpty()) ){
 			try {
 				Date datex = sdf.parse(date1);
 				Date datey = sdf.parse(date2);
@@ -179,6 +185,8 @@ public class objectFilter
 		}
 		
 		return approved;
+		
+		
 	}
 	
 	//putting constraints before writing to database
@@ -201,4 +209,44 @@ public class objectFilter
 		
 		return t;
 	}
+	
+	//writing dates to database
+	
+	public static Transaction writeDates(Transaction trans, String[] input) {
+
+		if(input[0].equals(""))
+			trans.setVisaEndDate(null);
+		else
+			trans.setVisaEndDate(java.sql.Date.valueOf(objectFilter.addDay(input[0])));
+		
+		if(input[1].equals(""))
+			trans.setVisaEndDate(null);
+		else
+			trans.setVisaEndDate(java.sql.Date.valueOf(objectFilter.addDay(input[1])));
+		
+		if(input[2].equals(""))
+			trans.setVisaEndDate(null);
+		else
+			trans.setVisaEndDate(java.sql.Date.valueOf(objectFilter.addDay(input[2])));
+		
+		if(input[3].equals(""))
+			trans.setVisaEndDate(null);
+		else
+			trans.setVisaEndDate(java.sql.Date.valueOf(objectFilter.addDay(input[3])));
+		
+		if(input[4].equals(""))
+			trans.setVisaEndDate(null);
+		else
+			trans.setVisaEndDate(java.sql.Date.valueOf(objectFilter.addDay(input[4])));
+		
+		if(input[5].equals(""))
+			trans.setVisaEndDate(null);
+		else
+			trans.setVisaEndDate(java.sql.Date.valueOf(objectFilter.addDay(input[5])));
+				
+		
+		
+		return trans;
+	}
+	
 }
