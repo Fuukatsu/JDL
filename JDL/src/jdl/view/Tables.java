@@ -70,47 +70,6 @@ public class Tables extends JFrame{
 	private JTable table_1;
 	private int client_id = 1;
 
-	public static boolean DateCheck(String date1, String date2) {
-	 	
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		boolean approved = false;
-		if((date1.isEmpty()) && (date2.isEmpty())) {
-			return approved = true;
-		}
-		else if(!date1.isEmpty() && date2.isEmpty()) {
-			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>End date must not be empty</font color = #ffffff></html>", "Detected an error in date fields", JOptionPane.ERROR_MESSAGE);
-			return approved = false;
-		}
-		else if(date1.isEmpty() && !date2.isEmpty()) {
-			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Start date must not be empty</font color = #ffffff></html>", "Detected an error in date fields", JOptionPane.ERROR_MESSAGE);
-			return approved = false;
-		}
-		else if (!date1.isEmpty() && !date2.isEmpty()){
-			try {
-				Date datex = sdf.parse(date1);
-				Date datey = sdf.parse(date2);
-				if (datex.compareTo(datey) > 0) {
-					//System.out.println("Date1 is after Date2"); FALSE
-					JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Start date must be before expiry date</font color = #ffffff></html>", "Detected an error in date fields", JOptionPane.ERROR_MESSAGE);
-					approved = false;
-				} else if (datex.compareTo(datey) < 0) {
-					//System.out.println("Date1 is before Date2");TRUE
-					approved = true;
-				} else if (datex.compareTo(datey) == 0) {
-					//System.out.println("Date1 is equal to Date2"); FALSE
-					JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Start date cannot be equal to expiry date</font color = #ffffff></html>", "Detected an error in date fields", JOptionPane.ERROR_MESSAGE);
-					approved = false;
-				}
-				
-			}
-			catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return approved;
-	}
-
 	/**
 	 * Create the application.
 	 */
@@ -621,68 +580,19 @@ public class Tables extends JFrame{
 				String as = aepStartPick.getJFormattedTextField().getText().trim().toString();
 				String ae = aepEndPick.getJFormattedTextField().getText().trim().toString();
 				try {
-					boolean visaValid = false;
-					boolean permitValid = false;
-					boolean aepValid = false;
-					boolean ptntValid = false;
-					if(!(tables_passportNoTxt.getText().trim().trim().isEmpty())) {
-						if(!(tables_tinIdTxt.getText().trim().trim().isEmpty())) {
-							if((!(tables_visaTypeTxt.getText().trim().trim().isEmpty()) && !(ve.isEmpty() && vs.isEmpty()) || (tables_visaTypeTxt.getText().trim().trim().isEmpty()) && (ve.isEmpty() && vs.isEmpty())) && DateCheck(ve,vs)) {
-								visaValid = true;
-							}
-							else if((tables_visaTypeTxt.getText().trim().trim().isEmpty()) && !(ve.isEmpty() && vs.isEmpty())) {
-								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The VISA TYPE field must not be empty. Please specify one.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
-							}
-							else if(!(tables_visaTypeTxt.getText().trim().trim().isEmpty()) && (ve.isEmpty() && vs.isEmpty())){
-								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please specify visa start date and expiry date.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
-							}
-							
-							
-							if((!(tables_permitTypeTxt.getText().trim().trim().isEmpty()) && !(pe.isEmpty() && ps.isEmpty()) || (tables_permitTypeTxt.getText().trim().trim().isEmpty()) && (pe.isEmpty() && ps.isEmpty())) && DateCheck(ps,pe)) {
-								permitValid = true;
-							}
-							else if((tables_permitTypeTxt.getText().trim().trim().isEmpty()) && !(pe.isEmpty() && ps.isEmpty())) {
-								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The PERMIT TYPE field must not be empty. Please specify one.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
-							}
-							else if(!(tables_permitTypeTxt.getText().trim().trim().isEmpty()) && (pe.isEmpty() && ps.isEmpty())){
-								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please specify permit start date and expiry date.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
-							}
-							
-							
-							if((!(tables_aepIdTxt.getText().trim().trim().isEmpty()) && !(ae.isEmpty() && as.isEmpty()) || (tables_aepIdTxt.getText().trim().trim().isEmpty()) && (ae.isEmpty() && as.isEmpty())) && DateCheck(as,ae)) {
-								aepValid = true;
-							}
-							else if((tables_aepIdTxt.getText().trim().trim().isEmpty()) && !(ae.isEmpty() && as.isEmpty())) {
-								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The AEP ID field must not be empty. Please specify one.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
-							}
-							else if(!(tables_aepIdTxt.getText().trim().trim().isEmpty()) && (ae.isEmpty() && as.isEmpty())){
-								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please specify AEP start date and expiry date.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
-							}
-							
-							if((tables_passportNoTxt.getText().trim().trim().length() > 25) || (tables_tinIdTxt.getText().trim().trim().length() > 25)) {
-								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please limit Passport No./TIN ID to 25 and less characters..</font color = #ffffff></html>", "Detected invalid length for Passport No./TIN ID", JOptionPane.ERROR_MESSAGE);
-							
-								if((tables_aepIdTxt.getText().trim().trim().length() > 25)) {
-									JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please limit AEP ID to 25 and less characters..</font color = #ffffff></html>", "Detected invalid length for AEP ID", JOptionPane.ERROR_MESSAGE);
-								
-									if(tables_aepIdTxt.getText().trim().trim().length() < 25 && tables_passportNoTxt.getText().trim().trim().length() > 25 && tables_tinIdTxt.getText().trim().length() > 25) {
-										ptntValid = true;
-										if(visaValid && permitValid && aepValid && ptntValid && (DateCheck(ve,vs) && DateCheck(ps,pe) && DateCheck(as,ae)) ) 
-										{
-											Register();
-											dispose(); 
-											new Tables().setVisible(true);
-										}		
+					
+					if(objectFilter.inputCheck("Passport No.",tables_passportNoTxt.getText())){
+						if(objectFilter.inputCheck("TIN ID",tables_tinIdTxt.getText())) {
+							if(objectFilter.dateCheckTransaction("Visa", tables_visaTypeTxt.getText(), ve, vs)) {
+								if(objectFilter.dateCheckTransaction("AEP", tables_aepIdTxt.getText(), as, ae)) {
+									if(objectFilter.dateCheckTransaction("Permit", tables_permitTypeTxt.getText(), ps, pe)) {
+										Register();
+										dispose();
+										new Tables().setVisible(true);
 									}
 								}
 							}
 						}
-						else {
-							JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The TIN ID field must not be empty. Please specify one.</font color = #ffffff></html>", "Detected an empty TIN ID field", JOptionPane.ERROR_MESSAGE);
-						}
-					}
-					else {
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The Passport No. field must not be empty. Please specify one.</font color = #ffffff></html>", "Detected an empty Passport No. field", JOptionPane.ERROR_MESSAGE);
 					}
 				}catch (Exception e3) {
 					e3.printStackTrace();
