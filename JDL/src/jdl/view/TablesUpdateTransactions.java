@@ -26,6 +26,7 @@ import jdl.controller.DateLabelFormatter;
 import jdl.controller.Runner;
 import jdl.controller.TableColumnAdjuster;
 import jdl.controller.objectFilter;
+import jdl.dao.databaseProperties;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -72,22 +73,7 @@ public class TablesUpdateTransactions extends JFrame{
 	private JTextField adminAcc_passwordTxt;
 	private JComboBox tables_comboBox1;
 	private TableModel tm;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Tables window = new Tables();
-					window.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
+	private databaseProperties dP = new databaseProperties();
 	public static boolean DateCheck(String date1, String date2) {
 	 	
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -184,7 +170,7 @@ public class TablesUpdateTransactions extends JFrame{
 		tables_comboBox.addItem("Click to see the list of registered client");
 		Connection conn1;
 		try {
-			conn1 = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+			conn1 = DriverManager.getConnection(dP.url, dP.username, dP.password);
 			Statement stat=conn1.createStatement();
 			ResultSet rs1=stat.executeQuery("SELECT * FROM jdl_accounts.clients");
 			 while(rs1.next()){        
@@ -224,7 +210,7 @@ public class TablesUpdateTransactions extends JFrame{
 				//System.out.println(tables_comboBox1.getSelectedItem().toString());
 				try 
 				{
-					Connection conn=DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+					Connection conn=DriverManager.getConnection(dP.url, dP.username, dP.password);
 					Statement stat=conn.createStatement();
 					Statement stat1=conn.createStatement();
 	
@@ -311,6 +297,7 @@ public class TablesUpdateTransactions extends JFrame{
 		tables_inputPanel.add(tables_visaLbl);
 		
 		tables_visaTypeTxt = new JTextField();
+		tables_visaTypeTxt.setToolTipText("Choose and Insert from the following Visa Types:\r\n\r\nPre-Arranged Employment Visa - Missionary\r\n(9G) Pre-Arranged Employment Visa - Working Visa Commercial\r\nPermanent Resident's Visa - Section 13 Series\r\nSpecial Non-Immigrant Visa - Section 47 (a)(2)\r\nSpecial Investor's Resident Visa (SIRV)\r\nSpecial President Retiree's Visa (E.O 1037)");
 		tables_visaTypeTxt.setBorder(new EmptyBorder(0, 0, 0, 0));
 		tables_visaTypeTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
 		tables_visaTypeTxt.setColumns(10);
@@ -464,6 +451,7 @@ public class TablesUpdateTransactions extends JFrame{
 		tables_inputPanel.add(tables_permitLbl);
 		
 		tables_permitTypeTxt = new JTextField();
+		tables_permitTypeTxt.setToolTipText("Choose and Insert the following Permit Types:\r\n\r\nSpecial Working Permit (SWP)\r\nProvisional Work Permit (PWP)");
 		tables_permitTypeTxt.setBorder(new EmptyBorder(0, 0, 0, 0));
 		tables_permitTypeTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
 		tables_permitTypeTxt.setColumns(10);
@@ -668,7 +656,7 @@ public class TablesUpdateTransactions extends JFrame{
 					
 				Connection conn;
 				try {
-					conn = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+					conn = DriverManager.getConnection(dP.url, dP.username, dP.password);
 					String sql = "SELECT * FROM jdl_accounts.clients WHERE client_id=?";
 					String sql1 = "SELECT * FROM jdl_accounts.transactions WHERE client_id=?";
 					PreparedStatement statement = (PreparedStatement) conn.prepareStatement(sql);
@@ -830,7 +818,7 @@ public class TablesUpdateTransactions extends JFrame{
 				String sql = "UPDATE jdl_accounts.transactions SET trans_passportNo = ?, trans_tinID = ?, trans_visaType = ?, trans_visaStartDate = ?, trans_visaEndDate = ?, trans_permitType = ?, trans_permitStartDate = ?, trans_permitEndDate = ?, trans_aepID = ?, "
 						+ "trans_aepStartDate = ?, trans_aepEndDate = ?, client_id = ?, trans_transTimestamp = ?, trans_transAuthor = ? WHERE trans_transId = ?";
 				
-				conn2 = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+				conn2 = DriverManager.getConnection(dP.url, dP.username, dP.password);
 				PreparedStatement statement1 = conn2.prepareStatement(sql);
 				
 				statement1.setString(1, tables_passportNoTxt.getText().trim());
@@ -929,8 +917,9 @@ public class TablesUpdateTransactions extends JFrame{
 		tables_clientStatusTableLbl.setBounds(929, 48, 243, 37);
 		tables_clientStatusTableLbl.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				new TablesStatus().setVisible(true);
-				dispose();
+				
+				Runner.openTS();
+				Runner.destroyTUT();
 			}
 		});
 		tables_clientStatusTableLbl.setForeground(Color.LIGHT_GRAY);
@@ -940,8 +929,9 @@ public class TablesUpdateTransactions extends JFrame{
 		tables_clientRemarksTableLbl.setBounds(1241, 48, 230, 37);
 		tables_clientRemarksTableLbl.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				new TablesRemarks().setVisible(true);
-				dispose();
+
+				Runner.openTR();
+				Runner.destroyTUT();
 			}
 		});
 		tables_clientRemarksTableLbl.setForeground(Color.LIGHT_GRAY);
@@ -961,13 +951,7 @@ public class TablesUpdateTransactions extends JFrame{
 		tables_line.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
 		
 		JLabel tables_updateTransactionLbl = new JLabel("Update Transaction", SwingConstants.CENTER);
-		tables_updateTransactionLbl.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				new TablesUpdateTransactions().setVisible(true);
-				dispose();
-			}
-		});
+
 		tables_updateTransactionLbl.setBounds(626, 48, 249, 37);
 		tables_updateTransactionLbl.setForeground(Color.WHITE);
 		tables_updateTransactionLbl.setFont(new Font("Segoe UI", Font.BOLD, 20));
@@ -975,8 +959,9 @@ public class TablesUpdateTransactions extends JFrame{
 		JLabel tables_addClientLbl = new JLabel("Add New Client", SwingConstants.CENTER);
 		tables_addClientLbl.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				new TablesAddClient().setVisible(true);
-				dispose();
+
+				Runner.openTAC();
+				Runner.destroyTUT();
 			}
 		});
 		tables_addClientLbl.setBounds(25, 48, 295, 37);
@@ -1043,8 +1028,8 @@ public class TablesUpdateTransactions extends JFrame{
 		getContentPane().add(tables_back);
 		tables_back.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-				new OptionList().setVisible(true);
+				Runner.destroyTUT();
+				Runner.openOptionList();
 			}
 		});
 		tables_back.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/button_back.png")));

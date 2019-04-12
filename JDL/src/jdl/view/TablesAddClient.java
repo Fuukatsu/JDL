@@ -22,8 +22,10 @@ import org.jdatepicker.impl.UtilDateModel;
 
 import jdl.controller.AutoCompletion;
 import jdl.controller.DateLabelFormatter;
+import jdl.controller.Runner;
 import jdl.controller.TableColumnAdjuster;
 import jdl.controller.objectFilter;
+import jdl.dao.databaseProperties;
 
 import java.text.ParseException;
 import java.util.Calendar;
@@ -71,25 +73,7 @@ public class TablesAddClient extends JFrame{
 	private JTextField tables_clientEmailTxt;
 	private JTable table_1;
 	private JTextField tables_clientCompanyTxt;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Tables window = new Tables();
-					window.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
+	private databaseProperties dP = new databaseProperties();
 	public TablesAddClient() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Tables.class.getResource("/jdl/Assets/login_small.png")));	
 		
@@ -143,7 +127,7 @@ public class TablesAddClient extends JFrame{
 		tables_reloadBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Connection conn=DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+					Connection conn=DriverManager.getConnection(dP.url, dP.username, dP.password);
 					Statement stat=conn.createStatement();
 					Statement stat1=conn.createStatement();
 					
@@ -219,6 +203,7 @@ public class TablesAddClient extends JFrame{
 
 		JDatePanelImpl BirthdatePanel = new JDatePanelImpl(birthdateModel, birthdate);
 		JDatePickerImpl birthdatePicker = new JDatePickerImpl(BirthdatePanel, new DateLabelFormatter());
+		birthdatePicker.getJFormattedTextField().setForeground(new Color(220, 20, 60));
 
 		birthdatePicker.setLocation(20, 350);
 		birthdatePicker.getJFormattedTextField().setBorder(UIManager.getBorder("TextField.border"));
@@ -354,8 +339,9 @@ public class TablesAddClient extends JFrame{
 		tables_clientCreateTransactionLbl.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new Tables().setVisible(true);
-				dispose();
+				
+				Runner.openTables();
+				Runner.destroyTAC();
 			}
 		});
 		
@@ -367,8 +353,9 @@ public class TablesAddClient extends JFrame{
 		tables_clientStatusTableLbl.setBounds(929, 48, 243, 37);
 		tables_clientStatusTableLbl.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				new TablesStatus().setVisible(true);
-				dispose();
+				
+				Runner.openTS();
+				Runner.destroyTAC();
 			}
 		});
 		tables_clientStatusTableLbl.setForeground(Color.LIGHT_GRAY);
@@ -378,8 +365,9 @@ public class TablesAddClient extends JFrame{
 		tables_clientRemarksTableLbl.setBounds(1241, 48, 230, 37);
 		tables_clientRemarksTableLbl.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				new TablesRemarks().setVisible(true);
-				dispose();
+				
+				Runner.openTR();
+				Runner.destroyTAC();
 			}
 		});
 		tables_clientRemarksTableLbl.setForeground(Color.LIGHT_GRAY);
@@ -402,8 +390,9 @@ public class TablesAddClient extends JFrame{
 		tables_updateTransactionLbl.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new TablesUpdateTransactions().setVisible(true);
-				dispose();
+				
+				Runner.openTUT();
+				Runner.destroyTAC();
 			}
 		});
 		tables_updateTransactionLbl.setBounds(626, 48, 249, 37);
@@ -459,8 +448,8 @@ public class TablesAddClient extends JFrame{
 		getContentPane().add(tables_back);
 		tables_back.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-				new OptionList().setVisible(true);
+				Runner.destroyTAC();
+				Runner.openOptionList();
 			}
 		});
 		tables_back.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/button_back.png")));
@@ -506,7 +495,7 @@ public class TablesAddClient extends JFrame{
 					String sql = "INSERT INTO jdl_accounts.clients (client_lastname, client_firstname, client_nationality, client_birthdate, client_gender, client_company, client_position, client_alias, client_contact, client_email)"
 							+ " values (?,?,?,?,?,?,?,?,?,?)";
 					
-					conn2 = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+					conn2 = DriverManager.getConnection(dP.url, dP.username, dP.password);
 					PreparedStatement statement1 = conn2.prepareStatement(sql);
 					
 					if(tables_clientLastnameTxt.getText().trim().equals("")) {
@@ -545,8 +534,8 @@ public class TablesAddClient extends JFrame{
 						
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Client has been added successfully.</font color = #ffffff></html>", "Client recorded.", JOptionPane.INFORMATION_MESSAGE);
 						
-						dispose();
-						new TablesAddClient().setVisible(true);
+						Runner.destroyTAC();
+						Runner.openTAC();
 					}
 				}
 

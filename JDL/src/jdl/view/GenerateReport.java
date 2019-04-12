@@ -26,25 +26,6 @@ public class GenerateReport extends JFrame{
 	private String admin_password;
 
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GenerateReport window = new GenerateReport();
-					window.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
 	public GenerateReport() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(GenerateReport.class.getResource("/jdl/Assets/login_small.png")));
 		
@@ -117,10 +98,10 @@ public class GenerateReport extends JFrame{
 		generate_numExpiredBtn.setBounds(432, 167, 96, 96);
 		getContentPane().add(generate_numExpiredBtn);
 		
-		JLabel generate_numpeopleLbl = new JLabel("NUMBER OF CLIENTS");
+		JLabel generate_numpeopleLbl = new JLabel("<html><center>NUMBER OF CLIENT</br> TRANSACTIONS</center></html>");
 		generate_numpeopleLbl.setForeground(Color.WHITE);
 		generate_numpeopleLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 18));
-		generate_numpeopleLbl.setBounds(100, 274, 176, 25);
+		generate_numpeopleLbl.setBounds(94, 274, 194, 39);
 		getContentPane().add(generate_numpeopleLbl);
 		
 		JLabel generate_numExpiredLbl = new JLabel("NUMBER OF EXPIRY");

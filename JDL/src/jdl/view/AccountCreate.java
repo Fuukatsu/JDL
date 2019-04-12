@@ -19,7 +19,9 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
+import jdl.controller.Runner;
 import jdl.dao.Queries;
+import jdl.dao.databaseProperties;
 import jdl.model.User;
 
 import java.util.ArrayList;
@@ -62,27 +64,9 @@ public class AccountCreate extends JFrame{
 	private JTextField emp_userIdTxt;
 	private JTextField emp_usernameTxt;
 	private JComboBox comboBox;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Tables window = new Tables();
-					window.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
-
-	/**
-	 * Create the application.
-	 */
-	public AccountCreate() {
+	private databaseProperties dP = new databaseProperties();
+	public AccountCreate() 
+	{
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Tables.class.getResource("/jdl/Assets/login_small.png")));	
 		
 		//Main Panel
@@ -197,22 +181,22 @@ public class AccountCreate extends JFrame{
 			 	UIManager.put("OptionPane.messageFont", new Font("Segoe UI Semibold", Font.BOLD, 14));
 			 	UIManager.put("Button.background", Color.WHITE);
 			 	UIManager.put("OptionPane.foreground",new ColorUIResource(90, 103, 115));
-			 	emp_userIdTxt.setText(emp_userIdTxt.getText().trim().trim());
-			 	emp_usernameTxt.setText(emp_usernameTxt.getText().trim().trim());
-			 	emp_passwordTxt.setText(emp_passwordTxt.getText().trim().trim());
-				if(emp_userIdTxt.getText().trim().equals("")) {
+			 	emp_userIdTxt.setText(emp_userIdTxt.getText().trim());
+			 	emp_usernameTxt.setText(emp_usernameTxt.getText().trim());
+			 	emp_passwordTxt.setText(emp_passwordTxt.getText().trim());
+				if(emp_userIdTxt.getText().equals("")) {
 			 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> No USER ID was specified. Kindly fill out the fields. </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
 			 	}
-			 	else if(emp_usernameTxt.getText().trim().equals("")) {
+			 	else if(emp_usernameTxt.getText().equals("")) {
 			 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> No USERNAME was specified. Kindly fill out the fields. </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
 			 	}
-			 	else if(emp_passwordTxt.getText().trim().equals("")) {
+			 	else if(emp_passwordTxt.getText().equals("")) {
 			 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> No PASSWORD was specified. Kindly fill out the fields. </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
 			 	}
-			 	else if(emp_usernameTxt.getText().trim().length() <= 1) {
+			 	else if(emp_usernameTxt.getText().length() <= 1) {
 			 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> Acceptable usernames must be at least 2 characters and above. Please enter a valid one.  </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
 			 	}
-			 	else if(emp_passwordTxt.getText().trim().length()<=7 ) {
+			 	else if(emp_passwordTxt.getText().length()<=7 ) {
 			 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> Acceptable Passwords must be at least 7 characters and above. Please lengthen your password. </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
 			 	}
 			 	else {
@@ -222,13 +206,13 @@ public class AccountCreate extends JFrame{
 			 		boolean userIdExist = false;
 			 		for(User u:uList)
 			 		{
-			 			if(u.getUser_id() == Integer.parseInt(emp_userIdTxt.getText().trim()))
+			 			if(u.getUser_id() == Integer.parseInt(emp_userIdTxt.getText()))
 			 			{
 			 				userIdExist = true;
 			 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> User ID already exists </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
 			 				break;
 			 			}
-			 			if(u.getUser_username().equals(emp_usernameTxt.getText().trim())) {
+			 			if(u.getUser_username().equals(emp_usernameTxt.getText())) {
 			 				usernameExist = true;
 			 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> Username already exists </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
 			 				break;
@@ -238,10 +222,14 @@ public class AccountCreate extends JFrame{
 					 if(comboBox.getSelectedIndex() == 1 && !usernameExist &&!userIdExist) {
 					 	createAccount(1);
 					 	JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>User has been created successfully.</font color = #ffffff></html>", "User Created.", JOptionPane.INFORMATION_MESSAGE);
+					 	//Runner.destroyAC();
+					 	//Runner.openAC();
 					 }	
 					 else if(comboBox.getSelectedIndex() == 0 && !usernameExist &&!userIdExist) {
 					 	createAccount(0);
 					 	JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>User has been created successfully.</font color = #ffffff></html>", "User Created.", JOptionPane.INFORMATION_MESSAGE);
+					 	//Runner.destroyAC();
+					 	//Runner.openAC();
 					 }
 			 	}
 				
@@ -277,8 +265,8 @@ public class AccountCreate extends JFrame{
 		emp_close.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new AccountManagement().setVisible(true);
-				dispose();
+				Runner.destroyAC();
+				Runner.openAccountManagement();
 			}
 		});
 		emp_close.setIcon(new ImageIcon(AccountCreate.class.getResource("/jdl/Assets/button_back.png")));
@@ -300,19 +288,20 @@ public class AccountCreate extends JFrame{
 	}
 	public void createAccount(Integer admin) {
 		try {
-			Connection conn=DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+			Connection conn=DriverManager.getConnection(dP.url, dP.username, dP.password);
 			String sql = "INSERT INTO jdl_accounts.users (user_username, user_id, user_password, user_ifAdmin) values (?,?,?,?)";
 			PreparedStatement statement = (PreparedStatement) conn.prepareStatement(sql);
 			
-			statement.setString(1, emp_usernameTxt.getText().trim());
-			statement.setInt(2, Integer.parseInt(emp_userIdTxt.getText().trim()));
-			statement.setString(3, emp_passwordTxt.getText().trim());
+			statement.setString(1, emp_usernameTxt.getText());
+			statement.setInt(2, Integer.parseInt(emp_userIdTxt.getText()));
+			statement.setString(3, emp_passwordTxt.getText());
 			statement.setInt(4, admin);
 		 	statement.execute();
 		 	
-		 	dispose();
-		 	new OptionList().setVisible(true);
-	    	
+		 	///dispose();
+		 	//new OptionList().setVisible(true);
+	    	Runner.destroyAC();
+	    	Runner.openAC();
 		} 
 		catch (SQLException e1) {
 			e1.printStackTrace();

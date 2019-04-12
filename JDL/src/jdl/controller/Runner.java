@@ -114,7 +114,6 @@ public class Runner
     }
     public static void destroyAC()
     {
-    	ac.setVisible(false);
     	ac.dispose();
     }
     public static void openAD()
@@ -198,7 +197,6 @@ public class Runner
     }
     public static void destroyGE()
     {
-    	gE.setVisible(false);
     	gE.dispose();
     }
     

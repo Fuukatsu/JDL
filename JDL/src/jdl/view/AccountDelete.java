@@ -20,6 +20,7 @@ import org.jdatepicker.impl.UtilDateModel;
 
 import jdl.controller.AutoCompletion;
 import jdl.controller.Runner;
+import jdl.dao.databaseProperties;
 
 import java.util.Properties;
 
@@ -59,25 +60,7 @@ public class AccountDelete extends JFrame{
 	private boolean tables_validator = true;
 	private JTextField emp_LastnameTxt;
 	private JTextField emp_userIdTxt;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Tables window = new Tables();
-					window.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
+	private databaseProperties dP = new databaseProperties();
 	public AccountDelete() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Tables.class.getResource("/jdl/Assets/login_small.png")));	
 		
@@ -110,7 +93,7 @@ public class AccountDelete extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				Connection conn;
 				try {
-					conn = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+					conn = DriverManager.getConnection(dP.url, dP.username, dP.password);
 					String sql = "SELECT * FROM jdl_accounts.users WHERE user_username=?";
 					String sql1 = "SELECT * FROM jdl_accounts.employees WHERE user_id=?";
 					PreparedStatement statement = (PreparedStatement) conn.prepareStatement(sql);
@@ -139,7 +122,7 @@ public class AccountDelete extends JFrame{
 		
 		Connection conn1;
 		try {
-			conn1 = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+			conn1 = DriverManager.getConnection(dP.url, dP.username, dP.password);
 			Statement stat=conn1.createStatement();
 			ResultSet rs1=stat.executeQuery("SELECT * FROM jdl_accounts.users WHERE user_id != "+Runner.getUser().getUser_id()+"");
 			
@@ -249,7 +232,7 @@ public class AccountDelete extends JFrame{
 		tables_registerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Connection conn=DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+					Connection conn=DriverManager.getConnection(dP.url, dP.username, dP.password);
 					String sql = "DELETE FROM jdl_accounts.employees WHERE user_id=?";
 					String sql1 = "DELETE FROM jdl_accounts.users WHERE user_id=?";
 					PreparedStatement statement = (PreparedStatement) conn.prepareStatement(sql);
@@ -281,8 +264,8 @@ public class AccountDelete extends JFrame{
 				 				statement1.executeUpdate();
 			    		
 				 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> User Successfully deleted. </font color = #ffffff></html>", "Deleted Successfully", JOptionPane.INFORMATION_MESSAGE);
-				 				dispose();
-				 				new AccountDelete().setVisible(true);
+				 				Runner.destroyAD();
+				 				Runner.openAD();
 			    	}
 					
 				} 
@@ -312,8 +295,9 @@ public class AccountDelete extends JFrame{
 		emp_close.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new AccountManagement().setVisible(true);
-				dispose();
+
+				Runner.destroyAD();
+				Runner.openAccountManagement();
 			}
 		});
 		emp_close.setIcon(new ImageIcon(AccountDelete.class.getResource("/jdl/Assets/button_back.png")));

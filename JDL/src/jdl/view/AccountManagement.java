@@ -23,6 +23,7 @@ import jdl.controller.DateLabelFormatter;
 import jdl.controller.Runner;
 import jdl.controller.TableColumnAdjuster;
 import jdl.controller.objectFilter;
+import jdl.dao.databaseProperties;
 
 import java.util.Properties;
 
@@ -75,13 +76,13 @@ public class AccountManagement extends JFrame{
 	private JTable table;
 	private JTextField adminAcc_usernameTxt;
 	private JPasswordField adminAcc_passwordTxt;
-	
+	private databaseProperties dP = new databaseProperties();
 	//Username
     public void setUser(String user) {
     	this.adminAcc_usernameTxt.setText(user);
     	}
     public String getUser() {
-    	return this.adminAcc_usernameTxt.getText().trim();
+    	return this.adminAcc_usernameTxt.getText();
     	}
     
     //Password
@@ -163,7 +164,7 @@ public class AccountManagement extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				try 
 				{
-					Connection conn=DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+					Connection conn=DriverManager.getConnection(dP.url, dP.username, dP.password);
 					Statement stat=conn.createStatement();
 					Statement stat1=conn.createStatement();
 					
@@ -380,7 +381,7 @@ public class AccountManagement extends JFrame{
 		
 		Connection conn1;
 		try {
-			conn1 = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+			conn1 = DriverManager.getConnection(dP.url, dP.username, dP.password);
 			Statement stat=conn1.createStatement();
 			ResultSet rs1=stat.executeQuery("SELECT * FROM jdl_accounts.users WHERE user_id != "+Runner.getUser().getUser_id()+"");
 			
@@ -461,50 +462,50 @@ public class AccountManagement extends JFrame{
 					String sql = "INSERT INTO jdl_accounts.employees (emp_lastname, emp_firstname, emp_position, emp_gender, emp_birthdate, emp_address, emp_contact, emp_email, user_id)"
 							+ " values (?,?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE emp_lastname = ?, emp_firstname = ?, emp_position = ?, emp_gender = ?, emp_birthdate = ?, emp_address = ?, emp_contact = ?, emp_email = ?, user_id = ?";
 					
-					conn2 = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+					conn2 = DriverManager.getConnection(dP.url, dP.username, dP.password);
 					PreparedStatement statement1 = conn2.prepareStatement(sql);
-					emp_LastnameTxt.setText(emp_LastnameTxt.getText().trim().trim());
-					emp_FirstnameTxt.setText(emp_FirstnameTxt.getText().trim().trim());
-					emp_PositionTxt.setText(emp_PositionTxt.getText().trim().trim());
-					emp_GenderTxt.setText(emp_GenderTxt.getText().trim().trim());
-					emp_ContactTxt.setText(emp_ContactTxt.getText().trim().trim());
-					emp_EmailTxt.setText(emp_EmailTxt.getText().trim().trim());
-					if(emp_LastnameTxt.getText().trim().equals("")) {
+					emp_LastnameTxt.setText(emp_LastnameTxt.getText().trim());
+					emp_FirstnameTxt.setText(emp_FirstnameTxt.getText().trim());
+					emp_PositionTxt.setText(emp_PositionTxt.getText().trim());
+					emp_GenderTxt.setText(emp_GenderTxt.getText().trim());
+					emp_ContactTxt.setText(emp_ContactTxt.getText().trim());
+					emp_EmailTxt.setText(emp_EmailTxt.getText().trim());
+					if(emp_LastnameTxt.getText().equals("")) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employee's Lastname must not be empty.</font color = #ffffff></html>", "Detected an empty Employee's lastname", JOptionPane.ERROR_MESSAGE);
-					}else if (emp_FirstnameTxt.getText().trim().equals("")) {
+					}else if (emp_FirstnameTxt.getText().equals("")) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employee's Firstname must not be empty.</font color = #ffffff></html>", "Detected an empty Employee's firstname", JOptionPane.ERROR_MESSAGE);
-					}else if(emp_PositionTxt.getText().trim().equals("")) {
+					}else if(emp_PositionTxt.getText().equals("")) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employee's Position must not be empty.</font color = #ffffff></html>", "Detected an empty or undefinable company position ", JOptionPane.ERROR_MESSAGE);
-					}else if(emp_GenderTxt.getText().trim().equals("")) {
+					}else if(emp_GenderTxt.getText().equals("")) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employee's Gender must not be empty.</font color = #ffffff></html>", "Detected an empty or undefinable gender", JOptionPane.ERROR_MESSAGE);
-					}else if(birthdatePicker.getJFormattedTextField().getText().trim().toString().equals("")) {
+					}else if(birthdatePicker.getJFormattedTextField().getText().toString().equals("")) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employee's Birthdate must not be empty.</font color = #ffffff></html>", "Detected an empty Employee's birthdate", JOptionPane.ERROR_MESSAGE);
-					}else if((emp_ContactTxt.getText().trim().equals("") && emp_EmailTxt.getText().trim() .equals("") )) {
+					}else if((emp_ContactTxt.getText().equals("") && emp_EmailTxt.getText() .equals("") )) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>There should at least one contact information available for an employee</font color = #ffffff></html>", "Detected an empty contact no. or email", JOptionPane.ERROR_MESSAGE);
-					}else if(objectFilter.checkEmail(emp_EmailTxt.getText().trim().trim().toString())){
+					}else if(objectFilter.checkEmail(emp_EmailTxt.getText().trim().toString())){
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please Enter a valid email</font color = #ffffff></html>", "Invalid Email", JOptionPane.ERROR_MESSAGE);
-					}else if(objectFilter.containsAlpha(emp_ContactTxt.getText().trim().trim() )) {
+					}else if(objectFilter.containsAlpha(emp_ContactTxt.getText().trim() )) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employees's contact number must not contain alphabet characters.</font color = #ffffff></html>", "Detected an alphabet character in employees's contact number", JOptionPane.ERROR_MESSAGE);
 					}
 					else {
-						statement1.setString(1, emp_LastnameTxt.getText().trim());
-						statement1.setString(2, emp_FirstnameTxt.getText().trim());
-						statement1.setString(3, emp_PositionTxt.getText().trim());
-						statement1.setString(4, emp_GenderTxt.getText().trim());
-						statement1.setDate(5, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().trim().toString())));
-						statement1.setString(6, emp_AddressTxt.getText().trim());
-						statement1.setString(7, emp_ContactTxt.getText().trim());
-						statement1.setString(8, emp_EmailTxt.getText().trim());
-						statement1.setString(9, emp_userIdTxt.getText().trim());
-						statement1.setString(10, emp_LastnameTxt.getText().trim());
-						statement1.setString(11, emp_FirstnameTxt.getText().trim());
-						statement1.setString(12, emp_PositionTxt.getText().trim());
-						statement1.setString(13, emp_GenderTxt.getText().trim());
-						statement1.setDate(14, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().trim().toString())));
-						statement1.setString(15, emp_AddressTxt.getText().trim());
-						statement1.setString(16, emp_ContactTxt.getText().trim());
-						statement1.setString(17, emp_EmailTxt.getText().trim());
-						statement1.setString(18, emp_userIdTxt.getText().trim());
+						statement1.setString(1, emp_LastnameTxt.getText());
+						statement1.setString(2, emp_FirstnameTxt.getText());
+						statement1.setString(3, emp_PositionTxt.getText());
+						statement1.setString(4, emp_GenderTxt.getText());
+						statement1.setDate(5, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().toString())));
+						statement1.setString(6, emp_AddressTxt.getText());
+						statement1.setString(7, emp_ContactTxt.getText());
+						statement1.setString(8, emp_EmailTxt.getText());
+						statement1.setString(9, emp_userIdTxt.getText());
+						statement1.setString(10, emp_LastnameTxt.getText());
+						statement1.setString(11, emp_FirstnameTxt.getText());
+						statement1.setString(12, emp_PositionTxt.getText());
+						statement1.setString(13, emp_GenderTxt.getText());
+						statement1.setDate(14, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().toString())));
+						statement1.setString(15, emp_AddressTxt.getText());
+						statement1.setString(16, emp_ContactTxt.getText());
+						statement1.setString(17, emp_EmailTxt.getText());
+						statement1.setString(18, emp_userIdTxt.getText());
 						
 						statement1.executeUpdate();
 						tables_inputPanel.revalidate();
@@ -526,8 +527,9 @@ public class AccountManagement extends JFrame{
 		JButton emp_deleteBtn = new JButton("Delete a User");
 		emp_deleteBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				new AccountDelete().setVisible(true);
+
+				Runner.destroyAccountManagement();
+				Runner.openAD();
 			}
 		});
 		emp_deleteBtn.setIcon(new ImageIcon(AccountManagement.class.getResource("/jdl/Assets/button_delete.png")));
@@ -541,8 +543,9 @@ public class AccountManagement extends JFrame{
 		JButton emp_createBtn = new JButton(" Create a User");
 		emp_createBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new AccountCreate().setVisible(true);
-				dispose();
+
+				Runner.destroyAccountManagement();
+				Runner.openAC();
 			}
 		});
 		emp_createBtn.setIcon(new ImageIcon(AccountManagement.class.getResource("/jdl/Assets/button_add.png")));
@@ -558,8 +561,8 @@ public class AccountManagement extends JFrame{
 		getContentPane().add(emp_back);
 		emp_back.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				dispose();
-				new OptionList().setVisible(true);
+				Runner.destroyAccountManagement();
+				Runner.openOptionList();
 			}
 		});
 		emp_back.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/button_back.png")));
@@ -613,7 +616,7 @@ public class AccountManagement extends JFrame{
 					tables_registerBtn.setEnabled(true);
 					Connection conn;
 					try {
-						conn = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","password");
+						conn = DriverManager.getConnection(dP.url, dP.username, dP.password);
 						String sql = "SELECT * FROM jdl_accounts.users WHERE user_username=?";
 						String sql1 = "SELECT * FROM jdl_accounts.employees WHERE user_id=?";
 						PreparedStatement statement = (PreparedStatement) conn.prepareStatement(sql);
@@ -627,7 +630,7 @@ public class AccountManagement extends JFrame{
 							emp_userIdTxt.setText(rs.getString("user_id"));
 					} 
 						
-						statement1.setInt(1, Integer.parseInt(emp_userIdTxt.getText().trim()));
+						statement1.setInt(1, Integer.parseInt(emp_userIdTxt.getText()));
 						ResultSet rs1 = statement1.executeQuery();
 						
 						while (rs1.next()) {
