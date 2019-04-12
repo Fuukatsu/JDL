@@ -149,14 +149,14 @@ public class ActivityHistory extends JFrame{
 		getContentPane().add(transaction_selectuserlbl);
 		
 		JComboBox comboBox = new JComboBox(objectFilter.getUsernames());
-		comboBox.setFont(new Font("Segoe UI Semibold", Font.BOLD, 16));
-		comboBox.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
 				TableModel md = Queries.getClientTransactions(comboBox.getSelectedItem().toString());
 				table.setModel(md);
 			}
 		});
+		comboBox.setFont(new Font("Segoe UI Semibold", Font.BOLD, 16));
 		for(String s:objectFilter.getUsernames())
 			System.out.println(s);
 		comboBox.setBounds(369, 436, 295, 28);
