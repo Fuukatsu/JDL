@@ -510,7 +510,7 @@ public class AccountManagement extends JFrame{
 						statement1.executeUpdate();
 						tables_inputPanel.revalidate();
 						
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employee Information has been successfully updated.</font color = #ffffff></html>", "Information Update Successful", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employee Information has been successfully updated.</font color = #ffffff></html>", "Information Updated Successfully", JOptionPane.INFORMATION_MESSAGE);
 				}
 				}
 

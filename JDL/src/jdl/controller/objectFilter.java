@@ -1,6 +1,9 @@
 package jdl.controller;
 
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -8,8 +11,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+
 import javax.swing.JOptionPane;
 
+import jdl.dao.databaseProperties;
 import jdl.dao.Queries;
 import jdl.model.Client;
 import jdl.model.Transaction;
@@ -192,12 +197,15 @@ public class objectFilter
 	//putting constraints before writing to database
 	public static boolean inputCheck(String what/*Ex. Passport No.*/ ,String input) {
 		boolean t = false;
-		
 		input = input.trim();
-		if(!input.isEmpty() ) {
-			t = true;
+		if(!input.isEmpty()) {
 			if(!(input.length() >25)) {
-				t = true;
+				if(validatePassport(what ,input)) {
+					t = true;
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The "+what+": "+input+" is not a valid "+what+"</font color = #ffffff></html>", "Detected an invalid Passport No. field", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please limit your input to 25 characters only.</font color = #ffffff></html>", "Detected an empty Passport No. field", JOptionPane.ERROR_MESSAGE);
@@ -210,6 +218,22 @@ public class objectFilter
 		return t;
 	}
 	
+	//for validating passport numbers
+	public static boolean validatePassport(String what, String input) {
+		boolean t = false;
+		String alphanum = "^[\\p{L}0-9]*$";
+		String tin = "^[-\\p{L}0-9]*$";
+		
+		if(what.equals("Passport No.") && (input.matches(alphanum) && input.length() == 9)) {
+			t = true;
+		}else if(what.equals("TIN ID") && (input.matches(tin))){
+			t = true;
+		}
+		
+		return t;
+		
+	}
+	
 	//writing dates to database
 	
 	public static Transaction writeDates(Transaction trans, String[] input) {
@@ -220,33 +244,31 @@ public class objectFilter
 			trans.setVisaEndDate(java.sql.Date.valueOf(objectFilter.addDay(input[0])));
 		
 		if(input[1].equals(""))
-			trans.setVisaEndDate(null);
+			trans.setVisaStartDate(null);
 		else
-			trans.setVisaEndDate(java.sql.Date.valueOf(objectFilter.addDay(input[1])));
+			trans.setVisaStartDate(java.sql.Date.valueOf(objectFilter.addDay(input[1])));
 		
 		if(input[2].equals(""))
-			trans.setVisaEndDate(null);
+			trans.setPermitStartDate(null);
 		else
-			trans.setVisaEndDate(java.sql.Date.valueOf(objectFilter.addDay(input[2])));
+			trans.setPermitStartDate(java.sql.Date.valueOf(objectFilter.addDay(input[2])));
 		
 		if(input[3].equals(""))
-			trans.setVisaEndDate(null);
+			trans.setPermitEndDate(null);
 		else
-			trans.setVisaEndDate(java.sql.Date.valueOf(objectFilter.addDay(input[3])));
+			trans.setPermitEndDate(java.sql.Date.valueOf(objectFilter.addDay(input[3])));
 		
 		if(input[4].equals(""))
-			trans.setVisaEndDate(null);
+			trans.setAepStartDate(null);
 		else
-			trans.setVisaEndDate(java.sql.Date.valueOf(objectFilter.addDay(input[4])));
+			trans.setAepStartDate(java.sql.Date.valueOf(objectFilter.addDay(input[4])));
 		
 		if(input[5].equals(""))
-			trans.setVisaEndDate(null);
+			trans.setAepEndDate(null);
 		else
-			trans.setVisaEndDate(java.sql.Date.valueOf(objectFilter.addDay(input[5])));
-				
-		
-		
+			trans.setAepEndDate(java.sql.Date.valueOf(objectFilter.addDay(input[5])));
 		return trans;
 	}
+	
 	
 }

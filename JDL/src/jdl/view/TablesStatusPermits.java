@@ -720,7 +720,7 @@ public class TablesStatusPermits extends JFrame{
 						
 					statement2.executeUpdate();
 					tables_inputPanel.revalidate();
-					JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Permit Status has been made to this transaction.</font color = #ffffff></html>", "Permit Status Inserted", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Permit Status has been made to this transaction.</font color = #ffffff></html>", "Permit Status Inserted Successfully", JOptionPane.INFORMATION_MESSAGE);
 					
 				} catch (SQLException e1) {
 					e1.printStackTrace();

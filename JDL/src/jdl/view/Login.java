@@ -138,13 +138,29 @@ public class Login extends JFrame {
 				String tUsername = login_usernameTxt.getText().trim();
 				String tPassword = new String(login_passwordTxt.getPassword());
 				Runner.setUser(loginFunction.attemptLogin(tUsername, tPassword));
+				if(tPassword.length() < 8)
+				{
+					login_error.setVisible(false);
+					login_error1.setVisible(false);
+					login_error2.setVisible(true);
+				}
+				else
+				if(tUsername.length() == 0 && tPassword.length() == 0)
+				{
+					login_error1.setVisible(true);
+					login_error2.setVisible(false);
+					login_error.setVisible(false);
+				}
 				if(Runner.getUser() != null)
 				{
+					login_success.setVisible(true);
 					Runner.destroyLogin();
 					Runner.openOptionList();
 				}
 				else
 				{
+					login_error1.setVisible(false);
+					login_error2.setVisible(false);
 					login_error.setVisible(true);
 				}
 			}

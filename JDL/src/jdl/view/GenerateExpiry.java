@@ -21,6 +21,7 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableModel;
 
 import jdl.controller.Runner;
 import jdl.controller.objectFilter;
@@ -36,12 +37,13 @@ import java.util.Date;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.table.DefaultTableModel;
 
 public class GenerateExpiry extends JFrame{
 	private String admin_username;
 	private String admin_password;
 	private JTable table_1;
-
+	private ArrayList<Transaction> tlist;
 
 	/**
 	 * Launch the application.
@@ -73,7 +75,7 @@ public class GenerateExpiry extends JFrame{
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		setMinimumSize(new Dimension(690, 480));
+		setMinimumSize(new Dimension(1000, 690));
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		
@@ -81,7 +83,7 @@ public class GenerateExpiry extends JFrame{
 		getContentPane().setLayout(null);
 		
 		JLabel generate_minimizeBtn = new JLabel("");
-		generate_minimizeBtn.setBounds(654, 0, 26, 46);
+		generate_minimizeBtn.setBounds(964, 0, 26, 46);
 		getContentPane().add(generate_minimizeBtn);
 		generate_minimizeBtn.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -91,7 +93,7 @@ public class GenerateExpiry extends JFrame{
 		generate_minimizeBtn.setIcon(new ImageIcon(GenerateExpiry.class.getResource("/jdl/Assets/button_minimizer.png")));
 		
 		JLabel generate_client = new JLabel("Number of Expiring Visas");
-		generate_client.setBounds(254, 0, 180, 46);
+		generate_client.setBounds(411, 0, 180, 46);
 		getContentPane().add(generate_client);
 		
 		
@@ -113,8 +115,8 @@ public class GenerateExpiry extends JFrame{
 		
 		JLabel generate_clientRangeLbl = new JLabel("SELECT A RANGE OF TIME:");
 		generate_clientRangeLbl.setForeground(Color.WHITE);
-		generate_clientRangeLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 13));
-		generate_clientRangeLbl.setBounds(46, 67, 169, 34);
+		generate_clientRangeLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
+		generate_clientRangeLbl.setBounds(26, 101, 180, 34);
 		getContentPane().add(generate_clientRangeLbl);
 		
 		JButton generate_weeklyBtn = new JButton("Weekly");
@@ -122,13 +124,38 @@ public class GenerateExpiry extends JFrame{
 			@Override
 			public void mouseClicked(MouseEvent e) 
 			{
-				ArrayList<Transaction> tlist;
 				try {
 				String date = objectFilter.getDateToday();
 				Date d= new SimpleDateFormat("yyyy-MM-dd").parse(date);
 				date = objectFilter.addYear(date);
 				Date dd = new SimpleDateFormat("yyyy-MM-dd").parse(date);
 				tlist = Queries.getTransactionsBetweenDate(new java.sql.Date(d.getTime()), new java.sql.Date(dd.getTime()));
+				Object[][] tl = new Object[tlist.size()][13];
+				for(int i = 0; i < tlist.size();i++)
+				{
+					Object[] ttl = new Object[14];
+					Transaction ttemp = tlist.get(i);
+					ttl[0] = Integer.toString(ttemp.getClient_id());
+					ttl[1] = Integer.toString(ttemp.getTransID());
+					ttl[2] = ttemp.getPassportNo();
+					ttl[3] = ttemp.getTinID();
+					ttl[4] = ttemp.getVisaType();
+					ttl[5] = ttemp.getVisaStartDate();
+					ttl[6] = ttemp.getVisaEndDate();
+					ttl[7] = ttemp.getPermitType();
+					ttl[8] = ttemp.getPermitStartDate();
+					ttl[9] = ttemp.getPermitEndDate();
+					ttl[10] = ttemp.getAepID();
+					ttl[11] = ttemp.getAepStartDate();
+					ttl[12] = ttemp.getAepEndDate();
+					tl[i] = ttl;
+				}
+				table_1.setModel(new DefaultTableModel(
+						tl,
+						new String[] {
+							"Client ID", "Transaction ID", "Passport No", "TIN ID", "Visa Type", "Visa Start Date", "Visa End Date", "Permit Type", "Permit Start Date", "Permit End Date", "AEP ID", "AEP Start Date", "AEP End Date"
+						}
+					));
 				} catch (ParseException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -138,7 +165,7 @@ public class GenerateExpiry extends JFrame{
 		generate_weeklyBtn.setBackground(new Color(0, 102, 102));
 		generate_weeklyBtn.setForeground(new Color(255, 255, 255));
 		generate_weeklyBtn.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
-		generate_weeklyBtn.setBounds(32, 112, 188, 29);
+		generate_weeklyBtn.setBounds(26, 146, 188, 40);
 		getContentPane().add(generate_weeklyBtn);
 		
 		JButton generate_monthlyBtn = new JButton("Monthly");
@@ -152,7 +179,7 @@ public class GenerateExpiry extends JFrame{
 		generate_monthlyBtn.setForeground(Color.WHITE);
 		generate_monthlyBtn.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
 		generate_monthlyBtn.setBackground(new Color(0, 102, 102));
-		generate_monthlyBtn.setBounds(32, 152, 188, 29);
+		generate_monthlyBtn.setBounds(26, 197, 188, 40);
 		getContentPane().add(generate_monthlyBtn);
 		
 		JButton generate_yearlyBtn = new JButton("Yearly");
@@ -166,7 +193,7 @@ public class GenerateExpiry extends JFrame{
 		generate_yearlyBtn.setForeground(Color.WHITE);
 		generate_yearlyBtn.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
 		generate_yearlyBtn.setBackground(new Color(0, 102, 102));
-		generate_yearlyBtn.setBounds(32, 192, 188, 29);
+		generate_yearlyBtn.setBounds(26, 248, 188, 40);
 		getContentPane().add(generate_yearlyBtn);
 		
 		JPanel panel = new JPanel();
@@ -188,16 +215,33 @@ public class GenerateExpiry extends JFrame{
 		
 		JLabel generate_clientListLbl = new JLabel("LIST OF EXPIRING VISAS\r\n");
 		generate_clientListLbl.setForeground(Color.WHITE);
-		generate_clientListLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 13));
-		generate_clientListLbl.setBounds(245, 67, 202, 34);
+		generate_clientListLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
+		generate_clientListLbl.setBounds(243, 57, 202, 34);
 		getContentPane().add(generate_clientListLbl);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBorder(new EmptyBorder(0, 0, 0, 0));
-		scrollPane_1.setBounds(243, 101, 425, 350);
+		scrollPane_1.setBounds(243, 101, 735, 566);
 		getContentPane().add(scrollPane_1);
 		
 		table_1 = new JTable();
+		table_1.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null, "", null, null, "", null, null, null, null, null},
+			},
+			new String[] {
+				"Client ID", "Transaction ID", "Passport No", "TIN ID", "Visa Type", "Visa Start Type", "Visa Start Date", "Visa End Date", "Permit Type", "Permit Start Date", "Permit End Date", "AEP ID", "AEP Start Date", "AEP End Date"
+			}
+		));
+		table_1.getColumnModel().getColumn(1).setPreferredWidth(90);
+		table_1.getColumnModel().getColumn(4).setPreferredWidth(69);
+		table_1.getColumnModel().getColumn(5).setPreferredWidth(92);
+		table_1.getColumnModel().getColumn(6).setPreferredWidth(88);
+		table_1.getColumnModel().getColumn(7).setPreferredWidth(94);
+		table_1.getColumnModel().getColumn(9).setPreferredWidth(101);
+		table_1.getColumnModel().getColumn(10).setPreferredWidth(104);
+		table_1.getColumnModel().getColumn(12).setPreferredWidth(101);
+		table_1.getColumnModel().getColumn(13).setPreferredWidth(92);
 		table_1.setFont(new Font("Calibri", Font.PLAIN, 16));
 		table_1.setBounds(495, 198, 125, 68);
 		table_1.setRowHeight(32);
@@ -215,19 +259,19 @@ public class GenerateExpiry extends JFrame{
 		
 		JLabel generate_clientCountLbl = new JLabel("<HTML><CENTER>NUMBER OF EXPIRY<br> IN RANGE</br></CENTER></HTML>");
 		generate_clientCountLbl.setForeground(Color.WHITE);
-		generate_clientCountLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 13));
-		generate_clientCountLbl.setBounds(63, 243, 128, 34);
+		generate_clientCountLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
+		generate_clientCountLbl.setBounds(52, 352, 138, 40);
 		getContentPane().add(generate_clientCountLbl);
 		
 		JLabel generate_actualCountLbl = new JLabel("");
 		generate_actualCountLbl.setForeground(Color.WHITE);
 		generate_actualCountLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 13));
-		generate_actualCountLbl.setBounds(46, 285, 169, 166);
+		generate_actualCountLbl.setBounds(36, 416, 169, 166);
 		getContentPane().add(generate_actualCountLbl);
 		
 		JLabel options_background = new JLabel("");
-		options_background.setIcon(new ImageIcon(GenerateExpiry.class.getResource("/jdl/Assets/background_optionList4.jpg")));
-		options_background.setBounds(0, 0, 690, 480);
+		options_background.setIcon(new ImageIcon(GenerateExpiry.class.getResource("/jdl/Assets/background_tables4.jpg")));
+		options_background.setBounds(0, 0, 1000, 690);
 		getContentPane().add(options_background);
 		
 	}

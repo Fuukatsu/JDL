@@ -702,7 +702,7 @@ public class TablesStatus extends JFrame{
 						tables_inputPanel.revalidate();
 						tables_reloadBtn.doClick();
 						
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Visa Status has been made to this transaction.</font color = #ffffff></html>", "Visa Status Inserted", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Visa Status has been made to this transaction.</font color = #ffffff></html>", "Visa Status Inserted Successfully", JOptionPane.INFORMATION_MESSAGE);
 						
 					} catch (SQLException e1) {
 						e1.printStackTrace();
@@ -914,7 +914,7 @@ public class TablesStatus extends JFrame{
 				Date datey = sdf.parse(date2);
 				if (datex.compareTo(datey) > 0) {
 					//System.out.println("Date1 is after Date2"); FALSE
-					JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Early hearing date must be before hearing date</font color = #ffffff></html>", "Detected an error in date fields", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Early hearing date must be before hearing date</font color = #ffffff></html>", "Detected an error in date fields. Please check your dates carefully.", JOptionPane.ERROR_MESSAGE);
 					approved = false;
 				} else if (datex.compareTo(datey) < 0) {
 					//System.out.println("Date1 is before Date2");TRUE

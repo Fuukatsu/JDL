@@ -104,10 +104,10 @@ public class GenerateReport extends JFrame{
 		generate_numpeopleLbl.setBounds(94, 274, 194, 39);
 		getContentPane().add(generate_numpeopleLbl);
 		
-		JLabel generate_numExpiredLbl = new JLabel("NUMBER OF EXPIRY");
+		JLabel generate_numExpiredLbl = new JLabel("<html><center>NUMBER OF <br>EXPIRATION DATES </br></center></html>");
 		generate_numExpiredLbl.setForeground(Color.WHITE);
 		generate_numExpiredLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 18));
-		generate_numExpiredLbl.setBounds(401, 274, 176, 25);
+		generate_numExpiredLbl.setBounds(401, 263, 176, 57);
 		getContentPane().add(generate_numExpiredLbl);
 		
 		JLabel options_background = new JLabel("");

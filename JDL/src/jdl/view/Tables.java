@@ -543,7 +543,7 @@ public class Tables extends JFrame{
 						tables_tinIdTxt.setEditable(false);
 					}
 					if(tables_comboBox.getSelectedItem() == tables_comboBox.getItemAt(0)) 
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please Select a Client</font color = #ffffff></html>", "Invalid Selection", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please Select a Client</font color = #ffffff></html>", "Invalid Client Selection", JOptionPane.ERROR_MESSAGE);
 					else
 					{
 						client_id = tables_comboBox.getSelectedIndex();
@@ -562,12 +562,12 @@ public class Tables extends JFrame{
 		java.util.Date date=new java.util.Date();
 		java.sql.Date sqlDate=new java.sql.Date(date.getTime());
 		
+		
+		//Register Action
 		tables_registerBtn.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
-				
-				
 				UIManager.put("OptionPane.background",new ColorUIResource(90, 103, 115));
 			 	UIManager.put("Panel.background",new ColorUIResource(90, 103, 115));
 			 	UIManager.put("OptionPane.messageFont", new Font("Segoe UI Semibold", Font.BOLD, 14));
@@ -588,8 +588,8 @@ public class Tables extends JFrame{
 								if(objectFilter.dateCheckTransaction("AEP", tables_aepIdTxt.getText(), as, ae)) {
 									if(objectFilter.dateCheckTransaction("Permit", tables_permitTypeTxt.getText(), ps, pe)) {
 										Register();
-										dispose();
-										new Tables().setVisible(true);
+										Runner.destroyTables();
+										Runner.openTables();
 									}
 								}
 							}
@@ -602,6 +602,7 @@ public class Tables extends JFrame{
 				
 				tables_reloadBtn.doClick();
 			}// end of action performed
+		
 			
 		public void Register() 
 		{			
@@ -619,12 +620,11 @@ public class Tables extends JFrame{
 			in[3] = permitEndPick.getJFormattedTextField().getText().trim().toString();
 			in[4] = aepStartPick.getJFormattedTextField().getText().trim().toString();
 			in[5] = aepEndPick.getJFormattedTextField().getText().trim().toString();
-			
 			objectFilter.writeDates(trans, in);
 			
-			trans.setPassportNo(tables_passportNoTxt.getText().trim().trim());
-			trans.setTinID(tables_tinIdTxt.getText().trim().trim());
-			trans.setVisaType(tables_visaTypeTxt.getText().trim().trim());			
+			trans.setPassportNo(tables_passportNoTxt.getText().trim());
+			trans.setTinID(tables_tinIdTxt.getText().trim());
+			trans.setVisaType(tables_visaTypeTxt.getText().trim());			
 			trans.setPermitType(tables_permitTypeTxt.getText().trim());
 			trans.setAepID(tables_aepIdTxt.getText().trim());
 			trans.setClient_id(Integer.parseInt(objectFilter.getClientList()[client_id].split(":")[1].trim()));
