@@ -145,11 +145,26 @@ public class TablesRemarks extends JFrame{
 		
 		tables_comboBox1.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
 		
+		JButton tables_registerBtn = new JButton("Insert Remark");
+		
 		JComboBox tables_comboBox = new JComboBox();
+		tables_comboBox.insertItemAt("Click to see the list of registered client", 0);
+		tables_reloadBtn.setEnabled(false);
+		tables_registerBtn.setEnabled(false);
+		tables_comboBox.setSelectedIndex(0);
+		
 		tables_comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Connection conn;
 				Connection conn2;
+				
+				if(tables_comboBox.getSelectedItem().toString() == "Click to see the list of registered client") {
+					tables_reloadBtn.setEnabled(false);
+					tables_registerBtn.setEnabled(false);
+					tables_comboBox1.removeAllItems();
+				}else if (tables_comboBox.getSelectedItem().toString() != "Click to see the list of registered client") {
+					tables_reloadBtn.setEnabled(true);
+					tables_registerBtn.setEnabled(true);
 				
 				try {
 					conn = DriverManager.getConnection(dP.url, dP.username, dP.password);
@@ -186,7 +201,7 @@ public class TablesRemarks extends JFrame{
 
 				tables_reloadBtn.doClick();
 			}
-		});
+		}});
 			
 		Connection conn1;
 		try {
@@ -492,7 +507,6 @@ public class TablesRemarks extends JFrame{
 		lblSelectATransaction.setBounds(20, 105, 146, 25);
 		tables_inputPanel.add(lblSelectATransaction);
 
-		JButton tables_registerBtn = new JButton("Insert Remark");
 		tables_registerBtn.setForeground(new Color(255, 255, 255));
 		tables_registerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

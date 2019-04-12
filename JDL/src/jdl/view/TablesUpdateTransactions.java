@@ -610,6 +610,9 @@ public class TablesUpdateTransactions extends JFrame{
 		tables_comboBox1.setBounds(20, 142, 400, 26);
 		tables_inputPanel.add(tables_comboBox1);
 		
+		tables_reloadBtn.setEnabled(false);
+		tables_comboBox.setSelectedIndex(0);
+		
 		tables_comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -624,6 +627,13 @@ public class TablesUpdateTransactions extends JFrame{
 				tables_aepIdTxt.setText("");
 				aepStartPick.getJFormattedTextField().setText("");
 				aepEndPick.getJFormattedTextField().setText("");
+				
+				if(tables_comboBox.getSelectedItem().toString() == "Click to see the list of registered client") {
+					tables_reloadBtn.setEnabled(false);
+					tables_comboBox1.removeAllItems();
+				}else if (tables_comboBox.getSelectedItem().toString() != "Click to see the list of registered client") {
+					tables_reloadBtn.setEnabled(true);
+				}
 				
 				if(tables_comboBox.getSelectedIndex() == 0) {
 					tables_passportNoTxt.setEditable(false);

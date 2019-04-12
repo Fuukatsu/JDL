@@ -157,9 +157,26 @@ public class TablesStatusPermits extends JFrame{
 		tables_cancellationLbl.setBounds(224, 219, 197, 29);
 		tables_inputPanel.add(tables_cancellationLbl);
 		
+
+		JButton tables_registerBtn = new JButton("Insert Status");
+		
 		JComboBox tables_comboBox = new JComboBox();
+		tables_comboBox.insertItemAt("Click to see the list of registered client", 0);
+		
+		tables_reloadBtn.setEnabled(false);
+		tables_registerBtn.setEnabled(false);
+		tables_comboBox.setSelectedIndex(0);
+		
 		tables_comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				if(tables_comboBox.getSelectedItem().toString() == "Click to see the list of registered client") {
+					tables_reloadBtn.setEnabled(false);
+					tables_registerBtn.setEnabled(false);
+					tables_comboBox1.removeAllItems();
+				}else if (tables_comboBox.getSelectedItem().toString() != "Click to see the list of registered client") {
+					tables_reloadBtn.setEnabled(true);
+					tables_registerBtn.setEnabled(true);					
 				Connection conn;
 				Connection conn2;
 				
@@ -219,7 +236,7 @@ public class TablesStatusPermits extends JFrame{
 
 				tables_reloadBtn.doClick();
 			}
-		});
+		}});
 			
 		Connection conn1;
 		try {
@@ -616,7 +633,6 @@ public class TablesStatusPermits extends JFrame{
 		lblSelectATransaction.setBounds(20, 85, 146, 25);
 		tables_inputPanel.add(lblSelectATransaction);
 
-		JButton tables_registerBtn = new JButton("Insert Status");
 		tables_registerBtn.setForeground(new Color(255, 255, 255));
 		tables_registerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

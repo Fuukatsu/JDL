@@ -128,6 +128,8 @@ public class Tables extends JFrame{
 		AutoCompletion.enable(tables_comboBox);
 		tables_inputPanel.add(tables_comboBox);
 		
+		JButton tables_reloadBtn = new JButton("Reload");
+		
 		tables_tinIdTxt = new JTextField();
 		tables_tinIdTxt.setBorder(new EmptyBorder(0, 0, 0, 0));
 		tables_tinIdTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
@@ -135,7 +137,6 @@ public class Tables extends JFrame{
 		tables_tinIdTxt.setBounds(20, 236, 400, 23);
 		tables_inputPanel.add(tables_tinIdTxt);
 		
-		JButton tables_reloadBtn = new JButton("Reload");
 		tables_reloadBtn.setBounds(1393, 148, 138, 38);
 		tables_reloadBtn.setForeground(new Color(255, 255, 255));
 		tables_reloadBtn.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/main_refresh.png")));
@@ -474,6 +475,8 @@ public class Tables extends JFrame{
 		tables_registerBtn.setForeground(new Color(255, 255, 255));	
 
 		tables_registerBtn.setEnabled(false);
+		tables_reloadBtn.setEnabled(false);
+		tables_comboBox.setSelectedIndex(0);
 		
 		tables_comboBox.addActionListener(new ActionListener() 
 		{
@@ -482,6 +485,12 @@ public class Tables extends JFrame{
 				
 				tables_passportNoTxt.setText("");
 				tables_tinIdTxt.setText("");
+				
+				if(tables_comboBox.getSelectedItem().toString() == "Click to see the list of registered client") {
+					tables_reloadBtn.setEnabled(false);
+				}else if (tables_comboBox.getSelectedItem().toString() != "Click to see the list of registered client") {
+					tables_reloadBtn.setEnabled(true);
+				}
 				
 				if(tables_comboBox.getSelectedIndex() == 0) {
 					tables_passportNoTxt.setEnabled(false);
