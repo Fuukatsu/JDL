@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 
@@ -22,6 +23,7 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import jdl.controller.Runner;
+import jdl.controller.TableColumnAdjuster;
 import jdl.controller.objectFilter;
 import jdl.dao.Queries;
 
@@ -72,14 +74,10 @@ public class ActivityHistory extends JFrame{
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
-		setMinimumSize(new Dimension(690, 480));
+		setMinimumSize(new Dimension(1000, 680));
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
-
 		
-		UIDefaults defaults = UIManager.getLookAndFeelDefaults();
-		if (defaults.get("Table.alternateRowColor") == null)
-		    defaults.put("Table.alternateRowColor", new Color(155, 177, 166));
 		
 		//Input Section (Labels and Associated Textfields)
 		
@@ -96,9 +94,9 @@ public class ActivityHistory extends JFrame{
 		getContentPane().setLayout(null);
 		
 		JLabel transaction_historylbl = new JLabel("Transaction Activity History:");
+		transaction_historylbl.setBounds(21, 48, 374, 37);
 		transaction_historylbl.setForeground(Color.WHITE);
 		transaction_historylbl.setFont(new Font("Segoe UI", Font.BOLD, 19));
-		transaction_historylbl.setBounds(21, 61, 374, 49);
 		getContentPane().add(transaction_historylbl);
 		
 		JLabel transaction_historyLbl = new JLabel("Some title here");
@@ -107,8 +105,6 @@ public class ActivityHistory extends JFrame{
 		transaction_historyLbl.setFont(new Font("Segoe UI", Font.BOLD, 19));
 		
 		
-
-		
 		JLabel emp_back = new JLabel("");
 		emp_back.setBounds(0, 0, 57, 37);
 		getContentPane().add(emp_back);
@@ -116,15 +112,17 @@ public class ActivityHistory extends JFrame{
 			public void mouseClicked(MouseEvent e) {
 				Runner.destroyAH();
 				Runner.openOptionList();
+				
 			}
 		});
+		
 		emp_back.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/button_back.png")));
 		emp_back.setHorizontalAlignment(SwingConstants.CENTER);
 		emp_back.setForeground(Color.WHITE);
 		emp_back.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
 		
 		JLabel transaction_titleLbl = new JLabel("Activity History");
-		transaction_titleLbl.setBounds(217, 0, 242, 37);
+		transaction_titleLbl.setBounds(328, 0, 242, 37);
 		getContentPane().add(transaction_titleLbl);
 		transaction_titleLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		transaction_titleLbl.setForeground(Color.WHITE);
@@ -133,52 +131,78 @@ public class ActivityHistory extends JFrame{
 		//Images
 		
 		JLabel emp_minimize = new JLabel("");
-		emp_minimize.setBounds(642, 0, 26, 46);
+		emp_minimize.setBounds(964, 0, 26, 46);
 		getContentPane().add(emp_minimize);
 		emp_minimize.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				setState(ICONIFIED);
 			}
 		});
+		
 		emp_minimize.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/button_minimizer.png")));
 		
 		JLabel transaction_selectuserlbl = new JLabel("Select User to View Transaction History:");
+		transaction_selectuserlbl.setBounds(185, 628, 284, 41);
 		transaction_selectuserlbl.setForeground(Color.WHITE);
 		transaction_selectuserlbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
-		transaction_selectuserlbl.setBounds(21, 430, 350, 41);
 		getContentPane().add(transaction_selectuserlbl);
 		
-		JComboBox comboBox = new JComboBox(objectFilter.getUsernames());
-		comboBox.setFont(new Font("Segoe UI Semibold", Font.BOLD, 16));
-		comboBox.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				TableModel md = Queries.getClientTransactions(comboBox.getSelectedItem().toString());
-				table.setModel(md);
-			}
-		});
-		for(String s:objectFilter.getUsernames())
-			System.out.println(s);
-		comboBox.setBounds(369, 436, 295, 28);
-		getContentPane().add(comboBox);
-		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(21, 108, 646, 311);
+		scrollPane.setBounds(21, 91, 955, 534);
+		scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
+		
 		getContentPane().add(scrollPane);
+		
+		
+		JComboBox comboBox = new JComboBox(objectFilter.getUsernames());
+		comboBox.setBounds(477, 634, 302, 28);
+		comboBox.setFont(new Font("Segoe UI Semibold", Font.BOLD, 16));
 		
 		table = new JTable();
 		TableModel md = Queries.getClientTransactions(comboBox.getSelectedItem().toString());
 		table.setModel(md);
+		
+		table.setFont(new Font("Calibri", Font.PLAIN, 16));
+		table.setBounds(495, 198, 125, 68);
+		table.setRowHeight(25);
+		table.setBorder(null);
 		scrollPane.setViewportView(table);
+
+		comboBox.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				TableModel md = Queries.getClientTransactions(comboBox.getSelectedItem().toString());
+				table.setModel(md);
+				table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+				scrollPane.setViewportView(table);
+				
+				TableColumnAdjuster tca = new TableColumnAdjuster(table);
+				tca.adjustColumns();
+
+			}
+		});
+		
+		for(String s:objectFilter.getUsernames())
+			System.out.println(s);
+		getContentPane().add(comboBox);
+		
+		JTableHeader header = table.getTableHeader();
+		header.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
+	    header.setBackground(new Color(155, 177, 166));
+	    header.setForeground(Color.WHITE);
+		
+		UIDefaults defaults = UIManager.getLookAndFeelDefaults();
+		if (defaults.get("Table.alternateRowColor") == null)
+		    defaults.put("Table.alternateRowColor", new Color(155, 177, 166));
 		
 		
 		JLabel emp_background = new JLabel("");
+		emp_background.setBounds(0, 0, 1000, 680);
 		emp_background.setIcon(new ImageIcon(ActivityHistory.class.getResource("/jdl/Assets/background_tables4.jpg")));
-		emp_background.setBounds(0, 0, 708, 494);
 		getContentPane().add(emp_background);
 
 		
 	}
-    
 }
 
