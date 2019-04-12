@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.swing.JOptionPane;
+
 import jdl.dao.Queries;
 import jdl.model.Client;
 import jdl.model.User;
@@ -130,5 +132,73 @@ public class objectFilter
 		c.add(Calendar.YEAR, 1);
 		String newDate = format.format(c.getTime());  
 		return newDate;
+	}
+	
+	//checking two dates
+	public static boolean dateCheckTransaction(String typeName, String type, String date1, String date2) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		boolean approved = false;
+		type = type.trim();
+		if((date1.isEmpty()) && (date2.isEmpty()) && type.isEmpty()) {
+			return approved = true;
+		}
+		else if((!date1.isEmpty() && date2.isEmpty()) && type.isEmpty() ) {
+			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+typeName+" end date must not be empty</font color = #ffffff></html>", "Detected an error in date fields", JOptionPane.ERROR_MESSAGE);
+			return approved = false;
+		}
+		else if((date1.isEmpty() && !date2.isEmpty()) && type.isEmpty()){
+			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+typeName+" start date must not be empty</font color = #ffffff></html>", "Detected an error in date fields", JOptionPane.ERROR_MESSAGE);
+			return approved = false;
+		}
+		else if((!date1.isEmpty() && !date2.isEmpty()) && type.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+typeName+" type must not be empty</font color = #ffffff></html>", "Detected an error in "+type+" type", JOptionPane.ERROR_MESSAGE);
+			return approved = false;
+		}
+		
+		else if ((!date1.isEmpty() && !date2.isEmpty()) && !type.isEmpty() ){
+			try {
+				Date datex = sdf.parse(date1);
+				Date datey = sdf.parse(date2);
+				if (datex.compareTo(datey) > 0) {
+					//System.out.println("Date1 is after Date2"); FALSE
+					JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+typeName+" start date must be before expiry date</font color = #ffffff></html>", "Detected an error in date fields", JOptionPane.ERROR_MESSAGE);
+					approved = false;
+				} else if (datex.compareTo(datey) < 0) {
+					//System.out.println("Date1 is before Date2");TRUE
+					approved = true;
+				} else if (datex.compareTo(datey) == 0) {
+					//System.out.println("Date1 is equal to Date2"); FALSE
+					JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+typeName +" start date cannot be equal to expiry date</font color = #ffffff></html>", "Detected an error in date fields", JOptionPane.ERROR_MESSAGE);
+					approved = false;
+				}
+				
+			}
+			catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return approved;
+	}
+	
+	//putting constraints before writing to database
+	public static boolean inputCheck(String what/*Ex. Passport No.*/ ,String input) {
+		boolean t = false;
+		
+		input = input.trim();
+		if(!input.isEmpty() ) {
+			t = true;
+			if(!(input.length() >25)) {
+				t = true;
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please limit your input to 25 characters only.</font color = #ffffff></html>", "Detected an empty Passport No. field", JOptionPane.ERROR_MESSAGE);
+			}
+		}else {
+			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The "+what+" field must not be empty. Please specify one.</font color = #ffffff></html>", "Detected an empty Passport No. field", JOptionPane.ERROR_MESSAGE);
+		}
+		
+		
+		return t;
 	}
 }

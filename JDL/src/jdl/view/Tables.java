@@ -59,56 +59,16 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 
 public class Tables extends JFrame{
 	private JTextField tables_passportNoTxt;
 	private JTextField tables_tinIdTxt;
+	private JTextField tables_visaTypeTxt;
+	private JTextField tables_permitTypeTxt;
 	private JTextField tables_aepIdTxt;
 	private String clientSelectedName;
 	private JTable table_1;
 	private int client_id = 1;
-
-	public static boolean DateCheck(String date1, String date2) {
-	 	
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		boolean approved = false;
-		if((date1.isEmpty()) && (date2.isEmpty())) {
-			return approved = true;
-		}
-		else if(!date1.isEmpty() && date2.isEmpty()) {
-			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>End date must not be empty</font color = #ffffff></html>", "Detected an error in date fields", JOptionPane.ERROR_MESSAGE);
-			return approved = false;
-		}
-		else if(date1.isEmpty() && !date2.isEmpty()) {
-			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Start date must not be empty</font color = #ffffff></html>", "Detected an error in date fields", JOptionPane.ERROR_MESSAGE);
-			return approved = false;
-		}
-		else if (!date1.isEmpty() && !date2.isEmpty()){
-			try {
-				Date datex = sdf.parse(date1);
-				Date datey = sdf.parse(date2);
-				if (datex.compareTo(datey) > 0) {
-					//System.out.println("Date1 is after Date2"); FALSE
-					JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Start date must be before expiry date</font color = #ffffff></html>", "Detected an error in date fields", JOptionPane.ERROR_MESSAGE);
-					approved = false;
-				} else if (datex.compareTo(datey) < 0) {
-					//System.out.println("Date1 is before Date2");TRUE
-					approved = true;
-				} else if (datex.compareTo(datey) == 0) {
-					//System.out.println("Date1 is equal to Date2"); FALSE
-					JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Start date cannot be equal to expiry date</font color = #ffffff></html>", "Detected an error in date fields", JOptionPane.ERROR_MESSAGE);
-					approved = false;
-				}
-				
-			}
-			catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return approved;
-	}
 
 	/**
 	 * Create the application.
@@ -163,7 +123,7 @@ public class Tables extends JFrame{
 		
 		JComboBox tables_comboBox = new JComboBox(objectFilter.getClientList());
 		
-		tables_comboBox.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
+		tables_comboBox.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 14));
 		tables_comboBox.setBounds(20, 79, 400, 29);
 		AutoCompletion.enable(tables_comboBox);
 		tables_inputPanel.add(tables_comboBox);
@@ -245,6 +205,13 @@ public class Tables extends JFrame{
 		tables_visaLbl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
 		tables_visaLbl.setBounds(20, 263, 190, 29);
 		tables_inputPanel.add(tables_visaLbl);
+		
+		tables_visaTypeTxt = new JTextField();
+		tables_visaTypeTxt.setBorder(new EmptyBorder(0, 0, 0, 0));
+		tables_visaTypeTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
+		tables_visaTypeTxt.setColumns(10);
+		tables_visaTypeTxt.setBounds(20, 294, 400, 23);
+		tables_inputPanel.add(tables_visaTypeTxt);
 		
 		JLabel tables_visaStartLbl = new JLabel("Visa Start Date:");
 		tables_visaStartLbl.setForeground(new Color(255, 255, 255));
@@ -392,6 +359,13 @@ public class Tables extends JFrame{
 		tables_permitLbl.setBounds(20, 378, 190, 29);
 		tables_inputPanel.add(tables_permitLbl);
 		
+		tables_permitTypeTxt = new JTextField();
+		tables_permitTypeTxt.setBorder(new EmptyBorder(0, 0, 0, 0));
+		tables_permitTypeTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
+		tables_permitTypeTxt.setColumns(10);
+		tables_permitTypeTxt.setBounds(20, 409, 400, 23);
+		tables_inputPanel.add(tables_permitTypeTxt);
+		
 		JLabel tables_permitStartLbl = new JLabel("Permit Start Date:");
 		tables_permitStartLbl.setForeground(Color.WHITE);
 		tables_permitStartLbl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
@@ -495,18 +469,6 @@ public class Tables extends JFrame{
 		tables_companyPositionLbl.setBounds(1173, 760, 358, 31);
 		getContentPane().add(tables_companyPositionLbl);
 		
-		JComboBox tables_visaTypeTxt = new JComboBox();
-		tables_visaTypeTxt.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
-		tables_visaTypeTxt.setModel(new DefaultComboBoxModel(new String[] {"", "Pre-Arranged Employment Visa - Missionary", "(9G) Pre-Arranged Employment Visa - Working Visa Commercial", "Permanent Resident's Visa - Section 13 Series", "Special Non-Immigrant Visa - Section 47 (a)(2)", "Special Investor's Resident Visa (SIRV)", "Special President Retiree's Visa (E.O 1037)"}));
-		tables_visaTypeTxt.setBounds(20, 296, 400, 23);
-		tables_inputPanel.add(tables_visaTypeTxt);
-		
-		JComboBox tables_permitTypeTxt = new JComboBox();
-		tables_permitTypeTxt.setModel(new DefaultComboBoxModel(new String[] {"", "Special Working Permit (SWP)", "Provisional Work Permit (PWP)"}));
-		tables_permitTypeTxt.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
-		tables_permitTypeTxt.setBounds(20, 409, 400, 23);
-		tables_inputPanel.add(tables_permitTypeTxt);
-		
 		JButton tables_registerBtn = new JButton("Register Info");
 		tables_registerBtn.setBorder(null);
 		tables_registerBtn.setForeground(new Color(255, 255, 255));	
@@ -570,7 +532,7 @@ public class Tables extends JFrame{
 					tables_emaiLbl.setText("Email: "+c.getClient_email());
 					tables_contactLbl.setText("Contact No.: "+c.getClient_contact());
 					
-					if (tables_passportNoTxt.getText().equals("") && tables_tinIdTxt.getText().equals("") ) {
+					if (tables_passportNoTxt.getText().trim().trim().equals("") && tables_tinIdTxt.getText().trim().trim().equals("") ) {
 						tables_passportNoTxt.setEditable(true);
 						tables_tinIdTxt.setEditable(true);
 					}
@@ -611,72 +573,26 @@ public class Tables extends JFrame{
 			 	UIManager.put("Button.background", Color.WHITE);
 			 	UIManager.put("OptionPane.foreground",new ColorUIResource(90, 103, 115));
 				
-				String vs = visaStartPick.getJFormattedTextField().getText().toString();
-				String ve = visaEndPick.getJFormattedTextField().getText().toString();
-				String ps = permitStartPick.getJFormattedTextField().getText().toString();
-				String pe = permitEndPick.getJFormattedTextField().getText().toString();
-				String as = aepStartPick.getJFormattedTextField().getText().toString();
-				String ae = aepEndPick.getJFormattedTextField().getText().toString();
+				String vs = visaStartPick.getJFormattedTextField().getText().trim().toString();
+				String ve = visaEndPick.getJFormattedTextField().getText().trim().toString();
+				String ps = permitStartPick.getJFormattedTextField().getText().trim().toString();
+				String pe = permitEndPick.getJFormattedTextField().getText().trim().toString();
+				String as = aepStartPick.getJFormattedTextField().getText().trim().toString();
+				String ae = aepEndPick.getJFormattedTextField().getText().trim().toString();
 				try {
-					boolean visaValid = false;
-					boolean permitValid = false;
-					boolean aepValid = false;
-					boolean ptntValid = false;
-					if(!(tables_passportNoTxt.getText().isEmpty())) {
-						if(!(tables_tinIdTxt.getText().isEmpty())) {
-							if((!(tables_visaTypeTxt.getSelectedItem().toString().equals("") && !(ve.isEmpty() && vs.isEmpty()) || (tables_visaTypeTxt.getSelectedItem().toString().equals("") && (ve.isEmpty() && vs.isEmpty())) && DateCheck(ve,vs)))) {
-								visaValid = true;
+					
+					if(objectFilter.inputCheck("Passport No.",tables_passportNoTxt.getText())){
+						if(objectFilter.inputCheck("TIN ID",tables_tinIdTxt.getText())) {
+							if(objectFilter.dateCheckTransaction("Visa", tables_visaTypeTxt.getText(), ve, vs)) {
+								if(objectFilter.dateCheckTransaction("AEP", tables_aepIdTxt.getText(), as, ae)) {
+									if(objectFilter.dateCheckTransaction("Permit", tables_permitTypeTxt.getText(), ps, pe)) {
+										Register();
+										dispose();
+										new Tables().setVisible(true);
+									}
+								}
 							}
-							else if((tables_visaTypeTxt.getSelectedItem().toString().equals("") && !(ve.isEmpty() && vs.isEmpty()))) {
-								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The VISA TYPE field must not be empty. Please specify one.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
-							}
-							else if(!(tables_visaTypeTxt.getSelectedItem().equals("")) && (ve.isEmpty() && vs.isEmpty())){
-								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please specify visa start date and expiry date.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
-							}
-							
-							
-							if((!(tables_permitTypeTxt.getSelectedItem().toString().equals("")) && !(pe.isEmpty() && ps.isEmpty()) || (tables_permitTypeTxt.getSelectedItem().toString().equals("")) && (pe.isEmpty() && ps.isEmpty())) && DateCheck(ps,pe)) {
-								permitValid = true;
-							}
-							else if((tables_permitTypeTxt.getSelectedItem().toString().equals("")) && !(pe.isEmpty() && ps.isEmpty())) {
-								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The PERMIT TYPE field must not be empty. Please specify one.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
-							}
-							else if(!(tables_permitTypeTxt.getSelectedItem().toString().equals("")) && (pe.isEmpty() && ps.isEmpty())){
-								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please specify permit start date and expiry date.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
-							}
-							
-							
-							if((!(tables_aepIdTxt.getText().isEmpty()) && !(ae.isEmpty() && as.isEmpty()) || (tables_aepIdTxt.getText().isEmpty()) && (ae.isEmpty() && as.isEmpty())) && DateCheck(as,ae)) {
-								aepValid = true;
-							}
-							else if((tables_aepIdTxt.getText().isEmpty()) && !(ae.isEmpty() && as.isEmpty())) {
-								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The AEP ID field must not be empty. Please specify one.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
-							}
-							else if(!(tables_aepIdTxt.getText().isEmpty()) && (ae.isEmpty() && as.isEmpty())){
-								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please specify AEP start date and expiry date.</font color = #ffffff></html>", "Detected an empty Visa Type Field", JOptionPane.ERROR_MESSAGE);
-							}
-							
-							if((tables_passportNoTxt.getText().length() > 25) || (tables_tinIdTxt.getText().length() > 25))
-								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please limit Passport No./TIN ID to 25 and less characters..</font color = #ffffff></html>", "Detected invalid length for Passport No./TIN ID", JOptionPane.ERROR_MESSAGE);
-							
-							if((tables_aepIdTxt.getText().length() > 25))
-								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please limit AEP ID to 25 and less characters..</font color = #ffffff></html>", "Detected invalid length for AEP ID", JOptionPane.ERROR_MESSAGE);
-							
-							else
-								ptntValid = true;
-							if(visaValid && permitValid && aepValid && ptntValid && (DateCheck(ve,vs) && DateCheck(ps,pe) && DateCheck(as,ae)) ) 
-							{
-								Register();
-								dispose(); 
-								new Tables().setVisible(true);
-							}							
 						}
-						else {
-							JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The TIN ID field must not be empty. Please specify one.</font color = #ffffff></html>", "Detected an empty TIN ID field", JOptionPane.ERROR_MESSAGE);
-						}
-					}
-					else {
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The Passport No. field must not be empty. Please specify one.</font color = #ffffff></html>", "Detected an empty Passport No. field", JOptionPane.ERROR_MESSAGE);
 					}
 				}catch (Exception e3) {
 					e3.printStackTrace();
@@ -693,39 +609,39 @@ public class Tables extends JFrame{
 		 	UIManager.put("Button.background", Color.WHITE);
 		 	UIManager.put("OptionPane.foreground",new ColorUIResource(90, 103, 115));
 			Transaction trans = new Transaction();
-			trans.setPassportNo(tables_passportNoTxt.getText());
-			trans.setTinID(tables_tinIdTxt.getText());
-			trans.setVisaType(tables_visaTypeTxt.getSelectedItem().toString());			
+			trans.setPassportNo(tables_passportNoTxt.getText().trim().trim());
+			trans.setTinID(tables_tinIdTxt.getText().trim().trim());
+			trans.setVisaType(tables_visaTypeTxt.getText().trim().trim());			
 			
 			
 			
-			if(visaStartPick.getJFormattedTextField().getText().toString().equals(""))
+			if(visaStartPick.getJFormattedTextField().getText().trim().toString().equals(""))
 				trans.setVisaEndDate(null);
 			else
-				trans.setVisaEndDate(java.sql.Date.valueOf(objectFilter.addDay(visaStartPick.getJFormattedTextField().getText().toString())));		
+				trans.setVisaEndDate(java.sql.Date.valueOf(objectFilter.addDay(visaStartPick.getJFormattedTextField().getText().trim().toString())));		
 			
-			if(visaEndPick.getJFormattedTextField().getText().toString().equals(""))
+			if(visaEndPick.getJFormattedTextField().getText().trim().toString().equals(""))
 				trans.setVisaStartDate(null);
 			else
-				trans.setVisaStartDate(java.sql.Date.valueOf(objectFilter.addDay(visaEndPick.getJFormattedTextField().getText().toString())));
-			trans.setPermitType(tables_permitTypeTxt.getSelectedItem().toString());
-			if(permitStartPick.getJFormattedTextField().getText().toString().equals(""))
+				trans.setVisaStartDate(java.sql.Date.valueOf(objectFilter.addDay(visaEndPick.getJFormattedTextField().getText().trim().toString())));
+			trans.setPermitType(tables_permitTypeTxt.getText().trim());
+			if(permitStartPick.getJFormattedTextField().getText().trim().toString().equals(""))
 				trans.setPermitStartDate(null);
 			else
-				trans.setPermitStartDate(java.sql.Date.valueOf(objectFilter.addDay(permitStartPick.getJFormattedTextField().getText().toString())));
-			if(permitEndPick.getJFormattedTextField().getText().toString().equals(""))
+				trans.setPermitStartDate(java.sql.Date.valueOf(objectFilter.addDay(permitStartPick.getJFormattedTextField().getText().trim().toString())));
+			if(permitEndPick.getJFormattedTextField().getText().trim().toString().equals(""))
 				trans.setPermitEndDate(null);
 			else
-				trans.setPermitEndDate(java.sql.Date.valueOf(objectFilter.addDay(permitEndPick.getJFormattedTextField().getText().toString())));
-			trans.setAepID(tables_aepIdTxt.getText());
-			if(aepStartPick.getJFormattedTextField().getText().toString().equals(""))
+				trans.setPermitEndDate(java.sql.Date.valueOf(objectFilter.addDay(permitEndPick.getJFormattedTextField().getText().trim().toString())));
+			trans.setAepID(tables_aepIdTxt.getText().trim());
+			if(aepStartPick.getJFormattedTextField().getText().trim().toString().equals(""))
 				trans.setAepStartDate(null);
 			else
-				trans.setAepStartDate(java.sql.Date.valueOf(objectFilter.addDay(aepStartPick.getJFormattedTextField().getText().toString())));		
-			if(aepEndPick.getJFormattedTextField().getText().toString().equals(""))
+				trans.setAepStartDate(java.sql.Date.valueOf(objectFilter.addDay(aepStartPick.getJFormattedTextField().getText().trim().toString())));		
+			if(aepEndPick.getJFormattedTextField().getText().trim().toString().equals(""))
 				trans.setAepEndDate(null);
 			else
-				trans.setAepEndDate(java.sql.Date.valueOf(objectFilter.addDay(aepEndPick.getJFormattedTextField().getText().toString())));
+				trans.setAepEndDate(java.sql.Date.valueOf(objectFilter.addDay(aepEndPick.getJFormattedTextField().getText().trim().toString())));
 			trans.setClient_id(Integer.parseInt(objectFilter.getClientList()[client_id].split(":")[1].trim()));
 			Calendar calendar = Calendar.getInstance();
 			java.sql.Date currentDate = new java.sql.Date(calendar.getTime().getTime());
@@ -737,6 +653,8 @@ public class Tables extends JFrame{
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Transaction inserted successfully.</font color = #ffffff></html>", "Transaction Created", JOptionPane.INFORMATION_MESSAGE);
 			tables_passportNoTxt.setText("");
 			tables_tinIdTxt.setText("");
+			tables_visaTypeTxt.setText("");
+			tables_permitTypeTxt.setText("");
 			tables_aepIdTxt.setText("");
 			visaStartPick.getJFormattedTextField().setText("");
 			visaEndPick.getJFormattedTextField().setText("");
@@ -744,8 +662,6 @@ public class Tables extends JFrame{
 			aepEndPick.getJFormattedTextField().setText("");
 			permitStartPick.getJFormattedTextField().setText("");
 			permitEndPick.getJFormattedTextField().setText("");
-			tables_visaTypeTxt.setSelectedIndex(0);
-			tables_permitTypeTxt.setSelectedIndex(0);
 			tables_inputPanel.revalidate();
 		}
 	});//end of action listener
@@ -768,15 +684,13 @@ public class Tables extends JFrame{
 		tables_clientCreateTransactionLbl.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		
 		JLabel tables_clientStatusTableLbl = new JLabel("Client Status Table", SwingConstants.CENTER);
+		tables_clientStatusTableLbl.setBounds(929, 48, 243, 37);
 		tables_clientStatusTableLbl.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e) {
-				Runner.openTS();
-				Runner.destroyTables();
+				new TablesStatus().setVisible(true);
+				dispose();
 			}
 		});
-		tables_clientStatusTableLbl.setBounds(929, 48, 243, 37);
-
 		tables_clientStatusTableLbl.setForeground(Color.LIGHT_GRAY);
 		tables_clientStatusTableLbl.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		
@@ -784,8 +698,8 @@ public class Tables extends JFrame{
 		tables_clientRemarksTableLbl.setBounds(1241, 48, 230, 37);
 		tables_clientRemarksTableLbl.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				Runner.openTR();
-				Runner.destroyTables();
+				new TablesRemarks().setVisible(true);
+				dispose();
 			}
 		});
 		tables_clientRemarksTableLbl.setForeground(Color.LIGHT_GRAY);
@@ -810,7 +724,7 @@ public class Tables extends JFrame{
 			public void mouseClicked(MouseEvent e) 
 			{
 				Runner.openTUT();
-				Runner.destroyTables();
+				setVisible(false);
 			}
 		});
 		tables_updateTransactionLbl.setBounds(626, 48, 249, 37);
@@ -820,8 +734,8 @@ public class Tables extends JFrame{
 		JLabel tables_addClientLbl = new JLabel("Add New Client", SwingConstants.CENTER);
 		tables_addClientLbl.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				Runner.openTAC();
-				Runner.destroyTables();
+				new TablesAddClient().setVisible(true);
+				dispose();
 			}
 		});
 		tables_addClientLbl.setBounds(25, 48, 295, 37);
