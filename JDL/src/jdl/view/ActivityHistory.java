@@ -72,7 +72,7 @@ public class ActivityHistory extends JFrame{
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
-		setMinimumSize(new Dimension(1422, 799));
+		setMinimumSize(new Dimension(690, 480));
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 
@@ -124,16 +124,16 @@ public class ActivityHistory extends JFrame{
 		emp_back.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
 		
 		JLabel transaction_titleLbl = new JLabel("Activity History");
-		transaction_titleLbl.setBounds(627, 0, 242, 41);
+		transaction_titleLbl.setBounds(217, 0, 242, 37);
 		getContentPane().add(transaction_titleLbl);
 		transaction_titleLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		transaction_titleLbl.setForeground(Color.WHITE);
-		transaction_titleLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
+		transaction_titleLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
 		
 		//Images
 		
 		JLabel emp_minimize = new JLabel("");
-		emp_minimize.setBounds(1377, 0, 35, 41);
+		emp_minimize.setBounds(642, 0, 26, 46);
 		getContentPane().add(emp_minimize);
 		emp_minimize.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -142,13 +142,14 @@ public class ActivityHistory extends JFrame{
 		});
 		emp_minimize.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/button_minimizer.png")));
 		
-		JLabel transaction_selectuserlbl = new JLabel("Select User :");
+		JLabel transaction_selectuserlbl = new JLabel("Select User to View Transaction History:");
 		transaction_selectuserlbl.setForeground(Color.WHITE);
-		transaction_selectuserlbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
-		transaction_selectuserlbl.setBounds(21, 739, 128, 49);
+		transaction_selectuserlbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
+		transaction_selectuserlbl.setBounds(21, 430, 350, 41);
 		getContentPane().add(transaction_selectuserlbl);
 		
 		JComboBox comboBox = new JComboBox(objectFilter.getUsernames());
+		comboBox.setFont(new Font("Segoe UI Semibold", Font.BOLD, 16));
 		comboBox.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -158,11 +159,11 @@ public class ActivityHistory extends JFrame{
 		});
 		for(String s:objectFilter.getUsernames())
 			System.out.println(s);
-		comboBox.setBounds(105, 754, 189, 22);
+		comboBox.setBounds(369, 436, 295, 28);
 		getContentPane().add(comboBox);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 121, 1040, 289);
+		scrollPane.setBounds(21, 108, 646, 311);
 		getContentPane().add(scrollPane);
 		
 		table = new JTable();
@@ -173,7 +174,7 @@ public class ActivityHistory extends JFrame{
 		
 		JLabel emp_background = new JLabel("");
 		emp_background.setIcon(new ImageIcon(ActivityHistory.class.getResource("/jdl/Assets/background_tables4.jpg")));
-		emp_background.setBounds(0, 0, 1422, 799);
+		emp_background.setBounds(0, 0, 708, 494);
 		getContentPane().add(emp_background);
 
 		

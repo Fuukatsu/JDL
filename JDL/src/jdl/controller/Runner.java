@@ -197,7 +197,6 @@ public class Runner
     }
     public static void destroyGE()
     {
-    	gE.setVisible(false);
     	gE.dispose();
     }
     
