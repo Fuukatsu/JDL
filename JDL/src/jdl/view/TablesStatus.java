@@ -802,11 +802,24 @@ public class TablesStatus extends JFrame{
 		});
 		tables_minimize.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/button_minimizer.png")));
 		
+		tables_comboBox.insertItemAt("Click to see the list of registered client", 0);
+		tables_reloadBtn.setEnabled(false);
+		tables_registerBtn.setEnabled(false);
+		tables_comboBox.setSelectedIndex(0);
+		
 		tables_comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
 				Connection conn;
 				Connection conn2;
+				
+				if(tables_comboBox.getSelectedItem().toString() == "Click to see the list of registered client") {
+					tables_reloadBtn.setEnabled(false);
+					tables_registerBtn.setEnabled(false);
+					tables_comboBox1.removeAllItems();
+				}else if (tables_comboBox.getSelectedItem().toString() != "Click to see the list of registered client") {
+					tables_reloadBtn.setEnabled(true);
+					tables_registerBtn.setEnabled(true);
 				
 				try {
 					conn = DriverManager.getConnection(dP.url, dP.username, dP.password);
@@ -868,12 +881,13 @@ public class TablesStatus extends JFrame{
 				tables_reloadBtn.doClick();
 				tables_registerBtn.setEnabled(true);
 			}
-		});
+		}});
 		JLabel tables_background = new JLabel("");
 		tables_background.setIcon(new ImageIcon(TablesStatus.class.getResource("/jdl/Assets/background_tables4.jpg")));
 		tables_background.setBounds(0, 0, 1551, 848);
 		getContentPane().add(tables_background);
 	}
+	
 	public boolean checkFields()
 	{
 		JTextField[] fieldtexts = {
