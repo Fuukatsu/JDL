@@ -10,7 +10,6 @@ public class Runner
 	private static ActivityHistory aH;
 	private static Login l;
 	private static OptionList ol;
-	private static OrderBy ob;
 	private static Splash s;
 	private static Tables t;
 	private static TablesAddClient tac;
@@ -124,15 +123,6 @@ public class Runner
     {
     	ad.setVisible(false);
     	ad.dispose();
-    }
-    public static void openOB()
-    {
-    	ob = new OrderBy();
-    }
-    public static void destroyOB()
-    {
-    	ob.setVisible(false);
-    	ob.dispose();
     }
     public static void openTAC()
     {

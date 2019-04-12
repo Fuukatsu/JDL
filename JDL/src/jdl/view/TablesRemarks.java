@@ -547,7 +547,7 @@ public class TablesRemarks extends JFrame{
 					tables_inputPanel.revalidate();
 					tables_reloadBtn.doClick();
 					
-					JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Remark has been made to this transaction.</font color = #ffffff></html>", "Remark Inserted", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Remark has been made to this transaction.</font color = #ffffff></html>", "Remark Inserted Successfully", JOptionPane.INFORMATION_MESSAGE);
 					
 				} catch (SQLException e1) {
 					e1.printStackTrace();

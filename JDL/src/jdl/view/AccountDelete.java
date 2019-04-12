@@ -254,11 +254,11 @@ public class AccountDelete extends JFrame{
 				 	UIManager.put("OptionPane.foreground",new ColorUIResource(90, 103, 115));
 				 	
 				 	if(emp_userIdTxt.getText().trim().equals("")) {
-				 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> No user is specified. Please select one. </font color = #ffffff></html>", "Error in Deletion", JOptionPane.INFORMATION_MESSAGE);
+				 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> No user is specified. Please select one. </font color = #ffffff></html>", "No User Selected", JOptionPane.INFORMATION_MESSAGE);
 				 	}
 				 	else {
 				 		int message = JOptionPane.showConfirmDialog(null, "<html><font color = #ffffff> Are you sure you want to delete this user?<br>This will prevent"
-				 			+ " the user from accessing this system.</br></font color = #ffffff></html>", "Are you sure?", JOptionPane.YES_NO_OPTION);
+				 			+ " the user from accessing this system.</br></font color = #ffffff></html>", "Delete this User?", JOptionPane.YES_NO_OPTION);
 				 			if (message == JOptionPane.YES_OPTION) {
 				 				statement.executeUpdate();
 				 				statement1.executeUpdate();
