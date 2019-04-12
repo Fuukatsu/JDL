@@ -59,6 +59,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.JComboBox;
+import javax.swing.ScrollPaneConstants;
 
 public class Tables extends JFrame{
 	private JTextField tables_passportNoTxt;
@@ -157,8 +158,8 @@ public class Tables extends JFrame{
 				{
 					if(md.getRowCount() > 0 && tables_comboBox.getSelectedIndex() != 0)
 					{
-						tables_tinIdTxt.setText(md.getValueAt(0, 3).toString());
-						tables_tinIdTxt.setEditable(true);
+						//tables_tinIdTxt.setText(md.getValueAt(0, 3).toString());
+						//tables_tinIdTxt.setEditable(true);
 						//System.out.println(md.getValueAt(0, 3));		
 					}
 					else
@@ -570,12 +571,12 @@ public class Tables extends JFrame{
 		java.util.Date date=new java.util.Date();
 		java.sql.Date sqlDate=new java.sql.Date(date.getTime());
 		
+		
+		//Register Action
 		tables_registerBtn.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
-				
-				
 				UIManager.put("OptionPane.background",new ColorUIResource(90, 103, 115));
 			 	UIManager.put("Panel.background",new ColorUIResource(90, 103, 115));
 			 	UIManager.put("OptionPane.messageFont", new Font("Segoe UI Semibold", Font.BOLD, 14));
@@ -596,8 +597,8 @@ public class Tables extends JFrame{
 								if(objectFilter.dateCheckTransaction("AEP", tables_aepIdTxt.getText(), as, ae)) {
 									if(objectFilter.dateCheckTransaction("Permit", tables_permitTypeTxt.getText(), ps, pe)) {
 										Register();
-										dispose();
-										new Tables().setVisible(true);
+										Runner.destroyTables();
+										Runner.openTables();
 									}
 								}
 							}
@@ -610,6 +611,7 @@ public class Tables extends JFrame{
 				
 				tables_reloadBtn.doClick();
 			}// end of action performed
+		
 			
 		public void Register() 
 		{			
@@ -627,12 +629,11 @@ public class Tables extends JFrame{
 			in[3] = permitEndPick.getJFormattedTextField().getText().trim().toString();
 			in[4] = aepStartPick.getJFormattedTextField().getText().trim().toString();
 			in[5] = aepEndPick.getJFormattedTextField().getText().trim().toString();
-			
 			objectFilter.writeDates(trans, in);
 			
-			trans.setPassportNo(tables_passportNoTxt.getText().trim().trim());
-			trans.setTinID(tables_tinIdTxt.getText().trim().trim());
-			trans.setVisaType(tables_visaTypeTxt.getText().trim().trim());			
+			trans.setPassportNo(tables_passportNoTxt.getText().trim());
+			trans.setTinID(tables_tinIdTxt.getText().trim());
+			trans.setVisaType(tables_visaTypeTxt.getText().trim());			
 			trans.setPermitType(tables_permitTypeTxt.getText().trim());
 			trans.setAepID(tables_aepIdTxt.getText().trim());
 			trans.setClient_id(Integer.parseInt(objectFilter.getClientList()[client_id].split(":")[1].trim()));
@@ -643,7 +644,7 @@ public class Tables extends JFrame{
 			
 			boolean c = Queries.insertTransaction(trans);
 			if(c)
-				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Transaction Inserted Successfully.</font color = #ffffff></html>", "Transaction Created Successfully", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Transaction inserted successfully.</font color = #ffffff></html>", "Transaction Created", JOptionPane.INFORMATION_MESSAGE);
 			tables_passportNoTxt.setText("");
 			tables_tinIdTxt.setText("");
 			tables_visaTypeTxt.setText("");

@@ -138,6 +138,37 @@ public class Queries
 		}
 		return true;
 	}
+	
+	public static boolean updateTransaction(Transaction t)
+	{
+		try (Connection con = DriverManager.getConnection(dP.url, dP.username, dP.password)) 
+		{
+			PreparedStatement ps = con.prepareStatement("UPDATE jdl_accounts.transactions SET trans_passportNo = ?, trans_tinID = ?, trans_visaType=?, trans_visaStartDate=?, trans_visaEndDate=?, trans_permitType=?, trans_permitStartDate=?, trans_permitEndDate=?, trans_aepID=?, "
+					+ "trans_aepStartDate=?, trans_aepEndDate=?, client_id=?, trans_transTimestamp=?, trans_transAuthor=?  WHERE trans_transId = ?");
+			ps.setString(1, t.getPassportNo());
+			ps.setString(2, t.getTinID());
+			ps.setString(3, t.getVisaType());
+			ps.setDate(4, t.getVisaStartDate());
+			ps.setDate(5, t.getVisaEndDate());
+			ps.setString(6, t.getPermitType());
+			ps.setDate(7, t.getPermitStartDate());
+			ps.setDate(8, t.getPermitEndDate());
+			ps.setString(9, t.getAepID());
+			ps.setDate(10, t.getAepStartDate());
+			ps.setDate(11, t.getAepEndDate());
+			ps.setInt(12, t.getClient_id());
+			ps.setDate(13, t.getTransTimestamp());
+			ps.setString(14, t.getTransAuthor());
+			ps.setInt(15, t.getTransID());
+			ps.executeUpdate();
+		} catch (SQLException e) 
+		{
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
 	public static ArrayList<User> getUsers()
 	{
 		ArrayList<User> lists = new ArrayList<User>();

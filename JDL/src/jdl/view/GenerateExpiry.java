@@ -21,6 +21,7 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableModel;
 
 import jdl.controller.Runner;
 import jdl.controller.objectFilter;
@@ -42,7 +43,7 @@ public class GenerateExpiry extends JFrame{
 	private String admin_username;
 	private String admin_password;
 	private JTable table_1;
-
+	private ArrayList<Transaction> tlist;
 
 	/**
 	 * Launch the application.
@@ -123,13 +124,38 @@ public class GenerateExpiry extends JFrame{
 			@Override
 			public void mouseClicked(MouseEvent e) 
 			{
-				ArrayList<Transaction> tlist;
 				try {
 				String date = objectFilter.getDateToday();
 				Date d= new SimpleDateFormat("yyyy-MM-dd").parse(date);
 				date = objectFilter.addYear(date);
 				Date dd = new SimpleDateFormat("yyyy-MM-dd").parse(date);
 				tlist = Queries.getTransactionsBetweenDate(new java.sql.Date(d.getTime()), new java.sql.Date(dd.getTime()));
+				Object[][] tl = new Object[tlist.size()][13];
+				for(int i = 0; i < tlist.size();i++)
+				{
+					Object[] ttl = new Object[14];
+					Transaction ttemp = tlist.get(i);
+					ttl[0] = Integer.toString(ttemp.getClient_id());
+					ttl[1] = Integer.toString(ttemp.getTransID());
+					ttl[2] = ttemp.getPassportNo();
+					ttl[3] = ttemp.getTinID();
+					ttl[4] = ttemp.getVisaType();
+					ttl[5] = ttemp.getVisaStartDate();
+					ttl[6] = ttemp.getVisaEndDate();
+					ttl[7] = ttemp.getPermitType();
+					ttl[8] = ttemp.getPermitStartDate();
+					ttl[9] = ttemp.getPermitEndDate();
+					ttl[10] = ttemp.getAepID();
+					ttl[11] = ttemp.getAepStartDate();
+					ttl[12] = ttemp.getAepEndDate();
+					tl[i] = ttl;
+				}
+				table_1.setModel(new DefaultTableModel(
+						tl,
+						new String[] {
+							"Client ID", "Transaction ID", "Passport No", "TIN ID", "Visa Type", "Visa Start Date", "Visa End Date", "Permit Type", "Permit Start Date", "Permit End Date", "AEP ID", "AEP Start Date", "AEP End Date"
+						}
+					));
 				} catch (ParseException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

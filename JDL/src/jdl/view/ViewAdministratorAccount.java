@@ -42,6 +42,8 @@ import java.awt.event.ActionEvent;
 
 import java.awt.Component;
 import javax.swing.SpringLayout;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class ViewAdministratorAccount extends JFrame{
 	
@@ -54,7 +56,6 @@ public class ViewAdministratorAccount extends JFrame{
 	private JTextField adminAcc_positionTxt;
 	private JTextField adminAcc_contactTxt;
 	private JTextField adminAcc_emailTxt;
-	private JTextField adminAcc_genderTxt;
 	private JTextField adminAcc_addressTxt;
 	private databaseProperties dP = new databaseProperties();
 	/**
@@ -262,14 +263,6 @@ public class ViewAdministratorAccount extends JFrame{
 		getContentPane().add(adminAcc_emailTxt);
 		adminAcc_emailTxt.setVisible(false);
 		
-		adminAcc_genderTxt = new JTextField();
-		adminAcc_genderTxt.setBorder(null);
-		adminAcc_genderTxt.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
-		adminAcc_genderTxt.setColumns(10);
-		adminAcc_genderTxt.setBounds(232, 564, 275, 27);
-		getContentPane().add(adminAcc_genderTxt);
-		adminAcc_genderTxt.setVisible(false);
-		
 		adminAcc_addressTxt = new JTextField();
 		adminAcc_addressTxt.setBorder(null);
 		adminAcc_addressTxt.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
@@ -277,6 +270,14 @@ public class ViewAdministratorAccount extends JFrame{
 		adminAcc_addressTxt.setBounds(232, 595, 275, 27);
 		getContentPane().add(adminAcc_addressTxt);
 		adminAcc_addressTxt.setVisible(false);
+		
+		JComboBox adminAcc_genderBox = new JComboBox();
+		adminAcc_genderBox.setModel(new DefaultComboBoxModel(new String[] {"Male", "Female"}));
+		adminAcc_genderBox.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
+		adminAcc_genderBox.setEditable(false);
+		adminAcc_genderBox.setVisible(false);
+		adminAcc_genderBox.setBounds(232, 566, 275, 24);
+		getContentPane().add(adminAcc_genderBox);
 		
 		JLabel adminAcc_lastname1 = new JLabel("Lastname:");
 		adminAcc_lastname1.setForeground(Color.WHITE);
@@ -361,7 +362,7 @@ public class ViewAdministratorAccount extends JFrame{
 				adminAcc_positionTxt.setVisible(true);
 				adminAcc_contactTxt.setVisible(true);
 				adminAcc_emailTxt.setVisible(true);
-				adminAcc_genderTxt.setVisible(true);
+				adminAcc_genderBox.setVisible(true);
 				adminAcc_addressTxt.setVisible(true);
 				adminAcc_lastname1.setVisible(true);
 				adminAcc_firstname1.setVisible(true);
@@ -371,6 +372,7 @@ public class ViewAdministratorAccount extends JFrame{
 				adminAcc_email1.setVisible(true);
 				adminAcc_gender1.setVisible(true);
 				adminAcc_address1.setVisible(true);
+				adminAcc_genderBox.setVisible(true);
 			}
 		});
 		adminAcc_editCredentials.setForeground(Color.WHITE);
@@ -407,7 +409,7 @@ public class ViewAdministratorAccount extends JFrame{
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Administrator's Firstname must not be empty.</font color = #ffffff></html>", "Detected an empty Administrator's firstname", JOptionPane.ERROR_MESSAGE);
 					}else if(adminAcc_positionTxt.getText().trim().trim().equals("")) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Administrator's Position must not be empty.</font color = #ffffff></html>", "Detected an empty or undefinable company position ", JOptionPane.ERROR_MESSAGE);
-					}else if(adminAcc_genderTxt.getText().trim().trim().equals("")) {
+					}else if(adminAcc_genderBox.getSelectedItem().toString().trim().trim().equals("")) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Administrator's Gender must not be empty.</font color = #ffffff></html>", "Detected an empty or undefinable gender", JOptionPane.ERROR_MESSAGE);
 					}else if(birthdatePicker.getJFormattedTextField().getText().trim().toString().equals("")) {
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Administrator's Birthdate must not be empty.</font color = #ffffff></html>", "Detected an empty Administrator's birthdate", JOptionPane.ERROR_MESSAGE);
@@ -423,7 +425,7 @@ public class ViewAdministratorAccount extends JFrame{
 						statement1.setString(1, adminAcc_lastnameTxt.getText().trim());
 						statement1.setString(2, adminAcc_firstnameTxt.getText().trim());
 						statement1.setString(3, adminAcc_positionTxt.getText().trim());
-						statement1.setString(4, adminAcc_genderTxt.getText().trim());
+						statement1.setString(4, adminAcc_genderBox.getSelectedItem().toString().trim());
 						statement1.setDate(5, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().trim().toString())));
 						statement1.setString(6, adminAcc_addressTxt.getText().trim());
 						statement1.setString(7, adminAcc_contactTxt.getText().trim());
@@ -432,7 +434,7 @@ public class ViewAdministratorAccount extends JFrame{
 						statement1.setString(10, adminAcc_lastnameTxt.getText().trim());
 						statement1.setString(11, adminAcc_firstnameTxt.getText().trim());
 						statement1.setString(12, adminAcc_positionTxt.getText().trim());
-						statement1.setString(13, adminAcc_genderTxt.getText().trim());
+						statement1.setString(13, adminAcc_genderBox.getSelectedItem().toString().trim());
 						statement1.setDate(14, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().trim().toString())));
 						statement1.setString(15, adminAcc_addressTxt.getText().trim());
 						statement1.setString(16, adminAcc_contactTxt.getText().trim());
@@ -457,7 +459,7 @@ public class ViewAdministratorAccount extends JFrame{
 						adminAcc_positionTxt.setVisible(false);
 						adminAcc_contactTxt.setVisible(false);
 						adminAcc_emailTxt.setVisible(false);
-						adminAcc_genderTxt.setVisible(false);
+						adminAcc_genderBox.setVisible(false);
 						adminAcc_addressTxt.setVisible(false);
 						
 						statement3.setInt(1, Integer.parseInt(adminAcc_userIdTxt.getText().trim()));
@@ -480,7 +482,7 @@ public class ViewAdministratorAccount extends JFrame{
 							adminAcc_positionTxt.setText(rs1.getString("emp_position"));
 							adminAcc_contactTxt.setText(rs1.getString("emp_contact"));
 							adminAcc_emailTxt.setText(rs1.getString("emp_email"));
-							adminAcc_genderTxt.setText(rs1.getString("emp_gender"));	
+							adminAcc_genderBox.setSelectedItem(rs1.getString("emp_gender"));
 							adminAcc_addressTxt.setText(rs1.getString("emp_address"));	
 						}
 						
@@ -572,7 +574,8 @@ public class ViewAdministratorAccount extends JFrame{
 						adminAcc_positionTxt.setText(rs1.getString("emp_position"));
 						adminAcc_contactTxt.setText(rs1.getString("emp_contact"));
 						adminAcc_emailTxt.setText(rs1.getString("emp_email"));
-						adminAcc_genderTxt.setText(rs1.getString("emp_gender"));	
+						//adminAcc_genderTxt.setText(rs1.getString("emp_gender"));
+						adminAcc_genderBox.setSelectedItem(rs1.getString("emp_gender"));
 						adminAcc_addressTxt.setText(rs1.getString("emp_address"));	
 					}
 				}
