@@ -542,7 +542,7 @@ public class Tables extends JFrame{
 						tables_tinIdTxt.setEditable(false);
 					}
 					if(tables_comboBox.getSelectedItem() == tables_comboBox.getItemAt(0)) 
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please Select a Client</font color = #ffffff></html>", "Invalid Selection", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please Select a Client</font color = #ffffff></html>", "Invalid Client Selection", JOptionPane.ERROR_MESSAGE);
 					else
 					{
 						client_id = tables_comboBox.getSelectedIndex();
@@ -635,9 +635,6 @@ public class Tables extends JFrame{
 			boolean c = Queries.insertTransaction(trans);
 			if(c)
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Transaction inserted successfully.</font color = #ffffff></html>", "Transaction Created", JOptionPane.INFORMATION_MESSAGE);
-			
-			
-			//Clear Textfields
 			tables_passportNoTxt.setText("");
 			tables_tinIdTxt.setText("");
 			tables_visaTypeTxt.setText("");

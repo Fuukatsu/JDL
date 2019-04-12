@@ -70,6 +70,7 @@ public class Queries
 				c.setClient_email(rs.getString(11));
 				lists.add(c);
 			}
+			con.close();
 		} catch (SQLException e) 
 		{
 			e.printStackTrace();
@@ -99,7 +100,9 @@ public class Queries
 					" FROM transactions WHERE client_id = ? ORDER BY trans_transId DESC");
 			ps.setInt(1, id);
 			rs = ps.executeQuery();
-			return DbUtils.resultSetToTableModel(rs);
+			TableModel tm = DbUtils.resultSetToTableModel(rs);
+			con.close();
+			return tm;
 		} catch (SQLException e) 
 		{
 			e.printStackTrace();
@@ -127,6 +130,7 @@ public class Queries
 			ps.setDate(13, t.getTransTimestamp());
 			ps.setString(14, t.getTransAuthor());
 			ps.executeUpdate();
+			con.close();
 		} catch (SQLException e) 
 		{
 			e.printStackTrace();
@@ -181,6 +185,7 @@ public class Queries
 				u.setUser_ifAdmin(rs.getInt("user_ifAdmin"));
 				lists.add(u);
 			}
+			con.close();
 		} catch (SQLException e) 
 		{
 			e.printStackTrace();
@@ -212,6 +217,7 @@ public class Queries
 				c.setClient_contact(rs.getString(10));
 				c.setClient_email(rs.getString(11));
 			}
+			con.close();
 		} catch (SQLException e) 
 		{
 			e.printStackTrace();
@@ -240,7 +246,9 @@ public class Queries
 					" FROM transactions WHERE trans_transAuthor = ? ORDER BY trans_transId DESC");
 			ps.setString(1, u);
 			rs = ps.executeQuery();
-			return DbUtils.resultSetToTableModel(rs);
+			TableModel tm = DbUtils.resultSetToTableModel(rs);
+			con.close();
+			return tm;
 		} catch (SQLException e) 
 		{
 			e.printStackTrace();
@@ -274,6 +282,7 @@ public class Queries
 				t.setTransAuthor(rs.getString(15));
 				tlist.add(t);
 			}
+			con.close();
 		} catch (SQLException e) 
 		{
 			e.printStackTrace();
@@ -292,6 +301,7 @@ public class Queries
 			{
 				return false;
 			}
+			con.close();
 		} catch (SQLException e) 
 		{
 			e.printStackTrace();
@@ -305,6 +315,7 @@ public class Queries
 			PreparedStatement ps = con.prepareStatement("INSERT INTO jdl_accounts.notifications (notif_date) values (?)");
 			ps.setDate(1, date);
 			ps.executeUpdate();
+			con.close();
 		} catch (SQLException e) 
 		{
 			e.printStackTrace();
@@ -352,6 +363,7 @@ public class Queries
 				t.setTransAuthor(rs.getString(15));
 				tlist.add(t);
 			}
+			con.close();
 		} catch (SQLException e) 
 		{
 			e.printStackTrace();

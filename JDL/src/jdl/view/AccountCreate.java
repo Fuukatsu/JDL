@@ -185,19 +185,19 @@ public class AccountCreate extends JFrame{
 			 	emp_usernameTxt.setText(emp_usernameTxt.getText().trim());
 			 	emp_passwordTxt.setText(emp_passwordTxt.getText().trim());
 				if(emp_userIdTxt.getText().equals("")) {
-			 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> No USER ID was specified. Kindly fill out the fields. </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
+			 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> No USER ID was specified. Kindly fill out the fields. </font color = #ffffff></html>", "No User ID was filled out", JOptionPane.INFORMATION_MESSAGE);
 			 	}
 			 	else if(emp_usernameTxt.getText().equals("")) {
-			 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> No USERNAME was specified. Kindly fill out the fields. </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
+			 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> No USERNAME was specified. Kindly fill out the fields. </font color = #ffffff></html>", "No Username was filled out", JOptionPane.INFORMATION_MESSAGE);
 			 	}
 			 	else if(emp_passwordTxt.getText().equals("")) {
-			 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> No PASSWORD was specified. Kindly fill out the fields. </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
+			 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> No PASSWORD was specified. Kindly fill out the fields. </font color = #ffffff></html>", "No Password was filled out", JOptionPane.INFORMATION_MESSAGE);
 			 	}
 			 	else if(emp_usernameTxt.getText().length() <= 1) {
-			 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> Acceptable usernames must be at least 2 characters and above. Please enter a valid one.  </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
+			 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> Acceptable usernames must be at least 2 characters and above. Please enter a valid one.  </font color = #ffffff></html>", "Invalid Username was filled out", JOptionPane.INFORMATION_MESSAGE);
 			 	}
 			 	else if(emp_passwordTxt.getText().length()<=7 ) {
-			 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> Acceptable Passwords must be at least 7 characters and above. Please lengthen your password. </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
+			 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> Acceptable Passwords must be at least 7 characters and above. Please lengthen your password. </font color = #ffffff></html>", "Invalid Password was filled out", JOptionPane.INFORMATION_MESSAGE);
 			 	}
 			 	else {
 			 		//if username exists: True -> Throw Err, False -> 
@@ -209,12 +209,12 @@ public class AccountCreate extends JFrame{
 			 			if(u.getUser_id() == Integer.parseInt(emp_userIdTxt.getText()))
 			 			{
 			 				userIdExist = true;
-			 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> User ID already exists </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
+			 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> User ID already exists </font color = #ffffff></html>", "Already Existing ID", JOptionPane.INFORMATION_MESSAGE);
 			 				break;
 			 			}
 			 			if(u.getUser_username().equals(emp_usernameTxt.getText())) {
 			 				usernameExist = true;
-			 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> Username already exists </font color = #ffffff></html>", "Error in Creation", JOptionPane.INFORMATION_MESSAGE);
+			 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> Username already exists </font color = #ffffff></html>", "Already Existing Username", JOptionPane.INFORMATION_MESSAGE);
 			 				break;
 			 			}
 			 		}
@@ -222,14 +222,11 @@ public class AccountCreate extends JFrame{
 					 if(comboBox.getSelectedIndex() == 1 && !usernameExist &&!userIdExist) {
 					 	createAccount(1);
 					 	JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>User has been created successfully.</font color = #ffffff></html>", "User Created.", JOptionPane.INFORMATION_MESSAGE);
-					 	//Runner.destroyAC();
-					 	//Runner.openAC();
+
 					 }	
 					 else if(comboBox.getSelectedIndex() == 0 && !usernameExist &&!userIdExist) {
 					 	createAccount(0);
 					 	JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>User has been created successfully.</font color = #ffffff></html>", "User Created.", JOptionPane.INFORMATION_MESSAGE);
-					 	//Runner.destroyAC();
-					 	//Runner.openAC();
 					 }
 			 	}
 				

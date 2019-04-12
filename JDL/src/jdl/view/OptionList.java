@@ -99,7 +99,7 @@ public class OptionList extends JFrame{
 				 	UIManager.put("OptionPane.foreground",new ColorUIResource(90, 103, 115));
 				 	
 				 
-			    int reply = JOptionPane.showConfirmDialog(null, "<html><font color = #ffffff> Are you sure you want to logout of the system? </font color = #ffffff></html>", "Logout?", JOptionPane.YES_NO_OPTION);
+			    int reply = JOptionPane.showConfirmDialog(null, "<html><font color = #ffffff> Are you sure you want to logout of the system? </font color = #ffffff></html>", "Proceed to Logout?", JOptionPane.YES_NO_OPTION);
 			    	if (reply == JOptionPane.YES_OPTION) {
 			    		Runner.setUser(null);
 			    		Runner.openLogin();
