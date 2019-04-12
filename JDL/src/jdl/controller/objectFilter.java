@@ -270,5 +270,61 @@ public class objectFilter
 		return trans;
 	}
 	
+	public static boolean validateEmptyStrings(String[] input, String[] what) {
+		boolean t = false;
+		if(input[0].isEmpty() || containsDigit(input[0]) || input[0].length() >24 ) {
+			if(input[0].isEmpty())
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[0]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
+			else if(containsDigit(input[0]))
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[0]+" must not contain digits.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+			else if(input[0].length() >24)
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[0]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+		}
+		else if(input[1].isEmpty() || containsDigit(input[1]) || input[1].length() >24 ) {
+			if(input[1].isEmpty())
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[1]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
+			else if(containsDigit(input[1]))
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[1]+" must not contain digits.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+			else if(input[1].length() >24)
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[1]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+		}
+		else if(input[3].isEmpty()) {
+			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[3]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
+		}
+		else if(input[5].length() >24 ) {
+			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[5]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+		}
+		else if(input[6].length() >24 ) {
+			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[6]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+		}
+		else if(containsDigit(input[7]) || input[6].length() >24 ) {
+			if(containsDigit(input[7]))
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[7]+" must not contain digits.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);
+			else
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[7]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);
+		}
+		else if(containsAlpha(input[8]) || input[6].length() >24 ){
+			if(containsDigit(input[8]))
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[8]+" must not contain digits.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);
+			else
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[8]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);
+		}
+		else if(input[9].isEmpty() || input[9].length() >24 || !checkEmail(input[9])) {
+			if(input[9].isEmpty())
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[9]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
+			else if(input[9].length() >24)
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[9]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+			else if(!checkEmail(input[9]))
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[9]+": "+input[9]+" is invalid</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+		}
+		else{
+			t = true;
+		}
+		
+		return t;
+	}
+	
+	
+	
 	
 }

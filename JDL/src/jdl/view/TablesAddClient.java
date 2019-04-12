@@ -498,31 +498,39 @@ public class TablesAddClient extends JFrame{
 					conn2 = DriverManager.getConnection(dP.url, dP.username, dP.password);
 					PreparedStatement statement1 = conn2.prepareStatement(sql);
 					
-					if(tables_clientLastnameTxt.getText().trim().equals("")) {
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Client's Lastname must not be empty.</font color = #ffffff></html>", "Detected an empty client's lastname", JOptionPane.ERROR_MESSAGE);
-					}else if (tables_clientFirstnameTxt.getText().trim().equals("")) {
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Client's Firstname must not be empty.</font color = #ffffff></html>", "Detected an empty client's firstname", JOptionPane.ERROR_MESSAGE);
-					}else if((tables_nationalityBox.getSelectedItem().toString()).equals("")) {
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Client's Nationality must not be empty.</font color = #ffffff></html>", "Detected an empty or undefinable nationality ", JOptionPane.ERROR_MESSAGE);
-					}else if(birthdatePicker.getJFormattedTextField().getText().toString().equals("")) {
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Client's Birthdate must not be empty.</font color = #ffffff></html>", "Detected an empty client's birthdate", JOptionPane.ERROR_MESSAGE);
-					}else if(tables_genderBox.getSelectedItem().toString().equals("")) {
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Client's Gender must not be empty.</font color = #ffffff></html>", "Detected an empty or undefinable gender", JOptionPane.ERROR_MESSAGE);
-					}else if(tables_clientContactTxt.getText().trim().equals("") && tables_clientEmailTxt.getText().trim().equals("")) {
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>There should at least one contact information available for a client</font color = #ffffff></html>", "Detected an empty contact no or email", JOptionPane.ERROR_MESSAGE);
-					}else if(objectFilter.containsDigit(tables_clientAliasTxt.getText().trim()) || objectFilter.containsDigit(tables_clientFirstnameTxt.getText()) || objectFilter.containsDigit(tables_clientLastnameTxt.getText())) {
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Client's names or alias must not contain numeric character.</font color = #ffffff></html>", "Detected an numerical character in client's names/alias", JOptionPane.ERROR_MESSAGE);
-					}else if(objectFilter.containsAlpha(tables_clientContactTxt.getText().trim() )) {
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Client's contact number must not contain alphabet characters.</font color = #ffffff></html>", "Detected an alphabet character in client's contact number", JOptionPane.ERROR_MESSAGE);
-					}else if((!(objectFilter.checkEmail(tables_clientEmailTxt.getText().trim())) && !(tables_clientEmailTxt.getText().equals(""))) &&  (tables_clientContactTxt.getText().equals("")|| !(tables_clientContactTxt.getText().equals("")) )) {
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Client's email is not valid</font color = #ffffff></html>", "Detected an invalid email", JOptionPane.ERROR_MESSAGE);
-					}
-					else {
-						
+					String[] input = new String[10];
+					input[0] = tables_clientLastnameTxt.getText().trim();
+					input[1] = tables_clientFirstnameTxt.getText().trim();
+					input[2] = tables_nationalityBox.getSelectedItem().toString();
+					input[3] = birthdatePicker.getJFormattedTextField().getText().toString();
+					input[4] = tables_genderBox.getSelectedItem().toString();
+					input[5] = tables_clientCompanyTxt.getText().trim();
+					input[6] = tables_clientPositionTxt.getText().trim();
+					input[7] = tables_clientAliasTxt.getText().trim();
+					input[8] = tables_clientContactTxt.getText().trim();
+					input[9] = tables_clientEmailTxt.getText().trim();
+					
+					String[] name = new String[10];
+					name[0] = "Client's Lastname";
+					name[1] = "Client's Firstname";
+					name[2] = "Client's Nationality";
+					name[3] = "Client's Birthdate";
+					name[4] = "Client's Gender";
+					name[5] = "Client's Company";
+					name[6] = "Client's Position";
+					name[7] = "Client's Alias";
+					name[8] = "Client's Contact Number";
+					name[9] = "Client's Email";
+					
+					if(objectFilter.validateEmptyStrings(input, name)) {
+						System.out.print("IM HERE" + objectFilter.validateEmptyStrings(input, name));
 						statement1.setString(1, tables_clientLastnameTxt.getText().trim());
 						statement1.setString(2, tables_clientFirstnameTxt.getText().trim());
 						statement1.setString(3, tables_nationalityBox.getSelectedItem().toString());
-						statement1.setDate(4, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().toString())));
+						if(input[5].equals(""))
+							statement1.setDate(4, null);
+						else
+							statement1.setDate(4, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().toString())));
 						statement1.setString(5, tables_genderBox.getSelectedItem().toString());
 						statement1.setString(6, tables_clientCompanyTxt.getText().trim());
 						statement1.setString(7, tables_clientPositionTxt.getText().trim());
