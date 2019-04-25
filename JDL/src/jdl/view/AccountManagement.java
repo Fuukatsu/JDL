@@ -363,7 +363,7 @@ public class AccountManagement extends JFrame{
 		emp_BirthdateLbl.setBounds(20, 393, 197, 29);
 		tables_inputPanel.add(emp_BirthdateLbl);
 		
-		JComboBox emp_comboBox = new JComboBox();
+		JComboBox<String> emp_comboBox = new JComboBox<String>();
 		emp_comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				emp_LastnameTxt.setText("");
@@ -463,6 +463,7 @@ public class AccountManagement extends JFrame{
 							+ " values (?,?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE emp_lastname = ?, emp_firstname = ?, emp_position = ?, emp_gender = ?, emp_birthdate = ?, emp_address = ?, emp_contact = ?, emp_email = ?, user_id = ?";
 					
 					conn2 = DriverManager.getConnection(dP.url, dP.username, dP.password);
+					
 					PreparedStatement statement1 = conn2.prepareStatement(sql);
 					emp_LastnameTxt.setText(emp_LastnameTxt.getText().trim());
 					emp_FirstnameTxt.setText(emp_FirstnameTxt.getText().trim());
@@ -470,24 +471,30 @@ public class AccountManagement extends JFrame{
 					emp_GenderTxt.setText(emp_GenderTxt.getText().trim());
 					emp_ContactTxt.setText(emp_ContactTxt.getText().trim());
 					emp_EmailTxt.setText(emp_EmailTxt.getText().trim());
-					if(emp_LastnameTxt.getText().equals("")) {
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employee's Lastname must not be empty.</font color = #ffffff></html>", "Detected an empty Employee's lastname", JOptionPane.ERROR_MESSAGE);
-					}else if (emp_FirstnameTxt.getText().equals("")) {
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employee's Firstname must not be empty.</font color = #ffffff></html>", "Detected an empty Employee's firstname", JOptionPane.ERROR_MESSAGE);
-					}else if(emp_PositionTxt.getText().equals("")) {
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employee's Position must not be empty.</font color = #ffffff></html>", "Detected an empty or undefinable company position ", JOptionPane.ERROR_MESSAGE);
-					}else if(emp_GenderTxt.getText().equals("")) {
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employee's Gender must not be empty.</font color = #ffffff></html>", "Detected an empty or undefinable gender", JOptionPane.ERROR_MESSAGE);
-					}else if(birthdatePicker.getJFormattedTextField().getText().toString().equals("")) {
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employee's Birthdate must not be empty.</font color = #ffffff></html>", "Detected an empty Employee's birthdate", JOptionPane.ERROR_MESSAGE);
-					}else if((emp_ContactTxt.getText().equals("") && emp_EmailTxt.getText() .equals("") )) {
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>There should at least one contact information available for an employee</font color = #ffffff></html>", "Detected an empty contact no. or email", JOptionPane.ERROR_MESSAGE);
-					}else if(objectFilter.checkEmail(emp_EmailTxt.getText().trim().toString())){
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please Enter a valid email</font color = #ffffff></html>", "Invalid Email", JOptionPane.ERROR_MESSAGE);
-					}else if(objectFilter.containsAlpha(emp_ContactTxt.getText().trim() )) {
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employees's contact number must not contain alphabet characters.</font color = #ffffff></html>", "Detected an alphabet character in employees's contact number", JOptionPane.ERROR_MESSAGE);
-					}
-					else {
+					
+					String[] input = new String[9];
+					input[0] = emp_LastnameTxt.getText().trim();
+					input[1] = emp_FirstnameTxt.getText().trim();
+					input[2] = emp_PositionTxt.getText().trim();
+					input[3] = emp_GenderTxt.getText().trim();
+					input[4] = birthdatePicker.getJFormattedTextField().getText().toString().trim();
+					input[5] = emp_AddressTxt.getText();
+					input[6] = emp_ContactTxt.getText();
+					input[7] = emp_EmailTxt.getText();
+					input[8] = emp_userIdTxt.getText();
+					
+					String[] what = new String[9];
+					what[0] = "Employee's Lastname";
+					what[1] = "Employee's Firstname";
+					what[2] = "Employee's Position";
+					what[3] = "Employee's Gender";
+					what[4] = "Employee's Birthdate";
+					what[5] = "Employee's Address";
+					what[6] = "Employee's Contact";
+					what[7] = "Employee's Email";
+					what[8] = "Employee's User ID";
+					
+					if(objectFilter.validateAccountInfoEmptyStrings(input, what)) {
 						statement1.setString(1, emp_LastnameTxt.getText());
 						statement1.setString(2, emp_FirstnameTxt.getText());
 						statement1.setString(3, emp_PositionTxt.getText());
@@ -497,6 +504,7 @@ public class AccountManagement extends JFrame{
 						statement1.setString(7, emp_ContactTxt.getText());
 						statement1.setString(8, emp_EmailTxt.getText());
 						statement1.setString(9, emp_userIdTxt.getText());
+						
 						statement1.setString(10, emp_LastnameTxt.getText());
 						statement1.setString(11, emp_FirstnameTxt.getText());
 						statement1.setString(12, emp_PositionTxt.getText());
@@ -511,10 +519,9 @@ public class AccountManagement extends JFrame{
 						tables_inputPanel.revalidate();
 						
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employee Information has been successfully updated.</font color = #ffffff></html>", "Information Updated Successfully", JOptionPane.INFORMATION_MESSAGE);
+					}
 				}
-				}
-
-				 catch (SQLException e1) {
+				catch (SQLException e1) {
 					e1.printStackTrace();
 				}
 			}
