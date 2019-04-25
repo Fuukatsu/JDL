@@ -137,7 +137,7 @@ public class Login extends JFrame {
 			{
 				String tUsername = login_usernameTxt.getText().trim();
 				String tPassword = new String(login_passwordTxt.getPassword());
-				if(tPassword.length() < 8 || tUsername.length() < 8)
+				if(tPassword.length() < 8)
 				{
 					login_error.setVisible(false);
 					login_error1.setVisible(false);
