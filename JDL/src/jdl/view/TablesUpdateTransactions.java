@@ -794,12 +794,12 @@ public class TablesUpdateTransactions extends JFrame{
 				Runner.openTables();
 			}
 		});
-		tables_clientCreateTransactionLbl.setBounds(330, 48, 227, 37);
+		tables_clientCreateTransactionLbl.setBounds(475, 48, 227, 37);
 		tables_clientCreateTransactionLbl.setForeground(Color.LIGHT_GRAY);
-		tables_clientCreateTransactionLbl.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		tables_clientCreateTransactionLbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		
 		JLabel tables_clientStatusTableLbl = new JLabel("Client Status Table", SwingConstants.CENTER);
-		tables_clientStatusTableLbl.setBounds(929, 48, 243, 37);
+		tables_clientStatusTableLbl.setBounds(1043, 48, 209, 37);
 		tables_clientStatusTableLbl.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				
@@ -808,10 +808,10 @@ public class TablesUpdateTransactions extends JFrame{
 			}
 		});
 		tables_clientStatusTableLbl.setForeground(Color.LIGHT_GRAY);
-		tables_clientStatusTableLbl.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		tables_clientStatusTableLbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		
 		JLabel tables_clientRemarksTableLbl = new JLabel("Client Remarks Table", SwingConstants.CENTER);
-		tables_clientRemarksTableLbl.setBounds(1241, 48, 230, 37);
+		tables_clientRemarksTableLbl.setBounds(1290, 48, 209, 37);
 		tables_clientRemarksTableLbl.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 
@@ -820,7 +820,7 @@ public class TablesUpdateTransactions extends JFrame{
 			}
 		});
 		tables_clientRemarksTableLbl.setForeground(Color.LIGHT_GRAY);
-		tables_clientRemarksTableLbl.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		tables_clientRemarksTableLbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		
 		JLabel label = new JLabel("");
 		label.setBounds(1178, 48, 57, 37);
@@ -829,7 +829,7 @@ public class TablesUpdateTransactions extends JFrame{
 		label.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
 		
 		JLabel tables_line = new JLabel("");
-		tables_line.setBounds(722, 101, 57, 22);
+		tables_line.setBounds(861, 96, 57, 22);
 		tables_line.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/line.png")));
 		tables_line.setHorizontalAlignment(SwingConstants.CENTER);
 		tables_line.setForeground(Color.WHITE);
@@ -837,9 +837,9 @@ public class TablesUpdateTransactions extends JFrame{
 		
 		JLabel tables_updateTransactionLbl = new JLabel("Update Transaction", SwingConstants.CENTER);
 
-		tables_updateTransactionLbl.setBounds(626, 48, 249, 37);
+		tables_updateTransactionLbl.setBounds(774, 48, 227, 37);
 		tables_updateTransactionLbl.setForeground(Color.WHITE);
-		tables_updateTransactionLbl.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		tables_updateTransactionLbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		
 		JLabel tables_addClientLbl = new JLabel("Add New Client", SwingConstants.CENTER);
 		tables_addClientLbl.addMouseListener(new MouseAdapter() {
@@ -849,9 +849,9 @@ public class TablesUpdateTransactions extends JFrame{
 				Runner.destroyTUT();
 			}
 		});
-		tables_addClientLbl.setBounds(25, 48, 295, 37);
+		tables_addClientLbl.setBounds(25, 48, 183, 37);
 		tables_addClientLbl.setForeground(Color.LIGHT_GRAY);
-		tables_addClientLbl.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		tables_addClientLbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		
 		JLabel tables_specificClientLbl = new JLabel("Client Transactions");
 		tables_specificClientLbl.setBackground(new Color(0, 153, 153));
@@ -902,7 +902,7 @@ public class TablesUpdateTransactions extends JFrame{
 		tables_minimize.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/button_minimizer.png")));
 		
 		JLabel tables_seeTablesLbl = new JLabel("See Tables");
-		tables_seeTablesLbl.setBounds(667, 4, 168, 37);
+		tables_seeTablesLbl.setBounds(659, 4, 168, 37);
 		getContentPane().add(tables_seeTablesLbl);
 		tables_seeTablesLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		tables_seeTablesLbl.setForeground(Color.WHITE);
@@ -939,6 +939,12 @@ public class TablesUpdateTransactions extends JFrame{
 		tables_inputPanel.add(tables_transactionIdLbl);
 		getContentPane().add(scrollPane_1);
 		getContentPane().add(tables_specificClientLbl);
+		
+		JLabel tables_editClientsLbl = new JLabel("Updates Clients", SwingConstants.CENTER);
+		tables_editClientsLbl.setForeground(Color.LIGHT_GRAY);
+		tables_editClientsLbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		tables_editClientsLbl.setBounds(245, 48, 183, 37);
+		getContentPane().add(tables_editClientsLbl);
 		
 		JLabel background_tables = new JLabel("");
 		background_tables.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/background_tables4.jpg")));
