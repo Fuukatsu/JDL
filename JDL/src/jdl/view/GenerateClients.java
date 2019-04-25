@@ -198,9 +198,10 @@ public class GenerateClients extends JFrame{
 		getContentPane().add(generate_clientCountLbl);
 		
 		JLabel generate_actualCountLbl = new JLabel("");
+		generate_actualCountLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		generate_actualCountLbl.setForeground(Color.WHITE);
-		generate_actualCountLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 13));
-		generate_actualCountLbl.setBounds(35, 422, 169, 166);
+		generate_actualCountLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 90));
+		generate_actualCountLbl.setBounds(10, 422, 227, 166);
 		getContentPane().add(generate_actualCountLbl);
 		
 		JLabel options_background = new JLabel("");
