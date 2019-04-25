@@ -124,7 +124,7 @@ public class TablesUpdateClient extends JFrame{
 		tables_inputPanel.setLayout(null);
 		
 		JComboBox tables_comboBox = new JComboBox();
-		tables_comboBox.addItem("Click to see the list of registered client");
+		
 		Connection conn1;
 		try {
 			conn1 = DriverManager.getConnection(dP.url, dP.username, dP.password);
@@ -137,12 +137,39 @@ public class TablesUpdateClient extends JFrame{
 			
 			       	tables_comboBox.addItem(client_lastname+", "+client_firstname+", "+client_id);
 			       
-			       	clientSelectedName = tables_comboBox.getSelectedItem().toString();
 			       	
 			    }
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
+		
+		tables_comboBox.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				Connection conn=DriverManager.getConnection(dP.url, dP.username, dP.password);
+				Statement stat=conn.createStatement();
+				Statement stat1=conn.createStatement();
+				
+				clientSelectedName = tables_comboBox.getSelectedItem().toString();
+		       	
+				ResultSet rs=stat.executeQuery("SELECT * FROM jdl_accounts.clients WHERE client_id = "+Integer.parseInt(clientSelectedName.substring(clientSelectedName.lastIndexOf(",")+2, clientSelectedName.length())));
+				while(rs.next()) {
+					tables_clientLastnameTxt.setText(rs.getString("client_lastname"));
+					tables_clientFirstnameTxt.setText(rs.getString("client_firstname"));
+					tables_clientAliasTxt.setText(rs.getString("client_alias"));
+					tables_clientCompanyTxt.setText(rs.getString("client_company"));
+					tables_clientPositionTxt.setText(rs.getString("client_position"));
+					tables_clientContactTxt.setText(rs.getString("client_contact"));
+					tables_clientEmailTxt.setText(rs.getString("client_email"));
+				}
+				
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+	});
+		
 		
 		tables_comboBox.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 14));
 		tables_comboBox.setBounds(20, 49, 400, 29);
@@ -155,42 +182,31 @@ public class TablesUpdateClient extends JFrame{
 		tables_reloadBtn.setForeground(new Color(255, 255, 255));
 		tables_reloadBtn.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/main_refresh.png")));
 		tables_reloadBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) 
-			{
-				if(tables_comboBox.getSelectedItem() != null)
-				{
-					if(tables_comboBox.getSelectedItem().toString().equals(""))
-						client_id = "-1";
-					else
-						client_id = tables_comboBox.getSelectedItem().toString().split(",")[2].trim();
-				}
-				//System.out.println(tables_comboBox1.getSelectedItem().toString());
-				try 
-				{
+			public void actionPerformed(ActionEvent e) {
+			
+				try {
 					Connection conn=DriverManager.getConnection(dP.url, dP.username, dP.password);
 					Statement stat=conn.createStatement();
 					Statement stat1=conn.createStatement();
-	
-					ResultSet rs1 = stat1.executeQuery("SELECT client_id AS 'Client ID',"
-							+ "trans_transId AS 'Transaction ID'" +
-							",trans_passportNo AS 'Passport No' "+ 
-							", trans_tinID AS 'TIN ID' " + 
-							", trans_visaType AS 'Visa Type' " + 
-							", trans_visaStartDate AS 'Visa Start Date' " + 
-							", trans_visaEndDate AS 'Visa Expiry Date' " + 
-							", trans_permitType AS 'Permit Type' " + 
-							", trans_permitStartDate AS 'Permit Start Date' " + 
-							", trans_permitEndDate AS 'Permit Expiry Date' " + 
-							", trans_aepID AS 'AEP ID' " + 
-							", trans_aepStartDate AS 'AEP Start Date' " + 
-							", trans_aepEndDate AS 'AEP Expiry Date' " + 
-							" FROM jdl_accounts.transactions WHERE client_id ="+Integer.parseInt(client_id)+" ORDER BY trans_transId");
-					tm = DbUtils.resultSetToTableModel(rs1);
-					table_1.setModel(tm);
+					
+					ResultSet rs=stat.executeQuery("SELECT client_id AS 'Client ID',"
+							+ "client_lastname AS 'Lastname'" +
+							", client_firstname AS 'Firstname'" + 
+							", client_alias AS 'Alias' " + 
+							", client_nationality AS 'Country' " + 
+							", client_birthdate AS 'Birthdate' " + 
+							", client_gender AS 'Gender' " + 
+							", client_company AS 'Company' " + 
+							", client_position AS 'Company Position' " + 
+							", client_contact AS 'Contact No.' " + 
+							", client_email AS 'Email' " + 
+							" FROM jdl_accounts.clients ORDER BY client_id DESC");
+					
+					table_1.setModel(DbUtils.resultSetToTableModel(rs));
 					table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 					
-					TableColumnAdjuster tca1 = new TableColumnAdjuster(table_1);
-					tca1.adjustColumns();
+					TableColumnAdjuster tca = new TableColumnAdjuster(table_1);
+					tca.adjustColumns();
 
 				} catch (SQLException e1) {
 					e1.printStackTrace();
@@ -359,7 +375,7 @@ public class TablesUpdateClient extends JFrame{
 		tables_registeredClientsLbl.setBounds(489, 155, 255, 37);
 		getContentPane().add(tables_registeredClientsLbl);
 		
-		JButton tables_registerBtn = new JButton("Register Client");
+		JButton tables_registerBtn = new JButton("Update Client");
 		tables_registerBtn.setForeground(new Color(255, 255, 255));
 		
 		java.util.Date date=new java.util.Date();
@@ -474,7 +490,7 @@ public class TablesUpdateClient extends JFrame{
 		tables_clientCompanyTxt.setBounds(20, 493, 400, 23);
 		tables_inputPanel.add(tables_clientCompanyTxt);
 		
-		JComboBox tables_nationalityBox = new JComboBox();
+		JComboBox tables_nationalityBox = new JComboBox (getAllCountries());
 		tables_nationalityBox.setBounds(20, 328, 400, 23);
 		tables_nationalityBox.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
 		tables_inputPanel.add(tables_nationalityBox);	
