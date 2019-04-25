@@ -50,7 +50,8 @@ public class GenerateExpiry extends JFrame{
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
-			public void run() {
+			public void run() 
+			{
 				try {
 					GenerateExpiry window = new GenerateExpiry();
 					window.setVisible(true);
@@ -127,6 +128,94 @@ public class GenerateExpiry extends JFrame{
 				try {
 				String date = objectFilter.getDateToday();
 				Date d= new SimpleDateFormat("yyyy-MM-dd").parse(date);
+				date = objectFilter.addWeek(date);
+				Date dd = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+				tlist = Queries.getTransactionsBetweenDate(new java.sql.Date(d.getTime()), new java.sql.Date(dd.getTime()));
+				Object[][] tl = new Object[tlist.size()][13];
+				for(int i = 0; i < tlist.size();i++)
+				{
+					Object[] ttl = new Object[14];
+					Transaction ttemp = tlist.get(i);
+					ttl[0] = Integer.toString(ttemp.getClient_id());
+					ttl[1] = Integer.toString(ttemp.getTransID());
+					ttl[2] = ttemp.getPassportNo();
+					ttl[3] = ttemp.getTinID();
+					ttl[4] = ttemp.getVisaType();
+					ttl[5] = ttemp.getVisaStartDate();
+					ttl[6] = ttemp.getVisaEndDate();
+					ttl[7] = ttemp.getPermitType();
+					ttl[8] = ttemp.getPermitStartDate();
+					ttl[9] = ttemp.getPermitEndDate();
+					ttl[10] = ttemp.getAepID();
+					ttl[11] = ttemp.getAepStartDate();
+					ttl[12] = ttemp.getAepEndDate();
+					tl[i] = ttl;
+				}
+				table_1.setModel(applyTableModel(tl));
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		generate_weeklyBtn.setBackground(new Color(0, 102, 102));
+		generate_weeklyBtn.setForeground(new Color(255, 255, 255));
+		generate_weeklyBtn.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
+		generate_weeklyBtn.setBounds(26, 146, 188, 40);
+		getContentPane().add(generate_weeklyBtn);
+		
+		JButton generate_monthlyBtn = new JButton("Monthly");
+		generate_monthlyBtn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) 
+			{
+				try {
+				String date = objectFilter.getDateToday();
+				Date d= new SimpleDateFormat("yyyy-MM-dd").parse(date);
+				date = objectFilter.addMonth(date);
+				Date dd = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+				tlist = Queries.getTransactionsBetweenDate(new java.sql.Date(d.getTime()), new java.sql.Date(dd.getTime()));
+				Object[][] tl = new Object[tlist.size()][13];
+				for(int i = 0; i < tlist.size();i++)
+				{
+					Object[] ttl = new Object[14];
+					Transaction ttemp = tlist.get(i);
+					ttl[0] = Integer.toString(ttemp.getClient_id());
+					ttl[1] = Integer.toString(ttemp.getTransID());
+					ttl[2] = ttemp.getPassportNo();
+					ttl[3] = ttemp.getTinID();
+					ttl[4] = ttemp.getVisaType();
+					ttl[5] = ttemp.getVisaStartDate();
+					ttl[6] = ttemp.getVisaEndDate();
+					ttl[7] = ttemp.getPermitType();
+					ttl[8] = ttemp.getPermitStartDate();
+					ttl[9] = ttemp.getPermitEndDate();
+					ttl[10] = ttemp.getAepID();
+					ttl[11] = ttemp.getAepStartDate();
+					ttl[12] = ttemp.getAepEndDate();
+					tl[i] = ttl;
+				}
+				table_1.setModel(applyTableModel(tl));
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		generate_monthlyBtn.setForeground(Color.WHITE);
+		generate_monthlyBtn.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
+		generate_monthlyBtn.setBackground(new Color(0, 102, 102));
+		generate_monthlyBtn.setBounds(26, 197, 188, 40);
+		getContentPane().add(generate_monthlyBtn);
+		
+		JButton generate_yearlyBtn = new JButton("Yearly");
+		generate_yearlyBtn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) 
+			{
+				try {
+				String date = objectFilter.getDateToday();
+				Date d= new SimpleDateFormat("yyyy-MM-dd").parse(date);
 				date = objectFilter.addYear(date);
 				Date dd = new SimpleDateFormat("yyyy-MM-dd").parse(date);
 				tlist = Queries.getTransactionsBetweenDate(new java.sql.Date(d.getTime()), new java.sql.Date(dd.getTime()));
@@ -150,44 +239,11 @@ public class GenerateExpiry extends JFrame{
 					ttl[12] = ttemp.getAepEndDate();
 					tl[i] = ttl;
 				}
-				table_1.setModel(new DefaultTableModel(
-						tl,
-						new String[] {
-							"Client ID", "Transaction ID", "Passport No", "TIN ID", "Visa Type", "Visa Start Date", "Visa End Date", "Permit Type", "Permit Start Date", "Permit End Date", "AEP ID", "AEP Start Date", "AEP End Date"
-						}
-					));
+				table_1.setModel(applyTableModel(tl));
 				} catch (ParseException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-			}
-		});
-		generate_weeklyBtn.setBackground(new Color(0, 102, 102));
-		generate_weeklyBtn.setForeground(new Color(255, 255, 255));
-		generate_weeklyBtn.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
-		generate_weeklyBtn.setBounds(26, 146, 188, 40);
-		getContentPane().add(generate_weeklyBtn);
-		
-		JButton generate_monthlyBtn = new JButton("Monthly");
-		generate_monthlyBtn.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				//Query nung table with constraints to monthly
-			}
-		});
-		generate_monthlyBtn.setForeground(Color.WHITE);
-		generate_monthlyBtn.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
-		generate_monthlyBtn.setBackground(new Color(0, 102, 102));
-		generate_monthlyBtn.setBounds(26, 197, 188, 40);
-		getContentPane().add(generate_monthlyBtn);
-		
-		JButton generate_yearlyBtn = new JButton("Yearly");
-		generate_yearlyBtn.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				//Query nung table with constraints to yearly
 			}
 		});
 		generate_yearlyBtn.setForeground(Color.WHITE);
@@ -225,14 +281,7 @@ public class GenerateExpiry extends JFrame{
 		getContentPane().add(scrollPane_1);
 		
 		table_1 = new JTable();
-		table_1.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null, "", null, null, "", null, null, null, null, null},
-			},
-			new String[] {
-				"Client ID", "Transaction ID", "Passport No", "TIN ID", "Visa Type", "Visa Start Type", "Visa Start Date", "Visa End Date", "Permit Type", "Permit Start Date", "Permit End Date", "AEP ID", "AEP Start Date", "AEP End Date"
-			}
-		));
+		table_1.setModel(resetTableModel());
 		table_1.getColumnModel().getColumn(1).setPreferredWidth(90);
 		table_1.getColumnModel().getColumn(4).setPreferredWidth(69);
 		table_1.getColumnModel().getColumn(5).setPreferredWidth(92);
@@ -274,5 +323,25 @@ public class GenerateExpiry extends JFrame{
 		options_background.setBounds(0, 0, 1000, 690);
 		getContentPane().add(options_background);
 		
+	}
+	public static DefaultTableModel resetTableModel()
+	{
+		return new DefaultTableModel(
+				new Object[][] {
+					{null, null, null, null, null, "", null, null, "", null, null, null, null, null},
+				},
+				new String[] {
+					"Client ID", "Transaction ID", "Passport No", "TIN ID", "Visa Type", "Visa Start Type", "Visa Start Date", "Visa End Date", "Permit Type", "Permit Start Date", "Permit End Date", "AEP ID", "AEP Start Date", "AEP End Date"
+				}
+			);
+	}
+	public static DefaultTableModel applyTableModel(Object[][] rows)
+	{
+		return new DefaultTableModel(
+				rows,
+				new String[] {
+					"Client ID", "Transaction ID", "Passport No", "TIN ID", "Visa Type", "Visa Start Type", "Visa Start Date", "Visa End Date", "Permit Type", "Permit Start Date", "Permit End Date", "AEP ID", "AEP Start Date", "AEP End Date"
+				}
+			);
 	}
 }
