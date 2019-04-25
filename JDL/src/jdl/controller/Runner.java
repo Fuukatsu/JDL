@@ -25,8 +25,6 @@ public class Runner
 	
     public static void main(String[] args) 
     {
-    	EmailFunctions.initiateEmail();
-    	EmailFunctions.checkTodayNotification();
         openSplash();
     }
     public static void openSplash()
