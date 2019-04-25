@@ -13,6 +13,7 @@ public class Runner
 	private static Splash s;
 	private static Tables t;
 	private static TablesAddClient tac;
+	private static TablesUpdateClient tuc;
 	private static TablesRemarks tr;
 	private static TablesStatus ts;
 	private static TablesStatusPermits tsp;
@@ -132,6 +133,15 @@ public class Runner
     {
     	tac.setVisible(false);
     	tac.dispose();
+    }
+    public static void openTUC()
+    {
+    	tuc = new TablesUpdateClient();
+    }
+    public static void destroyTUC()
+    {
+    	tuc.setVisible(false);
+    	tuc.dispose();
     }
     public static void openTR()
     {
