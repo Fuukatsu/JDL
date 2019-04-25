@@ -1,6 +1,5 @@
 package jdl.view;
 
-
 import java.awt.EventQueue;
 import java.text.DateFormat;
 import java.awt.Toolkit;
@@ -16,6 +15,8 @@ import javax.swing.JTable;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableModel;
+
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
@@ -61,7 +62,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class TablesAddClient extends JFrame{
+public class TablesUpdateClient extends JFrame{
 	private JTextField tables_clientBirthdateTxt;
 	private JTextField tables_clientPositionTxt;
 	private String clientSelectedName;
@@ -73,8 +74,10 @@ public class TablesAddClient extends JFrame{
 	private JTextField tables_clientEmailTxt;
 	private JTable table_1;
 	private JTextField tables_clientCompanyTxt;
+	private TableModel tm;
+	private String client_id = "";
 	private databaseProperties dP = new databaseProperties();
-	public TablesAddClient() {
+	public TablesUpdateClient() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Tables.class.getResource("/jdl/Assets/login_small.png")));	
 		
 		//Main Panel
@@ -116,39 +119,78 @@ public class TablesAddClient extends JFrame{
 		//Input Section
 		
 		JPanel tables_inputPanel = new JPanel();
-		tables_inputPanel.setBounds(25, 155, 450, 721);
+		tables_inputPanel.setBounds(25, 141, 450, 735);
 		tables_inputPanel.setBackground(new Color (255, 255, 255, 60));
 		tables_inputPanel.setLayout(null);
+		
+		JComboBox tables_comboBox = new JComboBox();
+		tables_comboBox.addItem("Click to see the list of registered client");
+		Connection conn1;
+		try {
+			conn1 = DriverManager.getConnection(dP.url, dP.username, dP.password);
+			Statement stat=conn1.createStatement();
+			ResultSet rs1=stat.executeQuery("SELECT * FROM jdl_accounts.clients");
+			 while(rs1.next()){        
+				 	String client_lastname = rs1.getString("client_lastname");
+				 	String client_firstname = rs1.getString("client_firstname");
+				 	client_id = rs1.getString("client_id");
+			
+			       	tables_comboBox.addItem(client_lastname+", "+client_firstname+", "+client_id);
+			       
+			       	clientSelectedName = tables_comboBox.getSelectedItem().toString();
+			       	
+			    }
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		
+		tables_comboBox.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 14));
+		tables_comboBox.setBounds(20, 49, 400, 29);
+		
+		AutoCompletion.enable(tables_comboBox);
+		tables_inputPanel.add(tables_comboBox);
 		
 		JButton tables_reloadBtn = new JButton("Reload");
 		tables_reloadBtn.setBounds(1389, 159, 138, 38);
 		tables_reloadBtn.setForeground(new Color(255, 255, 255));
 		tables_reloadBtn.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/main_refresh.png")));
 		tables_reloadBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
+			public void actionPerformed(ActionEvent e) 
+			{
+				if(tables_comboBox.getSelectedItem() != null)
+				{
+					if(tables_comboBox.getSelectedItem().toString().equals(""))
+						client_id = "-1";
+					else
+						client_id = tables_comboBox.getSelectedItem().toString().split(",")[2].trim();
+				}
+				//System.out.println(tables_comboBox1.getSelectedItem().toString());
+				try 
+				{
 					Connection conn=DriverManager.getConnection(dP.url, dP.username, dP.password);
 					Statement stat=conn.createStatement();
 					Statement stat1=conn.createStatement();
-					
-					ResultSet rs=stat.executeQuery("SELECT client_id AS 'Client ID',"
-							+ "client_lastname AS 'Lastname'" +
-							", client_firstname AS 'Firstname'" + 
-							", client_alias AS 'Alias' " + 
-							", client_nationality AS 'Country' " + 
-							", client_birthdate AS 'Birthdate' " + 
-							", client_gender AS 'Gender' " + 
-							", client_company AS 'Company' " + 
-							", client_position AS 'Company Position' " + 
-							", client_contact AS 'Contact No.' " + 
-							", client_email AS 'Email' " + 
-							" FROM jdl_accounts.clients ORDER BY client_id DESC");
-					
-					table_1.setModel(DbUtils.resultSetToTableModel(rs));
+	
+					ResultSet rs1 = stat1.executeQuery("SELECT client_id AS 'Client ID',"
+							+ "trans_transId AS 'Transaction ID'" +
+							",trans_passportNo AS 'Passport No' "+ 
+							", trans_tinID AS 'TIN ID' " + 
+							", trans_visaType AS 'Visa Type' " + 
+							", trans_visaStartDate AS 'Visa Start Date' " + 
+							", trans_visaEndDate AS 'Visa Expiry Date' " + 
+							", trans_permitType AS 'Permit Type' " + 
+							", trans_permitStartDate AS 'Permit Start Date' " + 
+							", trans_permitEndDate AS 'Permit Expiry Date' " + 
+							", trans_aepID AS 'AEP ID' " + 
+							", trans_aepStartDate AS 'AEP Start Date' " + 
+							", trans_aepEndDate AS 'AEP Expiry Date' " + 
+							" FROM jdl_accounts.transactions WHERE client_id ="+Integer.parseInt(client_id)+" ORDER BY trans_transId");
+					tm = DbUtils.resultSetToTableModel(rs1);
+					table_1.setModel(tm);
 					table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 					
-					TableColumnAdjuster tca = new TableColumnAdjuster(table_1);
-					tca.adjustColumns();
+					TableColumnAdjuster tca1 = new TableColumnAdjuster(table_1);
+					tca1.adjustColumns();
 
 				} catch (SQLException e1) {
 					e1.printStackTrace();
@@ -166,29 +208,22 @@ public class TablesAddClient extends JFrame{
 		
 		//Input Section (Labels and Associated Textfields)
 		
-		JLabel tables_inputSectionLbl = new JLabel("Input Section");
-		tables_inputSectionLbl.setBounds(25, 111, 255, 44);
+		JLabel tables_inputSectionLbl = new JLabel("Update Section");
+		tables_inputSectionLbl.setBounds(25, 96, 255, 44);
 		tables_inputSectionLbl.setForeground(new Color(255, 255, 255));
 		tables_inputSectionLbl.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		
 		JLabel tables_clientNationalityLbl = new JLabel("Country:");
 		tables_clientNationalityLbl.setForeground(new Color(255, 255, 255));
 		tables_clientNationalityLbl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
-		tables_clientNationalityLbl.setBounds(20, 260, 204, 29);
+		tables_clientNationalityLbl.setBounds(20, 299, 204, 29);
 		tables_inputPanel.add(tables_clientNationalityLbl);
 		
 		JLabel tables_clientBirthdateLbl = new JLabel("Birthdate:");
 		tables_clientBirthdateLbl.setForeground(new Color(255, 255, 255));
 		tables_clientBirthdateLbl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
-		tables_clientBirthdateLbl.setBounds(20, 317, 197, 29);
+		tables_clientBirthdateLbl.setBounds(20, 356, 197, 29);
 		tables_inputPanel.add(tables_clientBirthdateLbl);
-		
-		JComboBox tables_nationalityBox = new JComboBox(getAllCountries());
-		tables_nationalityBox.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
-		tables_nationalityBox.setBounds(20, 290, 400, 25);
-		tables_inputPanel.add(tables_nationalityBox);	
-		tables_nationalityBox.setEditable(true);
-		AutoCompletion.enable(tables_nationalityBox);
 			
 		getContentPane().add(scrollPane);
 		
@@ -205,7 +240,7 @@ public class TablesAddClient extends JFrame{
 		JDatePickerImpl birthdatePicker = new JDatePickerImpl(BirthdatePanel, new DateLabelFormatter());
 		birthdatePicker.getJFormattedTextField().setForeground(new Color(220, 20, 60));
 
-		birthdatePicker.setLocation(20, 350);
+		birthdatePicker.setLocation(20, 384);
 		birthdatePicker.getJFormattedTextField().setBorder(UIManager.getBorder("TextField.border"));
 		birthdatePicker.getJFormattedTextField().setBackground(new Color(255, 255, 255));
 		birthdatePicker.getJFormattedTextField().setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
@@ -216,91 +251,91 @@ public class TablesAddClient extends JFrame{
 		JLabel tables_clientGenderLbl = new JLabel("Gender:");
 		tables_clientGenderLbl.setForeground(new Color(255, 255, 255));
 		tables_clientGenderLbl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
-		tables_clientGenderLbl.setBounds(20, 373, 190, 29);
+		tables_clientGenderLbl.setBounds(20, 407, 190, 29);
 		tables_inputPanel.add(tables_clientGenderLbl);
 		
 		JLabel tables_clientCompanyLbl = new JLabel("Company:");
 		tables_clientCompanyLbl.setForeground(Color.WHITE);
 		tables_clientCompanyLbl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
-		tables_clientCompanyLbl.setBounds(20, 428, 190, 29);
+		tables_clientCompanyLbl.setBounds(20, 462, 190, 29);
 		tables_inputPanel.add(tables_clientCompanyLbl);
 		
 		JLabel tables_clientPositionLbl = new JLabel("Position in the Company:");
 		tables_clientPositionLbl.setForeground(Color.WHITE);
 		tables_clientPositionLbl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
-		tables_clientPositionLbl.setBounds(20, 486, 197, 29);
+		tables_clientPositionLbl.setBounds(20, 520, 197, 29);
 		tables_inputPanel.add(tables_clientPositionLbl);
 		
 		tables_clientPositionTxt = new JTextField();
 		tables_clientPositionTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
 		tables_clientPositionTxt.setColumns(10);
 		tables_clientPositionTxt.setBorder(new EmptyBorder(0, 0, 0, 0));
-		tables_clientPositionTxt.setBounds(20, 516, 400, 23);
+		tables_clientPositionTxt.setBounds(20, 550, 400, 23);
 		tables_inputPanel.add(tables_clientPositionTxt);
 		
 		JLabel tables_clientLastnameLbl = new JLabel("Lastname:");
 		tables_clientLastnameLbl.setForeground(Color.WHITE);
 		tables_clientLastnameLbl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
-		tables_clientLastnameLbl.setBounds(20, 37, 190, 41);
+		tables_clientLastnameLbl.setBounds(20, 102, 190, 41);
 		tables_inputPanel.add(tables_clientLastnameLbl);
 		
 		tables_clientFirstnameTxt = new JTextField();
 		tables_clientFirstnameTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
 		tables_clientFirstnameTxt.setColumns(10);
 		tables_clientFirstnameTxt.setBorder(new EmptyBorder(0, 0, 0, 0));
-		tables_clientFirstnameTxt.setBounds(20, 134, 400, 23);
+		tables_clientFirstnameTxt.setBounds(20, 199, 400, 23);
 		tables_inputPanel.add(tables_clientFirstnameTxt);
 		
 		JLabel tables_clientFirstnameLbl = new JLabel("Firstname:");
 		tables_clientFirstnameLbl.setForeground(Color.WHITE);
 		tables_clientFirstnameLbl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
-		tables_clientFirstnameLbl.setBounds(20, 97, 298, 41);
+		tables_clientFirstnameLbl.setBounds(20, 162, 298, 41);
 		tables_inputPanel.add(tables_clientFirstnameLbl);
 		
 		tables_clientLastnameTxt = new JTextField();
 		tables_clientLastnameTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
 		tables_clientLastnameTxt.setColumns(10);
 		tables_clientLastnameTxt.setBorder(new EmptyBorder(0, 0, 0, 0));
-		tables_clientLastnameTxt.setBounds(20, 76, 400, 23);
+		tables_clientLastnameTxt.setBounds(20, 141, 400, 23);
 		tables_inputPanel.add(tables_clientLastnameTxt);
 		
 		tables_clientAliasTxt = new JTextField();
 		tables_clientAliasTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
 		tables_clientAliasTxt.setColumns(10);
 		tables_clientAliasTxt.setBorder(new EmptyBorder(0, 0, 0, 0));
-		tables_clientAliasTxt.setBounds(20, 189, 400, 23);
+		tables_clientAliasTxt.setBounds(20, 254, 400, 23);
 		tables_inputPanel.add(tables_clientAliasTxt);
 		
 		JLabel tables_clientAliasLbl = new JLabel("Alias:");
 		tables_clientAliasLbl.setForeground(Color.WHITE);
 		tables_clientAliasLbl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
-		tables_clientAliasLbl.setBounds(20, 159, 204, 29);
+		tables_clientAliasLbl.setBounds(20, 224, 204, 29);
 		tables_inputPanel.add(tables_clientAliasLbl);
 		
 		tables_clientContactTxt = new JTextField();
 		tables_clientContactTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
 		tables_clientContactTxt.setColumns(10);
 		tables_clientContactTxt.setBorder(new EmptyBorder(0, 0, 0, 0));
-		tables_clientContactTxt.setBounds(20, 571, 400, 23);
+		tables_clientContactTxt.setBounds(20, 605, 400, 23);
 		tables_inputPanel.add(tables_clientContactTxt);
 		
 		JLabel tables_clientContactLbl = new JLabel("Contact No.:");
 		tables_clientContactLbl.setForeground(Color.WHITE);
 		tables_clientContactLbl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
-		tables_clientContactLbl.setBounds(20, 541, 190, 29);
+		tables_clientContactLbl.setBounds(20, 575, 190, 29);
 		tables_inputPanel.add(tables_clientContactLbl);
 		
 		tables_clientEmailTxt = new JTextField();
 		tables_clientEmailTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
 		tables_clientEmailTxt.setColumns(10);
 		tables_clientEmailTxt.setBorder(new EmptyBorder(0, 0, 0, 0));
-		tables_clientEmailTxt.setBounds(20, 626, 400, 23);
+		tables_clientEmailTxt.setBounds(20, 660, 400, 23);
 		tables_inputPanel.add(tables_clientEmailTxt);
 		
 		JLabel tables_clientEmailLbl = new JLabel("Email:");
 		tables_clientEmailLbl.setForeground(Color.WHITE);
 		tables_clientEmailLbl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
-		tables_clientEmailLbl.setBounds(20, 596, 190, 29);
+		tables_clientEmailLbl.setBounds(20, 630, 190, 29);
 		tables_inputPanel.add(tables_clientEmailLbl);
 		
 		
@@ -308,14 +343,14 @@ public class TablesAddClient extends JFrame{
 		tables_primaryInformationLbl.setHorizontalAlignment(SwingConstants.LEFT);
 		tables_primaryInformationLbl.setForeground(Color.WHITE);
 		tables_primaryInformationLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 13));
-		tables_primaryInformationLbl.setBounds(20, 11, 400, 41);
+		tables_primaryInformationLbl.setBounds(20, 85, 400, 29);
 		tables_inputPanel.add(tables_primaryInformationLbl);
 		
 		JLabel tables_secondaryInformationLbl = new JLabel("-------------------------- Secondary Information ------------------------");
 		tables_secondaryInformationLbl.setHorizontalAlignment(SwingConstants.LEFT);
 		tables_secondaryInformationLbl.setForeground(Color.WHITE);
 		tables_secondaryInformationLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 13));
-		tables_secondaryInformationLbl.setBounds(20, 223, 400, 41);
+		tables_secondaryInformationLbl.setBounds(20, 282, 400, 23);
 		tables_inputPanel.add(tables_secondaryInformationLbl);
 		
 		JLabel tables_registeredClientsLbl = new JLabel("Registered Clients");
@@ -332,7 +367,7 @@ public class TablesAddClient extends JFrame{
 		
 		tables_registerBtn.setBackground(new Color(0, 102, 102));
 		tables_registerBtn.setFont(new Font("Segoe UI Semibold", Font.BOLD, 13));
-		tables_registerBtn.setBounds(131, 675, 173, 35);
+		tables_registerBtn.setBounds(142, 698, 173, 29);
 		tables_inputPanel.add(tables_registerBtn);
 		
 		JLabel tables_clientCreateTransactionLbl = new JLabel("Create New Transaction", SwingConstants.CENTER);
@@ -380,7 +415,7 @@ public class TablesAddClient extends JFrame{
 		label.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
 		
 		JLabel tables_line = new JLabel("");
-		tables_line.setBounds(87, 82, 57, 27);
+		tables_line.setBounds(309, 84, 57, 27);
 		tables_line.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/line.png")));
 		tables_line.setHorizontalAlignment(SwingConstants.CENTER);
 		tables_line.setForeground(Color.WHITE);
@@ -401,7 +436,7 @@ public class TablesAddClient extends JFrame{
 		
 		JLabel tables_addClientLbl = new JLabel("Add New Client", SwingConstants.CENTER);
 		tables_addClientLbl.setBounds(25, 48, 183, 37);
-		tables_addClientLbl.setForeground(Color.WHITE);
+		tables_addClientLbl.setForeground(Color.LIGHT_GRAY);
 		tables_addClientLbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		
 		JLabel tables_allClientTransactionLbl = new JLabel("Registered Clients");
@@ -425,23 +460,32 @@ public class TablesAddClient extends JFrame{
 		
 		JComboBox tables_genderBox = new JComboBox();
 		tables_genderBox.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
-		tables_genderBox.setBounds(20, 402, 400, 24);
+		tables_genderBox.setBounds(20, 436, 400, 24);
 		tables_inputPanel.add(tables_genderBox);
 		tables_genderBox.setEditable(false);
 		tables_genderBox.addItem("Male");
 		tables_genderBox.addItem("Female");
 		getContentPane().add(scrollPane);
 		
-		tables_nationalityBox.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
-		tables_nationalityBox.setBounds(20, 290, 400, 25);
-		tables_inputPanel.add(tables_nationalityBox);
-		
 		tables_clientCompanyTxt = new JTextField();
 		tables_clientCompanyTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
 		tables_clientCompanyTxt.setColumns(10);
 		tables_clientCompanyTxt.setBorder(new EmptyBorder(0, 0, 0, 0));
-		tables_clientCompanyTxt.setBounds(20, 459, 400, 23);
+		tables_clientCompanyTxt.setBounds(20, 493, 400, 23);
 		tables_inputPanel.add(tables_clientCompanyTxt);
+		
+		JComboBox tables_nationalityBox = new JComboBox();
+		tables_nationalityBox.setBounds(20, 328, 400, 23);
+		tables_nationalityBox.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
+		tables_inputPanel.add(tables_nationalityBox);	
+		tables_nationalityBox.setEditable(true);
+		AutoCompletion.enable(tables_nationalityBox);
+		
+		JLabel tables_chooseLbl = new JLabel("Choose Client:");
+		tables_chooseLbl.setForeground(Color.WHITE);
+		tables_chooseLbl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
+		tables_chooseLbl.setBounds(20, 11, 114, 41);
+		tables_inputPanel.add(tables_chooseLbl);
 		
 		JLabel tables_back = new JLabel("");
 		tables_back.setBounds(0, 0, 57, 37);
@@ -477,13 +521,13 @@ public class TablesAddClient extends JFrame{
 		tables_minimize.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/button_minimizer.png")));
 		
 		JLabel tables_editClientsLbl = new JLabel("Update Clients", SwingConstants.CENTER);
-		tables_editClientsLbl.setForeground(Color.LIGHT_GRAY);
+		tables_editClientsLbl.setForeground(Color.WHITE);
 		tables_editClientsLbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		tables_editClientsLbl.setBounds(245, 48, 183, 37);
 		getContentPane().add(tables_editClientsLbl);
 		
 		JLabel background_tables = new JLabel("New label");
-		background_tables.setIcon(new ImageIcon(TablesAddClient.class.getResource("/jdl/Assets/background_tables4.jpg")));
+		background_tables.setIcon(new ImageIcon(TablesUpdateClient.class.getResource("/jdl/Assets/background_tables4.jpg")));
 		background_tables.setBounds(0, 0, 1551, 900);
 		getContentPane().add(background_tables);
 		
@@ -498,8 +542,7 @@ public class TablesAddClient extends JFrame{
 				Connection conn2;
 				
 				try {
-					String sql = "INSERT INTO jdl_accounts.clients (client_lastname, client_firstname, client_nationality, client_birthdate, client_gender, client_company, client_position, client_alias, client_contact, client_email)"
-							+ " values (?,?,?,?,?,?,?,?,?,?)";
+					String sql = "UPDATE jdl_accounts.clients (client_lastname = ?, client_firstname = ?, client_nationality = ?, client_birthdate = ?, client_gender = ?, client_company = ?, client_position = ?, client_alias = ?, client_contact = ?, client_email = ?)";
 					
 					conn2 = DriverManager.getConnection(dP.url, dP.username, dP.password);
 					PreparedStatement statement1 = conn2.prepareStatement(sql);
@@ -570,6 +613,5 @@ public class TablesAddClient extends JFrame{
 	    }
 	    return countries;
 	 }
-	
 }
 
