@@ -28,6 +28,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.table.DefaultTableModel;
 
 public class GenerateClients extends JFrame{
 	private String admin_username;
@@ -160,6 +161,21 @@ public class GenerateClients extends JFrame{
 		getContentPane().add(scrollPane_1);
 		
 		table_1 = new JTable();
+		table_1.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+			},
+			new String[] {
+				"Client ID", "Transaction ID", "Passport No.", "TIN ID", "Visa Type", "Visa Start Type", "Visa Start Date", "Visa End Date", "Permit Type", "Permit Start Date", "Permit End Date", "AEP ID", "AEP Start Date", "AEP End Date"
+			}
+		));
+		table_1.getColumnModel().getColumn(1).setPreferredWidth(86);
+		table_1.getColumnModel().getColumn(5).setPreferredWidth(93);
+		table_1.getColumnModel().getColumn(6).setPreferredWidth(96);
+		table_1.getColumnModel().getColumn(7).setPreferredWidth(87);
+		table_1.getColumnModel().getColumn(9).setPreferredWidth(102);
+		table_1.getColumnModel().getColumn(10).setPreferredWidth(106);
+		table_1.getColumnModel().getColumn(12).setPreferredWidth(96);
 		table_1.setFont(new Font("Calibri", Font.PLAIN, 16));
 		table_1.setBounds(495, 198, 125, 68);
 		table_1.setRowHeight(32);
