@@ -499,7 +499,10 @@ public class AccountManagement extends JFrame{
 						statement1.setString(2, emp_FirstnameTxt.getText());
 						statement1.setString(3, emp_PositionTxt.getText());
 						statement1.setString(4, emp_GenderTxt.getText());
-						statement1.setDate(5, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().toString())));
+						if(birthdatePicker.getJFormattedTextField().getText().toString().equals("")) 
+							statement1.setDate(5, null);
+						else
+							statement1.setDate(5, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().toString())));
 						statement1.setString(6, emp_AddressTxt.getText());
 						statement1.setString(7, emp_ContactTxt.getText());
 						statement1.setString(8, emp_EmailTxt.getText());

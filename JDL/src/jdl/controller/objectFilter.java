@@ -303,12 +303,6 @@ public class objectFilter
 			else
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[7]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);
 		}
-		else if(containsAlpha(input[8]) || input[6].length() >24 ){
-			if(containsDigit(input[8]))
-				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[8]+" must not contain digits.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);
-			else
-				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[8]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);
-		}
 		else if(input[9].isEmpty() || input[9].length() >24 || !checkEmail(input[9])) {
 			if(input[9].isEmpty())
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[9]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
@@ -324,7 +318,7 @@ public class objectFilter
 		return t;
 	}
 	public static boolean validateAccountInfoEmptyStrings(String[] input, String[] what) {
-		boolean t = true;
+		boolean t = false;
 		
 		if(input[0].isEmpty() || containsDigit(input[0]) || input[0].length() >24 ) {
 			if(input[0].isEmpty())
@@ -352,12 +346,6 @@ public class objectFilter
 		}
 		else if(input[4].isEmpty()) {
 			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[4]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
-		}
-		else if(containsAlpha(input[6]) || input[6].length() >24 ){
-			if(containsDigit(input[6]))
-				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[6]+" must not contain digits.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);
-			else
-				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[6]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);
 		}
 		else if(input[7].isEmpty() || input[7].length() >24 || !checkEmail(input[7])) {
 			if(input[7].isEmpty())
