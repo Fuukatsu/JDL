@@ -520,6 +520,7 @@ public class AccountManagement extends JFrame{
 						
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employee Information has been successfully updated.</font color = #ffffff></html>", "Information Updated Successfully", JOptionPane.INFORMATION_MESSAGE);
 					}
+					
 				}
 				catch (SQLException e1) {
 					e1.printStackTrace();

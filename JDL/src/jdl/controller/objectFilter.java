@@ -303,19 +303,19 @@ public class objectFilter
 			else
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[7]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);
 		}
-		else if(containsAlpha(input[7]) || input[6].length() >24 ){
+		else if(containsAlpha(input[8]) || input[6].length() >24 ){
 			if(containsDigit(input[8]))
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[8]+" must not contain digits.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);
 			else
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[8]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);
 		}
-		else if(input[7].isEmpty() || input[7].length() >24 || !checkEmail(input[7])) {
-			if(input[7].isEmpty())
-				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[7]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
-			else if(input[7].length() >24)
-				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[7]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
-			else if(!checkEmail(input[7]))
-				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[7]+": "+input[7]+" is invalid</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+		else if(input[9].isEmpty() || input[9].length() >24 || !checkEmail(input[9])) {
+			if(input[9].isEmpty())
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[9]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
+			else if(input[9].length() >24)
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[9]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+			else if(!checkEmail(input[9]))
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[9]+": "+input[9]+" is invalid</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
 		}
 		else{
 			t = true;
