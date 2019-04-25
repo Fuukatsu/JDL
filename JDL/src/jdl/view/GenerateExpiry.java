@@ -129,6 +129,7 @@ public class GenerateExpiry extends JFrame{
 				String date = objectFilter.getDateToday();
 				Date d= new SimpleDateFormat("yyyy-MM-dd").parse(date);
 				date = objectFilter.addWeek(date);
+				date = objectFilter.addDay(date);
 				Date dd = new SimpleDateFormat("yyyy-MM-dd").parse(date);
 				tlist = Queries.getTransactionsBetweenDate(new java.sql.Date(d.getTime()), new java.sql.Date(dd.getTime()));
 				Object[][] tl = new Object[tlist.size()][13];
@@ -173,6 +174,7 @@ public class GenerateExpiry extends JFrame{
 				String date = objectFilter.getDateToday();
 				Date d= new SimpleDateFormat("yyyy-MM-dd").parse(date);
 				date = objectFilter.addMonth(date);
+				date = objectFilter.addDay(date);
 				Date dd = new SimpleDateFormat("yyyy-MM-dd").parse(date);
 				tlist = Queries.getTransactionsBetweenDate(new java.sql.Date(d.getTime()), new java.sql.Date(dd.getTime()));
 				Object[][] tl = new Object[tlist.size()][13];
@@ -217,6 +219,7 @@ public class GenerateExpiry extends JFrame{
 				String date = objectFilter.getDateToday();
 				Date d= new SimpleDateFormat("yyyy-MM-dd").parse(date);
 				date = objectFilter.addYear(date);
+				date = objectFilter.addDay(date);
 				Date dd = new SimpleDateFormat("yyyy-MM-dd").parse(date);
 				tlist = Queries.getTransactionsBetweenDate(new java.sql.Date(d.getTime()), new java.sql.Date(dd.getTime()));
 				Object[][] tl = new Object[tlist.size()][13];
