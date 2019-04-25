@@ -44,7 +44,7 @@ public class GenerateExpiry extends JFrame{
 	private String admin_password;
 	private JTable table_1;
 	private ArrayList<Transaction> tlist;
-
+	private JLabel generate_actualCountLbl = new JLabel("");
 	/**
 	 * Launch the application.
 	 */
@@ -153,6 +153,8 @@ public class GenerateExpiry extends JFrame{
 					tl[i] = ttl;
 				}
 				table_1.setModel(applyTableModel(tl));
+				generate_actualCountLbl.setText(Integer.toString(tl.length));
+				generate_actualCountLbl.setVisible(true);
 				} catch (ParseException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -198,6 +200,8 @@ public class GenerateExpiry extends JFrame{
 					tl[i] = ttl;
 				}
 				table_1.setModel(applyTableModel(tl));
+				generate_actualCountLbl.setText(Integer.toString(tl.length));
+				generate_actualCountLbl.setVisible(true);
 				} catch (ParseException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -243,6 +247,8 @@ public class GenerateExpiry extends JFrame{
 					tl[i] = ttl;
 				}
 				table_1.setModel(applyTableModel(tl));
+				generate_actualCountLbl.setText(Integer.toString(tl.length));
+				generate_actualCountLbl.setVisible(true);
 				} catch (ParseException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -315,7 +321,6 @@ public class GenerateExpiry extends JFrame{
 		generate_clientCountLbl.setBounds(52, 352, 138, 40);
 		getContentPane().add(generate_clientCountLbl);
 		
-		JLabel generate_actualCountLbl = new JLabel("");
 		generate_actualCountLbl.setForeground(Color.WHITE);
 		generate_actualCountLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 13));
 		generate_actualCountLbl.setBounds(36, 416, 169, 166);
