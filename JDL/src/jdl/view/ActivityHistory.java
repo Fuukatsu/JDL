@@ -159,7 +159,7 @@ public class ActivityHistory extends JFrame{
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				TableModel md = Queries.getClientTransactions(comboBox.getSelectedItem().toString());
+				TableModel md = Queries.getClientTransactions2(comboBox.getSelectedItem().toString());
 				table.setModel(md);
 				table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 				
