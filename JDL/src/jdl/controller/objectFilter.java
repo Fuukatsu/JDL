@@ -353,7 +353,7 @@ public class objectFilter
 			if(input[7].isEmpty())
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[7]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
 			else if(input[7].length() >150)
-				JOptionPane.showMessageDialog(null, "<ht0ml><font color = #ffffff>"+what[7]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[7]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
 			else if(!checkEmail(input[7]))
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[7]+": "+input[7]+" is invalid</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
 		}
@@ -480,7 +480,7 @@ public class objectFilter
 			if(input[7].isEmpty())
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[7]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
 			else if(input[7].length() >150)
-				JOptionPane.showMessageDialog(null, "<ht0ml><font color = #ffffff>"+what[7]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[7]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
 			else if(!checkEmail(input[7]))
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[7]+": "+input[7]+" is invalid</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
 		}
@@ -496,7 +496,7 @@ public class objectFilter
 			if(input[9].isEmpty())
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[9]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
 			else if(input[9].length() <8)
-				JOptionPane.showMessageDialog(null, "<ht0ml><font color = #ffffff>"+what[9]+" too short. Minimum of 8 alphanumeric characters. </font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[9]+" too short. Minimum of 8 alphanumeric characters. </font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
 		}
 		else{
 			t = true;

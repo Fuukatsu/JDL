@@ -662,7 +662,7 @@ public class TablesStatusPermits extends JFrame{
 					String sql = "INSERT INTO jdl_accounts.status_permits (statusP_dateReceived, statusP_instructions, statusP_aepCancellation, statusP_downgrading, statusP_aepExitClearance, statusP_updatedVisaExtend, statusP_documentation, statusP_addRequirements, statusP_aepDateFiled, "
 							+ "statusP_aepDateRelease, statusP_permitDateFiled, statusP_permitDateReleased, statusP_acrIcard, client_id, trans_transId)  values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE statusP_dateReceived = ?, statusP_instructions = ?, statusP_aepCancellation = ?,  statusP_downgrading = ?, statusP_aepExitClearance = ?,  statusP_updatedVisaExtend = ?, statusP_documentation = ?, statusP_addRequirements = ?, statusP_aepDateFiled = ?," 
 							+ "statusP_aepDateRelease = ?, statusP_permitDateFiled = ?, statusP_acrIcard = ?, statusP_permitDateReleased = ?, client_id = ?, trans_transId = ? ";
-					conn3 = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&compensateOnDuplicateKeyUpdateCounts=false","root","password");
+					conn3 =  DriverManager.getConnection(dP.url, dP.username, dP.password);
 					PreparedStatement statement2= conn3.prepareStatement(sql);
 					
 					if(tables_dateReceivedTxt.getJFormattedTextField().getText().trim().toString().equals("")) 
