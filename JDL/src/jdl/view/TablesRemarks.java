@@ -621,6 +621,8 @@ public class TablesRemarks extends JFrame{
 		getContentPane().add(tables_back);
 		tables_back.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				//setVisible(false);
+				//dispose();
 				Runner.destroyTR();
 				Runner.openOptionList();
 			}

@@ -683,8 +683,8 @@ public class Tables extends JFrame{
 		tables_clientStatusTableLbl.setBounds(1043, 48, 209, 37);
 		tables_clientStatusTableLbl.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				new TablesStatus().setVisible(true);
-				dispose();
+				Runner.openTS();
+				Runner.destroyTables();
 			}
 		});
 		tables_clientStatusTableLbl.setForeground(Color.LIGHT_GRAY);
@@ -694,8 +694,8 @@ public class Tables extends JFrame{
 		tables_clientRemarksTableLbl.setBounds(1290, 48, 209, 37);
 		tables_clientRemarksTableLbl.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				new TablesRemarks().setVisible(true);
-				dispose();
+				Runner.openTR();
+				Runner.destroyTables();
 			}
 		});
 		tables_clientRemarksTableLbl.setForeground(Color.LIGHT_GRAY);
@@ -720,7 +720,7 @@ public class Tables extends JFrame{
 			public void mouseClicked(MouseEvent e) 
 			{
 				Runner.openTUT();
-				setVisible(false);
+				Runner.destroyTables();
 			}
 		});
 		tables_updateTransactionLbl.setBounds(774, 48, 227, 37);
@@ -731,7 +731,7 @@ public class Tables extends JFrame{
 		tables_addClientLbl.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				Runner.openTAC();
-			    setVisible(false);
+			    Runner.destroyTables();
 			}
 		});
 		tables_addClientLbl.setBounds(25, 48, 183, 37);
