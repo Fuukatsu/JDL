@@ -584,6 +584,8 @@ public class TablesUpdateClient extends JFrame{
 		btnDeleteClient.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				Runner.openTDC();
+				Runner.destroyTUC();
+				Runner.openTUC();
 			}
 		});
 		btnDeleteClient.setIcon(new ImageIcon(TablesUpdateClient.class.getResource("/jdl/Assets/button_delete.png")));
