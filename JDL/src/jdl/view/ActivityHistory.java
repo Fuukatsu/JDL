@@ -50,6 +50,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
 
 public class ActivityHistory extends JFrame{
 	private JTextField tables_clientBirthdateTxt;
@@ -172,7 +173,46 @@ public class ActivityHistory extends JFrame{
 		
 		table = new JTable();
 		TableModel md = Queries.getClientTransactions(comboBox.getSelectedItem().toString());
-		table.setModel(md);
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{new Integer(68), new Integer(230), "P12345678", "12345", "123sdfs", null, null, "", null, null, "", null, null, null},
+				{new Integer(68), new Integer(229), "P12345678", "1234423", "", null, null, "asdsadf", null, null, "", null, null, null},
+				{new Integer(68), new Integer(228), "P12345678", "132342", "675yfh", null, null, "uihiu", null, null, "", null, null, null},
+				{new Integer(68), new Integer(227), "P12345678", "123523", "jy7", null, null, "", null, null, "", null, null, null},
+				{new Integer(68), new Integer(226), "P12345678", "1243432", "23d", null, null, "", null, null, "", null, null, null},
+				{new Integer(68), new Integer(225), "P12345678", "1235", "", null, null, "3fvh", null, null, "12342", null, null, null},
+				{new Integer(68), new Integer(224), "P12345678", "12354", "34", null, null, "", null, null, "", null, null, null},
+				{new Integer(68), new Integer(223), "P12345678", "123456", "56hg", null, null, "", null, null, "", null, null, null},
+				{new Integer(68), new Integer(222), "P12345678", "12235467", "", null, null, "", null, null, "12ghj", null, null, null},
+				{new Integer(68), new Integer(221), "P12345678", "123456", "", null, null, "6yhg", null, null, "", null, null, null},
+				{new Integer(68), new Integer(220), "P12345678", "123321", "fg6", null, null, "", null, null, "", null, null, null},
+				{new Integer(68), new Integer(219), "P12345678", "1234532", "9k", null, null, "", null, null, "", null, null, null},
+				{new Integer(68), new Integer(218), "P12345678", "12345", "8h", null, null, "", null, null, "", null, null, null},
+				{new Integer(68), new Integer(217), "P12345678", "12346", "", null, null, "fgh5", null, null, "", null, null, null},
+				{new Integer(68), new Integer(216), "P12345678", "12332", "rf", null, null, "", null, null, "", null, null, null},
+				{new Integer(68), new Integer(215), "P12345678", "1233243", "f4", null, null, "", null, null, "", null, null, null},
+				{new Integer(68), new Integer(214), "P12345678", "12345", "", null, null, "", null, null, "132sds", null, null, null},
+				{new Integer(68), new Integer(213), "P12345678", "13221434", "", null, null, "", null, null, "a12341", null, null, null},
+				{new Integer(68), new Integer(212), "P12345678", "123323", "3d", null, null, "", null, null, "", null, null, null},
+				{new Integer(68), new Integer(211), "P12345678", "1233434", "", null, null, "", null, null, "", null, null, null},
+				{new Integer(68), new Integer(210), "P12345678", "123456", "", null, null, "SWD", null, null, "", null, null, null},
+				{new Integer(68), new Integer(209), "P12345678", "12345", "9g", null, null, "", null, null, "", null, null, null},
+				{new Integer(70), new Integer(182), "PH6310288", "9584344742", "Pre-arragend Employment Visa (9G)", null, null, "Special Working Permit (SWP)", null, null, "NCR-000-000-000-070", null, null, null},
+				{new Integer(68), new Integer(181), "PH7041062", "8808072894", "Pre-arragend Employment Visa (9G)", null, null, "Special Working Permit (SWP)", null, null, "NCR-000-000-000-068", null, null, null},
+				{new Integer(68), new Integer(123), "123412123", "123213", "oi8", null, null, "", null, null, "", null, null, null},
+			},
+			new String[] {
+				"Client ID", "Transaction ID", "Passport No", "TIN ID", "Visa Type", "Visa Start Date", "Visa Expiry Date", "Permit Type", "Permit Start Date", "Permit Expiry Date", "AEP ID", "AEP Start Date", "AEP Expiry Date", "Action Done"
+			}
+		));
+		table.getColumnModel().getColumn(1).setPreferredWidth(90);
+		table.getColumnModel().getColumn(5).setPreferredWidth(90);
+		table.getColumnModel().getColumn(6).setPreferredWidth(100);
+		table.getColumnModel().getColumn(8).setPreferredWidth(100);
+		table.getColumnModel().getColumn(9).setPreferredWidth(100);
+		table.getColumnModel().getColumn(11).setPreferredWidth(90);
+		table.getColumnModel().getColumn(12).setPreferredWidth(90);
+		table.getColumnModel().getColumn(13).setPreferredWidth(80);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		TableColumnAdjuster tca = new TableColumnAdjuster(table);
 		tca.adjustColumns();
