@@ -142,40 +142,6 @@ public class TablesUpdateClient extends JFrame{
 			e1.printStackTrace();
 		}
 		
-		tables_comboBox.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			try {
-				Connection conn=DriverManager.getConnection(dP.url, dP.username, dP.password);
-				Statement stat=conn.createStatement();
-				Statement stat1=conn.createStatement();
-				
-				clientSelectedName = tables_comboBox.getSelectedItem().toString();
-		       	
-				ResultSet rs=stat.executeQuery("SELECT * FROM jdl_accounts.clients WHERE client_id = "+Integer.parseInt(clientSelectedName.substring(clientSelectedName.lastIndexOf(",")+2, clientSelectedName.length())));
-				while(rs.next()) {
-					tables_clientLastnameTxt.setText(rs.getString("client_lastname"));
-					tables_clientFirstnameTxt.setText(rs.getString("client_firstname"));
-					tables_clientAliasTxt.setText(rs.getString("client_alias"));
-					tables_clientCompanyTxt.setText(rs.getString("client_company"));
-					tables_clientPositionTxt.setText(rs.getString("client_position"));
-					tables_clientContactTxt.setText(rs.getString("client_contact"));
-					tables_clientEmailTxt.setText(rs.getString("client_email"));
-				}
-				
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-	});
-		
-		
-		tables_comboBox.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 14));
-		tables_comboBox.setBounds(20, 49, 400, 29);
-		
-		AutoCompletion.enable(tables_comboBox);
-		tables_inputPanel.add(tables_comboBox);
-		
 		JButton tables_reloadBtn = new JButton("Reload");
 		tables_reloadBtn.setBounds(1389, 159, 138, 38);
 		tables_reloadBtn.setForeground(new Color(255, 255, 255));
@@ -352,6 +318,41 @@ public class TablesUpdateClient extends JFrame{
 		tables_clientEmailLbl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
 		tables_clientEmailLbl.setBounds(20, 630, 190, 29);
 		tables_inputPanel.add(tables_clientEmailLbl);
+		
+		tables_comboBox.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				Connection conn=DriverManager.getConnection(dP.url, dP.username, dP.password);
+				Statement stat=conn.createStatement();
+				Statement stat1=conn.createStatement();
+				
+				clientSelectedName = tables_comboBox.getSelectedItem().toString();
+		       	
+				ResultSet rs=stat.executeQuery("SELECT * FROM jdl_accounts.clients WHERE client_id = "+Integer.parseInt(clientSelectedName.substring(clientSelectedName.lastIndexOf(",")+2, clientSelectedName.length())));
+				while(rs.next()) {
+					tables_clientLastnameTxt.setText(rs.getString("client_lastname"));
+					tables_clientFirstnameTxt.setText(rs.getString("client_firstname"));
+					tables_clientAliasTxt.setText(rs.getString("client_alias"));
+					birthdatePicker.getJFormattedTextField().setText((rs.getString("client_birthdate")));
+					tables_clientCompanyTxt.setText(rs.getString("client_company"));
+					tables_clientPositionTxt.setText(rs.getString("client_position"));
+					tables_clientContactTxt.setText(rs.getString("client_contact"));
+					tables_clientEmailTxt.setText(rs.getString("client_email"));
+				}
+				
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+	});
+		
+		
+		tables_comboBox.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 14));
+		tables_comboBox.setBounds(20, 49, 400, 29);
+		
+		AutoCompletion.enable(tables_comboBox);
+		tables_inputPanel.add(tables_comboBox);
 		
 		
 		JLabel tables_primaryInformationLbl = new JLabel("-------------------------- Primary Information ---------------------------");
@@ -610,7 +611,7 @@ public class TablesUpdateClient extends JFrame{
 						if(input[5].equals(""))
 							statement1.setDate(4, null);
 						else
-							statement1.setDate(4, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().toString())));
+						statement1.setDate(4, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().toString())));
 						statement1.setString(5, tables_genderBox.getSelectedItem().toString());
 						statement1.setString(6, tables_clientCompanyTxt.getText().trim());
 						statement1.setString(7, tables_clientPositionTxt.getText().trim());
