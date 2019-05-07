@@ -194,6 +194,7 @@ public class Queries
 		}
 		return lists;
 	}
+	
 	public static Client getClient(int id)
 	{
 		Client c = new Client();
