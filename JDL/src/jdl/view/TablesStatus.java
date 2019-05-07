@@ -886,6 +886,9 @@ public class TablesStatus extends JFrame{
 			}
 		}});
 		
+		tables_reloadBtn.setEnabled(false);
+		tables_registerBtn.setEnabled(false);
+		
 		JLabel tables_editClientsLbl = new JLabel("Update Clients", SwingConstants.CENTER);
 		tables_editClientsLbl.addMouseListener(new MouseAdapter() {
 			@Override

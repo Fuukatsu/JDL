@@ -61,6 +61,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.DefaultComboBoxModel;
 
 public class TablesUpdateClient extends JFrame{
 	private JTextField tables_clientBirthdateTxt;
@@ -118,12 +119,19 @@ public class TablesUpdateClient extends JFrame{
 		
 		//Input Section
 		
+
+		JButton tables_reloadBtn = new JButton("Reload");
+		tables_reloadBtn.setBounds(1389, 159, 138, 38);
+		tables_reloadBtn.setForeground(new Color(255, 255, 255));
+		tables_reloadBtn.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/main_refresh.png")));
+		
 		JPanel tables_inputPanel = new JPanel();
 		tables_inputPanel.setBounds(25, 141, 450, 735);
 		tables_inputPanel.setBackground(new Color (255, 255, 255, 60));
 		tables_inputPanel.setLayout(null);
 		
 		JComboBox tables_comboBox = new JComboBox();
+		tables_comboBox.setModel(new DefaultComboBoxModel(new String[] {"Click to see the list of registered client"}));
 		Connection conn1;
 		try {
 			conn1 = DriverManager.getConnection(dP.url, dP.username, dP.password);
@@ -135,17 +143,12 @@ public class TablesUpdateClient extends JFrame{
 				 	client_id = rs1.getString("client_id");
 			
 			       	tables_comboBox.addItem(client_lastname+", "+client_firstname+", "+client_id);
-			       
 			       	
 			    }
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		
-		JButton tables_reloadBtn = new JButton("Reload");
-		tables_reloadBtn.setBounds(1389, 159, 138, 38);
-		tables_reloadBtn.setForeground(new Color(255, 255, 255));
-		tables_reloadBtn.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/main_refresh.png")));
+	
 		tables_reloadBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			
@@ -319,34 +322,55 @@ public class TablesUpdateClient extends JFrame{
 		tables_clientEmailLbl.setBounds(20, 630, 190, 29);
 		tables_inputPanel.add(tables_clientEmailLbl);
 		
+		JButton tables_registerBtn = new JButton("Update Client");
+		tables_registerBtn.setForeground(new Color(255, 255, 255));
+		
 		tables_comboBox.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
+			
 			try {
 				Connection conn=DriverManager.getConnection(dP.url, dP.username, dP.password);
 				Statement stat=conn.createStatement();
 				Statement stat1=conn.createStatement();
+					
+					if(tables_comboBox.getSelectedItem().toString() == "Click to see the list of registered client") {
+						tables_reloadBtn.setEnabled(false);
+						tables_registerBtn.setEnabled(false);
+						tables_clientLastnameTxt.setText("");
+						tables_clientFirstnameTxt.setText("");
+						tables_clientAliasTxt.setText("");
+						birthdatePicker.getJFormattedTextField().setText("");
+						tables_clientCompanyTxt.setText("");
+						tables_clientPositionTxt.setText("");
+						tables_clientContactTxt.setText("");
+						tables_clientEmailTxt.setText("");
 				
-				clientSelectedName = tables_comboBox.getSelectedItem().toString();
-		       	
-				ResultSet rs=stat.executeQuery("SELECT * FROM jdl_accounts.clients WHERE client_id = "+Integer.parseInt(clientSelectedName.substring(clientSelectedName.lastIndexOf(",")+2, clientSelectedName.length())));
-				while(rs.next()) {
-					tables_clientLastnameTxt.setText(rs.getString("client_lastname"));
-					tables_clientFirstnameTxt.setText(rs.getString("client_firstname"));
-					tables_clientAliasTxt.setText(rs.getString("client_alias"));
-					birthdatePicker.getJFormattedTextField().setText((rs.getString("client_birthdate")));
-					tables_clientCompanyTxt.setText(rs.getString("client_company"));
-					tables_clientPositionTxt.setText(rs.getString("client_position"));
-					tables_clientContactTxt.setText(rs.getString("client_contact"));
-					tables_clientEmailTxt.setText(rs.getString("client_email"));
+					}else if (tables_comboBox.getSelectedItem().toString() != "Click to see the list of registered client") {
+						tables_reloadBtn.setEnabled(true);
+					
+					clientSelectedName = tables_comboBox.getSelectedItem().toString();
+			       	
+					ResultSet rs=stat.executeQuery("SELECT * FROM jdl_accounts.clients WHERE client_id = "+Integer.parseInt(clientSelectedName.substring(clientSelectedName.lastIndexOf(",")+2, clientSelectedName.length())));
+					while(rs.next()) {
+						tables_clientLastnameTxt.setText(rs.getString("client_lastname"));
+						tables_clientFirstnameTxt.setText(rs.getString("client_firstname"));
+						tables_clientAliasTxt.setText(rs.getString("client_alias"));
+						birthdatePicker.getJFormattedTextField().setText((rs.getString("client_birthdate")));
+						tables_clientCompanyTxt.setText(rs.getString("client_company"));
+						tables_clientPositionTxt.setText(rs.getString("client_position"));
+						tables_clientContactTxt.setText(rs.getString("client_contact"));
+						tables_clientEmailTxt.setText(rs.getString("client_email"));
+					}
+					
+				}} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
-				
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 		}
 	});
 		
+		tables_reloadBtn.setEnabled(false);
+		tables_registerBtn.setEnabled(false);
 		
 		tables_comboBox.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 14));
 		tables_comboBox.setBounds(20, 49, 400, 29);
@@ -375,8 +399,7 @@ public class TablesUpdateClient extends JFrame{
 		tables_registeredClientsLbl.setBounds(489, 155, 255, 37);
 		getContentPane().add(tables_registeredClientsLbl);
 		
-		JButton tables_registerBtn = new JButton("Update Client");
-		tables_registerBtn.setForeground(new Color(255, 255, 255));
+		
 		
 		java.util.Date date=new java.util.Date();
 		java.sql.Date sqlDate=new java.sql.Date(date.getTime());

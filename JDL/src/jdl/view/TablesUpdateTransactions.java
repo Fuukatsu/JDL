@@ -677,6 +677,9 @@ public class TablesUpdateTransactions extends JFrame{
 			}
 		}});
 		
+		tables_reloadBtn.setEnabled(false);
+		tables_registerBtn.setEnabled(false);
+		
 		JLabel lblClientTransaction = new JLabel("------------------------ Client Transaction Details -----------------------");
 		lblClientTransaction.setHorizontalAlignment(SwingConstants.LEFT);
 		lblClientTransaction.setForeground(Color.WHITE);

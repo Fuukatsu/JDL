@@ -237,6 +237,9 @@ public class TablesStatusPermits extends JFrame{
 				tables_reloadBtn.doClick();
 			}
 		}});
+		
+		tables_reloadBtn.setEnabled(false);
+		tables_registerBtn.setEnabled(false);
 			
 		Connection conn1;
 		try {
