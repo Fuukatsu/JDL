@@ -622,8 +622,8 @@ public class TablesUpdateClient extends JFrame{
 						
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Client has been added successfully.</font color = #ffffff></html>", "Client has been recorded successfully.", JOptionPane.INFORMATION_MESSAGE);
 						
-						Runner.destroyTAC();
-						Runner.openTAC();
+						Runner.destroyTUC();
+						Runner.openTUC();
 					}
 				}
 
