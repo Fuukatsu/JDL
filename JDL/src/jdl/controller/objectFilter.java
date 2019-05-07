@@ -272,6 +272,7 @@ public class objectFilter
 		return trans;
 	}
 	
+	
 	public static boolean validateEmptyStrings(String[] input, String[] what) {
 		boolean t = false;
 		if(input[0].isEmpty() || containsDigit(input[0]) || input[0].length() >50 ) {
