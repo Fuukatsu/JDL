@@ -122,7 +122,7 @@ public class ActivityHistory extends JFrame{
 		emp_back.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
 		
 		JLabel transaction_titleLbl = new JLabel("Activity History");
-		transaction_titleLbl.setBounds(328, 0, 242, 37);
+		transaction_titleLbl.setBounds(365, 0, 242, 37);
 		getContentPane().add(transaction_titleLbl);
 		transaction_titleLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		transaction_titleLbl.setForeground(Color.WHITE);
