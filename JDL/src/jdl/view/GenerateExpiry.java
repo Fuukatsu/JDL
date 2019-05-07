@@ -24,6 +24,7 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 
 import jdl.controller.Runner;
+import jdl.controller.TableColumnAdjuster;
 import jdl.controller.objectFilter;
 import jdl.dao.Queries;
 import jdl.model.Transaction;
@@ -135,6 +136,10 @@ public class GenerateExpiry extends JFrame{
 					tl[i] = ttl;
 				}
 				table_1.setModel(applyTableModel(tl));
+				TableColumnAdjuster tca1 = new TableColumnAdjuster(table_1);
+				table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+				tca1.adjustColumns();
+				
 				generate_actualCountLbl.setText(Integer.toString(tl.length));
 				generate_actualCountLbl.setVisible(true);
 				} catch (ParseException e1) {
@@ -182,6 +187,10 @@ public class GenerateExpiry extends JFrame{
 					tl[i] = ttl;
 				}
 				table_1.setModel(applyTableModel(tl));
+				TableColumnAdjuster tca1 = new TableColumnAdjuster(table_1);
+				table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+				tca1.adjustColumns();
+				
 				generate_actualCountLbl.setText(Integer.toString(tl.length));
 				generate_actualCountLbl.setVisible(true);
 				} catch (ParseException e1) {
@@ -228,7 +237,11 @@ public class GenerateExpiry extends JFrame{
 					ttl[12] = ttemp.getAepEndDate();
 					tl[i] = ttl;
 				}
-				table_1.setModel(applyTableModel(tl));
+				table_1.setModel(applyTableModel(tl));	
+				TableColumnAdjuster tca1 = new TableColumnAdjuster(table_1);
+				table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+				tca1.adjustColumns();
+				
 				generate_actualCountLbl.setText(Integer.toString(tl.length));
 				generate_actualCountLbl.setVisible(true);
 				} catch (ParseException e1) {
@@ -274,6 +287,9 @@ public class GenerateExpiry extends JFrame{
 		
 		table_1 = new JTable();
 		table_1.setModel(resetTableModel());
+		TableColumnAdjuster tca1 = new TableColumnAdjuster(table_1);
+		table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		tca1.adjustColumns();
 	/*	table_1.getColumnModel().getColumn(1).setPreferredWidth(90);
 		table_1.getColumnModel().getColumn(4).setPreferredWidth(69);
 		table_1.getColumnModel().getColumn(5).setPreferredWidth(92);

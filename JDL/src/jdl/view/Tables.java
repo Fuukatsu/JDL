@@ -153,6 +153,8 @@ public class Tables extends JFrame{
 				TableModel md = Queries.getTransactions(Integer.parseInt(d));
 				table_1.setModel(md);
 				TableColumnAdjuster tca1 = new TableColumnAdjuster(table_1);
+				
+				table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 				tca1.adjustColumns();
 				if(md != null)
 				{
