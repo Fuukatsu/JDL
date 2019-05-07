@@ -124,7 +124,6 @@ public class TablesUpdateClient extends JFrame{
 		tables_inputPanel.setLayout(null);
 		
 		JComboBox tables_comboBox = new JComboBox();
-		
 		Connection conn1;
 		try {
 			conn1 = DriverManager.getConnection(dP.url, dP.username, dP.password);
@@ -537,6 +536,13 @@ public class TablesUpdateClient extends JFrame{
 		tables_minimize.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/button_minimizer.png")));
 		
 		JLabel tables_editClientsLbl = new JLabel("Update Clients", SwingConstants.CENTER);
+		tables_editClientsLbl.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Runner.openTAC();
+				Runner.destroyTAC();
+			}
+		});
 		tables_editClientsLbl.setForeground(Color.WHITE);
 		tables_editClientsLbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		tables_editClientsLbl.setBounds(245, 48, 183, 37);
@@ -558,7 +564,8 @@ public class TablesUpdateClient extends JFrame{
 				Connection conn2;
 				
 				try {
-					String sql = "UPDATE jdl_accounts.clients (client_lastname = ?, client_firstname = ?, client_nationality = ?, client_birthdate = ?, client_gender = ?, client_company = ?, client_position = ?, client_alias = ?, client_contact = ?, client_email = ?)";
+					String sql = "UPDATE jdl_accounts.clients SET client_lastname = ?, client_firstname = ?, client_nationality = ?, client_birthdate = ?, client_gender = ?, client_company = ?, client_position = ?, client_alias = ?, client_contact = ?, client_email = ?"
+							+ "WHERE client_id = "+Integer.parseInt(clientSelectedName.substring(clientSelectedName.lastIndexOf(",")+2, clientSelectedName.length()));
 					
 					conn2 = DriverManager.getConnection(dP.url, dP.username, dP.password);
 					PreparedStatement statement1 = conn2.prepareStatement(sql);

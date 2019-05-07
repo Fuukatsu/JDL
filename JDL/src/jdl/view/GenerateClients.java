@@ -245,14 +245,6 @@ public class GenerateClients extends JFrame{
 		scrollPane_1.setBorder(new EmptyBorder(0, 0, 0, 0));
 		scrollPane_1.setBounds(243, 101, 735, 567);
 		getContentPane().add(scrollPane_1);
-		
-		table_1.getColumnModel().getColumn(1).setPreferredWidth(86);
-		table_1.getColumnModel().getColumn(5).setPreferredWidth(93);
-		table_1.getColumnModel().getColumn(6).setPreferredWidth(96);
-		table_1.getColumnModel().getColumn(7).setPreferredWidth(87);
-		table_1.getColumnModel().getColumn(9).setPreferredWidth(102);
-		table_1.getColumnModel().getColumn(10).setPreferredWidth(106);
-		table_1.getColumnModel().getColumn(12).setPreferredWidth(96);
 		table_1.setFont(new Font("Calibri", Font.PLAIN, 16));
 		table_1.setBounds(495, 198, 125, 68);
 		table_1.setRowHeight(32);
