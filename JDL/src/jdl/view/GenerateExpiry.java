@@ -274,6 +274,15 @@ public class GenerateExpiry extends JFrame{
 		
 		table_1 = new JTable();
 		table_1.setModel(resetTableModel());
+	/*	table_1.getColumnModel().getColumn(1).setPreferredWidth(90);
+		table_1.getColumnModel().getColumn(4).setPreferredWidth(69);
+		table_1.getColumnModel().getColumn(5).setPreferredWidth(92);
+		table_1.getColumnModel().getColumn(6).setPreferredWidth(88);
+		table_1.getColumnModel().getColumn(7).setPreferredWidth(94);
+		table_1.getColumnModel().getColumn(9).setPreferredWidth(101);
+		table_1.getColumnModel().getColumn(10).setPreferredWidth(104);
+		table_1.getColumnModel().getColumn(12).setPreferredWidth(101);
+		table_1.getColumnModel().getColumn(13).setPreferredWidth(92);*/
 		table_1.setFont(new Font("Calibri", Font.PLAIN, 16));
 		table_1.setBounds(495, 198, 125, 68);
 		table_1.setRowHeight(32);
@@ -311,10 +320,10 @@ public class GenerateExpiry extends JFrame{
 	{
 		return new DefaultTableModel(
 				new Object[][] {
-					{null, null, null, null, null, "", null, null, "", null, null, null, null, null},
+					{null, null, null, null, null, null, null, null, null, null, null, null,null},
 				},
 				new String[] {
-					"Client ID", "Transaction ID", "Passport No", "TIN ID", "Visa Type", "Visa Start Type", "Visa Start Date", "Visa End Date", "Permit Type", "Permit Start Date", "Permit End Date", "AEP ID", "AEP Start Date", "AEP End Date"
+					"Client ID", "Transaction ID", "Passport No", "TIN ID", "Visa Type", "Visa Start Date", "Visa End Date", "Permit Type", "Permit Start Date", "Permit End Date", "AEP ID", "AEP Start Date", "AEP End Date"
 				}
 			);
 	}

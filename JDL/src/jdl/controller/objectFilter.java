@@ -184,8 +184,10 @@ public class objectFilter
 				}
 				
 			}
-			catch (ParseException e) {
+			catch (ParseException e) 
+			{
 				e.printStackTrace();
+				approved = false;
 			}
 		}
 		
