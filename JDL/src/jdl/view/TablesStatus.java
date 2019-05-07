@@ -490,6 +490,7 @@ public class TablesStatus extends JFrame{
 		tables_clientCreateTransactionLbl.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
 				Runner.openTables();
 				Runner.destroyTS();
 			}
@@ -508,6 +509,7 @@ public class TablesStatus extends JFrame{
 		tables_clientRemarksTableLbl.setBounds(1290, 48, 209, 37);
 		tables_clientRemarksTableLbl.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				
 				Runner.openTR();
 				Runner.destroyTS();
 			}
@@ -532,6 +534,7 @@ public class TablesStatus extends JFrame{
 		tables_updateTransactionLbl.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
 				Runner.openTUT();
 				Runner.destroyTS();
 			}
@@ -887,6 +890,7 @@ public class TablesStatus extends JFrame{
 		tables_editClientsLbl.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
 				Runner.openTUC();
 				Runner.destroyTS();
 			}

@@ -941,6 +941,14 @@ public class TablesUpdateTransactions extends JFrame{
 		getContentPane().add(tables_specificClientLbl);
 		
 		JLabel tables_editClientsLbl = new JLabel("Updates Clients", SwingConstants.CENTER);
+		tables_editClientsLbl.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				Runner.openTUC();
+				Runner.destroyTUT();
+			}
+		});
 		tables_editClientsLbl.setForeground(Color.LIGHT_GRAY);
 		tables_editClientsLbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		tables_editClientsLbl.setBounds(245, 48, 183, 37);

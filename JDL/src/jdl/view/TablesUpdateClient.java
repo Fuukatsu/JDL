@@ -82,7 +82,7 @@ public class TablesUpdateClient extends JFrame{
 		
 		//Main Panel
 	
-		setTitle("JDL: Add Client");
+		setTitle("JDL: Update Client");
 		setResizable(false);
 		setUndecorated(true);
 		setLocationRelativeTo(null);
@@ -391,7 +391,7 @@ public class TablesUpdateClient extends JFrame{
 			public void mouseClicked(MouseEvent e) {
 				
 				Runner.openTables();
-				Runner.destroyTAC();
+				Runner.destroyTUC();
 			}
 		});
 		
@@ -405,7 +405,7 @@ public class TablesUpdateClient extends JFrame{
 			public void mouseClicked(MouseEvent e) {
 				
 				Runner.openTS();
-				Runner.destroyTAC();
+				Runner.destroyTUC();
 			}
 		});
 		tables_clientStatusTableLbl.setForeground(Color.LIGHT_GRAY);
@@ -417,7 +417,7 @@ public class TablesUpdateClient extends JFrame{
 			public void mouseClicked(MouseEvent e) {
 				
 				Runner.openTR();
-				Runner.destroyTAC();
+				Runner.destroyTUC();
 			}
 		});
 		tables_clientRemarksTableLbl.setForeground(Color.LIGHT_GRAY);
@@ -442,7 +442,7 @@ public class TablesUpdateClient extends JFrame{
 			public void mouseClicked(MouseEvent e) {
 				
 				Runner.openTUT();
-				Runner.destroyTAC();
+				Runner.destroyTUC();
 			}
 		});
 		tables_updateTransactionLbl.setBounds(774, 48, 227, 37);
@@ -450,6 +450,14 @@ public class TablesUpdateClient extends JFrame{
 		tables_updateTransactionLbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		
 		JLabel tables_addClientLbl = new JLabel("Add New Client", SwingConstants.CENTER);
+		tables_addClientLbl.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				Runner.openTAC();
+				Runner.destroyTUC();
+			}
+		});
 		tables_addClientLbl.setBounds(25, 48, 183, 37);
 		tables_addClientLbl.setForeground(Color.LIGHT_GRAY);
 		tables_addClientLbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
