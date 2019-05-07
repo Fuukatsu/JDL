@@ -65,6 +65,13 @@ public class GenerateClients extends JFrame{
 		getContentPane().setBackground(new Color(90, 103, 115));
 		getContentPane().setLayout(null);
 		
+		JLabel generate_actualCountLbl = new JLabel("");
+		generate_actualCountLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		generate_actualCountLbl.setForeground(Color.WHITE);
+		generate_actualCountLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 90));
+		generate_actualCountLbl.setBounds(10, 422, 227, 166);
+		getContentPane().add(generate_actualCountLbl);
+		
 		JLabel generate_minimizeBtn = new JLabel("");
 		generate_minimizeBtn.setBounds(964, 0, 26, 46);
 		getContentPane().add(generate_minimizeBtn);
@@ -131,7 +138,7 @@ public class GenerateClients extends JFrame{
 				}
 				table_1.setModel(applyTableModel(tl));
 				TableColumnAdjuster tca1 = new TableColumnAdjuster(table_1);
-				
+				generate_actualCountLbl.setText(Integer.toString(countClients(tl)));
 				table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 				tca1.adjustColumns();
 				//Query nung table with constraints to weekly
@@ -174,7 +181,7 @@ public class GenerateClients extends JFrame{
 				}
 				table_1.setModel(applyTableModel(tl));
 				TableColumnAdjuster tca1 = new TableColumnAdjuster(table_1);
-				
+				generate_actualCountLbl.setText(Integer.toString(countClients(tl)));
 				table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 				tca1.adjustColumns();
 				//Query nung table with constraints to weekly
@@ -220,7 +227,7 @@ public class GenerateClients extends JFrame{
 				}
 				table_1.setModel(applyTableModel(tl));
 				TableColumnAdjuster tca1 = new TableColumnAdjuster(table_1);
-				
+				generate_actualCountLbl.setText(Integer.toString(countClients(tl)));
 				table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 				tca1.adjustColumns();
 				//Query nung table with constraints to weekly
@@ -290,13 +297,6 @@ public class GenerateClients extends JFrame{
 		generate_clientCountLbl.setBounds(51, 354, 138, 39);
 		getContentPane().add(generate_clientCountLbl);
 		
-		JLabel generate_actualCountLbl = new JLabel("");
-		generate_actualCountLbl.setHorizontalAlignment(SwingConstants.CENTER);
-		generate_actualCountLbl.setForeground(Color.WHITE);
-		generate_actualCountLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 90));
-		generate_actualCountLbl.setBounds(10, 422, 227, 166);
-		getContentPane().add(generate_actualCountLbl);
-		
 		JLabel options_background = new JLabel("");
 		options_background.setIcon(new ImageIcon(GenerateClients.class.getResource("/jdl/Assets/background_tables4.jpg")));
 		options_background.setBounds(0, 0, 1000, 690);
@@ -322,5 +322,15 @@ public class GenerateClients extends JFrame{
 					"Client ID", "Transaction ID", "Passport No", "TIN ID", "Visa Type", "Visa Start Date", "Visa End Date", "Permit Type", "Permit Start Date", "Permit End Date", "AEP ID", "AEP Start Date", "AEP End Date"
 				}
 			);
+	}
+	public static int countClients(Object[][] rows)
+	{
+		ArrayList<Object> list = new ArrayList<Object>();
+		for(Object[] row:rows)
+		{
+			if(!list.contains(row[0]))
+				list.add(row[0]);
+		}
+		return list.size();
 	}
 }
