@@ -52,7 +52,7 @@ public class Queries
 		ArrayList<Client> lists = new ArrayList<Client>();
 		try (Connection con = DriverManager.getConnection(dP.url, dP.username, dP.password)) 
 		{
-			PreparedStatement ps = con.prepareStatement("SELECT * FROM jdl_accounts.clients");
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM jdl_accounts.clients where client_isActive = 1");
 			ResultSet rs = ps.executeQuery();
 			while(rs.next())
 			{        
