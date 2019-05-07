@@ -262,6 +262,39 @@ public class Queries
 		}
 		return null;
 	}
+	public static TableModel getClientTransactions2(String u)
+	{
+		ResultSet rs = null;
+		try (Connection con = DriverManager.getConnection(dP.url, dP.username, dP.password)) 
+		{
+			PreparedStatement ps = con.prepareStatement("SELECT client_id AS 'Client ID',"
+					+ "trans_transId AS 'Transaction ID'" +
+					",trans_passportNo AS 'Passport No' "+ 
+					", trans_tinID AS 'TIN ID' " + 
+					", trans_visaType AS 'Visa Type' " + 
+					", trans_visaStartDate AS 'Visa Start Date' " + 
+					", trans_visaEndDate AS 'Visa Expiry Date' " + 
+					", trans_permitType AS 'Permit Type' " + 
+					", trans_permitStartDate AS 'Permit Start Date' " + 
+					", trans_permitEndDate AS 'Permit Expiry Date' " + 
+					", trans_aepID AS 'AEP ID' " + 
+					", trans_aepStartDate AS 'AEP Start Date' " + 
+					", trans_aepEndDate AS 'AEP Expiry Date' " + 
+					", trans_transTimestamp AS 'Timestamp' "+
+					", trans_transAuthor AS 'Author' "+
+					", trans_transAction AS 'Action' "+
+					" FROM transactions WHERE trans_transAuthor = ? ORDER BY trans_transId DESC");
+			ps.setString(1, u);
+			rs = ps.executeQuery();
+			TableModel tm = DbUtils.resultSetToTableModel(rs);
+			con.close();
+			return tm;
+		} catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		return null;
+	}
 	public static ArrayList<Transaction> getTransactions()
 	{
 		ArrayList<Transaction> tlist = new ArrayList<Transaction>();
@@ -343,7 +376,9 @@ public class Queries
 					"BETWEEN ? AND ? "+
 					"UNION "+
 					"SELECT * FROM jdl_accounts.transactions WHERE trans_aepEndDate "+
-					"BETWEEN ? AND ? ";
+					"BETWEEN ? AND ? "+
+					"UNION "+
+					"SELECT * FROM jdl_accounts.transactions WHERE trans_isActive = 1";
 			PreparedStatement ps = con.prepareStatement(sql);
 			for(int i = 0; i < 6; i+=2)
 			{
