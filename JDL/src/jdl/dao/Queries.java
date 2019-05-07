@@ -97,7 +97,7 @@ public class Queries
 					", trans_aepID AS 'AEP ID' " + 
 					", trans_aepStartDate AS 'AEP Start Date' " + 
 					", trans_aepEndDate AS 'AEP Expiry Date' " + 
-					" FROM transactions WHERE client_id = ? ORDER BY trans_transId DESC");
+					" FROM transactions WHERE client_id = ? AND trans_isActive = 1 ORDER BY trans_transId DESC");
 			ps.setInt(1, id);
 			rs = ps.executeQuery();
 			TableModel tm = DbUtils.resultSetToTableModel(rs);
@@ -201,7 +201,7 @@ public class Queries
 		Client c = new Client();
 		try (Connection con = DriverManager.getConnection(dP.url, dP.username, dP.password)) 
 		{
-			PreparedStatement ps = con.prepareStatement("SELECT * FROM clients WHERE client_id = ?");
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM clients WHERE client_id = ? and client_isActive = 1");
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next())
@@ -218,6 +218,8 @@ public class Queries
 				c.setClient_alias(rs.getString(9));
 				c.setClient_contact(rs.getString(10));
 				c.setClient_email(rs.getString(11));
+				c.setClient_action(rs.getString(12));
+				c.setClient_isActive(rs.getInt(13));
 			}
 			con.close();
 		} catch (SQLException e) 
@@ -248,7 +250,7 @@ public class Queries
 					", trans_transTimestamp AS 'Timestamp' "+
 					", trans_transAuthor AS 'Author' "+
 					", trans_transAction AS 'Action' "+
-					" FROM transactions WHERE trans_transAuthor = ? ORDER BY trans_transId DESC");
+					" FROM transactions WHERE trans_transAuthor = ? AND trans_isActive = 1 ORDER BY trans_transId DESC");
 			ps.setString(1, u);
 			rs = ps.executeQuery();
 			TableModel tm = DbUtils.resultSetToTableModel(rs);

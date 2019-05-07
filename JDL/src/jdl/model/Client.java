@@ -16,6 +16,8 @@ public class Client
 	private String client_alias;
 	private String client_contact;
 	private String client_email;
+	private String client_action;
+	private int client_isActive;
 	public int getClient_id() {
 		return client_id;
 	}
@@ -81,5 +83,17 @@ public class Client
 	}
 	public void setClient_email(String client_email) {
 		this.client_email = client_email;
+	}
+	public String getClient_action() {
+		return client_action;
+	}
+	public void setClient_action(String client_action) {
+		this.client_action = client_action;
+	}
+	public int getClient_isActive() {
+		return client_isActive;
+	}
+	public void setClient_isActive(int client_isActive) {
+		this.client_isActive = client_isActive;
 	} 
 }
