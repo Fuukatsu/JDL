@@ -207,7 +207,7 @@ public class TablesRemarks extends JFrame{
 		try {
 			conn1 = DriverManager.getConnection(dP.url, dP.username, dP.password);
 			Statement stat=conn1.createStatement();
-			ResultSet rs1=stat.executeQuery("SELECT * FROM jdl_accounts.clients");
+			ResultSet rs1=stat.executeQuery("SELECT * FROM jdl_accounts.clients WHERE client_isActive = 1 OR null");
 			 while(rs1.next()){        
 				 	String client_lastname = rs1.getString("client_lastname");
 				 	String client_firstname = rs1.getString("client_firstname");

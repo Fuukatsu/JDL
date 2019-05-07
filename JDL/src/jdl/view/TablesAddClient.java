@@ -142,7 +142,7 @@ public class TablesAddClient extends JFrame{
 							", client_position AS 'Company Position' " + 
 							", client_contact AS 'Contact No.' " + 
 							", client_email AS 'Email' " + 
-							" FROM jdl_accounts.clients ORDER BY client_id DESC");
+							" FROM jdl_accounts.clients WHERE client_isActive = 1 OR null ORDER BY client_id DESC");
 					
 					table_1.setModel(DbUtils.resultSetToTableModel(rs));
 					table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
