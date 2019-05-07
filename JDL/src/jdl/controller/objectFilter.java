@@ -274,20 +274,20 @@ public class objectFilter
 	
 	public static boolean validateEmptyStrings(String[] input, String[] what) {
 		boolean t = false;
-		if(input[0].isEmpty() || containsDigit(input[0]) || input[0].length() >24 ) {
+		if(input[0].isEmpty() || containsDigit(input[0]) || input[0].length() >50 ) {
 			if(input[0].isEmpty())
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[0]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
 			else if(containsDigit(input[0]))
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[0]+" must not contain digits.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
-			else if(input[0].length() >24)
+			else if(input[0].length() >50)
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[0]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
 		}
-		else if(input[1].isEmpty() || containsDigit(input[1]) || input[1].length() >24 ) {
+		else if(input[1].isEmpty() || containsDigit(input[1]) || input[1].length() >50 ) {
 			if(input[1].isEmpty())
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[1]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
 			else if(containsDigit(input[1]))
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[1]+" must not contain digits.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
-			else if(input[1].length() >24)
+			else if(input[1].length() >50)
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[1]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
 		}
 		else if(input[3].isEmpty()) {
@@ -296,19 +296,19 @@ public class objectFilter
 		else if(input[5].length() >24 ) {
 			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[5]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
 		}
-		else if(input[6].length() >24 ) {
+		else if(input[6].length() >70 ) {
 			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[6]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
 		}
-		else if(containsDigit(input[7]) || input[6].length() >24 ) {
+		else if(containsDigit(input[7]) || input[6].length() > 70) {
 			if(containsDigit(input[7]))
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[7]+" must not contain digits.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);
 			else
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[7]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);
 		}
-		else if(input[9].isEmpty() || input[9].length() >24 || !checkEmail(input[9])) {
+		else if(input[9].isEmpty() || input[9].length() >150 || !checkEmail(input[9])) {
 			if(input[9].isEmpty())
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[9]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
-			else if(input[9].length() >24)
+			else if(input[9].length() >150)
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[9]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
 			else if(!checkEmail(input[9]))
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[9]+": "+input[9]+" is invalid</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
@@ -322,38 +322,38 @@ public class objectFilter
 	public static boolean validateAccountInfoEmptyStrings(String[] input, String[] what) {
 		boolean t = false;
 		
-		if(input[0].isEmpty() || containsDigit(input[0]) || input[0].length() >24 ) {
+		if(input[0].isEmpty() || containsDigit(input[0]) || input[0].length() >50 ) {
 			if(input[0].isEmpty())
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[0]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
 			else if(containsDigit(input[0]))
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[0]+" must not contain digits.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
-			else if(input[0].length() >24)
+			else if(input[0].length() >50)
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[0]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
 		}
-		if(input[1].isEmpty() || containsDigit(input[1]) || input[1].length() >24 ) {
+		if(input[1].isEmpty() || containsDigit(input[1]) || input[1].length() >50 ) {
 			if(input[1].isEmpty())
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[1]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
 			else if(containsDigit(input[1]))
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[1]+" must not contain digits.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
-			else if(input[1].length() >24)
+			else if(input[1].length() >50)
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[1]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
 		}
-		if(input[2].isEmpty() || containsDigit(input[2]) || input[2].length() >24 ) {
+		if(input[2].isEmpty() || containsDigit(input[2]) || input[2].length() >70 ) {
 			if(input[2].isEmpty())
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[2]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
 			else if(containsDigit(input[2]))
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[2]+" must not contain digits.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
-			else if(input[2].length() >24)
+			else if(input[2].length() >70)
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[2]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
 		}
 		else if(input[4].isEmpty()) {
 			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[4]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
 		}
-		else if(input[7].isEmpty() || input[7].length() >24 || !checkEmail(input[7])) {
+		else if(input[7].isEmpty() || input[7].length() >150|| !checkEmail(input[7])) {
 			if(input[7].isEmpty())
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[7]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
-			else if(input[7].length() >24)
-				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[7]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+			else if(input[7].length() >150)
+				JOptionPane.showMessageDialog(null, "<ht0ml><font color = #ffffff>"+what[7]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
 			else if(!checkEmail(input[7]))
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[7]+": "+input[7]+" is invalid</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
 		}
@@ -364,6 +364,7 @@ public class objectFilter
 		
 		return t;
 	}
+	
 	public static String removeDay(String date) {
 		//String d = birthdatePicker.getJFormattedTextField().getText().toString();
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd"); 
@@ -445,4 +446,66 @@ public class objectFilter
 		range[1] = format.format(c2.getTime());
 		return range;
 	}
+	public static boolean validateOwnAccountInfoEmptyStrings(String[] input, String[] what) {
+		boolean t = false;
+		
+		if(input[0].isEmpty() || containsDigit(input[0]) || input[0].length() >50 ) {
+			if(input[0].isEmpty())
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[0]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
+			else if(containsDigit(input[0]))
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[0]+" must not contain digits.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+			else if(input[0].length() >50)
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[0]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+		}
+		if(input[1].isEmpty() || containsDigit(input[1]) || input[1].length() >50 ) {
+			if(input[1].isEmpty())
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[1]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
+			else if(containsDigit(input[1]))
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[1]+" must not contain digits.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+			else if(input[1].length() >50)
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[1]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+		}
+		if(input[2].isEmpty() || containsDigit(input[2]) || input[2].length() >70 ) {
+			if(input[2].isEmpty())
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[2]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
+			else if(containsDigit(input[2]))
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[2]+" must not contain digits.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+			else if(input[2].length() >70)
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[2]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+		}
+		else if(input[4].isEmpty()) {
+			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[4]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
+		}
+		else if(input[7].isEmpty() || input[7].length() >150|| !checkEmail(input[7])) {
+			if(input[7].isEmpty())
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[7]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
+			else if(input[7].length() >150)
+				JOptionPane.showMessageDialog(null, "<ht0ml><font color = #ffffff>"+what[7]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+			else if(!checkEmail(input[7]))
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[7]+": "+input[7]+" is invalid</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+		}
+		else if(input[8].isEmpty()) {
+			for(int i=0; i < input[8].length()-1; i++) {
+				if(input[8].charAt(i)==' ') {
+					JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[8]+": "+input[8]+" is invalid</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+					break;
+				}
+			}
+		}
+		else if(input[9].isEmpty() || input[9].length() <8) {
+			if(input[9].isEmpty())
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[9]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
+			else if(input[9].length() <8)
+				JOptionPane.showMessageDialog(null, "<ht0ml><font color = #ffffff>"+what[9]+" too short. Minimum of 8 alphanumeric characters. </font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+		}
+		else{
+			t = true;
+		}
+		
+		
+		return t;
+	}
 }
+
+
+

@@ -22,6 +22,7 @@ import javax.swing.plaf.ColorUIResource;
 import javax.swing.table.JTableHeader;
 
 import jdl.controller.Runner;
+import jdl.controller.TableColumnAdjuster;
 import jdl.controller.objectFilter;
 import jdl.dao.Queries;
 import jdl.model.*;
@@ -48,6 +49,9 @@ public class GenerateClients extends JFrame{
 		//Main Panel
 		table_1 = new JTable();
 		table_1.setModel(resetModel());
+		TableColumnAdjuster tca1 = new TableColumnAdjuster(table_1);
+		table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		tca1.adjustColumns();
 		setTitle("JDL: Options");
 		setResizable(false);
 		setUndecorated(true);
@@ -126,6 +130,10 @@ public class GenerateClients extends JFrame{
 					tl[i] = ttl;
 				}
 				table_1.setModel(applyTableModel(tl));
+				TableColumnAdjuster tca1 = new TableColumnAdjuster(table_1);
+				
+				table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+				tca1.adjustColumns();
 				//Query nung table with constraints to weekly
 			}
 		});
@@ -165,6 +173,10 @@ public class GenerateClients extends JFrame{
 					tl[i] = ttl;
 				}
 				table_1.setModel(applyTableModel(tl));
+				TableColumnAdjuster tca1 = new TableColumnAdjuster(table_1);
+				
+				table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+				tca1.adjustColumns();
 				//Query nung table with constraints to weekly
 			
 				//Query nung table with constraints to monthly
@@ -207,6 +219,10 @@ public class GenerateClients extends JFrame{
 					tl[i] = ttl;
 				}
 				table_1.setModel(applyTableModel(tl));
+				TableColumnAdjuster tca1 = new TableColumnAdjuster(table_1);
+				
+				table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+				tca1.adjustColumns();
 				//Query nung table with constraints to weekly
 			
 				//Query nung table with constraints to monthly

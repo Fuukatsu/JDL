@@ -396,6 +396,7 @@ public class ViewAdministratorAccount extends JFrame{
 				try {
 					String sql = "INSERT INTO jdl_accounts.employees (emp_lastname, emp_firstname, emp_position, emp_gender, emp_birthdate, emp_address, emp_contact, emp_email, user_id)"
 							+ " values (?,?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE emp_lastname = ?, emp_firstname = ?, emp_position = ?, emp_gender = ?, emp_birthdate = ?, emp_address = ?, emp_contact = ?, emp_email = ?, user_id = ?";
+					
 					String sql1 = "UPDATE users set user_username = ?, user_password = ? WHERE user_id = ?";
 					String sql2 = "SELECT * FROM jdl_accounts.employees WHERE user_id=?";
 					conn2 = DriverManager.getConnection(dP.url, dP.username, dP.password);
@@ -403,25 +404,32 @@ public class ViewAdministratorAccount extends JFrame{
 					PreparedStatement statement2 = conn2.prepareStatement(sql1);
 					PreparedStatement statement3 = conn2.prepareStatement(sql2);
 					
-					if(adminAcc_lastnameTxt.getText().trim().trim().equals("")) {
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Administrator's Lastname must not be empty.</font color = #ffffff></html>", "Detected an empty Administrator's lastname", JOptionPane.ERROR_MESSAGE);
-					}else if (adminAcc_firstnameTxt.getText().trim().trim().equals("")) {
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Administrator's Firstname must not be empty.</font color = #ffffff></html>", "Detected an empty Administrator's firstname", JOptionPane.ERROR_MESSAGE);
-					}else if(adminAcc_positionTxt.getText().trim().trim().equals("")) {
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Administrator's Position must not be empty.</font color = #ffffff></html>", "Detected an empty or undefinable company position ", JOptionPane.ERROR_MESSAGE);
-					}else if(adminAcc_genderBox.getSelectedItem().toString().trim().trim().equals("")) {
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Administrator's Gender must not be empty.</font color = #ffffff></html>", "Detected an empty or undefinable gender", JOptionPane.ERROR_MESSAGE);
-					}else if(birthdatePicker.getJFormattedTextField().getText().trim().toString().equals("")) {
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Administrator's Birthdate must not be empty.</font color = #ffffff></html>", "Detected an empty Administrator's birthdate", JOptionPane.ERROR_MESSAGE);
-					}else if(adminAcc_contactTxt.getText().trim().trim().equals("") || adminAcc_emailTxt.getText().trim().trim() .equals("")) {
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>There should at least one contact information available for an employee</font color = #ffffff></html>", "Detected an empty contact no. or email", JOptionPane.ERROR_MESSAGE);
-					}else if(objectFilter.checkEmail(adminAcc_emailTxt.getText().trim().trim().toString())){
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please Enter a valid email</font color = #ffffff></html>", "Invalid Email", JOptionPane.ERROR_MESSAGE);
-					}else if(objectFilter.containsAlpha(adminAcc_contactTxt.getText().trim().trim() )) {
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Your contact number must not contain alphabet characters.</font color = #ffffff></html>", "Detected an alphabet character in your contact number", JOptionPane.ERROR_MESSAGE);
-					}
+					String[] input = new String[10];
+					input[0] = adminAcc_lastnameTxt.getText().trim();
+					input[1] = adminAcc_firstnameTxt.getText().trim();
+					input[2] = adminAcc_positionTxt.getText().trim();
+					input[3] = adminAcc_genderBox.getSelectedItem().toString().trim();
+					input[4] = birthdatePicker.getJFormattedTextField().getText().toString().trim();
+					input[5] = adminAcc_addressTxt.getText().trim();
+					input[6] = adminAcc_contactTxt.getText().trim();
+					input[7] = adminAcc_emailTxt.getText().trim();
+					input[8] = adminAcc_userIdTxt.getText().trim();
+					input[9] = adminAcc_passwordTxt.getText().trim();
 					
-					else {
+					String[] what = new String[10];
+					what[0] = "Your lastname";
+					what[1] = "Your firstname";
+					what[2] = "Your position";
+					what[3] = "Your gender";
+					what[4] = "Your birthdate";
+					what[5] = "Your address";
+					what[6] = "Your contact";
+					what[7] = "Your email";
+					what[8] = "Your User ID";
+					what[9] = "Your password";
+					
+					if(objectFilter.validateOwnAccountInfoEmptyStrings(input, what))
+					{
 						statement1.setString(1, adminAcc_lastnameTxt.getText().trim());
 						statement1.setString(2, adminAcc_firstnameTxt.getText().trim());
 						statement1.setString(3, adminAcc_positionTxt.getText().trim());

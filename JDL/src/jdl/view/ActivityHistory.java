@@ -161,7 +161,6 @@ public class ActivityHistory extends JFrame{
 				TableModel md = Queries.getClientTransactions(comboBox.getSelectedItem().toString());
 				table.setModel(md);
 				table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-				scrollPane.setViewportView(table);
 				
 				TableColumnAdjuster tca = new TableColumnAdjuster(table);
 				tca.adjustColumns();
@@ -174,6 +173,9 @@ public class ActivityHistory extends JFrame{
 		table = new JTable();
 		TableModel md = Queries.getClientTransactions(comboBox.getSelectedItem().toString());
 		table.setModel(md);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		TableColumnAdjuster tca = new TableColumnAdjuster(table);
+		tca.adjustColumns();
 		
 		table.setFont(new Font("Calibri", Font.PLAIN, 16));
 		table.setBounds(495, 198, 125, 68);
