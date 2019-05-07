@@ -15,7 +15,7 @@ public class SampleRunner {
 
 	public static void main(String[] args) throws ParseException 
 	{
-		String date = "2019-04-10";
+		/*String date = "2019-04-10";
 		Date d = new SimpleDateFormat("yyyy-MM-dd").parse(date);
 		date = objectFilter.addYear(date);
 		Date dd = new SimpleDateFormat("yyyy-MM-dd").parse(date);
@@ -24,7 +24,9 @@ public class SampleRunner {
 		for(Transaction t:tlist)
 		{
 			System.out.println(t.getTransID());
-		}
+		} */
+		CSVLoaderMain csv = new CSVLoaderMain();
+		csv.run();
 	}
 
 }

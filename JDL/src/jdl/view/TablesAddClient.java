@@ -477,6 +477,13 @@ public class TablesAddClient extends JFrame{
 		tables_minimize.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/button_minimizer.png")));
 		
 		JLabel tables_editClientsLbl = new JLabel("Update Clients", SwingConstants.CENTER);
+		tables_editClientsLbl.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Runner.openTUC();
+				Runner.destroyTAC();
+			}
+		});
 		tables_editClientsLbl.setForeground(Color.LIGHT_GRAY);
 		tables_editClientsLbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		tables_editClientsLbl.setBounds(245, 48, 183, 37);
@@ -529,11 +536,10 @@ public class TablesAddClient extends JFrame{
 					name[9] = "Client's Email";
 					
 					if(objectFilter.validateEmptyStrings(input, name)) {
-						System.out.print("IM HERE" + objectFilter.validateEmptyStrings(input, name));
 						statement1.setString(1, tables_clientLastnameTxt.getText().trim());
 						statement1.setString(2, tables_clientFirstnameTxt.getText().trim());
 						statement1.setString(3, tables_nationalityBox.getSelectedItem().toString());
-						if(input[5].equals(""))
+						if(input[3].equals(""))
 							statement1.setDate(4, null);
 						else
 							statement1.setDate(4, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().toString())));

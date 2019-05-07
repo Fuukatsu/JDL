@@ -38,6 +38,7 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.ScrollPaneConstants;
 
 public class GenerateExpiry extends JFrame{
 	private String admin_username;
@@ -45,26 +46,7 @@ public class GenerateExpiry extends JFrame{
 	private JTable table_1;
 	private ArrayList<Transaction> tlist;
 	private JLabel generate_actualCountLbl = new JLabel("");
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() 
-			{
-				try {
-					GenerateExpiry window = new GenerateExpiry();
-					window.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
-	/**
-	 * Create the application.
-	 */
 	public GenerateExpiry() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(GenerateExpiry.class.getResource("/jdl/Assets/login_small.png")));
 		
@@ -285,13 +267,14 @@ public class GenerateExpiry extends JFrame{
 		getContentPane().add(generate_clientListLbl);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane_1.setBorder(new EmptyBorder(0, 0, 0, 0));
 		scrollPane_1.setBounds(243, 101, 735, 566);
 		getContentPane().add(scrollPane_1);
 		
 		table_1 = new JTable();
 		table_1.setModel(resetTableModel());
-		table_1.getColumnModel().getColumn(1).setPreferredWidth(90);
+	/*	table_1.getColumnModel().getColumn(1).setPreferredWidth(90);
 		table_1.getColumnModel().getColumn(4).setPreferredWidth(69);
 		table_1.getColumnModel().getColumn(5).setPreferredWidth(92);
 		table_1.getColumnModel().getColumn(6).setPreferredWidth(88);
@@ -299,7 +282,7 @@ public class GenerateExpiry extends JFrame{
 		table_1.getColumnModel().getColumn(9).setPreferredWidth(101);
 		table_1.getColumnModel().getColumn(10).setPreferredWidth(104);
 		table_1.getColumnModel().getColumn(12).setPreferredWidth(101);
-		table_1.getColumnModel().getColumn(13).setPreferredWidth(92);
+		table_1.getColumnModel().getColumn(13).setPreferredWidth(92);*/
 		table_1.setFont(new Font("Calibri", Font.PLAIN, 16));
 		table_1.setBounds(495, 198, 125, 68);
 		table_1.setRowHeight(32);
@@ -320,10 +303,11 @@ public class GenerateExpiry extends JFrame{
 		generate_clientCountLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
 		generate_clientCountLbl.setBounds(52, 352, 138, 40);
 		getContentPane().add(generate_clientCountLbl);
+		generate_actualCountLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		generate_actualCountLbl.setForeground(Color.WHITE);
-		generate_actualCountLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 13));
-		generate_actualCountLbl.setBounds(36, 416, 169, 166);
+		generate_actualCountLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 90));
+		generate_actualCountLbl.setBounds(10, 416, 221, 148);
 		getContentPane().add(generate_actualCountLbl);
 		
 		JLabel options_background = new JLabel("");
@@ -336,10 +320,10 @@ public class GenerateExpiry extends JFrame{
 	{
 		return new DefaultTableModel(
 				new Object[][] {
-					{null, null, null, null, null, "", null, null, "", null, null, null, null, null},
+					{null, null, null, null, null, null, null, null, null, null, null, null,null},
 				},
 				new String[] {
-					"Client ID", "Transaction ID", "Passport No", "TIN ID", "Visa Type", "Visa Start Type", "Visa Start Date", "Visa End Date", "Permit Type", "Permit Start Date", "Permit End Date", "AEP ID", "AEP Start Date", "AEP End Date"
+					"Client ID", "Transaction ID", "Passport No", "TIN ID", "Visa Type", "Visa Start Date", "Visa End Date", "Permit Type", "Permit Start Date", "Permit End Date", "AEP ID", "AEP Start Date", "AEP End Date"
 				}
 			);
 	}

@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.Rectangle;
 import javax.swing.border.EmptyBorder;
 
+import jdl.controller.EmailFunctions;
 import jdl.controller.Runner;
 
 public class Splash extends JWindow {
@@ -23,6 +24,7 @@ public class Splash extends JWindow {
 
     public Splash() 
     {
+    	
     	getContentPane().setForeground(Color.WHITE);
     	setForeground(Color.WHITE);
     	
@@ -52,6 +54,9 @@ public class Splash extends JWindow {
         setLocationRelativeTo(null);
         setVisible(true);
 
+        //Email
+        EmailFunctions.initiateEmail();
+    	EmailFunctions.checkTodayNotification();
         
         //Progress Bar
   

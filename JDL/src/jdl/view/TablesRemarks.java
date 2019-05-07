@@ -520,7 +520,7 @@ public class TablesRemarks extends JFrame{
 				try {
 					String sql = "INSERT INTO jdl_accounts.remarks (remarks_dateReceived, remarks_dateUpdated, remarks_reminders, remarks_toDo, remarks_transaction, client_id, trans_transId)  values (?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE remarks_dateReceived = ?, remarks_dateUpdated = ?, remarks_reminders = ?,  remarks_toDo = ?, remarks_transaction = ?, "
 							+ " client_id = ?, trans_transId = ? ";
-					conn3 = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&compensateOnDuplicateKeyUpdateCounts=false","root","password");
+					conn3 = DriverManager.getConnection(dP.url, dP.username, dP.password);
 					PreparedStatement statement2= conn3.prepareStatement(sql);
 					
 					if(tables_dateReceivedTxt.getJFormattedTextField().getText().toString().equals("")) 
@@ -652,6 +652,14 @@ public class TablesRemarks extends JFrame{
 		getContentPane().add(lblSpecificClient);
 						
 						JLabel tables_editClientLbl = new JLabel("Update Clients", SwingConstants.CENTER);
+						tables_editClientLbl.addMouseListener(new MouseAdapter() {
+							@Override
+							public void mouseClicked(MouseEvent e) {
+								Runner.openTUC();
+								Runner.destroyTR();
+							}
+						});
+						
 						tables_editClientLbl.setForeground(Color.LIGHT_GRAY);
 						tables_editClientLbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
 						tables_editClientLbl.setBounds(245, 48, 183, 37);

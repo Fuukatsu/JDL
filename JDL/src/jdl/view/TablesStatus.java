@@ -249,7 +249,7 @@ public class TablesStatus extends JFrame{
 					e1.printStackTrace();
 					
 				}
-				//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				
 			}
 		});
 		
@@ -490,6 +490,7 @@ public class TablesStatus extends JFrame{
 		tables_clientCreateTransactionLbl.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
 				Runner.openTables();
 				Runner.destroyTS();
 			}
@@ -508,6 +509,7 @@ public class TablesStatus extends JFrame{
 		tables_clientRemarksTableLbl.setBounds(1290, 48, 209, 37);
 		tables_clientRemarksTableLbl.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				
 				Runner.openTR();
 				Runner.destroyTS();
 			}
@@ -532,6 +534,7 @@ public class TablesStatus extends JFrame{
 		tables_updateTransactionLbl.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
 				Runner.openTUT();
 				Runner.destroyTS();
 			}
@@ -641,7 +644,7 @@ public class TablesStatus extends JFrame{
 						String sql = "INSERT INTO jdl_accounts.status_visa (statusV_documentation, statusV_dateFiled, statusV_immigrant, statusV_earlyHearing, statusV_hearingDate, statusV_agenda, statusV_visaReleased, statusV_waiverECC, statusV_acrIcard, "
 								+ "statusV_docComplete, client_id, trans_transId)  values (?,?,?,?,?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE statusV_documentation = ?, statusV_dateFiled = ?, statusV_immigrant = ?, statusV_earlyHearing = ?, statusV_hearingDate = ?, statusV_agenda = ?, statusV_visaReleased = ?, statusV_waiverECC = ?, statusV_acrIcard = ?," 
 								+ "statusV_docComplete = ?, client_id = ?, trans_transId = ? ";
-						conn3 = DriverManager.getConnection("jdbc:mysql://192.168.1.17:3306/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&compensateOnDuplicateKeyUpdateCounts=false","root","password");
+						conn3 = DriverManager.getConnection(dP.url, dP.username, dP.password);
 						PreparedStatement statement2= conn3.prepareStatement(sql);
 						
 						statement2.setString(1, tables_documentationTxt.getText().trim());
@@ -884,6 +887,14 @@ public class TablesStatus extends JFrame{
 		}});
 		
 		JLabel tables_editClientsLbl = new JLabel("Update Clients", SwingConstants.CENTER);
+		tables_editClientsLbl.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				Runner.openTUC();
+				Runner.destroyTS();
+			}
+		});
 		tables_editClientsLbl.setForeground(Color.LIGHT_GRAY);
 		tables_editClientsLbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		tables_editClientsLbl.setBounds(245, 48, 183, 37);

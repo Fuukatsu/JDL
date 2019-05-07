@@ -22,9 +22,14 @@ import javax.swing.plaf.ColorUIResource;
 import javax.swing.table.JTableHeader;
 
 import jdl.controller.Runner;
-
+import jdl.controller.objectFilter;
+import jdl.dao.Queries;
+import jdl.model.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Date;
+import java.util.ArrayList;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -34,14 +39,15 @@ public class GenerateClients extends JFrame{
 	private String admin_username;
 	private String admin_password;
 	private JTable table_1;
-
+	private ArrayList<Transaction> tlist;
 
 
 	public GenerateClients() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(GenerateClients.class.getResource("/jdl/Assets/login_small.png")));
 		
 		//Main Panel
-		
+		table_1 = new JTable();
+		table_1.setModel(resetModel());
 		setTitle("JDL: Options");
 		setResizable(false);
 		setUndecorated(true);
@@ -93,8 +99,33 @@ public class GenerateClients extends JFrame{
 		JButton generate_weeklyBtn = new JButton("Weekly");
 		generate_weeklyBtn.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				
+			public void mouseClicked(MouseEvent e) 
+			{
+				String date = objectFilter.getDateToday();
+				Date sd = java.sql.Date.valueOf(objectFilter.getSundayoftheWeek(date));
+				Date ed = java.sql.Date.valueOf(objectFilter.getSaturdayoftheWeek(date));
+				tlist = Queries.getBetweenTransactionDate(sd, ed);
+				Object[][] tl = new Object[tlist.size()][13];
+				for(int i = 0; i < tlist.size();i++)
+				{
+					Object[] ttl = new Object[14];
+					Transaction ttemp = tlist.get(i);
+					ttl[0] = Integer.toString(ttemp.getClient_id());
+					ttl[1] = Integer.toString(ttemp.getTransID());
+					ttl[2] = ttemp.getPassportNo();
+					ttl[3] = ttemp.getTinID();
+					ttl[4] = ttemp.getVisaType();
+					ttl[5] = ttemp.getVisaStartDate();
+					ttl[6] = ttemp.getVisaEndDate();
+					ttl[7] = ttemp.getPermitType();
+					ttl[8] = ttemp.getPermitStartDate();
+					ttl[9] = ttemp.getPermitEndDate();
+					ttl[10] = ttemp.getAepID();
+					ttl[11] = ttemp.getAepStartDate();
+					ttl[12] = ttemp.getAepEndDate();
+					tl[i] = ttl;
+				}
+				table_1.setModel(applyTableModel(tl));
 				//Query nung table with constraints to weekly
 			}
 		});
@@ -108,7 +139,34 @@ public class GenerateClients extends JFrame{
 		generate_monthlyBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+				String date = objectFilter.getDateToday();
+				String[] range = objectFilter.rangeMonth(date);
+				Date sd = java.sql.Date.valueOf(range[0]);
+				Date ed = java.sql.Date.valueOf(range[1]);
+				tlist = Queries.getBetweenTransactionDate(sd, ed);
+				Object[][] tl = new Object[tlist.size()][13];
+				for(int i = 0; i < tlist.size();i++)
+				{
+					Object[] ttl = new Object[14];
+					Transaction ttemp = tlist.get(i);
+					ttl[0] = Integer.toString(ttemp.getClient_id());
+					ttl[1] = Integer.toString(ttemp.getTransID());
+					ttl[2] = ttemp.getPassportNo();
+					ttl[3] = ttemp.getTinID();
+					ttl[4] = ttemp.getVisaType();
+					ttl[5] = ttemp.getVisaStartDate();
+					ttl[6] = ttemp.getVisaEndDate();
+					ttl[7] = ttemp.getPermitType();
+					ttl[8] = ttemp.getPermitStartDate();
+					ttl[9] = ttemp.getPermitEndDate();
+					ttl[10] = ttemp.getAepID();
+					ttl[11] = ttemp.getAepStartDate();
+					ttl[12] = ttemp.getAepEndDate();
+					tl[i] = ttl;
+				}
+				table_1.setModel(applyTableModel(tl));
+				//Query nung table with constraints to weekly
+			
 				//Query nung table with constraints to monthly
 			}
 		});
@@ -121,9 +179,37 @@ public class GenerateClients extends JFrame{
 		JButton generate_yearlyBtn = new JButton("Yearly");
 		generate_yearlyBtn.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				//Query nung table with constraints to yearly
+			public void mouseClicked(MouseEvent e) 
+			{
+				String date = objectFilter.getDateToday();
+				String[] range = objectFilter.rangeYear(date);
+				Date sd = java.sql.Date.valueOf(range[0]);
+				Date ed = java.sql.Date.valueOf(range[1]);
+				tlist = Queries.getBetweenTransactionDate(sd, ed);
+				Object[][] tl = new Object[tlist.size()][13];
+				for(int i = 0; i < tlist.size();i++)
+				{
+					Object[] ttl = new Object[14];
+					Transaction ttemp = tlist.get(i);
+					ttl[0] = Integer.toString(ttemp.getClient_id());
+					ttl[1] = Integer.toString(ttemp.getTransID());
+					ttl[2] = ttemp.getPassportNo();
+					ttl[3] = ttemp.getTinID();
+					ttl[4] = ttemp.getVisaType();
+					ttl[5] = ttemp.getVisaStartDate();
+					ttl[6] = ttemp.getVisaEndDate();
+					ttl[7] = ttemp.getPermitType();
+					ttl[8] = ttemp.getPermitStartDate();
+					ttl[9] = ttemp.getPermitEndDate();
+					ttl[10] = ttemp.getAepID();
+					ttl[11] = ttemp.getAepStartDate();
+					ttl[12] = ttemp.getAepEndDate();
+					tl[i] = ttl;
+				}
+				table_1.setModel(applyTableModel(tl));
+				//Query nung table with constraints to weekly
+			
+				//Query nung table with constraints to monthly
 			}
 		});
 		generate_yearlyBtn.setForeground(Color.WHITE);
@@ -160,22 +246,13 @@ public class GenerateClients extends JFrame{
 		scrollPane_1.setBounds(243, 101, 735, 567);
 		getContentPane().add(scrollPane_1);
 		
-		table_1 = new JTable();
-		table_1.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-			},
-			new String[] {
-				"Client ID", "Transaction ID", "Passport No.", "TIN ID", "Visa Type", "Visa Start Type", "Visa Start Date", "Visa End Date", "Permit Type", "Permit Start Date", "Permit End Date", "AEP ID", "AEP Start Date", "AEP End Date"
-			}
-		));
-		table_1.getColumnModel().getColumn(1).setPreferredWidth(86);
+		/*table_1.getColumnModel().getColumn(1).setPreferredWidth(86);
 		table_1.getColumnModel().getColumn(5).setPreferredWidth(93);
 		table_1.getColumnModel().getColumn(6).setPreferredWidth(96);
 		table_1.getColumnModel().getColumn(7).setPreferredWidth(87);
 		table_1.getColumnModel().getColumn(9).setPreferredWidth(102);
 		table_1.getColumnModel().getColumn(10).setPreferredWidth(106);
-		table_1.getColumnModel().getColumn(12).setPreferredWidth(96);
+		table_1.getColumnModel().getColumn(12).setPreferredWidth(96);*/
 		table_1.setFont(new Font("Calibri", Font.PLAIN, 16));
 		table_1.setBounds(495, 198, 125, 68);
 		table_1.setRowHeight(32);
@@ -198,9 +275,10 @@ public class GenerateClients extends JFrame{
 		getContentPane().add(generate_clientCountLbl);
 		
 		JLabel generate_actualCountLbl = new JLabel("");
+		generate_actualCountLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		generate_actualCountLbl.setForeground(Color.WHITE);
-		generate_actualCountLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 13));
-		generate_actualCountLbl.setBounds(35, 422, 169, 166);
+		generate_actualCountLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 90));
+		generate_actualCountLbl.setBounds(10, 422, 227, 166);
 		getContentPane().add(generate_actualCountLbl);
 		
 		JLabel options_background = new JLabel("");
@@ -208,5 +286,25 @@ public class GenerateClients extends JFrame{
 		options_background.setBounds(0, 0, 1000, 690);
 		getContentPane().add(options_background);
 		
+	}
+	public static DefaultTableModel resetModel()
+	{
+		return new DefaultTableModel(
+				new Object[][] {
+					{null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+				},
+				new String[] {
+					"Client ID", "Transaction ID", "Passport No.", "TIN ID", "Visa Type", "Visa Start Date", "Visa End Date", "Permit Type", "Permit Start Date", "Permit End Date", "AEP ID", "AEP Start Date", "AEP End Date"
+				}
+			);
+	}
+	public static DefaultTableModel applyTableModel(Object[][] rows)
+	{
+		return new DefaultTableModel(
+				rows,
+				new String[] {
+					"Client ID", "Transaction ID", "Passport No", "TIN ID", "Visa Type", "Visa Start Date", "Visa End Date", "Permit Type", "Permit Start Date", "Permit End Date", "AEP ID", "AEP Start Date", "AEP End Date"
+				}
+			);
 	}
 }

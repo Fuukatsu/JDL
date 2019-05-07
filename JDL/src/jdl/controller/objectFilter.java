@@ -184,8 +184,10 @@ public class objectFilter
 				}
 				
 			}
-			catch (ParseException e) {
+			catch (ParseException e) 
+			{
 				e.printStackTrace();
+				approved = false;
 			}
 		}
 		
@@ -303,12 +305,6 @@ public class objectFilter
 			else
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[7]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);
 		}
-		else if(containsAlpha(input[8]) || input[6].length() >24 ){
-			if(containsDigit(input[8]))
-				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[8]+" must not contain digits.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);
-			else
-				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[8]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);
-		}
 		else if(input[9].isEmpty() || input[9].length() >24 || !checkEmail(input[9])) {
 			if(input[9].isEmpty())
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[9]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
@@ -323,8 +319,130 @@ public class objectFilter
 		
 		return t;
 	}
-	
-	
-	
-	
+	public static boolean validateAccountInfoEmptyStrings(String[] input, String[] what) {
+		boolean t = false;
+		
+		if(input[0].isEmpty() || containsDigit(input[0]) || input[0].length() >24 ) {
+			if(input[0].isEmpty())
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[0]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
+			else if(containsDigit(input[0]))
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[0]+" must not contain digits.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+			else if(input[0].length() >24)
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[0]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+		}
+		if(input[1].isEmpty() || containsDigit(input[1]) || input[1].length() >24 ) {
+			if(input[1].isEmpty())
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[1]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
+			else if(containsDigit(input[1]))
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[1]+" must not contain digits.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+			else if(input[1].length() >24)
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[1]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+		}
+		if(input[2].isEmpty() || containsDigit(input[2]) || input[2].length() >24 ) {
+			if(input[2].isEmpty())
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[2]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
+			else if(containsDigit(input[2]))
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[2]+" must not contain digits.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+			else if(input[2].length() >24)
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[2]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+		}
+		else if(input[4].isEmpty()) {
+			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[4]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
+		}
+		else if(input[7].isEmpty() || input[7].length() >24 || !checkEmail(input[7])) {
+			if(input[7].isEmpty())
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[7]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
+			else if(input[7].length() >24)
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[7]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+			else if(!checkEmail(input[7]))
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[7]+": "+input[7]+" is invalid</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
+		}
+		else{
+			t = true;
+		}
+		
+		
+		return t;
+	}
+	public static String removeDay(String date) {
+		//String d = birthdatePicker.getJFormattedTextField().getText().toString();
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd"); 
+		Calendar c = Calendar.getInstance();
+		try {
+			c.setTime(format.parse(date));
+		}catch(ParseException ex) {
+			ex.printStackTrace();
+		}
+		c.add(Calendar.DAY_OF_MONTH, -1);
+		String newDate = format.format(c.getTime());  
+		return newDate;
+	}
+	public static String getDay(String date) {
+		//String d = birthdatePicker.getJFormattedTextField().getText().toString();
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd"); 
+		Date d;
+		String Day = null;
+		try {
+			d = format.parse(date);
+			Day = new SimpleDateFormat("EEEE").format(d);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		return Day;
+	}	
+	public static String getSundayoftheWeek(String date)
+	{
+		while(!objectFilter.getDay(date).equals("Sunday"))
+		{
+			date = objectFilter.removeDay(date);
+		}
+		return date;
+	}
+	public static String getSaturdayoftheWeek(String date)
+	{
+		return objectFilter.removeDay(objectFilter.addWeek(date));
+	}
+	public static String[] rangeMonth(String date) 
+	{
+		String[] range = new String[2];
+		//String d = birthdatePicker.getJFormattedTextField().getText().toString();
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd"); 
+		Calendar c1 = Calendar.getInstance();
+		Calendar c2 = Calendar.getInstance();
+		try {
+			c1.setTime(format.parse(date));
+			c2.setTime(format.parse(date));
+		}catch(ParseException ex) {
+			ex.printStackTrace();
+		}
+		c1.set(Calendar.DAY_OF_MONTH,
+				c1.getActualMinimum(Calendar.DAY_OF_MONTH));
+		c2.set(Calendar.DAY_OF_MONTH,
+				c2.getActualMaximum(Calendar.DAY_OF_MONTH));
+		range[0] = format.format(c1.getTime());
+		range[1] = format.format(c2.getTime());
+		return range;
+	}
+	public static String[] rangeYear(String date) 
+	{
+		String[] range = new String[2];
+		//String d = birthdatePicker.getJFormattedTextField().getText().toString();
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd"); 
+		Calendar c1 = Calendar.getInstance();
+		Calendar c2 = Calendar.getInstance();
+		try {
+			c1.setTime(format.parse(date));
+			c2.setTime(format.parse(date));
+		}catch(ParseException ex) {
+			ex.printStackTrace();
+		}
+		c1.set(Calendar.DAY_OF_YEAR,
+				c1.getActualMinimum(Calendar.DAY_OF_YEAR));
+		c2.set(Calendar.DAY_OF_YEAR,
+				c2.getActualMaximum(Calendar.DAY_OF_YEAR));
+		range[0] = format.format(c1.getTime());
+		range[1] = format.format(c2.getTime());
+		return range;
+	}
 }
