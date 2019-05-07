@@ -121,7 +121,7 @@ public class TablesUpdateClient extends JFrame{
 		
 
 		JButton tables_reloadBtn = new JButton("Reload");
-		tables_reloadBtn.setBounds(1389, 159, 138, 38);
+		tables_reloadBtn.setBounds(1389, 154, 138, 38);
 		tables_reloadBtn.setForeground(new Color(255, 255, 255));
 		tables_reloadBtn.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/main_refresh.png")));
 		
@@ -579,6 +579,21 @@ public class TablesUpdateClient extends JFrame{
 		tables_editClientsLbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		tables_editClientsLbl.setBounds(245, 48, 183, 37);
 		getContentPane().add(tables_editClientsLbl);
+		
+		JButton btnDeleteClient = new JButton("Delete\r\n");
+		btnDeleteClient.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				Runner.openTDC();
+			}
+		});
+		btnDeleteClient.setIcon(new ImageIcon(TablesUpdateClient.class.getResource("/jdl/Assets/button_delete.png")));
+		btnDeleteClient.setSelectedIcon(null);
+		btnDeleteClient.setForeground(Color.WHITE);
+		btnDeleteClient.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
+		btnDeleteClient.setBorder(null);
+		btnDeleteClient.setBackground(new Color(0, 102, 102));
+		btnDeleteClient.setBounds(1243, 154, 138, 38);
+		getContentPane().add(btnDeleteClient);
 		
 		JLabel background_tables = new JLabel("New label");
 		background_tables.setIcon(new ImageIcon(TablesUpdateClient.class.getResource("/jdl/Assets/background_tables4.jpg")));

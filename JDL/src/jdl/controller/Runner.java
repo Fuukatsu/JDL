@@ -22,6 +22,7 @@ public class Runner
 	private static GenerateClients gC;
 	private static GenerateReport gR;
 	private static GenerateExpiry gE;
+	private static TablesDeleteClient tdc;
 	
     public static void main(String[] args) 
     {
@@ -36,6 +37,15 @@ public class Runner
     {
         s.setVisible(false);
         s.dispose();    
+    }
+    public static void openTDC()
+    {   
+        tdc = new TablesDeleteClient();
+    }
+    public static void destroyTDC()
+    {
+    	tdc.setVisible(false);
+    	tdc.dispose();
     }
     public static void openLogin()
     {   
