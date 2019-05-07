@@ -705,7 +705,6 @@ public class TablesStatusPermits extends JFrame{
 							statement2.setDate(16, null);
 						else
 							statement2.setDate(16, java.sql.Date.valueOf(tables_dateReceivedTxt.getJFormattedTextField().getText().trim().toString()));
-						
 							statement2.setString(17, tables_instructionsTxt.getText().trim());
 							statement2.setString(18, tables_aepCancellationTxt.getText().trim());
 							statement2.setString(19, tables_downgradingTxt.getText().trim());
@@ -713,6 +712,8 @@ public class TablesStatusPermits extends JFrame{
 							statement2.setString(21, tables_updatedVisaExtendTxt.getText().trim());
 							statement2.setString(22, tables_documentationTxt.getText().trim());
 							statement2.setString(23, tables_addRequirementsTxt.getText().trim());
+							
+							System.out.print(tables_permitDateReleasedTxt.getJFormattedTextField().getText());
 						
 						if(tables_aepDateFiledTxt.getJFormattedTextField().getText().trim().toString().equals(""))
 							statement2.setDate(24, null);
