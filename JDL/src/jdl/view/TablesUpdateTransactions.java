@@ -916,7 +916,7 @@ public class TablesUpdateTransactions extends JFrame{
 		getContentPane().add(tables_back);
 		tables_back.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				Runner.destroyTAC();
+				Runner.destroyTUT();
 				Runner.openOptionList();
 			}
 		});
