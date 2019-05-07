@@ -905,7 +905,7 @@ public class TablesUpdateTransactions extends JFrame{
 		tables_minimize.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/button_minimizer.png")));
 		
 		JLabel tables_seeTablesLbl = new JLabel("See Tables");
-		tables_seeTablesLbl.setBounds(659, 4, 168, 37);
+		tables_seeTablesLbl.setBounds(685, 4, 168, 37);
 		getContentPane().add(tables_seeTablesLbl);
 		tables_seeTablesLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		tables_seeTablesLbl.setForeground(Color.WHITE);
@@ -916,7 +916,7 @@ public class TablesUpdateTransactions extends JFrame{
 		getContentPane().add(tables_back);
 		tables_back.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				Runner.destroyTUT();
+				Runner.destroyTAC();
 				Runner.openOptionList();
 			}
 		});

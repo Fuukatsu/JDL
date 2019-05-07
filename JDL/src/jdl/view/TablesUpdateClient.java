@@ -539,7 +539,7 @@ public class TablesUpdateClient extends JFrame{
 		getContentPane().add(tables_back);
 		tables_back.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				Runner.destroyTAC();
+				Runner.destroyTUC();
 				Runner.openOptionList();
 			}
 		});
@@ -549,7 +549,7 @@ public class TablesUpdateClient extends JFrame{
 		tables_back.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
 		
 		JLabel tables_seeTablesLbl = new JLabel("See Tables");
-		tables_seeTablesLbl.setBounds(659, 4, 168, 37);
+		tables_seeTablesLbl.setBounds(685, 4, 168, 37);
 		getContentPane().add(tables_seeTablesLbl);
 		tables_seeTablesLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		tables_seeTablesLbl.setForeground(Color.WHITE);

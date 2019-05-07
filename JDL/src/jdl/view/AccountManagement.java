@@ -582,7 +582,7 @@ public class AccountManagement extends JFrame{
 		emp_back.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
 		
 		JLabel emp_employeeManageLbl = new JLabel("Account Management");
-		emp_employeeManageLbl.setBounds(627, 0, 242, 41);
+		emp_employeeManageLbl.setBounds(635, 0, 242, 41);
 		getContentPane().add(emp_employeeManageLbl);
 		emp_employeeManageLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		emp_employeeManageLbl.setForeground(Color.WHITE);

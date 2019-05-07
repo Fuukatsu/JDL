@@ -773,7 +773,7 @@ public class TablesStatus extends JFrame{
 		getContentPane().add(label_4);
 		
 		JLabel tables_seeTablesLbl = new JLabel("See Tables");
-		tables_seeTablesLbl.setBounds(659, 4, 168, 37);
+		tables_seeTablesLbl.setBounds(685, 4, 168, 37);
 		getContentPane().add(tables_seeTablesLbl);
 		tables_seeTablesLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		tables_seeTablesLbl.setForeground(Color.WHITE);

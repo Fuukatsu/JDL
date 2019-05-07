@@ -852,7 +852,7 @@ public class TablesStatusPermits extends JFrame{
 		tables_back.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
 		
 		JLabel tables_seeTablesLbl = new JLabel("See Tables");
-		tables_seeTablesLbl.setBounds(659, 0, 168, 37);
+		tables_seeTablesLbl.setBounds(685, 0, 168, 37);
 		getContentPane().add(tables_seeTablesLbl);
 		tables_seeTablesLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		tables_seeTablesLbl.setForeground(Color.WHITE);
@@ -924,6 +924,11 @@ public class TablesStatusPermits extends JFrame{
 				return true;
 		}
 		return false;
+	}
+	private static class __Tmp {
+		private static void __tmp() {
+			  javax.swing.JPanel __wbp_panel = new javax.swing.JPanel();
+		}
 	}
 }
 

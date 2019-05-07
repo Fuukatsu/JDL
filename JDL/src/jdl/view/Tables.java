@@ -60,12 +60,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.JComboBox;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.DefaultComboBoxModel;
 
 public class Tables extends JFrame{
 	private JTextField tables_passportNoTxt;
 	private JTextField tables_tinIdTxt;
-	private JTextField tables_visaTypeTxt;
-	private JTextField tables_permitTypeTxt;
 	private JTextField tables_aepIdTxt;
 	private String clientSelectedName;
 	private JTable table_1;
@@ -210,13 +209,6 @@ public class Tables extends JFrame{
 		tables_visaLbl.setBounds(20, 263, 190, 29);
 		tables_inputPanel.add(tables_visaLbl);
 		
-		tables_visaTypeTxt = new JTextField();
-		tables_visaTypeTxt.setBorder(new EmptyBorder(0, 0, 0, 0));
-		tables_visaTypeTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
-		tables_visaTypeTxt.setColumns(10);
-		tables_visaTypeTxt.setBounds(20, 294, 400, 23);
-		tables_inputPanel.add(tables_visaTypeTxt);
-		
 		JLabel tables_visaStartLbl = new JLabel("Visa Start Date:");
 		tables_visaStartLbl.setForeground(new Color(255, 255, 255));
 		tables_visaStartLbl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
@@ -309,6 +301,13 @@ public class Tables extends JFrame{
 		
 		tables_inputPanel.add(visaEndPick);
 		
+		JComboBox tables_visaType_comboBox = new JComboBox();
+		tables_visaType_comboBox.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 13));
+		tables_visaType_comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "Pre-arranged Employment Visa (9g/Working Visa Commercial) ", "Pre-arranged Employment Visa (9g/Missionary)", "Permanent Resident Visa", "Special Non-Immigrant Visa (A2)", "Special Investor's Resident Visa (SIRV) ", "Special Resident Retiree's Visa (SIRRV)"}));
+		tables_visaType_comboBox.setBounds(20, 290, 400, 29);
+		tables_inputPanel.add(tables_visaType_comboBox);
+		getContentPane().add(scrollPane_1);
+		
 		//PERMIT
 		UtilDateModel permitModel1 = new UtilDateModel();
 		Properties permit1 = new Properties();
@@ -363,12 +362,11 @@ public class Tables extends JFrame{
 		tables_permitLbl.setBounds(20, 378, 190, 29);
 		tables_inputPanel.add(tables_permitLbl);
 		
-		tables_permitTypeTxt = new JTextField();
-		tables_permitTypeTxt.setBorder(new EmptyBorder(0, 0, 0, 0));
-		tables_permitTypeTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
-		tables_permitTypeTxt.setColumns(10);
-		tables_permitTypeTxt.setBounds(20, 409, 400, 23);
-		tables_inputPanel.add(tables_permitTypeTxt);
+		JComboBox tables_permitType_comboBox = new JComboBox();
+		tables_permitType_comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "Special Working Permit(SWP)", "Provisional Work Permit (PWP)"}));
+		tables_permitType_comboBox.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 13));
+		tables_permitType_comboBox.setBounds(20, 407, 400, 29);
+		tables_inputPanel.add(tables_permitType_comboBox);
 		
 		JLabel tables_permitStartLbl = new JLabel("Permit Start Date:");
 		tables_permitStartLbl.setForeground(Color.WHITE);
@@ -498,10 +496,10 @@ public class Tables extends JFrame{
 				if(tables_comboBox.getSelectedIndex() == 0) {
 					tables_passportNoTxt.setEnabled(false);
 					tables_tinIdTxt.setEnabled(false);
-					tables_visaTypeTxt.setEnabled(false);
+					tables_visaType_comboBox.setEnabled(false);
 					visaStartPick.setEnabled(false);
 					visaEndPick.setEnabled(false);
-					tables_permitTypeTxt.setEnabled(false);
+					tables_permitType_comboBox.setEnabled(false);
 					permitStartPick.setEnabled(false);
 					permitEndPick.setEnabled(false);
 					tables_aepIdTxt.setEnabled(false);
@@ -514,10 +512,10 @@ public class Tables extends JFrame{
 					tables_registerBtn.setEnabled(true);
 					tables_passportNoTxt.setEnabled(true);
 					tables_tinIdTxt.setEnabled(true);
-					tables_visaTypeTxt.setEnabled(true);
+					tables_visaType_comboBox.setEnabled(true);
 					visaStartPick.setEnabled(true);
 					visaEndPick.setEnabled(true);
-					tables_permitTypeTxt.setEnabled(true);
+					tables_permitType_comboBox.setEnabled(true);
 					permitStartPick.setEnabled(true);
 					permitEndPick.setEnabled(true);
 					tables_aepIdTxt.setEnabled(true);
@@ -595,9 +593,9 @@ public class Tables extends JFrame{
 						
 					if(objectFilter.inputCheck("Passport No.",tables_passportNoTxt.getText())){
 						if(objectFilter.inputCheck("TIN ID",tables_tinIdTxt.getText())) {
-							if(objectFilter.dateCheckTransaction("Visa", tables_visaTypeTxt.getText(), ve, vs)) {
+							if(objectFilter.dateCheckTransaction("Visa", tables_visaType_comboBox.getSelectedItem().toString(), ve, vs)) {
 								if(objectFilter.dateCheckTransaction("AEP", tables_aepIdTxt.getText(), as, ae)) {
-									if(objectFilter.dateCheckTransaction("Permit", tables_permitTypeTxt.getText(), ps, pe)) {
+									if(objectFilter.dateCheckTransaction("Permit", tables_permitType_comboBox.getSelectedItem().toString(), ps, pe)) {
 										Register();
 										Runner.destroyTables();
 										Runner.openTables();
@@ -635,8 +633,8 @@ public class Tables extends JFrame{
 			
 			trans.setPassportNo(tables_passportNoTxt.getText().trim());
 			trans.setTinID(tables_tinIdTxt.getText().trim());
-			trans.setVisaType(tables_visaTypeTxt.getText().trim());			
-			trans.setPermitType(tables_permitTypeTxt.getText().trim());
+			trans.setVisaType(tables_visaType_comboBox.getSelectedItem().toString().trim());			
+			trans.setPermitType(tables_permitType_comboBox.getSelectedItem().toString().trim());
 			trans.setAepID(tables_aepIdTxt.getText().trim());
 			trans.setClient_id(Integer.parseInt(objectFilter.getClientList()[client_id].split(":")[1].trim()));
 			Calendar calendar = Calendar.getInstance();
@@ -649,8 +647,8 @@ public class Tables extends JFrame{
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Transaction inserted successfully.</font color = #ffffff></html>", "Transaction Created", JOptionPane.INFORMATION_MESSAGE);
 			tables_passportNoTxt.setText("");
 			tables_tinIdTxt.setText("");
-			tables_visaTypeTxt.setText("");
-			tables_permitTypeTxt.setText("");
+			tables_visaType_comboBox.setSelectedItem("");;
+			tables_permitType_comboBox.setSelectedItem("");;
 			tables_aepIdTxt.setText("");
 			visaStartPick.getJFormattedTextField().setText("");
 			visaEndPick.getJFormattedTextField().setText("");
@@ -787,7 +785,7 @@ public class Tables extends JFrame{
 		tables_minimize.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/button_minimizer.png")));
 		
 		JLabel tables_seeTablesLbl = new JLabel("See Tables");
-		tables_seeTablesLbl.setBounds(659, 4, 168, 37);
+		tables_seeTablesLbl.setBounds(685, 4, 168, 37);
 		getContentPane().add(tables_seeTablesLbl);
 		tables_seeTablesLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		tables_seeTablesLbl.setForeground(Color.WHITE);
@@ -817,8 +815,8 @@ public class Tables extends JFrame{
 		getContentPane().add(tables_clientRemarksTableLbl);
 		getContentPane().add(tables_line);
 		getContentPane().add(tables_inputPanel);
-		getContentPane().add(scrollPane_1);
-		getContentPane().add(tables_specificClientLbl);
+		
+
 		
 		JLabel tables_editClientsLbl = new JLabel("Update Clients", SwingConstants.CENTER);
 		tables_editClientsLbl.addMouseListener(new MouseAdapter() {
