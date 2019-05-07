@@ -145,6 +145,7 @@ public class Runner
     {
     	tr = new TablesRemarks();
     }
+
     public static void destroyTR()
     {
     	tr.setVisible(false);

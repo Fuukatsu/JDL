@@ -53,6 +53,12 @@ public class GenerateExpiry extends JFrame{
 		
 		//Main Panel
 		
+
+		table_1 = new JTable();
+		table_1.setModel(resetTableModel());
+		TableColumnAdjuster tca1 = new TableColumnAdjuster(table_1);
+		table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		tca1.adjustColumns();
 		setTitle("JDL: Options");
 		setResizable(false);
 		setUndecorated(true);
@@ -285,20 +291,6 @@ public class GenerateExpiry extends JFrame{
 		scrollPane_1.setBounds(243, 101, 735, 566);
 		getContentPane().add(scrollPane_1);
 		
-		table_1 = new JTable();
-		table_1.setModel(resetTableModel());
-		TableColumnAdjuster tca1 = new TableColumnAdjuster(table_1);
-		table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		tca1.adjustColumns();
-	/*	table_1.getColumnModel().getColumn(1).setPreferredWidth(90);
-		table_1.getColumnModel().getColumn(4).setPreferredWidth(69);
-		table_1.getColumnModel().getColumn(5).setPreferredWidth(92);
-		table_1.getColumnModel().getColumn(6).setPreferredWidth(88);
-		table_1.getColumnModel().getColumn(7).setPreferredWidth(94);
-		table_1.getColumnModel().getColumn(9).setPreferredWidth(101);
-		table_1.getColumnModel().getColumn(10).setPreferredWidth(104);
-		table_1.getColumnModel().getColumn(12).setPreferredWidth(101);
-		table_1.getColumnModel().getColumn(13).setPreferredWidth(92);*/
 		table_1.setFont(new Font("Calibri", Font.PLAIN, 16));
 		table_1.setBounds(495, 198, 125, 68);
 		table_1.setRowHeight(32);
