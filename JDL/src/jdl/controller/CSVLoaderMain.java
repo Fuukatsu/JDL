@@ -108,9 +108,9 @@ public class CSVLoaderMain {
 						status = false;
 					}
 					if(status)
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Transaction Data import from path "+directory+" row["+Integer.toString(c)+" has been successful</font color = #ffffff></html>", "Insert Successful", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Transaction Data import from path "+directory+" row:"+Integer.toString(c)+" has been successful</font color = #ffffff></html>", "Insert Successful", JOptionPane.INFORMATION_MESSAGE);
 					else
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Transaction Data import on row["+Integer.toString(c)+" has failed</font color = #ffffff></html>", "Insert Unsuccessful", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Transaction Data import on row:"+Integer.toString(c)+" has failed</font color = #ffffff></html>", "Insert Unsuccessful", JOptionPane.INFORMATION_MESSAGE);
 					c++;
 				}
 			}
@@ -134,6 +134,7 @@ public class CSVLoaderMain {
 		String[] cc = CSVQueries.getColumns().toArray(new String[0]);
 		for(int i = 0; i < cc.length; i++)
 		{
+			System.out.println(c[i]+" "+cc[i]);
 			if(!cc[i].equals(c[i]))
 				return false;
 		}
@@ -144,13 +145,13 @@ public class CSVLoaderMain {
 		try {
 			String vs = c[3];//[index 3]
 			String ve = c[4];//[index 4]
-			String ps = c[5];//[index 6]
-			String pe = c[6];//[index 7]
-			String as = c[7];//[index 9]
-			String ae  = c[8];//[index 10]
+			String ps = c[6];//[index 6]
+			String pe = c[7];//[index 7]
+			String as = c[9];//[index 9]
+			String ae  = c[10];//[index 10]
 			if(objectFilter.inputCheck("Passport No.",c[0])){
 				if(objectFilter.inputCheck("TIN ID",c[1])) {
-					if(objectFilter.dateCheckTransaction("Visa", c[2], ve, vs)) {
+					if(objectFilter.dateCheckTransaction("Visa", c[2], vs, ve)) {
 						if(objectFilter.dateCheckTransaction("AEP", c[8], as, ae)) {
 							if(objectFilter.dateCheckTransaction("Permit", c[5], ps, pe)) 
 							{
