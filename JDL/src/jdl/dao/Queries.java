@@ -114,7 +114,7 @@ public class Queries
 		try (Connection con = DriverManager.getConnection(dP.url, dP.username, dP.password)) 
 		{
 			PreparedStatement ps = con.prepareStatement("INSERT INTO jdl_accounts.transactions (trans_passportNo, trans_tinID, trans_visaType, trans_visaStartDate, trans_visaEndDate, trans_permitType, trans_permitStartDate, trans_permitEndDate, trans_aepID, "
-					+ "trans_aepStartDate, trans_aepEndDate, client_id, trans_transTimestamp, trans_transAuthor) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+					+ "trans_aepStartDate, trans_aepEndDate, client_id, trans_transTimestamp, trans_transAuthor, trans_transAction) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			ps.setString(1, t.getPassportNo());
 			ps.setString(2, t.getTinID());
 			ps.setString(3, t.getVisaType());
@@ -129,6 +129,7 @@ public class Queries
 			ps.setInt(12, t.getClient_id());
 			ps.setDate(13, t.getTransTimestamp());
 			ps.setString(14, t.getTransAuthor());
+			ps.setString(15, t.getTransAction());
 			ps.executeUpdate();
 			con.close();
 		} catch (SQLException e) 
@@ -244,6 +245,9 @@ public class Queries
 					", trans_aepID AS 'AEP ID' " + 
 					", trans_aepStartDate AS 'AEP Start Date' " + 
 					", trans_aepEndDate AS 'AEP Expiry Date' " + 
+					", trans_transTimestamp AS 'Timestamp' "+
+					", trans_transAuthor AS 'Author' "+
+					", trans_transAction AS 'Action' "+
 					" FROM transactions WHERE trans_transAuthor = ? ORDER BY trans_transId DESC");
 			ps.setString(1, u);
 			rs = ps.executeQuery();
@@ -261,7 +265,7 @@ public class Queries
 		ArrayList<Transaction> tlist = new ArrayList<Transaction>();
 		try (Connection con = DriverManager.getConnection(dP.url, dP.username, dP.password)) 
 		{
-			PreparedStatement ps = con.prepareStatement("SELECT * FROM TRANSACTIONS");
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM TRANSACTIONS WHERE trans_isActive = 1");
 			ResultSet rs = ps.executeQuery();
 			while(rs.next())
 			{
@@ -281,6 +285,7 @@ public class Queries
 				t.setClient_id(rs.getInt(13));
 				t.setTransTimestamp(rs.getDate(14));
 				t.setTransAuthor(rs.getString(15));
+				t.setTransAction(rs.getString(16));
 				tlist.add(t);
 			}
 			con.close();
@@ -362,6 +367,7 @@ public class Queries
 				t.setClient_id(rs.getInt(13));
 				t.setTransTimestamp(rs.getDate(14));
 				t.setTransAuthor(rs.getString(15));
+				t.setTransAction(rs.getString(16));
 				tlist.add(t);
 			}
 			con.close();
@@ -378,7 +384,7 @@ public class Queries
 		try (Connection con = DriverManager.getConnection(dP.url, dP.username, dP.password)) 
 		{
 			String sql = "SELECT * FROM jdl_accounts.transactions WHERE trans_transTimestamp "+
-					"BETWEEN ? AND ? ";
+					"BETWEEN ? AND ? AND trans_isActive = 1";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setDate(1, startDate);
 			ps.setDate(2, endDate);	
@@ -401,6 +407,7 @@ public class Queries
 				t.setClient_id(rs.getInt(13));
 				t.setTransTimestamp(rs.getDate(14));
 				t.setTransAuthor(rs.getString(15));
+				t.setTransAction(rs.getString(16));
 				tlist.add(t);
 			}
 			con.close();

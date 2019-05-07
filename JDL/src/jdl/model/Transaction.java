@@ -20,6 +20,7 @@ public class Transaction
 	private int client_id;
 	private Date transTimestamp;
 	private String transAuthor;
+	private String transAction;
 	public String getPassportNo() {
 		return passportNo;
 	}
@@ -109,5 +110,11 @@ public class Transaction
 	}
 	public void setTransAuthor(String transAuthor) {
 		this.transAuthor = transAuthor;
+	}
+	public String getTransAction() {
+		return transAction;
+	}
+	public void setTransAction(String transAction) {
+		this.transAction = transAction;
 	}
 }
