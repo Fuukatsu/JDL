@@ -672,6 +672,12 @@ public class TablesUpdateClient extends JFrame{
 			}
 	});
 	
+		int ifAdmin = Runner.getUser().getUser_ifAdmin();
+		
+		if (ifAdmin == 0) {
+			
+			btnDeleteClient.setVisible(false);
+		}
 	}
 	
 	public String[] getAllCountries() {

@@ -100,7 +100,7 @@ public class ActivityHistory extends JFrame{
 		transaction_historylbl.setFont(new Font("Segoe UI", Font.BOLD, 19));
 		getContentPane().add(transaction_historylbl);
 		
-		JLabel transaction_historyLbl = new JLabel("Some title here");
+		JLabel transaction_historyLbl = new JLabel("Transaction Activity History");
 		transaction_historyLbl.setBounds(22, 54, 368, 37);
 		transaction_historyLbl.setForeground(new Color(255, 255, 255));
 		transaction_historyLbl.setFont(new Font("Segoe UI", Font.BOLD, 19));
@@ -165,7 +165,7 @@ public class ActivityHistory extends JFrame{
 				
 				TableColumnAdjuster tca = new TableColumnAdjuster(table);
 				tca.adjustColumns();
-
+				
 			}
 		});
 		comboBox.setBounds(477, 634, 302, 28);

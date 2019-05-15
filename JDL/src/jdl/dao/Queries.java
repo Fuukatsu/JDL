@@ -27,7 +27,7 @@ public class Queries
 		User user = null;
 		try (Connection con = DriverManager.getConnection(dP.url, dP.username, dP.password)) 
 		{	
-			PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE user_username = ? AND user_password = ? AND user_ifAdmin <> 0");
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE user_username = ? AND user_password = ?");
 			ps.setString(1, username);
 			ps.setString(2, password);
 			ResultSet rs = ps.executeQuery();

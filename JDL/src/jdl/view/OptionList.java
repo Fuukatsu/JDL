@@ -109,11 +109,11 @@ public class OptionList extends JFrame{
 		});
 		options_logout.setIcon(new ImageIcon(OptionList.class.getResource("/jdl/Assets/button_logout.png")));
 		
-		JLabel options_Welcome = new JLabel("Welcome Administrator");
-		options_Welcome.setBounds(268, 0, 168, 46);
-		getContentPane().add(options_Welcome);
-		options_Welcome.setForeground(new Color(255, 255, 255));
-		options_Welcome.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
+		JLabel options_welcomeLbl = new JLabel("Welcome Administrator");
+		options_welcomeLbl.setBounds(268, 0, 168, 46);
+		getContentPane().add(options_welcomeLbl);
+		options_welcomeLbl.setForeground(new Color(255, 255, 255));
+		options_welcomeLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
 		options_tableIcon.setIcon(new ImageIcon(OptionList.class.getResource("/jdl/Assets/options_tableSheet.png")));
 		options_tableIcon.setBounds(159, 148, 52, 58);
 		getContentPane().add(options_tableIcon);
@@ -164,19 +164,19 @@ public class OptionList extends JFrame{
 		options_instructionLbl.setBounds(231, 76, 232, 29);
 		getContentPane().add(options_instructionLbl);
 		
-		JLabel options_seeTablesLbl = new JLabel("SEE TABLES");
-		options_seeTablesLbl.setForeground(Color.WHITE);
-		options_seeTablesLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 18));
-		options_seeTablesLbl.setHorizontalAlignment(SwingConstants.CENTER);
-		options_seeTablesLbl.setBounds(106, 220, 151, 25);
-		getContentPane().add(options_seeTablesLbl);
+		JLabel options_tableLbl = new JLabel("SEE TABLES");
+		options_tableLbl.setForeground(Color.WHITE);
+		options_tableLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 18));
+		options_tableLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		options_tableLbl.setBounds(106, 220, 151, 25);
+		getContentPane().add(options_tableLbl);
 		
-		JLabel options_generateLbl = new JLabel("GENERATE REPORT");
-		options_generateLbl.setHorizontalAlignment(SwingConstants.CENTER);
-		options_generateLbl.setForeground(Color.WHITE);
-		options_generateLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 18));
-		options_generateLbl.setBounds(429, 220, 166, 25);
-		getContentPane().add(options_generateLbl);
+		JLabel options_reportLbl = new JLabel("GENERATE REPORT");
+		options_reportLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		options_reportLbl.setForeground(Color.WHITE);
+		options_reportLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 18));
+		options_reportLbl.setBounds(429, 220, 166, 25);
+		getContentPane().add(options_reportLbl);
 		
 		JLabel options_manageLbl = new JLabel("MANAGE ACCOUNTS");
 		options_manageLbl.setHorizontalAlignment(SwingConstants.CENTER);
@@ -185,12 +185,12 @@ public class OptionList extends JFrame{
 		options_manageLbl.setBounds(92, 391, 188, 25);
 		getContentPane().add(options_manageLbl);
 		
-		JLabel options_employeeLbl = new JLabel("<HTML><CENTER>TRANSACTION <br>ACTIVITY HISTORY</br></CENTER></HTML>");
-		options_employeeLbl.setHorizontalAlignment(SwingConstants.CENTER);
-		options_employeeLbl.setForeground(Color.WHITE);
-		options_employeeLbl.setFont(new Font("Segoe UI Semilight", Font.BOLD, 15));
-		options_employeeLbl.setBounds(429, 391, 172, 44);
-		getContentPane().add(options_employeeLbl);
+		JLabel options_historyLbl = new JLabel("<HTML><CENTER>TRANSACTION <br>ACTIVITY HISTORY</br></CENTER></HTML>");
+		options_historyLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		options_historyLbl.setForeground(Color.WHITE);
+		options_historyLbl.setFont(new Font("Segoe UI Semilight", Font.BOLD, 15));
+		options_historyLbl.setBounds(429, 391, 172, 44);
+		getContentPane().add(options_historyLbl);
 		
 		JLabel options_upload = new JLabel("");
 		options_upload.addMouseListener(new MouseAdapter() {
@@ -208,8 +208,26 @@ public class OptionList extends JFrame{
 		options_background.setBounds(0, 0, 690, 480);
 		getContentPane().add(options_background);
 		
+		
+		int ifAdmin = Runner.getUser().getUser_ifAdmin();
+		
+		if (ifAdmin == 0) {
+			options_manageIcon.setVisible(false);
+			options_manageLbl.setVisible(false);
+		
+			options_historyIcon.setVisible(false);
+			options_historyLbl.setVisible(false);
+			
+			options_tableIcon.setBounds(161, 214, 52, 58);
+			options_tableLbl.setBounds(108, 286, 151, 25);
+			
+			options_reportIcon.setBounds(477, 214, 52, 58);
+			options_reportLbl.setBounds(429,286, 166, 25);
+			
+			options_welcomeLbl.setText("Welcome Employee");
+			options_welcomeLbl.setBounds(275, 0, 168, 46);
+			
+		}
+		
 	}
-
-    
-    
 }
