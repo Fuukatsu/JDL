@@ -31,7 +31,7 @@ public class GenerateReport extends JFrame{
 		
 		//Main Panel
 		//setVisible(true);
-		setTitle("JDL: Options");
+		setTitle("JDL: Generate Report");
 		setResizable(false);
 		setUndecorated(true);
 		setLocationRelativeTo(null);

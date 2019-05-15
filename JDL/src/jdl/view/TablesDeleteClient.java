@@ -303,6 +303,8 @@ public class TablesDeleteClient extends JFrame{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Runner.destroyTDC();
+				Runner.destroyTUC();
+				Runner.openTUC();
 			}
 		});
 		emp_close.setIcon(new ImageIcon(TablesDeleteClient.class.getResource("/jdl/Assets/button_back.png")));

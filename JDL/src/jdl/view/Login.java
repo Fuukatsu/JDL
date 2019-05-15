@@ -93,12 +93,6 @@ public class Login extends JFrame {
 		login_titleDesc.setBounds(18, 339, 389, 45);
 		getContentPane().add(login_titleDesc);
 		
-		JLabel login_adminLbl = new JLabel("Administrator", SwingConstants.CENTER);
-		login_adminLbl.setForeground(Color.WHITE);
-		login_adminLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 17));
-		login_adminLbl.setBounds(161, 203, 125, 37);
-		rightPanel.add(login_adminLbl);
-		
 		JLabel login_error = new JLabel("<html><center> Invalid username or password. <br>Please be aware of uppercases. </center></html>");
 		login_error.setHorizontalAlignment(SwingConstants.CENTER);
 		login_error.setBounds(67, 424, 313, 47);
@@ -225,7 +219,7 @@ public class Login extends JFrame {
 		
 		JLabel login_adminLogo = new JLabel("");
 		login_adminLogo.setIcon(new ImageIcon(Login.class.getResource("/jdl/Assets/login_adminLogo.png")));
-		login_adminLogo.setBounds(121, 45, 202, 177);
+		login_adminLogo.setBounds(125, 76, 202, 177);
 		rightPanel.add(login_adminLogo);
 		
 		login_close.setIcon(new ImageIcon(Login.class.getResource("/jdl/Assets/button_close.png")));

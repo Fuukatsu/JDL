@@ -52,7 +52,7 @@ public class GenerateClients extends JFrame{
 		TableColumnAdjuster tca1 = new TableColumnAdjuster(table_1);
 		table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		tca1.adjustColumns();
-		setTitle("JDL: Options");
+		setTitle("JDL: Generate Clients");
 		setResizable(false);
 		setUndecorated(true);
 		setLocationRelativeTo(null);

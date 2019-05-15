@@ -92,7 +92,7 @@ public class TablesStatus extends JFrame{
 		
 		//Main Panel
 	
-		setTitle("JDL: Status");
+		setTitle("JDL: Status (Visa)");
 		setResizable(false);
 		setUndecorated(true);
 		setLocationRelativeTo(null);
