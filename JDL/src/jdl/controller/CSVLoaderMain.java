@@ -128,6 +128,7 @@ public class CSVLoaderMain {
 			exc.printStackTrace();
 			
 		}
+		Runner.openOptionList();
 	} 
 	public static boolean checkColumns(String[] c)
 	{
@@ -149,20 +150,32 @@ public class CSVLoaderMain {
 			String pe = c[7];//[index 7]
 			String as = c[9];//[index 9]
 			String ae  = c[10];//[index 10]
-			if(objectFilter.inputCheck("Passport No.",c[0])){
-				if(objectFilter.inputCheck("TIN ID",c[1])) {
-					if(objectFilter.dateCheckTransaction("Visa", c[2], vs, ve)) {
-						if(objectFilter.dateCheckTransaction("AEP", c[8], as, ae)) {
-							if(objectFilter.dateCheckTransaction("Permit", c[5], ps, pe)) 
-							{
-								return true;
+			int cid = Integer.parseInt(c[12]);
+			ArrayList<Integer> clist = CSVQueries.getClientId();
+			/*
+			for(int i:clist)
+			{
+				System.out.println("clist["+i+"] = "+cid+" "+c[12]);
+			}
+			*/
+			if(clist.contains(cid))
+			{
+				if(objectFilter.inputCheck("Passport No.",c[0])){
+					if(objectFilter.inputCheck("TIN ID",c[1])) {
+						if(objectFilter.dateCheckTransaction("Visa", c[2], vs, ve)) {
+							if(objectFilter.dateCheckTransaction("AEP", c[8], as, ae)) {
+								if(objectFilter.dateCheckTransaction("Permit", c[5], ps, pe)) 
+								{
+									return true;
+								}
 							}
 						}
 					}
-				}
-			}			
+				}		
+			}
 			
-		}catch (Exception e3) {
+		}catch (Exception e3) 
+		{
 			e3.printStackTrace();
 		}
 		return false;
