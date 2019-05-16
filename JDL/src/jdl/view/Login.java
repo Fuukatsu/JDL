@@ -19,12 +19,23 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.ColorUIResource;
+
 import jdl.controller.Runner;
 import jdl.controller.loginFunction;
+import jdl.controller.objectFilter;
+import jdl.dao.Queries;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 public class Login extends JFrame {
@@ -138,7 +149,7 @@ public class Login extends JFrame {
 					login_error2.setVisible(true);
 				}
 				else
-				if(tUsername.length() == 0 && tPassword.length() == 0)
+				if(tUsername.length() == 0 || tPassword.length() == 0)
 				{
 					login_error1.setVisible(true);
 					login_error2.setVisible(false);
@@ -152,6 +163,28 @@ public class Login extends JFrame {
 						login_success.setVisible(true);
 						Runner.destroyLogin();
 						Runner.openOptionList();
+						
+						
+						UIManager.put("OptionPane.background",new ColorUIResource(90, 103, 115));
+					 	UIManager.put("Panel.background",new ColorUIResource(90, 103, 115));
+					 	UIManager.put("OptionPane.messageFont", new Font("Segoe UI Semibold", Font.BOLD, 14));
+					 	UIManager.put("Button.background", Color.WHITE);
+					 	UIManager.put("OptionPane.foreground",new ColorUIResource(90, 103, 115));
+					 	
+					 	try {
+					 	String date = objectFilter.getDateToday();
+					 	Date d = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+					 	Queries.checkNotification(new java.sql.Date(d.getTime()));
+					 	boolean dateCheck = Queries.checkNotification(new java.sql.Date(d.getTime()));
+					 	if (dateCheck) {
+							JOptionPane.showMessageDialog(null, "<html><center><font color = #ffffff> We already sent emails to your clients notifying <br> that their visas or permits are about to expire.</br>"
+						 			+ "<br>Click 'ok' to dismiss this message</br></center></font color = #ffffff></html>", "Emails Sent Automatically", JOptionPane.INFORMATION_MESSAGE);
+					 	}
+					 	}
+					 	catch (ParseException ex){
+							
+							ex.printStackTrace();
+					 	}
 					}
 					else
 					{
@@ -251,7 +284,6 @@ public class Login extends JFrame {
 		login_background.setIcon(new ImageIcon(Login.class.getResource("/jdl/Assets/login_consultation.png")));
 		login_background.setBounds(0, 0, 415, 550);
 		getContentPane().add(login_background);
-		
 		
 		
 	}

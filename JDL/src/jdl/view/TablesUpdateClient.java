@@ -370,7 +370,6 @@ public class TablesUpdateClient extends JFrame{
 	});
 		
 		tables_reloadBtn.setEnabled(false);
-		tables_registerBtn.setEnabled(false);
 		
 		tables_comboBox.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 14));
 		tables_comboBox.setBounds(20, 49, 400, 29);
