@@ -1,6 +1,5 @@
 package jdl.view;
 
-
 import java.awt.EventQueue;
 import java.awt.Toolkit;
 
@@ -26,6 +25,7 @@ import jdl.controller.Runner;
 import jdl.controller.TableColumnAdjuster;
 import jdl.controller.objectFilter;
 import jdl.dao.Queries;
+import jdl.dao.databaseProperties;
 
 import java.util.Properties;
 
@@ -236,12 +236,55 @@ public class ActivityHistory extends JFrame{
 		if (defaults.get("Table.alternateRowColor") == null)
 		    defaults.put("Table.alternateRowColor", new Color(155, 177, 166));
 		
-		
-		JLabel emp_background = new JLabel("");
-		emp_background.setBounds(0, 0, 1000, 680);
-		emp_background.setIcon(new ImageIcon(ActivityHistory.class.getResource("/jdl/Assets/background_tables4.jpg")));
-		getContentPane().add(emp_background);
 
+		databaseProperties dP = new databaseProperties();
+		JButton AC_reloadBtn = new JButton("Reload");
+		AC_reloadBtn.setBackground(new Color(0, 102, 102));
+		AC_reloadBtn.setIcon(new ImageIcon(ActivityHistory.class.getResource("/jdl/Assets/main_refresh.png")));
+		AC_reloadBtn.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
+		AC_reloadBtn.setForeground(new Color(255, 255, 255));
+		AC_reloadBtn.setBounds(829, 51, 147, 34);
+		getContentPane().add(AC_reloadBtn);
+		AC_reloadBtn.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/main_refresh.png")));
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(ActivityHistory.class.getResource("/jdl/Assets/background_tables4.jpg")));
+		lblNewLabel.setBounds(0, 0, 1000, 680);
+		getContentPane().add(lblNewLabel);
+		AC_reloadBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Connection conn=DriverManager.getConnection(dP.url, dP.username, dP.password);
+					Statement stat=conn.createStatement();
+					Statement stat1=conn.createStatement();
+					
+					ResultSet rs=stat.executeQuery("SELECT client_id AS 'Client ID',"
+							+ "client_lastname AS 'Lastname'" +
+							", client_firstname AS 'Firstname'" + 
+							", client_alias AS 'Alias' " + 
+							", client_nationality AS 'Country' " + 
+							", client_birthdate AS 'Birthdate' " + 
+							", client_gender AS 'Gender' " + 
+							", client_company AS 'Company' " + 
+							", client_position AS 'Company Position' " + 
+							", client_contact AS 'Contact No.' " + 
+							", client_email AS 'Email' " + 
+							" FROM jdl_accounts.clients WHERE client_isActive = 1 OR null ORDER BY client_id DESC");
+					
+					table.setModel(DbUtils.resultSetToTableModel(rs));
+					table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+					
+					TableColumnAdjuster tca = new TableColumnAdjuster(table);
+					tca.adjustColumns();
+
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+
+			}
+		});
+		
+		AC_reloadBtn.doClick();
 		
 	}
 }

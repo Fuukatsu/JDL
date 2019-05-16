@@ -61,6 +61,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.InputMethodListener;
 import java.awt.event.InputMethodEvent;
+import javax.swing.DefaultComboBoxModel;
 
 public class TablesStatus extends JFrame{
 	
@@ -159,6 +160,7 @@ public class TablesStatus extends JFrame{
 		tables_inputPanel.setLayout(null);
 		
 		tables_comboBox1 = new JComboBox();
+		tables_comboBox1.setModel(new DefaultComboBoxModel(new String[] {"List of Transaction IDs"}));
 		tables_comboBox1.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
 		tables_comboBox1.setBounds(20, 132, 407, 25);
 		tables_inputPanel.add(tables_comboBox1);
@@ -705,6 +707,17 @@ public class TablesStatus extends JFrame{
 						tables_inputPanel.revalidate();
 						tables_reloadBtn.doClick();
 						
+						tables_documentationTxt.setText("");				
+						dateFiledPicker.getJFormattedTextField().setText(null);
+						tables_immigrantTxt.setText("");
+						earlyHearingDatePicker.getJFormattedTextField().setText(null);
+						hearingDatePicker.getJFormattedTextField().setText(null);
+						tables_agendaTxt.setText("");
+						tables_visaReleaseTxt.setText("");
+						tables_waiverEccTxt.setText("");
+						tables_acrReleaseTxt.setText("");
+						tables_documentationCompleteTxt.setText("");
+						
 						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Visa Status has been made to this transaction.</font color = #ffffff></html>", "Visa Status Inserted Successfully", JOptionPane.INFORMATION_MESSAGE);
 						
 					} catch (SQLException e1) {
@@ -856,6 +869,7 @@ public class TablesStatus extends JFrame{
 					statement4.setInt(1, temp);
 					
 					tables_comboBox1.removeAllItems();
+					tables_comboBox1.setModel(new DefaultComboBoxModel(new String[] {"List of Transaction IDs"}));
 					
 					ResultSet rs = statement.executeQuery();
 					
@@ -882,7 +896,6 @@ public class TablesStatus extends JFrame{
 					}
 
 				tables_reloadBtn.doClick();
-				tables_registerBtn.setEnabled(true);
 			}
 		}});
 		
@@ -906,6 +919,18 @@ public class TablesStatus extends JFrame{
 		tables_background.setIcon(new ImageIcon(TablesStatus.class.getResource("/jdl/Assets/background_tables4.jpg")));
 		tables_background.setBounds(0, -4, 1551, 848);
 		getContentPane().add(tables_background);
+		
+		tables_comboBox1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(tables_comboBox1.getSelectedIndex() == -1 || tables_comboBox1.getSelectedIndex() == 0){
+					tables_registerBtn.setEnabled(false);
+				}
+				else {
+					tables_registerBtn.setEnabled(true);
+				}
+					
+			}
+		});
 	}
 	
 	public boolean checkFields()
@@ -948,7 +973,7 @@ public class TablesStatus extends JFrame{
 				Date datey = sdf.parse(date2);
 				if (datex.compareTo(datey) > 0) {
 					//System.out.println("Date1 is after Date2"); FALSE
-					JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Early hearing date must be before hearing date</font color = #ffffff></html>", "Detected an error in date fields. Please check your dates carefully.", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Early hearing date must be before the hearing date</font color = #ffffff></html>", "Detected an error in date fields.", JOptionPane.ERROR_MESSAGE);
 					approved = false;
 				} else if (datex.compareTo(datey) < 0) {
 					//System.out.println("Date1 is before Date2");TRUE

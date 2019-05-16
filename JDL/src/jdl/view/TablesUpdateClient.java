@@ -347,7 +347,8 @@ public class TablesUpdateClient extends JFrame{
 				
 					}else if (tables_comboBox.getSelectedItem().toString() != "Click to see the list of registered client") {
 						tables_reloadBtn.setEnabled(true);
-					
+						tables_registerBtn.setEnabled(true);
+						
 					clientSelectedName = tables_comboBox.getSelectedItem().toString();
 			       	
 					ResultSet rs=stat.executeQuery("SELECT * FROM jdl_accounts.clients WHERE client_id = "+Integer.parseInt(clientSelectedName.substring(clientSelectedName.lastIndexOf(",")+2, clientSelectedName.length())));
@@ -370,6 +371,7 @@ public class TablesUpdateClient extends JFrame{
 	});
 		
 		tables_reloadBtn.setEnabled(false);
+		tables_registerBtn.setEnabled(false);
 		
 		tables_comboBox.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 14));
 		tables_comboBox.setBounds(20, 49, 400, 29);

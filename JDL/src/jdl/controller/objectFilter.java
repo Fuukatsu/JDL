@@ -206,14 +206,14 @@ public class objectFilter
 					t = true;
 				}
 				else {
-					JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The "+what+": "+input+" is not a valid "+what+"</font color = #ffffff></html>", "Detected an invalid Passport No. field", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The "+what+": "+input+" is not a valid "+what+"</font color = #ffffff></html>", "Detected an Invalid Input", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 			else {
-				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please limit your input to 25 characters only.</font color = #ffffff></html>", "Detected an empty Passport No. field", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please limit your input to 25 characters only.</font color = #ffffff></html>", "Detected an Empty Textfield", JOptionPane.ERROR_MESSAGE);
 			}
 		}else {
-			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The "+what+" field must not be empty. Please specify one.</font color = #ffffff></html>", "Detected an empty Passport No. field", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The "+what+" field must not be empty. Please specify one.</font color = #ffffff></html>", "Detected an Empty Input", JOptionPane.ERROR_MESSAGE);
 		}
 		
 		
@@ -275,7 +275,7 @@ public class objectFilter
 	
 	public static boolean validateEmptyStrings(String[] input, String[] what) {
 		boolean t = false;
-		if(input[0].isEmpty() || containsDigit(input[0]) || input[0].length() >50 ) {
+		if(input[0].isEmpty() || input[0].equals(("")) || containsDigit(input[0]) || input[0].length() >50 ) {
 			if(input[0].isEmpty())
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[0]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
 			else if(containsDigit(input[0]))

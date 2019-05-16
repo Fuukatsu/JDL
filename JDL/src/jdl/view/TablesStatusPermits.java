@@ -48,6 +48,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -176,7 +177,7 @@ public class TablesStatusPermits extends JFrame{
 					tables_comboBox1.removeAllItems();
 				}else if (tables_comboBox.getSelectedItem().toString() != "Click to see the list of registered client") {
 					tables_reloadBtn.setEnabled(true);
-					tables_registerBtn.setEnabled(true);					
+									
 				Connection conn;
 				Connection conn2;
 				
@@ -190,7 +191,7 @@ public class TablesStatusPermits extends JFrame{
 							", statusP_instructions AS 'Instructions' " +
 							", statusP_aepCancellation AS 'AEP Cancellation' " +
 							", statusP_downgrading AS 'Downgrading' " +
-							", statusP_aepExitClearance AS 'aepExitClearance' " +
+							", statusP_aepExitClearance AS 'AEP Exit Clearance' " +
 							", statusP_updatedVisaExtend AS 'Visa Extend' " +
 							", statusP_documentation AS 'Documentation' " + 
 							", statusP_addRequirements AS 'Add Requirements' " + 
@@ -214,6 +215,7 @@ public class TablesStatusPermits extends JFrame{
 					statement4.setInt(1, temp);
 					
 					tables_comboBox1.removeAllItems();
+					tables_comboBox1.setModel(new DefaultComboBoxModel(new String[] {"List of Transaction IDs"}));
 					ResultSet rs = statement.executeQuery();
 					
 					 while(rs.next()) {
@@ -744,7 +746,24 @@ public class TablesStatusPermits extends JFrame{
 						
 					statement2.executeUpdate();
 					tables_inputPanel.revalidate();
+					
+					tables_dateReceivedTxt.getJFormattedTextField().setText(null);
+					tables_instructionsTxt.setText("");
+					tables_aepCancellationTxt.setText("");
+					tables_downgradingTxt.setText("");
+					tables_aepExitClearanceTxt.setText("");
+					tables_updatedVisaExtendTxt.setText("");
+					tables_documentationTxt.setText("");
+					tables_addRequirementsTxt.setText("");
+					tables_aepDateFiledTxt.getJFormattedTextField().setText(null);
+					tables_aepdateReleasedTxt.getJFormattedTextField().setText(null);
+					tables_permitDateFiledTxt.getJFormattedTextField().setText(null);
+					tables_permitDateReleasedTxt.getJFormattedTextField().setText(null);
+					tables_acrICardTxt.setText("");
+					
 					JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Permit Status has been made to this transaction.</font color = #ffffff></html>", "Permit Status Inserted Successfully", JOptionPane.INFORMATION_MESSAGE);
+					tables_reloadBtn.doClick();
+					
 					
 				} catch (SQLException e1) {
 					e1.printStackTrace();
@@ -863,6 +882,19 @@ public class TablesStatusPermits extends JFrame{
 		tables_seeTablesLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		tables_seeTablesLbl.setForeground(Color.WHITE);
 		tables_seeTablesLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
+		
+		
+		tables_comboBox1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(tables_comboBox1.getSelectedIndex() == -1 || tables_comboBox1.getSelectedIndex() == 0){
+					tables_registerBtn.setEnabled(false);
+				}
+				else {
+					tables_registerBtn.setEnabled(true);
+				}
+					
+			}
+		});
 		
 		//Images
 		

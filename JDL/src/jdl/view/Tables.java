@@ -302,8 +302,8 @@ public class Tables extends JFrame{
 		tables_inputPanel.add(visaEndPick);
 		
 		JComboBox tables_visaType_comboBox = new JComboBox();
-		tables_visaType_comboBox.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 13));
-		tables_visaType_comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "Pre-arranged Employment Visa (9g/Working Visa Commercial) ", "Pre-arranged Employment Visa (9g/Missionary)", "Permanent Resident Visa", "Special Non-Immigrant Visa (A2)", "Special Investor's Resident Visa (SIRV) ", "Special Resident Retiree's Visa (SIRRV)"}));
+		tables_visaType_comboBox.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+		tables_visaType_comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "Pre-arranged Employment Visa (9g/Working Visa Commercial) ", "Pre-arranged Employment Visa (9g/Missionary)", "Permanent Resident Visa - Section 13 Series", "Special Non-Immigrant Visa - Section 47 (a)(2)", "Special Investor's Resident Visa (SIRV) ", "Special Resident Retiree's Visa (E.O 1037)"}));
 		tables_visaType_comboBox.setBounds(20, 290, 400, 29);
 		tables_inputPanel.add(tables_visaType_comboBox);
 		getContentPane().add(scrollPane_1);
@@ -364,7 +364,7 @@ public class Tables extends JFrame{
 		
 		JComboBox tables_permitType_comboBox = new JComboBox();
 		tables_permitType_comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "Special Working Permit(SWP)", "Provisional Work Permit (PWP)"}));
-		tables_permitType_comboBox.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 13));
+		tables_permitType_comboBox.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
 		tables_permitType_comboBox.setBounds(20, 407, 400, 29);
 		tables_inputPanel.add(tables_permitType_comboBox);
 		

@@ -455,7 +455,9 @@ public class ViewAdministratorAccount extends JFrame{
 						statement2.setString(2, adminAcc_passwordTxt.getText().trim());
 						statement2.setString(3, adminAcc_userIdTxt.getText().trim());
 						
-						 int reply = JOptionPane.showConfirmDialog(null, "<html><font color = #ffffff> Are you sure you want to input this information? <br>You'll need to login again with your new credentials once the settings have been changed.</br> </font color = #ffffff></html>", "Proceed to Logout?", JOptionPane.YES_NO_OPTION);
+						if(adminAcc_lastnameTxt.getText().isEmpty() && adminAcc_firstnameTxt.getText().isEmpty() && adminAcc_positionTxt.getText().isEmpty() && adminAcc_addressTxt.getText().isEmpty() && adminAcc_contactTxt.getText().isEmpty()
+								&& adminAcc_emailTxt.getText().isEmpty() && adminAcc_userIdTxt.getText().isEmpty() && adminAcc_userIdTxt.getText().isEmpty()) {
+						 int reply = JOptionPane.showConfirmDialog(null, "<html><center><font color = #ffffff> Are you sure you want to input this information? <br>You'll need to login again with your new credentials <br>once the settings have been changed.</br> </font color = #ffffff></html></center>", "Proceed to Logout?", JOptionPane.YES_NO_OPTION);
 					    	if (reply == JOptionPane.YES_OPTION) {
 					    		
 					    		statement1.executeUpdate();
@@ -517,6 +519,7 @@ public class ViewAdministratorAccount extends JFrame{
 								Runner.destroyViewAdminAcc();
 							}
 						}
+					}
 						
 				else {
 					// Nothing happens

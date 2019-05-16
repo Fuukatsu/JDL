@@ -61,12 +61,11 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.DefaultComboBoxModel;
 
 public class TablesUpdateTransactions extends JFrame{
 	private JTextField tables_passportNoTxt;
 	private JTextField tables_tinIdTxt;
-	private JTextField tables_visaTypeTxt;
-	private JTextField tables_permitTypeTxt;
 	private JTextField tables_aepIdTxt;
 	private String clientSelectedName;
 	private JTable table_1;
@@ -258,14 +257,6 @@ public class TablesUpdateTransactions extends JFrame{
 		tables_visaLbl.setBounds(20, 310, 190, 29);
 		tables_inputPanel.add(tables_visaLbl);
 		
-		tables_visaTypeTxt = new JTextField();
-		tables_visaTypeTxt.setToolTipText("Choose and Insert from the following Visa Types:\r\n\r\nPre-Arranged Employment Visa - Missionary\r\n(9G) Pre-Arranged Employment Visa - Working Visa Commercial\r\nPermanent Resident's Visa - Section 13 Series\r\nSpecial Non-Immigrant Visa - Section 47 (a)(2)\r\nSpecial Investor's Resident Visa (SIRV)\r\nSpecial President Retiree's Visa (E.O 1037)");
-		tables_visaTypeTxt.setBorder(new EmptyBorder(0, 0, 0, 0));
-		tables_visaTypeTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
-		tables_visaTypeTxt.setColumns(10);
-		tables_visaTypeTxt.setBounds(20, 341, 400, 23);
-		tables_inputPanel.add(tables_visaTypeTxt);
-		
 		JLabel tables_visaStartLbl = new JLabel("Visa Start Date:");
 		tables_visaStartLbl.setForeground(new Color(255, 255, 255));
 		tables_visaStartLbl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
@@ -400,6 +391,19 @@ public class TablesUpdateTransactions extends JFrame{
 		
 		//Input Section (Labels)
 		
+		JComboBox tables_visaTypeTxt = new JComboBox();
+		tables_visaTypeTxt.setModel(new DefaultComboBoxModel(new String[] {"", "Pre-arranged Employment Visa (9g/Working Visa Commercial) ", "Pre-arranged Employment Visa (9g/Missionary)", "Permanent Resident Visa - Section 13 Series", "Special Non-Immigrant Visa - Section 47 (a)(2)", "Special Investor's Resident Visa (SIRV) ", "Special Resident Retiree's Visa (E.O 1037)"}));
+		tables_visaTypeTxt.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+		tables_visaTypeTxt.setBounds(20, 340, 400, 23);
+		tables_inputPanel.add(tables_visaTypeTxt);
+		
+		JComboBox tables_permitTypeTxt = new JComboBox();
+		tables_permitTypeTxt.setModel(new DefaultComboBoxModel(new String[] {"", "Special Working Permit(SWP)", "Provisional Work Permit (PWP)"}));
+		tables_permitTypeTxt.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+		tables_permitTypeTxt.setBounds(20, 454, 400, 23);
+		tables_inputPanel.add(tables_permitTypeTxt);
+
+		
 		JLabel tables_visaExpireLbl = new JLabel("Visa Expiry Date:");
 		tables_visaExpireLbl.setForeground(Color.WHITE);
 		tables_visaExpireLbl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
@@ -411,14 +415,6 @@ public class TablesUpdateTransactions extends JFrame{
 		tables_permitLbl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
 		tables_permitLbl.setBounds(20, 425, 190, 29);
 		tables_inputPanel.add(tables_permitLbl);
-		
-		tables_permitTypeTxt = new JTextField();
-		tables_permitTypeTxt.setToolTipText("Choose and Insert the following Permit Types:\r\n\r\nSpecial Working Permit (SWP)\r\nProvisional Work Permit (PWP)");
-		tables_permitTypeTxt.setBorder(new EmptyBorder(0, 0, 0, 0));
-		tables_permitTypeTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
-		tables_permitTypeTxt.setColumns(10);
-		tables_permitTypeTxt.setBounds(20, 456, 400, 23);
-		tables_inputPanel.add(tables_permitTypeTxt);
 		
 		JLabel tables_permitStartLbl = new JLabel("Permit Start Date:");
 		tables_permitStartLbl.setForeground(Color.WHITE);
@@ -538,7 +534,6 @@ public class TablesUpdateTransactions extends JFrame{
 				{
 					tables_passportNoTxt.setText(tm.getValueAt(row, 2).toString());
 					tables_tinIdTxt.setText(tm.getValueAt(row, 3).toString());
-					tables_visaTypeTxt.setText(tm.getValueAt(row, 4).toString());
 					if(tm.getValueAt(row, 5) != null)
 						visaEndPick.getJFormattedTextField().setText(tm.getValueAt(row, 5).toString());
 					else
@@ -547,7 +542,6 @@ public class TablesUpdateTransactions extends JFrame{
 						visaStartPick.getJFormattedTextField().setText(tm.getValueAt(row, 6).toString());
 					else
 						visaStartPick.getJFormattedTextField().setText("");
-					tables_permitTypeTxt.setText(tm.getValueAt(row, 7).toString());
 					if(tm.getValueAt(row, 8) != null)
 						permitStartPick.getJFormattedTextField().setText(tm.getValueAt(row, 8).toString());
 					else
@@ -580,10 +574,10 @@ public class TablesUpdateTransactions extends JFrame{
 				
 				tables_passportNoTxt.setText("");
 				tables_tinIdTxt.setText("");
-				tables_visaTypeTxt.setText("");
+				tables_visaTypeTxt.setSelectedIndex(0);
 				visaStartPick.getJFormattedTextField().setText("");
 				visaEndPick.getJFormattedTextField().setText("");
-				tables_permitTypeTxt.setText("");
+				tables_permitTypeTxt.setSelectedIndex(0);
 				permitStartPick.getJFormattedTextField().setText("");
 				permitEndPick.getJFormattedTextField().setText("");
 				tables_aepIdTxt.setText("");
@@ -712,9 +706,9 @@ public class TablesUpdateTransactions extends JFrame{
 						
 					if(objectFilter.inputCheck("Passport No.",tables_passportNoTxt.getText())){
 						if(objectFilter.inputCheck("TIN ID",tables_tinIdTxt.getText())) {
-							if(objectFilter.dateCheckTransaction("Visa", tables_visaTypeTxt.getText(), ve, vs)) {
+							if(objectFilter.dateCheckTransaction("Visa", tables_visaTypeTxt.getSelectedItem().toString(), ve, vs)) {
 								if(objectFilter.dateCheckTransaction("AEP", tables_aepIdTxt.getText(), as, ae)) {
-									if(objectFilter.dateCheckTransaction("Permit", tables_permitTypeTxt.getText(), ps, pe)) {
+									if(objectFilter.dateCheckTransaction("Permit", tables_permitTypeTxt.getSelectedItem().toString(), ps, pe)) {
 										Register();
 										Runner.destroyTUT();
 										Runner.openTUT();
@@ -755,8 +749,8 @@ public class TablesUpdateTransactions extends JFrame{
 				
 				trans.setPassportNo(tables_passportNoTxt.getText().trim());
 				trans.setTinID(tables_tinIdTxt.getText().trim());
-				trans.setVisaType(tables_visaTypeTxt.getText().trim());			
-				trans.setPermitType(tables_permitTypeTxt.getText().trim());
+				trans.setVisaType(tables_visaTypeTxt.getSelectedItem().toString().trim());			
+				trans.setPermitType(tables_permitTypeTxt.getSelectedItem().toString().trim());
 				trans.setAepID(tables_aepIdTxt.getText().trim());
 				trans.setTransTimestamp(currentDate);
 				trans.setClient_id(Integer.parseInt(client_id));
@@ -934,14 +928,15 @@ public class TablesUpdateTransactions extends JFrame{
 		getContentPane().add(tables_clientRemarksTableLbl);
 		getContentPane().add(tables_line);
 		getContentPane().add(tables_inputPanel);
+		getContentPane().add(scrollPane_1);
+		getContentPane().add(tables_specificClientLbl);
 		
 		JLabel tables_transactionIdLbl = new JLabel("Select Transaction ID to edit:");
 		tables_transactionIdLbl.setForeground(Color.WHITE);
 		tables_transactionIdLbl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
 		tables_transactionIdLbl.setBounds(20, 110, 213, 29);
 		tables_inputPanel.add(tables_transactionIdLbl);
-		getContentPane().add(scrollPane_1);
-		getContentPane().add(tables_specificClientLbl);
+	
 		
 		JLabel tables_editClientsLbl = new JLabel("Updates Clients", SwingConstants.CENTER);
 		tables_editClientsLbl.addMouseListener(new MouseAdapter() {
@@ -979,7 +974,5 @@ public class TablesUpdateTransactions extends JFrame{
     public String getPass() {
     	return this.adminAcc_passwordTxt.getText().trim();
     	}
-	
-    
 }
 

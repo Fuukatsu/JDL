@@ -55,6 +55,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.DefaultComboBoxModel;
 
 public class TablesRemarks extends JFrame{
 	private String clientSelectedName;
@@ -139,6 +140,7 @@ public class TablesRemarks extends JFrame{
 		tables_inputPanel.setLayout(null);
 
 		JComboBox tables_comboBox1 = new JComboBox();
+		tables_comboBox1.setModel(new DefaultComboBoxModel(new String[] {"List of Transaction IDs"}));
 		tables_comboBox1.setBounds(17, 129, 407, 25);
 		tables_inputPanel.add(tables_comboBox1);
 		tables_comboBox1.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
@@ -183,6 +185,8 @@ public class TablesRemarks extends JFrame{
 					statement3.setInt(1, temp);
 					
 					tables_comboBox1.removeAllItems();
+					tables_comboBox1.setModel(new DefaultComboBoxModel(new String[] {"List of Transaction IDs"}));
+					
 					ResultSet rs = statement.executeQuery();
 					
 					 while(rs.next()) {
@@ -627,6 +631,8 @@ public class TablesRemarks extends JFrame{
 				Runner.openOptionList();
 			}
 		});
+		
+	
 		tables_back.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/button_back.png")));
 		tables_back.setHorizontalAlignment(SwingConstants.CENTER);
 		tables_back.setForeground(Color.WHITE);
@@ -639,6 +645,17 @@ public class TablesRemarks extends JFrame{
 		tables_seeTablesLbl.setForeground(Color.WHITE);
 		tables_seeTablesLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
 		
+		tables_comboBox1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(tables_comboBox1.getSelectedIndex() == -1 || tables_comboBox1.getSelectedIndex() == 0){
+					tables_registerBtn.setEnabled(false);
+				}
+				else {
+					tables_registerBtn.setEnabled(true);
+				}
+					
+			}
+		});
 		//Images
 		
 		JLabel tables_minimize = new JLabel("");
