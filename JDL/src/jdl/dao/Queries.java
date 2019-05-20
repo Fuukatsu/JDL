@@ -377,8 +377,8 @@ public class Queries
 					"UNION "+
 					"SELECT * FROM jdl_accounts.transactions WHERE trans_aepEndDate "+
 					"BETWEEN ? AND ? "+
-					"INTERSECT "+
-					"SELECT * FROM jdl_accounts.transactions WHERE trans_isActive = 1";
+					"AND EXISTS "+
+					"(SELECT * FROM jdl_accounts.transactions WHERE trans_isActive = 1)";
 			PreparedStatement ps = con.prepareStatement(sql);
 			for(int i = 0; i < 6; i+=2)
 			{

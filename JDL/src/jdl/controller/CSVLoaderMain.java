@@ -127,8 +127,7 @@ public class CSVLoaderMain {
 		}catch(Exception exc) {
 			exc.printStackTrace();
 			
-		}
-		Runner.openOptionList();
+		}		
 	} 
 	public static boolean checkColumns(String[] c)
 	{
