@@ -294,9 +294,6 @@ public class objectFilter
 		else if(input[3].isEmpty()) {
 			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[3]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
 		}
-		else if(input[5].length() >24 ) {
-			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[5]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
-		}
 		else if(input[6].length() >70 ) {
 			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[6]+" too long.</font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
 		}
