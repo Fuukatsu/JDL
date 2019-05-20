@@ -210,7 +210,7 @@ public class objectFilter
 				}
 			}
 			else {
-				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please limit your input to 25 characters only.</font color = #ffffff></html>", "Detected an Empty Textfield", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Please limit your input to 25 characters only.</font color = #ffffff></html>", "Detected an Invalid Input", JOptionPane.ERROR_MESSAGE);
 			}
 		}else {
 			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>The "+what+" field must not be empty. Please specify one.</font color = #ffffff></html>", "Detected an Empty Input", JOptionPane.ERROR_MESSAGE);
