@@ -155,11 +155,11 @@ public class ActivityHistory extends JFrame{
 		getContentPane().add(scrollPane);
 		
 		
-		JComboBox comboBox = new JComboBox(objectFilter.getUsernames());
-		comboBox.addActionListener(new ActionListener() {
+		JComboBox history_userHistory = new JComboBox(objectFilter.getUsernames());
+		history_userHistory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				TableModel md = Queries.getClientTransactions2(comboBox.getSelectedItem().toString());
+				TableModel md = Queries.getClientTransactions2(history_userHistory.getSelectedItem().toString());
 				table.setModel(md);
 				table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 				
@@ -168,11 +168,11 @@ public class ActivityHistory extends JFrame{
 				
 			}
 		});
-		comboBox.setBounds(477, 634, 302, 28);
-		comboBox.setFont(new Font("Segoe UI Semibold", Font.BOLD, 16));
+		history_userHistory.setBounds(477, 634, 302, 28);
+		history_userHistory.setFont(new Font("Segoe UI Semibold", Font.BOLD, 16));
 		
 		table = new JTable();
-		TableModel md = Queries.getClientTransactions(comboBox.getSelectedItem().toString());
+		TableModel md = Queries.getClientTransactions(history_userHistory.getSelectedItem().toString());
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 				{new Integer(68), new Integer(230), "P12345678", "12345", "123sdfs", null, null, "", null, null, "", null, null, null},
@@ -225,7 +225,7 @@ public class ActivityHistory extends JFrame{
 		
 		for(String s:objectFilter.getUsernames())
 			System.out.println(s);
-		getContentPane().add(comboBox);
+		getContentPane().add(history_userHistory);
 		
 		JTableHeader header = table.getTableHeader();
 		header.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
@@ -255,21 +255,26 @@ public class ActivityHistory extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Connection conn=DriverManager.getConnection(dP.url, dP.username, dP.password);
-					Statement stat=conn.createStatement();
-					Statement stat1=conn.createStatement();
+					PreparedStatement ps = conn.prepareStatement("SELECT client_id AS 'Client ID',"
+							+ "trans_transId AS 'Transaction ID'" +
+							",trans_passportNo AS 'Passport No' "+ 
+							", trans_tinID AS 'TIN ID' " + 
+							", trans_visaType AS 'Visa Type' " + 
+							", trans_visaStartDate AS 'Visa Start Date' " + 
+							", trans_visaEndDate AS 'Visa Expiry Date' " + 
+							", trans_permitType AS 'Permit Type' " + 
+							", trans_permitStartDate AS 'Permit Start Date' " + 
+							", trans_permitEndDate AS 'Permit Expiry Date' " + 
+							", trans_aepID AS 'AEP ID' " + 
+							", trans_aepStartDate AS 'AEP Start Date' " + 
+							", trans_aepEndDate AS 'AEP Expiry Date' " + 
+							", trans_transTimestamp AS 'Timestamp' "+
+							", trans_transAuthor AS 'Author' "+
+							", trans_transAction AS 'Action' "+
+							" FROM transactions WHERE trans_transAuthor = ? ORDER BY trans_transId DESC");
 					
-					ResultSet rs=stat.executeQuery("SELECT client_id AS 'Client ID',"
-							+ "client_lastname AS 'Lastname'" +
-							", client_firstname AS 'Firstname'" + 
-							", client_alias AS 'Alias' " + 
-							", client_nationality AS 'Country' " + 
-							", client_birthdate AS 'Birthdate' " + 
-							", client_gender AS 'Gender' " + 
-							", client_company AS 'Company' " + 
-							", client_position AS 'Company Position' " + 
-							", client_contact AS 'Contact No.' " + 
-							", client_email AS 'Email' " + 
-							" FROM jdl_accounts.clients WHERE client_isActive = 1 OR null ORDER BY client_id DESC");
+					ps.setString(1, history_userHistory.getSelectedItem().toString());
+					ResultSet rs = ps.executeQuery();
 					
 					table.setModel(DbUtils.resultSetToTableModel(rs));
 					table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);

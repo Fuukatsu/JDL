@@ -59,10 +59,10 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import javax.swing.DefaultComboBoxModel;
 
 public class AccountManagement extends JFrame{
 	private JTextField tables_clientBirthdateTxt;
-	private JTextField emp_GenderTxt;
 	private JTextField emp_AddressTxt;
 	private JTextField emp_PositionTxt;
 	private String clientSelectedName;
@@ -234,6 +234,13 @@ public class AccountManagement extends JFrame{
 		
 		tables_inputPanel.add(birthdatePicker);
 		
+		JComboBox<String> emp_genderBox = new JComboBox<String>();
+		emp_genderBox.setModel(new DefaultComboBoxModel(new String[] {"Male", "Female"}));
+		emp_genderBox.setSelectedIndex(0);
+		emp_genderBox.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
+		emp_genderBox.setBounds(20, 366, 400, 24);
+		tables_inputPanel.add(emp_genderBox);
+		
 		JLabel emp_assignLbl = new JLabel("Assign this account information to:");
 		emp_assignLbl.setForeground(Color.WHITE);
 		emp_assignLbl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
@@ -266,13 +273,6 @@ public class AccountManagement extends JFrame{
 		emp_GenderLbl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
 		emp_GenderLbl.setBounds(20, 336, 190, 29);
 		tables_inputPanel.add(emp_GenderLbl);
-		
-		emp_GenderTxt = new JTextField();
-		emp_GenderTxt.setBorder(new EmptyBorder(0, 0, 0, 0));
-		emp_GenderTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
-		emp_GenderTxt.setColumns(10);
-		emp_GenderTxt.setBounds(20, 367, 400, 23);
-		tables_inputPanel.add(emp_GenderTxt);
 		
 		JLabel emp_AddressLbl = new JLabel("Address:");
 		emp_AddressLbl.setForeground(Color.WHITE);
@@ -369,7 +369,6 @@ public class AccountManagement extends JFrame{
 				emp_LastnameTxt.setText("");
 				emp_FirstnameTxt.setText("");
 				emp_PositionTxt.setText("");
-				emp_GenderTxt.setText("");
 				birthdatePicker.getJFormattedTextField().setText("");
 				emp_AddressTxt.setText("");
 				emp_ContactTxt.setText("");
@@ -468,7 +467,7 @@ public class AccountManagement extends JFrame{
 					emp_LastnameTxt.setText(emp_LastnameTxt.getText().trim());
 					emp_FirstnameTxt.setText(emp_FirstnameTxt.getText().trim());
 					emp_PositionTxt.setText(emp_PositionTxt.getText().trim());
-					emp_GenderTxt.setText(emp_GenderTxt.getText().trim());
+					emp_genderBox.getSelectedItem().toString().trim();
 					emp_ContactTxt.setText(emp_ContactTxt.getText().trim());
 					emp_EmailTxt.setText(emp_EmailTxt.getText().trim());
 					
@@ -476,7 +475,7 @@ public class AccountManagement extends JFrame{
 					input[0] = emp_LastnameTxt.getText().trim();
 					input[1] = emp_FirstnameTxt.getText().trim();
 					input[2] = emp_PositionTxt.getText().trim();
-					input[3] = emp_GenderTxt.getText().trim();
+					input[3] = emp_genderBox.getSelectedItem().toString().trim();
 					input[4] = birthdatePicker.getJFormattedTextField().getText().toString().trim();
 					input[5] = emp_AddressTxt.getText();
 					input[6] = emp_ContactTxt.getText();
@@ -498,7 +497,7 @@ public class AccountManagement extends JFrame{
 						statement1.setString(1, emp_LastnameTxt.getText());
 						statement1.setString(2, emp_FirstnameTxt.getText());
 						statement1.setString(3, emp_PositionTxt.getText());
-						statement1.setString(4, emp_GenderTxt.getText());
+						statement1.setString(4, emp_genderBox.getSelectedItem().toString());
 						if(birthdatePicker.getJFormattedTextField().getText().toString().equals("")) 
 							statement1.setDate(5, null);
 						else
@@ -511,7 +510,7 @@ public class AccountManagement extends JFrame{
 						statement1.setString(10, emp_LastnameTxt.getText());
 						statement1.setString(11, emp_FirstnameTxt.getText());
 						statement1.setString(12, emp_PositionTxt.getText());
-						statement1.setString(13, emp_GenderTxt.getText());
+						statement1.setString(13, emp_genderBox.getSelectedItem().toString());
 						statement1.setDate(14, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().toString())));
 						statement1.setString(15, emp_AddressTxt.getText());
 						statement1.setString(16, emp_ContactTxt.getText());
@@ -648,7 +647,6 @@ public class AccountManagement extends JFrame{
 							emp_LastnameTxt.setText(rs1.getString("emp_lastname"));
 							emp_FirstnameTxt.setText(rs1.getString("emp_firstname"));
 							emp_PositionTxt.setText(rs1.getString("emp_position"));
-							emp_GenderTxt.setText(rs1.getString("emp_gender"));
 							String dateValue = String.valueOf(rs1.getString("emp_birthdate"));
 							birthdateModel.setDate(Integer.parseInt(dateValue.substring(0, dateValue.indexOf("-"))), (Integer.parseInt(dateValue.substring(dateValue.indexOf("-")+1, dateValue.lastIndexOf("-"))))-1, Integer.parseInt(dateValue.substring(dateValue.lastIndexOf("-")+1, dateValue.length())));
 							birthdateModel.setSelected(true);
@@ -664,6 +662,5 @@ public class AccountManagement extends JFrame{
 		});
 		
 	}
-    
 }
 
