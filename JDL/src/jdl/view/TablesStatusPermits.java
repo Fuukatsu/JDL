@@ -26,6 +26,7 @@ import jdl.controller.TableColumnAdjuster;
 import jdl.controller.objectFilter;
 import jdl.dao.databaseProperties;
 
+import java.util.Date;
 import java.util.Properties;
 
 import net.proteanit.sql.DbUtils;
@@ -40,6 +41,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
@@ -642,7 +645,8 @@ public class TablesStatusPermits extends JFrame{
 		tables_registerBtn.setForeground(new Color(255, 255, 255));
 		tables_registerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(!checkFields())
+				if(!checkFields() && DateCheck(tables_aepDateFiledTxt.getJFormattedTextField().getText().toString(),tables_aepdateReleasedTxt.getJFormattedTextField().getText().toString())
+								  && DateCheck(tables_permitDateFiledTxt.getJFormattedTextField().getText().toString(), tables_permitDateReleasedTxt.getJFormattedTextField().getText().toString()) )
 				{
 					UIManager.put("OptionPane.background",new ColorUIResource(90, 103, 115));
 				 	UIManager.put("Panel.background",new ColorUIResource(90, 103, 115));
@@ -968,6 +972,42 @@ public class TablesStatusPermits extends JFrame{
 		private static void __tmp() {
 			  javax.swing.JPanel __wbp_panel = new javax.swing.JPanel();
 		}
+	}
+	
+	public static boolean DateCheck(String date1, String date2) {
+	 	
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		boolean approved = false;
+		if((date1.isEmpty()) && (date2.isEmpty())) {
+			return approved = true;
+		}
+		else if (!date1.isEmpty() && !date2.isEmpty()){
+			try {
+				Date datex = sdf.parse(date1);
+				Date datey = sdf.parse(date2);
+				if (datex.compareTo(datey) > 0) {
+					//System.out.println("Date1 is after Date2"); FALSE
+					JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Date Filed must be before the Date Released.</font color = #ffffff></html>", "Detected an error in date fields.", JOptionPane.ERROR_MESSAGE);
+					approved = false;
+				} else if (datex.compareTo(datey) < 0) {
+					//System.out.println("Date1 is before Date2");TRUE
+					approved = true;
+				}
+				
+			}
+			catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		//Start of snippet
+		else if (date1.isEmpty() && !date2.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Date Filed must not be blank.</font color = #ffffff></html>", "Detected an error in date fields.", JOptionPane.ERROR_MESSAGE);
+		}
+		else if (date2.isEmpty() && !date1.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Hearing date must not be blank.</font color = #ffffff></html>", "Detected an error in date fields.", JOptionPane.ERROR_MESSAGE);
+		}
+		
+		return approved;
 	}
 }
 
