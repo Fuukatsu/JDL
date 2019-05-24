@@ -150,6 +150,7 @@ public class TablesStatusPermits extends JFrame{
 		tables_inputPanel.setLayout(null);
 
 		JComboBox tables_comboBox1 = new JComboBox();
+		tables_comboBox1.setModel(new DefaultComboBoxModel(new String[] {"List of Transaction IDs"}));
 		tables_comboBox1.setBounds(17, 109, 407, 25);
 		tables_inputPanel.add(tables_comboBox1);
 		tables_comboBox1.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));

@@ -340,7 +340,7 @@ public class GenerateExpiry extends JFrame{
 		return new DefaultTableModel(
 				rows,
 				new String[] {
-					"Client ID", "Transaction ID", "Passport No", "TIN ID", "Visa Type", "Visa Start Type", "Visa Start Date", "Visa End Date", "Permit Type", "Permit Start Date", "Permit End Date", "AEP ID", "AEP Start Date", "AEP End Date"
+					"Client ID", "Transaction ID", "Passport No", "TIN ID", "Visa Type", "Visa Start Date", "Visa End Date", "Permit Type", "Permit Start Date", "Permit End Date", "AEP ID", "AEP Start Date", "AEP End Date"
 				}
 			);
 	}

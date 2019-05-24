@@ -393,13 +393,13 @@ public class TablesUpdateTransactions extends JFrame{
 		
 		JComboBox tables_visaTypeTxt = new JComboBox();
 		tables_visaTypeTxt.setModel(new DefaultComboBoxModel(new String[] {"", "Pre-arranged Employment Visa (9g/Working Visa Commercial) ", "Pre-arranged Employment Visa (9g/Missionary)", "Permanent Resident Visa - Section 13 Series", "Special Non-Immigrant Visa - Section 47 (a)(2)", "Special Investor's Resident Visa (SIRV) ", "Special Resident Retiree's Visa (E.O 1037)"}));
-		tables_visaTypeTxt.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+		tables_visaTypeTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 14));
 		tables_visaTypeTxt.setBounds(20, 340, 400, 23);
 		tables_inputPanel.add(tables_visaTypeTxt);
 		
 		JComboBox tables_permitTypeTxt = new JComboBox();
 		tables_permitTypeTxt.setModel(new DefaultComboBoxModel(new String[] {"", "Special Working Permit(SWP)", "Provisional Work Permit (PWP)"}));
-		tables_permitTypeTxt.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+		tables_permitTypeTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 14));
 		tables_permitTypeTxt.setBounds(20, 454, 400, 23);
 		tables_inputPanel.add(tables_permitTypeTxt);
 
@@ -530,8 +530,15 @@ public class TablesUpdateTransactions extends JFrame{
 			{
 				tables_reloadBtn.doClick();
 				int row = tables_comboBox1.getSelectedIndex();
+				
+				if( row == -1 || row == 0) {
+					
+					tables_registerBtn.setEnabled(false);
+				}
+				
 				if(row > -1)
 				{
+					tables_registerBtn.setEnabled(true);
 					tables_passportNoTxt.setText(tm.getValueAt(row, 2).toString());
 					tables_tinIdTxt.setText(tm.getValueAt(row, 3).toString());
 					if(tm.getValueAt(row, 5) != null)
@@ -710,8 +717,7 @@ public class TablesUpdateTransactions extends JFrame{
 								if(objectFilter.dateCheckTransaction("AEP", tables_aepIdTxt.getText(), as, ae)) {
 									if(objectFilter.dateCheckTransaction("Permit", tables_permitTypeTxt.getSelectedItem().toString(), ps, pe)) {
 										Register();
-										Runner.destroyTUT();
-										Runner.openTUT();
+										tables_reloadBtn.doClick();
 									}
 								}
 							}
