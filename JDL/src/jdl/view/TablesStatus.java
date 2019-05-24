@@ -985,6 +985,11 @@ public class TablesStatus extends JFrame{
 				e.printStackTrace();
 			}
 		}
+		else if (date1.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Early Hearing date must not be blank.</font color = #ffffff></html>", "Detected an error in date fields.", JOptionPane.ERROR_MESSAGE);
+		}
+		else if (date2.isEmpty())
+			JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Hearing date must not be blank.</font color = #ffffff></html>", "Detected an error in date fields.", JOptionPane.ERROR_MESSAGE);
 		
 		return approved;
 	}

@@ -237,7 +237,7 @@ public class AccountManagement extends JFrame{
 		JComboBox<String> emp_genderBox = new JComboBox<String>();
 		emp_genderBox.setModel(new DefaultComboBoxModel(new String[] {"Male", "Female"}));
 		emp_genderBox.setSelectedIndex(0);
-		emp_genderBox.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
+		emp_genderBox.setFont(new Font("Microsoft Tai Le", Font.BOLD, 15));
 		emp_genderBox.setBounds(20, 366, 400, 24);
 		tables_inputPanel.add(emp_genderBox);
 		
@@ -653,6 +653,8 @@ public class AccountManagement extends JFrame{
 							emp_AddressTxt.setText(rs1.getString("emp_address"));
 							emp_ContactTxt.setText(rs1.getString("emp_contact"));
 							emp_EmailTxt.setText(rs1.getString("emp_email"));	
+							emp_genderBox.setSelectedItem(rs1.getString("emp_gender"));
+						
 						}
 					}catch (SQLException e1) {
 						e1.printStackTrace();

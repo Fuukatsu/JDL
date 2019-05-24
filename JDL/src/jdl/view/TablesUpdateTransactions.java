@@ -392,17 +392,21 @@ public class TablesUpdateTransactions extends JFrame{
 		//Input Section (Labels)
 		
 		JComboBox tables_visaTypeTxt = new JComboBox();
-		tables_visaTypeTxt.setModel(new DefaultComboBoxModel(new String[] {"", "Pre-arranged Employment Visa (9g/Working Visa Commercial) ", "Pre-arranged Employment Visa (9g/Missionary)", "Permanent Resident Visa - Section 13 Series", "Special Non-Immigrant Visa - Section 47 (a)(2)", "Special Investor's Resident Visa (SIRV) ", "Special Resident Retiree's Visa (E.O 1037)"}));
+		tables_visaTypeTxt.setEditable(true);
+		tables_visaTypeTxt.setModel(new DefaultComboBoxModel(new String[] {"", "Pre-arranged Employment Visa (9g/Working Visa) ", "Pre-arranged Employment Visa (9g/Missionary)", "Permanent Resident Visa - Section 13 Series", "Special Non-Immigrant Visa - Section 47 (a)(2)", "Special Investor's Resident Visa (SIRV) ", "Special Resident Retiree's Visa (E.O 1037)"}));
 		tables_visaTypeTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 14));
 		tables_visaTypeTxt.setBounds(20, 340, 400, 23);
 		tables_inputPanel.add(tables_visaTypeTxt);
 		
 		JComboBox tables_permitTypeTxt = new JComboBox();
+		tables_permitTypeTxt.setEditable(true);
 		tables_permitTypeTxt.setModel(new DefaultComboBoxModel(new String[] {"", "Special Working Permit(SWP)", "Provisional Work Permit (PWP)"}));
 		tables_permitTypeTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 14));
 		tables_permitTypeTxt.setBounds(20, 454, 400, 23);
 		tables_inputPanel.add(tables_permitTypeTxt);
 
+		AutoCompletion.enable(tables_visaTypeTxt);
+		AutoCompletion.enable(tables_permitTypeTxt);
 		
 		JLabel tables_visaExpireLbl = new JLabel("Visa Expiry Date:");
 		tables_visaExpireLbl.setForeground(Color.WHITE);
@@ -541,6 +545,9 @@ public class TablesUpdateTransactions extends JFrame{
 					tables_registerBtn.setEnabled(true);
 					tables_passportNoTxt.setText(tm.getValueAt(row, 2).toString());
 					tables_tinIdTxt.setText(tm.getValueAt(row, 3).toString());
+					tables_visaTypeTxt.setSelectedItem(tm.getValueAt(row, 4).toString());
+					tables_permitTypeTxt.setSelectedItem(tm.getValueAt(row, 7).toString());
+				
 					if(tm.getValueAt(row, 5) != null)
 						visaEndPick.getJFormattedTextField().setText(tm.getValueAt(row, 5).toString());
 					else

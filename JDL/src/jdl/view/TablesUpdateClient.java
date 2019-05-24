@@ -322,6 +322,23 @@ public class TablesUpdateClient extends JFrame{
 		tables_clientEmailLbl.setBounds(20, 630, 190, 29);
 		tables_inputPanel.add(tables_clientEmailLbl);
 		
+		JComboBox tables_nationalityBox = new JComboBox (getAllCountries());
+		tables_nationalityBox.setBounds(20, 328, 400, 23);
+		tables_nationalityBox.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
+		tables_inputPanel.add(tables_nationalityBox);	
+		tables_nationalityBox.setEditable(true);
+		AutoCompletion.enable(tables_nationalityBox);
+		
+
+		JComboBox tables_genderBox = new JComboBox();
+		tables_genderBox.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
+		tables_genderBox.setBounds(20, 436, 400, 24);
+		tables_inputPanel.add(tables_genderBox);
+		tables_genderBox.setEditable(false);
+		tables_genderBox.addItem("Male");
+		tables_genderBox.addItem("Female");
+		getContentPane().add(scrollPane);
+		
 		JButton tables_registerBtn = new JButton("Update Client");
 		tables_registerBtn.setForeground(new Color(255, 255, 255));
 		
@@ -361,6 +378,10 @@ public class TablesUpdateClient extends JFrame{
 						tables_clientPositionTxt.setText(rs.getString("client_position"));
 						tables_clientContactTxt.setText(rs.getString("client_contact"));
 						tables_clientEmailTxt.setText(rs.getString("client_email"));
+						tables_nationalityBox.setSelectedItem(rs.getString("client_nationality"));
+						tables_genderBox.setSelectedItem(rs.getString("client_gender"));
+						
+						
 					}
 					
 				}} catch (SQLException e1) {
@@ -506,15 +527,6 @@ public class TablesUpdateClient extends JFrame{
 		getContentPane().add(tables_line);
 		getContentPane().add(tables_inputPanel);
 		
-		JComboBox tables_genderBox = new JComboBox();
-		tables_genderBox.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
-		tables_genderBox.setBounds(20, 436, 400, 24);
-		tables_inputPanel.add(tables_genderBox);
-		tables_genderBox.setEditable(false);
-		tables_genderBox.addItem("Male");
-		tables_genderBox.addItem("Female");
-		getContentPane().add(scrollPane);
-		
 		tables_clientCompanyTxt = new JTextField();
 		tables_clientCompanyTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
 		tables_clientCompanyTxt.setColumns(10);
@@ -522,12 +534,6 @@ public class TablesUpdateClient extends JFrame{
 		tables_clientCompanyTxt.setBounds(20, 493, 400, 23);
 		tables_inputPanel.add(tables_clientCompanyTxt);
 		
-		JComboBox tables_nationalityBox = new JComboBox (getAllCountries());
-		tables_nationalityBox.setBounds(20, 328, 400, 23);
-		tables_nationalityBox.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
-		tables_inputPanel.add(tables_nationalityBox);	
-		tables_nationalityBox.setEditable(true);
-		AutoCompletion.enable(tables_nationalityBox);
 		
 		JLabel tables_chooseLbl = new JLabel("Choose Client:");
 		tables_chooseLbl.setForeground(Color.WHITE);
