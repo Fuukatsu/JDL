@@ -115,8 +115,8 @@ public class GenerateReport extends JFrame{
 		
 		JLabel lblSelectAnArea = new JLabel("Select an Area Where to Generate Data");
 		lblSelectAnArea.setForeground(Color.WHITE);
-		lblSelectAnArea.setFont(new Font("Segoe UI Semibold", Font.BOLD, 18));
-		lblSelectAnArea.setBounds(183, 73, 335, 46);
+		lblSelectAnArea.setFont(new Font("Segoe UI Semibold", Font.BOLD, 16));
+		lblSelectAnArea.setBounds(201, 75, 290, 46);
 		getContentPane().add(lblSelectAnArea);
 		
 		JLabel options_background = new JLabel("");

@@ -48,7 +48,14 @@ public class GenerateClients extends JFrame{
 		
 		//Main Panel
 		table_1 = new JTable();
-		table_1.setModel(resetModel());
+		table_1.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+			},
+			new String[] {
+				"Client ID", "Transaction ID", "Passport No.", "TIN ID", "Visa Type", "Visa Start Date", "Visa End Date", "Permit Type", "Permit Start Date", "Permit End Date", "AEP ID", "AEP Start Date", "AEP End Date", "Date Created", "Date Created"
+			}
+		));
 		TableColumnAdjuster tca1 = new TableColumnAdjuster(table_1);
 		table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		tca1.adjustColumns();
@@ -134,6 +141,7 @@ public class GenerateClients extends JFrame{
 					ttl[10] = ttemp.getAepID();
 					ttl[11] = ttemp.getAepStartDate();
 					ttl[12] = ttemp.getAepEndDate();
+					ttl[14] = ttemp.getTransTimestamp();
 					tl[i] = ttl;
 				}
 				table_1.setModel(applyTableModel(tl));
@@ -177,6 +185,7 @@ public class GenerateClients extends JFrame{
 					ttl[10] = ttemp.getAepID();
 					ttl[11] = ttemp.getAepStartDate();
 					ttl[12] = ttemp.getAepEndDate();
+					ttl[14] = ttemp.getTransTimestamp();
 					tl[i] = ttl;
 				}
 				table_1.setModel(applyTableModel(tl));
@@ -208,7 +217,7 @@ public class GenerateClients extends JFrame{
 				Object[][] tl = new Object[tlist.size()][13];
 				for(int i = 0; i < tlist.size();i++)
 				{
-					Object[] ttl = new Object[14];
+					Object[] ttl = new Object[15];
 					Transaction ttemp = tlist.get(i);
 					ttl[0] = Integer.toString(ttemp.getClient_id());
 					ttl[1] = Integer.toString(ttemp.getTransID());
@@ -223,6 +232,7 @@ public class GenerateClients extends JFrame{
 					ttl[10] = ttemp.getAepID();
 					ttl[11] = ttemp.getAepStartDate();
 					ttl[12] = ttemp.getAepEndDate();
+					ttl[14] = ttemp.getTransTimestamp();
 					tl[i] = ttl;
 				}
 				table_1.setModel(applyTableModel(tl));
@@ -300,10 +310,10 @@ public class GenerateClients extends JFrame{
 	{
 		return new DefaultTableModel(
 				new Object[][] {
-					{null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+					{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
 				},
 				new String[] {
-					"Client ID", "Transaction ID", "Passport No.", "TIN ID", "Visa Type", "Visa Start Date", "Visa End Date", "Permit Type", "Permit Start Date", "Permit End Date", "AEP ID", "AEP Start Date", "AEP End Date"
+					"Client ID", "Transaction ID", "Passport No.", "TIN ID", "Visa Type", "Visa Start Date", "Visa End Date", "Permit Type", "Permit Start Date", "Permit End Date", "AEP ID", "AEP Start Date", "AEP End Date", "Date Created"
 				}
 			);
 	}
@@ -312,7 +322,7 @@ public class GenerateClients extends JFrame{
 		return new DefaultTableModel(
 				rows,
 				new String[] {
-					"Client ID", "Transaction ID", "Passport No", "TIN ID", "Visa Type", "Visa Start Date", "Visa End Date", "Permit Type", "Permit Start Date", "Permit End Date", "AEP ID", "AEP Start Date", "AEP End Date"
+					"Client ID", "Transaction ID", "Passport No", "TIN ID", "Visa Type", "Visa Start Date", "Visa End Date", "Permit Type", "Permit Start Date", "Permit End Date", "AEP ID", "AEP Start Date", "AEP End Date", "Date Created"
 				}
 			);
 	}
