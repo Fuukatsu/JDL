@@ -501,29 +501,30 @@ public class AccountManagement extends JFrame{
 						statement1.setString(4, emp_genderBox.getSelectedItem().toString());
 						if(birthdatePicker.getJFormattedTextField().getText().toString().equals("")) 
 							statement1.setDate(5, null);
-						else
+						else {
 							statement1.setDate(5, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().toString())));
-						statement1.setString(6, emp_AddressTxt.getText());
-						statement1.setString(7, emp_ContactTxt.getText());
-						statement1.setString(8, emp_EmailTxt.getText());
-						statement1.setString(9, emp_userIdTxt.getText());
-						
-						statement1.setString(10, emp_LastnameTxt.getText());
-						statement1.setString(11, emp_FirstnameTxt.getText());
-						statement1.setString(12, emp_PositionTxt.getText());
-						statement1.setString(13, emp_genderBox.getSelectedItem().toString());
-						statement1.setDate(14, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().toString())));
-						statement1.setString(15, emp_AddressTxt.getText());
-						statement1.setString(16, emp_ContactTxt.getText());
-						statement1.setString(17, emp_EmailTxt.getText());
-						statement1.setString(18, emp_userIdTxt.getText());
-						
-						statement1.executeUpdate();
-						tables_inputPanel.revalidate();
-						
-						JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employee Information has been successfully updated.</font color = #ffffff></html>", "Information Updated Successfully", JOptionPane.INFORMATION_MESSAGE);
+							statement1.setString(6, emp_AddressTxt.getText());
+							statement1.setString(7, emp_ContactTxt.getText());
+							statement1.setString(8, emp_EmailTxt.getText());
+							statement1.setString(9, emp_userIdTxt.getText());
+							
+							statement1.setString(10, emp_LastnameTxt.getText());
+							statement1.setString(11, emp_FirstnameTxt.getText());
+							statement1.setString(12, emp_PositionTxt.getText());
+							statement1.setString(13, emp_genderBox.getSelectedItem().toString());
+							statement1.setDate(14, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().toString())));
+							statement1.setString(15, emp_AddressTxt.getText());
+							statement1.setString(16, emp_ContactTxt.getText());
+							statement1.setString(17, emp_EmailTxt.getText());
+							statement1.setString(18, emp_userIdTxt.getText());
+							
+							statement1.executeUpdate();
+							tables_inputPanel.revalidate();
+							
+							JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employee Information has been successfully updated.</font color = #ffffff></html>", "Information Updated Successfully", JOptionPane.INFORMATION_MESSAGE);
 					}
 					
+				}
 				}
 				catch (SQLException e1) {
 					e1.printStackTrace();
@@ -622,6 +623,7 @@ public class AccountManagement extends JFrame{
 		emp_comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(emp_comboBox.getSelectedIndex() == 0) {
+					emp_userIdTxt.setText("");
 					tables_registerBtn.setEnabled(false);
 				}else {
 					tables_registerBtn.setEnabled(true);

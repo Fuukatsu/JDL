@@ -535,7 +535,7 @@ public class TablesUpdateTransactions extends JFrame{
 				tables_reloadBtn.doClick();
 				int row = tables_comboBox1.getSelectedIndex();
 				
-				if( row == -1 || row == 0) {
+				if( row == -1 || row == 0 || tables_comboBox1.getItemCount() == 0) {
 					
 					tables_registerBtn.setEnabled(false);
 				}
@@ -576,6 +576,9 @@ public class TablesUpdateTransactions extends JFrame{
 				}
 			}
 		});
+		
+		System.out.print(tables_comboBox1.getItemCount());
+		
 		tables_comboBox1.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
 		tables_comboBox1.setBounds(20, 142, 400, 26);
 		tables_inputPanel.add(tables_comboBox1);
@@ -623,7 +626,6 @@ public class TablesUpdateTransactions extends JFrame{
 				if(tables_comboBox.getSelectedIndex() != 0) {
 					tables_passportNoTxt.setEditable(false);
 					tables_tinIdTxt.setEditable(false);
-					tables_registerBtn.setEnabled(true);
 					tables_visaTypeTxt.setEnabled(true);
 					visaStartPick.setEnabled(true);
 					visaEndPick.setEnabled(true);
@@ -695,14 +697,14 @@ public class TablesUpdateTransactions extends JFrame{
 		lblClientTransaction.setBounds(20, 167, 400, 41);
 		tables_inputPanel.add(lblClientTransaction);
 		
-
+		tables_comboBox1.setSelectedIndex(-1);
+		tables_comboBox.setSelectedIndex(0);
 		
 		java.util.Date date=new java.util.Date();
 		java.sql.Date sqlDate=new java.sql.Date(date.getTime());
 		
 		tables_registerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				
 				UIManager.put("OptionPane.background",new ColorUIResource(90, 103, 115));
 			 	UIManager.put("Panel.background",new ColorUIResource(90, 103, 115));
@@ -737,6 +739,7 @@ public class TablesUpdateTransactions extends JFrame{
 				
 				tables_reloadBtn.doClick();
 			}// end of action performed
+			
 			
 		public void Register() {
 			

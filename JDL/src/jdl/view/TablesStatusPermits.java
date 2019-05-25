@@ -285,7 +285,7 @@ public class TablesStatusPermits extends JFrame{
 							", statusP_instructions AS 'Instructions' " +
 							", statusP_aepCancellation AS 'AEP Cancellation' " +
 							", statusP_downgrading AS 'Downgrading' " +
-							", statusP_aepExitClearance AS 'aepExitClearance' " +
+							", statusP_aepExitClearance AS 'AEP Exit Clearance' " +
 							", statusP_updatedVisaExtend AS 'Visa Extend' " +
 							", statusP_documentation AS 'Documentation' " + 
 							", statusP_addRequirements AS 'Add Requirements' " + 
