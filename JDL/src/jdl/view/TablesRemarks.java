@@ -23,6 +23,7 @@ import jdl.controller.AutoCompletion;
 import jdl.controller.DateLabelFormatter;
 import jdl.controller.Runner;
 import jdl.controller.TableColumnAdjuster;
+import jdl.controller.objectFilter;
 import jdl.dao.databaseProperties;
 
 import java.util.Properties;
@@ -547,13 +548,13 @@ public class TablesRemarks extends JFrame{
 					if(tables_dateReceivedTxt.getJFormattedTextField().getText().toString().equals("")) 
 						statement2.setDate(8, null);
 					else
-						statement2.setDate(8, java.sql.Date.valueOf(tables_dateReceivedTxt.getJFormattedTextField().getText().toString()));
+						statement2.setDate(8, java.sql.Date.valueOf(objectFilter.addDay(tables_dateReceivedTxt.getJFormattedTextField().getText().toString())));
 
 					
 					if(tables_dateUpdatedTxt.getJFormattedTextField().getText().toString().equals(""))
 						statement2.setDate(9, null);
 					else
-						statement2.setDate(9, java.sql.Date.valueOf(tables_dateUpdatedTxt.getJFormattedTextField().getText().toString()));
+						statement2.setDate(9, java.sql.Date.valueOf(objectFilter.addDay(tables_dateUpdatedTxt.getJFormattedTextField().getText().toString())));
 				
 					statement2.setString(10, tables_remindersTxt.getText());
 					statement2.setString(11, tables_toDoTxt.getText());
