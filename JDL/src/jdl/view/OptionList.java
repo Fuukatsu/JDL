@@ -56,6 +56,8 @@ public class OptionList extends JFrame{
 		//Images
 		
 		JLabel options_tableIcon = new JLabel("");
+		options_tableIcon.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
+		options_tableIcon.setToolTipText("<html> This is where you can create client information, create transactions\r\n<br> as well as create transaction's status and remark. <html>");
 		options_tableIcon.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) 
 			{
@@ -65,6 +67,8 @@ public class OptionList extends JFrame{
 		});
 		
 		JLabel options_close = new JLabel("");
+		options_close.setFont(new Font("Dialog", Font.BOLD, 13));
+		options_close.setToolTipText("Minimize");
 		options_close.setBounds(654, 0, 26, 46);
 		getContentPane().add(options_close);
 		options_close.addMouseListener(new MouseAdapter() {
@@ -75,6 +79,8 @@ public class OptionList extends JFrame{
 		options_close.setIcon(new ImageIcon(OptionList.class.getResource("/jdl/Assets/button_minimizer.png")));
 		
 		JLabel options_profileView = new JLabel("");
+		options_profileView.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
+		options_profileView.setToolTipText("<html>View or edit your user account credentials as well as your primary and\r\n<br>secondary information.</html>");
 		options_profileView.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) 
 			{				
@@ -88,6 +94,8 @@ public class OptionList extends JFrame{
 		options_profileView.setIcon(new ImageIcon(OptionList.class.getResource("/jdl/Assets/button_viewUser.png")));
 		
 		JLabel options_logout = new JLabel("");
+		options_logout.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
+		options_logout.setToolTipText("<html>Logout.</html>");
 		options_logout.setBounds(74, 11, 37, 29);
 		getContentPane().add(options_logout);
 		options_logout.addMouseListener(new MouseAdapter() {
@@ -119,6 +127,8 @@ public class OptionList extends JFrame{
 		getContentPane().add(options_tableIcon);
 		
 		JLabel options_reportIcon = new JLabel("");
+		options_reportIcon.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
+		options_reportIcon.setToolTipText("<html>Generate and view a list for recently entered transactions within a selected \r\n<br>time span or generate and view list of any upcoming expiring dates of any\r\n<br>kind of transactions.");
 		options_reportIcon.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -131,6 +141,8 @@ public class OptionList extends JFrame{
 		getContentPane().add(options_reportIcon);
 		
 		JLabel options_manageIcon = new JLabel("");
+		options_manageIcon.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
+		options_manageIcon.setToolTipText("<html> Create, view and delete accounts who gained access to this system \r\n<br>and create or edit their primary and secondary information useful for\r\n<br> your employee references. </html>");
 		options_manageIcon.addMouseListener(new MouseAdapter() 
 		{
 			public void mouseClicked(MouseEvent e) 
@@ -144,6 +156,8 @@ public class OptionList extends JFrame{
 		getContentPane().add(options_manageIcon);
 		
 		JLabel options_historyIcon = new JLabel("");
+		options_historyIcon.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
+		options_historyIcon.setToolTipText("<html>Views a list of entries of a specific user of this system who either created or\r\n<br>deleted any kind of transaction from the database. Keeps track of those who \r\n<br>are responsible of entering of deleting a data.</html>");
 		options_historyIcon.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) 
@@ -193,6 +207,8 @@ public class OptionList extends JFrame{
 		getContentPane().add(options_historyLbl);
 		
 		JLabel options_upload = new JLabel("");
+		options_upload.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
+		options_upload.setToolTipText("<html>Upload a CSV-formatted file.</html>");
 		options_upload.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				CSVLoaderMain csvImport = new CSVLoaderMain();
@@ -202,6 +218,18 @@ public class OptionList extends JFrame{
 		options_upload.setIcon(new ImageIcon(OptionList.class.getResource("/jdl/Assets/button_upload.png")));
 		options_upload.setBounds(42, 11, 26, 29);
 		getContentPane().add(options_upload);
+		
+		JLabel options_faq = new JLabel("");
+		options_faq.setToolTipText("FAQ (Frequently Asked Questions)");
+		options_faq.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
+		options_faq.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				Runner.openFAQ();
+			}
+		});
+		options_faq.setIcon(new ImageIcon(OptionList.class.getResource("/jdl/Assets/options_FAQ.png")));
+		options_faq.setBounds(106, 11, 31, 29);
+		getContentPane().add(options_faq);
 		
 		JLabel options_background = new JLabel("");
 		options_background.setIcon(new ImageIcon(OptionList.class.getResource("/jdl/Assets/background_optionList4.jpg")));

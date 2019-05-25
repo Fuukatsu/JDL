@@ -157,6 +157,7 @@ public class AccountManagement extends JFrame{
 		tables_inputPanel.setLayout(null);
 		
 		JButton tables_reloadBtn = new JButton("Reload");
+		tables_reloadBtn.setToolTipText("<html>Reloads the List of Registered Accounts</html>");
 		tables_reloadBtn.setBounds(1260, 82, 138, 38);
 		tables_reloadBtn.setForeground(new Color(255, 255, 255));
 		tables_reloadBtn.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/main_refresh.png")));
