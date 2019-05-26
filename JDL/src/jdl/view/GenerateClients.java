@@ -126,7 +126,7 @@ public class GenerateClients extends JFrame{
 				Object[][] tl = new Object[tlist.size()][13];
 				for(int i = 0; i < tlist.size();i++)
 				{
-					Object[] ttl = new Object[14];
+					Object[] ttl = new Object[15];
 					Transaction ttemp = tlist.get(i);
 					ttl[0] = Integer.toString(ttemp.getClient_id());
 					ttl[1] = Integer.toString(ttemp.getTransID());
@@ -141,7 +141,7 @@ public class GenerateClients extends JFrame{
 					ttl[10] = ttemp.getAepID();
 					ttl[11] = ttemp.getAepStartDate();
 					ttl[12] = ttemp.getAepEndDate();
-					ttl[14] = ttemp.getTransTimestamp();
+					ttl[13] = ttemp.getTransTimestamp();
 					tl[i] = ttl;
 				}
 				table_1.setModel(applyTableModel(tl));
@@ -170,7 +170,7 @@ public class GenerateClients extends JFrame{
 				Object[][] tl = new Object[tlist.size()][13];
 				for(int i = 0; i < tlist.size();i++)
 				{
-					Object[] ttl = new Object[14];
+					Object[] ttl = new Object[15];
 					Transaction ttemp = tlist.get(i);
 					ttl[0] = Integer.toString(ttemp.getClient_id());
 					ttl[1] = Integer.toString(ttemp.getTransID());
@@ -185,7 +185,7 @@ public class GenerateClients extends JFrame{
 					ttl[10] = ttemp.getAepID();
 					ttl[11] = ttemp.getAepStartDate();
 					ttl[12] = ttemp.getAepEndDate();
-					ttl[14] = ttemp.getTransTimestamp();
+					ttl[13] = ttemp.getTransTimestamp();
 					tl[i] = ttl;
 				}
 				table_1.setModel(applyTableModel(tl));
@@ -232,7 +232,7 @@ public class GenerateClients extends JFrame{
 					ttl[10] = ttemp.getAepID();
 					ttl[11] = ttemp.getAepStartDate();
 					ttl[12] = ttemp.getAepEndDate();
-					ttl[14] = ttemp.getTransTimestamp();
+					ttl[13] = ttemp.getTransTimestamp();
 					tl[i] = ttl;
 				}
 				table_1.setModel(applyTableModel(tl));
