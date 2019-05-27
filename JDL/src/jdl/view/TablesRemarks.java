@@ -531,13 +531,13 @@ public class TablesRemarks extends JFrame{
 					if(tables_dateReceivedTxt.getJFormattedTextField().getText().toString().equals("")) 
 						statement2.setDate(1, null);
 					else
-						statement2.setDate(1, java.sql.Date.valueOf(tables_dateReceivedTxt.getJFormattedTextField().getText().toString()));
+						statement2.setDate(1, java.sql.Date.valueOf(objectFilter.addDay(tables_dateReceivedTxt.getJFormattedTextField().getText().toString())));
 
 					
 					if(tables_dateUpdatedTxt.getJFormattedTextField().getText().toString().equals(""))
 						statement2.setDate(2, null);
 					else
-						statement2.setDate(2, java.sql.Date.valueOf(tables_dateUpdatedTxt.getJFormattedTextField().getText().toString()));
+						statement2.setDate(2, java.sql.Date.valueOf(objectFilter.addDay(tables_dateUpdatedTxt.getJFormattedTextField().getText().toString())));
 				
 					statement2.setString(3, tables_remindersTxt.getText());
 					statement2.setString(4, tables_toDoTxt.getText());
