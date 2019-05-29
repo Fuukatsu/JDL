@@ -16,6 +16,7 @@ import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -56,7 +57,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.JComboBox;
 import javax.swing.ScrollPaneConstants;
@@ -69,6 +73,7 @@ public class Tables extends JFrame{
 	private String clientSelectedName;
 	private JTable table_1;
 	private int client_id = 1;
+	private JTextField tables_searchTxt;
 
 	/**
 	 * Create the application.
@@ -122,13 +127,35 @@ public class Tables extends JFrame{
 		//Buttons
 		
 		JComboBox tables_comboBox = new JComboBox(objectFilter.getClientList());
+		tables_comboBox.setEditable(true);
 		
 		tables_comboBox.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 14));
 		tables_comboBox.setBounds(20, 79, 400, 29);
 		AutoCompletion.enable(tables_comboBox);
 		tables_inputPanel.add(tables_comboBox);
 		
-		JButton tables_reloadBtn = new JButton("Reload");
+		JButton tables_reloadBtn = new JButton("Reset and Reload");
+		
+		tables_searchTxt = new JTextField();
+		tables_searchTxt.setText("Enter keywords here");
+		tables_searchTxt.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+		tables_searchTxt.setColumns(10);
+		tables_searchTxt.setBorder(null);
+		tables_searchTxt.setBounds(1093, 150, 237, 35);
+		getContentPane().add(tables_searchTxt);
+		
+		JLabel tables_filterIcon = new JLabel("");
+		tables_filterIcon.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/client_filterIcon.png")));
+		tables_filterIcon.setForeground(Color.WHITE);
+		tables_filterIcon.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		tables_filterIcon.setBounds(1052, 148, 35, 37);
+		getContentPane().add(tables_filterIcon);
+		
+		JLabel tables_filterTableLbl = new JLabel("Filter Table:");
+		tables_filterTableLbl.setForeground(Color.WHITE);
+		tables_filterTableLbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		tables_filterTableLbl.setBounds(963, 150, 89, 37);
+		getContentPane().add(tables_filterTableLbl);
 		
 		tables_tinIdTxt = new JTextField();
 		tables_tinIdTxt.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -137,7 +164,7 @@ public class Tables extends JFrame{
 		tables_tinIdTxt.setBounds(20, 236, 400, 23);
 		tables_inputPanel.add(tables_tinIdTxt);
 		
-		tables_reloadBtn.setBounds(1393, 148, 138, 38);
+		tables_reloadBtn.setBounds(1340, 148, 191, 38);
 		tables_reloadBtn.setForeground(new Color(255, 255, 255));
 		tables_reloadBtn.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/main_refresh.png")));
 		tables_reloadBtn.addActionListener(new ActionListener() 
@@ -154,6 +181,46 @@ public class Tables extends JFrame{
 				TableColumnAdjuster tca1 = new TableColumnAdjuster(table_1);
 				
 				table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+				TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table_1.getModel());
+				table_1.setRowSorter(sorter);
+				
+				tables_searchTxt.setText("");
+				table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+				
+				
+				tables_searchTxt.getDocument().addDocumentListener(new DocumentListener(){
+
+					@Override
+					public void insertUpdate(DocumentEvent e) {
+						 String text = tables_searchTxt.getText();
+
+			                if (text.trim().length() == 0) {
+			                    sorter.setRowFilter(null);
+			                } else {
+			                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+			                }
+			            
+						
+					}
+
+					@Override
+					public void removeUpdate(DocumentEvent e) {
+						 String text = tables_searchTxt.getText();
+
+			                if (text.trim().length() == 0) {
+			                    sorter.setRowFilter(null);
+			                } else {
+			                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+			                }						
+					}
+
+					@Override
+					public void changedUpdate(DocumentEvent e) {
+						 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		            }
+				 });
+				
+				
 				tca1.adjustColumns();
 				if(md != null)
 				{
@@ -302,10 +369,12 @@ public class Tables extends JFrame{
 		tables_inputPanel.add(visaEndPick);
 		
 		JComboBox tables_visaType_comboBox = new JComboBox();
+		tables_visaType_comboBox.setEditable(true);
 		tables_visaType_comboBox.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 14));
 		tables_visaType_comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "Pre-arranged Employment Visa (9g/Working Visa) ", "Pre-arranged Employment Visa (9g/Missionary)", "Permanent Resident Visa - Section 13 Series", "Special Non-Immigrant Visa - Section 47 (a)(2)", "Special Investor's Resident Visa (SIRV) ", "Special Resident Retiree's Visa (E.O 1037)"}));
 		tables_visaType_comboBox.setBounds(20, 290, 400, 23);
 		tables_inputPanel.add(tables_visaType_comboBox);
+		AutoCompletion.enable(tables_visaType_comboBox);
 		getContentPane().add(scrollPane_1);
 		
 		//PERMIT
@@ -363,7 +432,9 @@ public class Tables extends JFrame{
 		tables_inputPanel.add(tables_permitLbl);
 		
 		JComboBox tables_permitType_comboBox = new JComboBox();
+		tables_permitType_comboBox.setEditable(true);
 		tables_permitType_comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "Special Working Permit(SWP)", "Provisional Work Permit (PWP)"}));
+		AutoCompletion.enable(tables_permitType_comboBox);
 		tables_permitType_comboBox.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 14));
 		tables_permitType_comboBox.setBounds(20, 407, 400, 23);
 		tables_inputPanel.add(tables_permitType_comboBox);

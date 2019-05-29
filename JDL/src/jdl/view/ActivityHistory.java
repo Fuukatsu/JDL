@@ -14,13 +14,17 @@ import javax.swing.JTable;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
+import jdl.controller.AutoCompletion;
 import jdl.controller.Runner;
 import jdl.controller.TableColumnAdjuster;
 import jdl.controller.objectFilter;
@@ -48,6 +52,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
@@ -57,6 +62,7 @@ public class ActivityHistory extends JFrame{
 	private String clientSelectedName;
 	private boolean tables_validator = true;
 	private JTable table;
+	private JTextField tables_searchTxt;
 
 	/**
 	 * Create the application.
@@ -82,6 +88,28 @@ public class ActivityHistory extends JFrame{
 		
 		//Input Section (Labels and Associated Textfields)
 		
+		tables_searchTxt = new JTextField();
+		tables_searchTxt.setText("Enter keywords here");
+		tables_searchTxt.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+		tables_searchTxt.setColumns(10);
+		tables_searchTxt.setBorder(null);
+		tables_searchTxt.setBounds(531, 61, 237, 34);
+		getContentPane().add(tables_searchTxt);
+		
+		JLabel tables_filterIcon = new JLabel("");
+		tables_filterIcon.setIcon(new ImageIcon(ActivityHistory.class.getResource("/jdl/Assets/client_filterIcon.png")));
+		tables_filterIcon.setForeground(Color.WHITE);
+		tables_filterIcon.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		tables_filterIcon.setBounds(493, 60, 35, 37);
+		getContentPane().add(tables_filterIcon);
+		
+		JLabel tables_filterTableLbl = new JLabel("Filter Table:");
+		tables_filterTableLbl.setForeground(Color.WHITE);
+		tables_filterTableLbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		tables_filterTableLbl.setBounds(405, 60, 89, 37);
+		getContentPane().add(tables_filterTableLbl);
+		
+		
 		//Birthdate
 		
 		UtilDateModel birthdateModel = new UtilDateModel();
@@ -95,7 +123,7 @@ public class ActivityHistory extends JFrame{
 		getContentPane().setLayout(null);
 		
 		JLabel transaction_historylbl = new JLabel("Transaction Activity History:");
-		transaction_historylbl.setBounds(21, 48, 374, 37);
+		transaction_historylbl.setBounds(21, 57, 374, 37);
 		transaction_historylbl.setForeground(Color.WHITE);
 		transaction_historylbl.setFont(new Font("Segoe UI", Font.BOLD, 19));
 		getContentPane().add(transaction_historylbl);
@@ -142,20 +170,21 @@ public class ActivityHistory extends JFrame{
 		
 		emp_minimize.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/button_minimizer.png")));
 		
-		JLabel transaction_selectuserlbl = new JLabel("Select User to View Transaction History:");
-		transaction_selectuserlbl.setBounds(185, 628, 284, 41);
+		JLabel transaction_selectuserlbl = new JLabel("Select User to View Its Transaction History:");
+		transaction_selectuserlbl.setBounds(21, 635, 309, 41);
 		transaction_selectuserlbl.setForeground(Color.WHITE);
 		transaction_selectuserlbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
 		getContentPane().add(transaction_selectuserlbl);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(21, 91, 955, 534);
+		scrollPane.setBounds(21, 105, 955, 520);
 		scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		
 		getContentPane().add(scrollPane);
 		
 		
 		JComboBox history_userHistory = new JComboBox(objectFilter.getUsernames());
+		AutoCompletion.enable(history_userHistory);
 		history_userHistory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -163,12 +192,47 @@ public class ActivityHistory extends JFrame{
 				table.setModel(md);
 				table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 				
+				TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table.getModel());
+				table.setRowSorter(sorter);
 				TableColumnAdjuster tca = new TableColumnAdjuster(table);
 				tca.adjustColumns();
 				
+				tables_searchTxt.setText("");
+				tables_searchTxt.getDocument().addDocumentListener(new DocumentListener(){
+
+					@Override
+					public void insertUpdate(DocumentEvent e) {
+						 String text = tables_searchTxt.getText();
+
+			                if (text.trim().length() == 0) {
+			                    sorter.setRowFilter(null);
+			                } else {
+			                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+			                }
+			            
+						
+					}
+
+					@Override
+					public void removeUpdate(DocumentEvent e) {
+						 String text = tables_searchTxt.getText();
+
+			                if (text.trim().length() == 0) {
+			                    sorter.setRowFilter(null);
+			                } else {
+			                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+			                }						
+					}
+
+					@Override
+					public void changedUpdate(DocumentEvent e) {
+						 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		            }
+				 });
+				
 			}
 		});
-		history_userHistory.setBounds(477, 634, 302, 28);
+		history_userHistory.setBounds(340, 641, 302, 28);
 		history_userHistory.setFont(new Font("Segoe UI Semibold", Font.BOLD, 16));
 		
 		table = new JTable();
@@ -223,8 +287,7 @@ public class ActivityHistory extends JFrame{
 		table.setBorder(null);
 		scrollPane.setViewportView(table);
 		
-		for(String s:objectFilter.getUsernames())
-			System.out.println(s);
+		for(String s:objectFilter.getUsernames());
 		getContentPane().add(history_userHistory);
 		
 		JTableHeader header = table.getTableHeader();
@@ -238,19 +301,19 @@ public class ActivityHistory extends JFrame{
 		
 
 		databaseProperties dP = new databaseProperties();
-		JButton AC_reloadBtn = new JButton("Reload");
+		JButton AC_reloadBtn = new JButton("Reset and Reload");
 		AC_reloadBtn.setBackground(new Color(0, 102, 102));
 		AC_reloadBtn.setIcon(new ImageIcon(ActivityHistory.class.getResource("/jdl/Assets/main_refresh.png")));
 		AC_reloadBtn.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
 		AC_reloadBtn.setForeground(new Color(255, 255, 255));
-		AC_reloadBtn.setBounds(829, 51, 147, 34);
+		AC_reloadBtn.setBounds(778, 60, 198, 36);
 		getContentPane().add(AC_reloadBtn);
 		AC_reloadBtn.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/main_refresh.png")));
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(ActivityHistory.class.getResource("/jdl/Assets/background_tables4.jpg")));
-		lblNewLabel.setBounds(0, 0, 1000, 680);
-		getContentPane().add(lblNewLabel);
+		JLabel tables_background = new JLabel("");
+		tables_background.setIcon(new ImageIcon(ActivityHistory.class.getResource("/jdl/Assets/background_tables4.jpg")));
+		tables_background.setBounds(0, 0, 1000, 680);
+		getContentPane().add(tables_background);
 		AC_reloadBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -280,7 +343,45 @@ public class ActivityHistory extends JFrame{
 					table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 					
 					TableColumnAdjuster tca = new TableColumnAdjuster(table);
+					TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table.getModel());
+					table.setRowSorter(sorter);
 					tca.adjustColumns();
+					
+					tables_searchTxt.setText("");
+					tables_searchTxt.getDocument().addDocumentListener(new DocumentListener(){
+
+						@Override
+						public void insertUpdate(DocumentEvent e) {
+							 String text = tables_searchTxt.getText();
+
+				                if (text.trim().length() == 0) {
+				                    sorter.setRowFilter(null);
+				                } else {
+				                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+				                }
+				            
+							
+						}
+
+						@Override
+						public void removeUpdate(DocumentEvent e) {
+							 String text = tables_searchTxt.getText();
+
+				                if (text.trim().length() == 0) {
+				                    sorter.setRowFilter(null);
+				                } else {
+				                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+				                }						
+						}
+
+						@Override
+						public void changedUpdate(DocumentEvent e) {
+							 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			            }
+					 });
+					
+					
+					
 
 				} catch (SQLException e1) {
 					e1.printStackTrace();

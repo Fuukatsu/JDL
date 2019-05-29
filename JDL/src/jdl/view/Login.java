@@ -19,6 +19,11 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,6 +40,7 @@ import jdl.controller.Runner;
 import jdl.controller.loginFunction;
 import jdl.controller.objectFilter;
 import jdl.dao.Queries;
+import jdl.dao.databaseProperties;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -43,6 +49,7 @@ public class Login extends JFrame {
 	/**
 	 * 
 	 */
+	static databaseProperties dP = new databaseProperties();
 	private static final long serialVersionUID = 2581971424563374008L;
 	private JTextField login_usernameTxt;
 	private JPasswordField login_passwordTxt;
@@ -171,20 +178,25 @@ public class Login extends JFrame {
 					 	UIManager.put("Button.background", Color.WHITE);
 					 	UIManager.put("OptionPane.foreground",new ColorUIResource(90, 103, 115));
 					 	
-					 	try {
-					 	String date = objectFilter.getDateToday();
-					 	Date d = new SimpleDateFormat("yyyy-MM-dd").parse(date);
-					 	Queries.checkNotification(new java.sql.Date(d.getTime()));
-					 	boolean dateCheck = Queries.checkNotification(new java.sql.Date(d.getTime()));
-					 	if (dateCheck) {
-							JOptionPane.showMessageDialog(null, "<html><center><font color = #ffffff> We already sent emails to your clients notifying <br> that their visas or permits are about to expire.</br>"
-						 			+ "<br>Click 'ok' to dismiss this message</br></center></font color = #ffffff></html>", "Emails Sent Automatically", JOptionPane.INFORMATION_MESSAGE);
-					 	}
-					 	}
-					 	catch (ParseException ex){
-							
+					 	try 
+						{
+					 		Connection con = DriverManager.getConnection(dP.url, dP.username, dP.password);
+					 		String date = objectFilter.getDateToday();
+					 		String dateConverted = "'"+date+"'";
+							PreparedStatement ps = con.prepareStatement("SELECT * FROM jdl_accounts.notifications WHERE notif_date = "+dateConverted);
+							ResultSet rs = ps.executeQuery();
+							while(rs.next())
+							{
+								if(rs.first() == true){
+									JOptionPane.showMessageDialog(null, "<html><center><font color = #ffffff> We already sent emails today, "+date+", to your clients notifying that <br> their visas or permits are about to expire.</br>"
+								 			+ " To view the list of notified clients, <br>kindly generate the report for the expiring dates.</br></center></font color = #ffffff></html>", "Emails Sent Automatically", JOptionPane.INFORMATION_MESSAGE);
+								}
+							}
+					}
+					 	catch (SQLException ex) 
+						{
 							ex.printStackTrace();
-					 	}
+						}
 					}
 					else
 					{

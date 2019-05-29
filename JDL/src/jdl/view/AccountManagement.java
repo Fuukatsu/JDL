@@ -14,6 +14,9 @@ import javax.swing.JTable;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
@@ -47,7 +50,10 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.JComboBox;
 import javax.swing.GroupLayout;
@@ -77,6 +83,7 @@ public class AccountManagement extends JFrame{
 	private JTextField adminAcc_usernameTxt;
 	private JPasswordField adminAcc_passwordTxt;
 	private databaseProperties dP = new databaseProperties();
+	private JTextField tables_searchTxt;
 	//Username
     public void setUser(String user) {
     	this.adminAcc_usernameTxt.setText(user);
@@ -156,9 +163,30 @@ public class AccountManagement extends JFrame{
 		tables_inputPanel.setBackground(new Color (255,255,255,60));
 		tables_inputPanel.setLayout(null);
 		
-		JButton tables_reloadBtn = new JButton("Reload");
+		tables_searchTxt = new JTextField();
+		tables_searchTxt.setText("Enter keywords here");
+		tables_searchTxt.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+		tables_searchTxt.setColumns(10);
+		tables_searchTxt.setBorder(null);
+		tables_searchTxt.setBounds(957, 85, 237, 33);
+		getContentPane().add(tables_searchTxt);
+		
+		JLabel tables_filterIcon = new JLabel("");
+		tables_filterIcon.setIcon(new ImageIcon(AccountManagement.class.getResource("/jdl/Assets/client_filterIcon.png")));
+		tables_filterIcon.setForeground(Color.WHITE);
+		tables_filterIcon.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		tables_filterIcon.setBounds(919, 85, 35, 37);
+		getContentPane().add(tables_filterIcon);
+		
+		JLabel tables_filterTableLbl = new JLabel("Filter Table:");
+		tables_filterTableLbl.setForeground(Color.WHITE);
+		tables_filterTableLbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		tables_filterTableLbl.setBounds(831, 85, 89, 33);
+		getContentPane().add(tables_filterTableLbl);
+		
+		JButton tables_reloadBtn = new JButton("Reset and Reload");
 		tables_reloadBtn.setToolTipText("<html>Reloads the List of Registered Accounts</html>");
-		tables_reloadBtn.setBounds(1260, 82, 138, 38);
+		tables_reloadBtn.setBounds(1204, 85, 194, 36);
 		tables_reloadBtn.setForeground(new Color(255, 255, 255));
 		tables_reloadBtn.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/main_refresh.png")));
 		tables_reloadBtn.addActionListener(new ActionListener() {
@@ -190,12 +218,54 @@ public class AccountManagement extends JFrame{
 					table_1.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 					
 					TableColumnAdjuster tca = new TableColumnAdjuster(table_1);
+					TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table_1.getModel());
+					table_1.setRowSorter(sorter);
+					
 					tca.adjustColumns();
 					
+					tables_searchTxt.getDocument().addDocumentListener(new DocumentListener(){
+
+						@Override
+						public void insertUpdate(DocumentEvent e) {
+							 String text = tables_searchTxt.getText();
+
+				                if (text.trim().length() == 0) {
+				                    sorter.setRowFilter(null);
+				                } else {
+				                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+				                }
+				            
+							
+						}
+
+						@Override
+						public void removeUpdate(DocumentEvent e) {
+							 String text = tables_searchTxt.getText();
+
+				                if (text.trim().length() == 0) {
+				                    sorter.setRowFilter(null);
+				                } else {
+				                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+				                }						
+						}
+
+						@Override
+						public void changedUpdate(DocumentEvent e) {
+							 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			            }
+					 });
+					
+					
+					
+					
 					table.setModel(DbUtils.resultSetToTableModel(rs1));
-					table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 					
 					TableColumnAdjuster tca1 = new TableColumnAdjuster(table);
+					TableRowSorter<TableModel> sorter1 = new TableRowSorter<TableModel>(table.getModel());
+					table.setRowSorter(sorter1);
+					
+					table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+					
 					tca1.adjustColumns();
 
 				} catch (SQLException e1) {
@@ -420,7 +490,7 @@ public class AccountManagement extends JFrame{
 		getContentPane().setLayout(null);
 		
 		JLabel tables_registeredClientsLbl = new JLabel("List of Registered Accounts:");
-		tables_registeredClientsLbl.setBounds(484, 85, 356, 49);
+		tables_registeredClientsLbl.setBounds(484, 79, 356, 49);
 		tables_registeredClientsLbl.setForeground(Color.WHITE);
 		tables_registeredClientsLbl.setFont(new Font("Segoe UI", Font.BOLD, 19));
 		getContentPane().add(tables_registeredClientsLbl);
@@ -549,7 +619,7 @@ public class AccountManagement extends JFrame{
 		emp_deleteBtn.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
 		emp_deleteBtn.setBorder(null);
 		emp_deleteBtn.setBackground(new Color(0, 102, 102));
-		emp_deleteBtn.setBounds(1069, 83, 181, 38);
+		emp_deleteBtn.setBounds(1217, 427, 181, 33);
 		getContentPane().add(emp_deleteBtn);
 		
 		JButton emp_createBtn = new JButton(" Create a User");
@@ -565,7 +635,7 @@ public class AccountManagement extends JFrame{
 		emp_createBtn.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
 		emp_createBtn.setBorder(null);
 		emp_createBtn.setBackground(new Color(0, 102, 102));
-		emp_createBtn.setBounds(890, 83, 169, 38);
+		emp_createBtn.setBounds(1042, 427, 169, 33);
 		getContentPane().add(emp_createBtn);
 		
 		JLabel emp_back = new JLabel("");
@@ -658,6 +728,7 @@ public class AccountManagement extends JFrame{
 							emp_EmailTxt.setText(rs1.getString("emp_email"));	
 							emp_genderBox.setSelectedItem(rs1.getString("emp_gender"));
 						
+							tables_reloadBtn.doClick();
 						}
 					}catch (SQLException e1) {
 						e1.printStackTrace();

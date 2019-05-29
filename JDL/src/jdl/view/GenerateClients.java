@@ -14,12 +14,17 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import jdl.controller.Runner;
 import jdl.controller.TableColumnAdjuster;
@@ -41,10 +46,31 @@ public class GenerateClients extends JFrame{
 	private String admin_password;
 	private JTable table_1;
 	private ArrayList<Transaction> tlist;
+	private JTextField tables_searchTxt;
 
 
 	public GenerateClients() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(GenerateClients.class.getResource("/jdl/Assets/login_small.png")));
+		tables_searchTxt = new JTextField();
+		tables_searchTxt.setText("Enter keywords here");
+		tables_searchTxt.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+		tables_searchTxt.setColumns(10);
+		tables_searchTxt.setBorder(null);
+		tables_searchTxt.setBounds(741, 61, 237, 30);
+		getContentPane().add(tables_searchTxt);
+		
+		JLabel tables_filterIcon = new JLabel("");
+		tables_filterIcon.setIcon(new ImageIcon(GenerateClients.class.getResource("/jdl/Assets/client_filterIcon.png")));
+		tables_filterIcon.setForeground(Color.WHITE);
+		tables_filterIcon.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		tables_filterIcon.setBounds(703, 57, 35, 37);
+		getContentPane().add(tables_filterIcon);
+		
+		JLabel tables_filterTableLbl = new JLabel("Filter Table:");
+		tables_filterTableLbl.setForeground(Color.WHITE);
+		tables_filterTableLbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		tables_filterTableLbl.setBounds(615, 57, 89, 37);
+		getContentPane().add(tables_filterTableLbl);
 		
 		//Main Panel
 		table_1 = new JTable();
@@ -58,7 +84,43 @@ public class GenerateClients extends JFrame{
 		));
 		TableColumnAdjuster tca1 = new TableColumnAdjuster(table_1);
 		table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table_1.getModel());
+		table_1.setRowSorter(sorter);
 		tca1.adjustColumns();
+		
+		tables_searchTxt.getDocument().addDocumentListener(new DocumentListener(){
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				 String text = tables_searchTxt.getText();
+
+	                if (text.trim().length() == 0) {
+	                    sorter.setRowFilter(null);
+	                } else {
+	                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+	                }
+	            
+				
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				 String text = tables_searchTxt.getText();
+
+	                if (text.trim().length() == 0) {
+	                    sorter.setRowFilter(null);
+	                } else {
+	                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+	                }						
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+		 });
+		
+		
 		setTitle("JDL: Generate Clients");
 		setResizable(false);
 		setUndecorated(true);
@@ -89,8 +151,8 @@ public class GenerateClients extends JFrame{
 		});
 		generate_minimizeBtn.setIcon(new ImageIcon(GenerateClients.class.getResource("/jdl/Assets/button_minimizer.png")));
 		
-		JLabel generate_client = new JLabel("Number of Client Transactions");
-		generate_client.setBounds(419, 0, 213, 46);
+		JLabel generate_client = new JLabel("Number of Clients and Their Transactions");
+		generate_client.setBounds(394, 0, 289, 46);
 		getContentPane().add(generate_client);
 		generate_client.setForeground(new Color(255, 255, 255));
 		generate_client.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
@@ -148,6 +210,41 @@ public class GenerateClients extends JFrame{
 				TableColumnAdjuster tca1 = new TableColumnAdjuster(table_1);
 				generate_actualCountLbl.setText(Integer.toString(countClients(tl)));
 				table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+				TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table_1.getModel());
+				table_1.setRowSorter(sorter);
+				
+				tables_searchTxt.getDocument().addDocumentListener(new DocumentListener(){
+
+					@Override
+					public void insertUpdate(DocumentEvent e) {
+						 String text = tables_searchTxt.getText();
+
+			                if (text.trim().length() == 0) {
+			                    sorter.setRowFilter(null);
+			                } else {
+			                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+			                }
+			            
+						
+					}
+
+					@Override
+					public void removeUpdate(DocumentEvent e) {
+						 String text = tables_searchTxt.getText();
+
+			                if (text.trim().length() == 0) {
+			                    sorter.setRowFilter(null);
+			                } else {
+			                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+			                }						
+					}
+
+					@Override
+					public void changedUpdate(DocumentEvent e) {
+						 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		            }
+				 });
+				
 				tca1.adjustColumns();
 				//Query nung table with constraints to weekly
 			}
@@ -192,6 +289,40 @@ public class GenerateClients extends JFrame{
 				TableColumnAdjuster tca1 = new TableColumnAdjuster(table_1);
 				generate_actualCountLbl.setText(Integer.toString(countClients(tl)));
 				table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+				TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table_1.getModel());
+				table_1.setRowSorter(sorter);
+				
+				tables_searchTxt.getDocument().addDocumentListener(new DocumentListener(){
+
+					@Override
+					public void insertUpdate(DocumentEvent e) {
+						 String text = tables_searchTxt.getText();
+
+			                if (text.trim().length() == 0) {
+			                    sorter.setRowFilter(null);
+			                } else {
+			                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+			                }
+			            
+						
+					}
+
+					@Override
+					public void removeUpdate(DocumentEvent e) {
+						 String text = tables_searchTxt.getText();
+
+			                if (text.trim().length() == 0) {
+			                    sorter.setRowFilter(null);
+			                } else {
+			                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+			                }						
+					}
+
+					@Override
+					public void changedUpdate(DocumentEvent e) {
+						 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		            }
+				 });
 				tca1.adjustColumns();
 				//Query nung table with constraints to weekly
 			
@@ -238,7 +369,41 @@ public class GenerateClients extends JFrame{
 				table_1.setModel(applyTableModel(tl));
 				TableColumnAdjuster tca1 = new TableColumnAdjuster(table_1);
 				generate_actualCountLbl.setText(Integer.toString(countClients(tl)));
+				TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table_1.getModel());
+				table_1.setRowSorter(sorter);
 				table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+				
+				tables_searchTxt.getDocument().addDocumentListener(new DocumentListener(){
+
+					@Override
+					public void insertUpdate(DocumentEvent e) {
+						 String text = tables_searchTxt.getText();
+
+			                if (text.trim().length() == 0) {
+			                    sorter.setRowFilter(null);
+			                } else {
+			                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+			                }
+			            
+						
+					}
+
+					@Override
+					public void removeUpdate(DocumentEvent e) {
+						 String text = tables_searchTxt.getText();
+
+			                if (text.trim().length() == 0) {
+			                    sorter.setRowFilter(null);
+			                } else {
+			                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+			                }						
+					}
+
+					@Override
+					public void changedUpdate(DocumentEvent e) {
+						 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		            }
+				 });
 				tca1.adjustColumns();
 				//Query nung table with constraints to weekly
 			
@@ -268,10 +433,10 @@ public class GenerateClients extends JFrame{
 		generate_countLbl.setForeground(Color.WHITE);
 		generate_countLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 99));
 		
-		JLabel generate_clientListLbl = new JLabel("LIST OF CLIENT TRANSACTIONS:");
+		JLabel generate_clientListLbl = new JLabel("LIST OF CLIENTS AND THEIR TRANSACTIONS");
 		generate_clientListLbl.setForeground(Color.WHITE);
 		generate_clientListLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
-		generate_clientListLbl.setBounds(243, 56, 219, 34);
+		generate_clientListLbl.setBounds(243, 56, 309, 34);
 		getContentPane().add(generate_clientListLbl);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
@@ -299,6 +464,7 @@ public class GenerateClients extends JFrame{
 		generate_clientCountLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
 		generate_clientCountLbl.setBounds(51, 354, 138, 39);
 		getContentPane().add(generate_clientCountLbl);
+		
 		
 		JLabel options_background = new JLabel("");
 		options_background.setIcon(new ImageIcon(GenerateClients.class.getResource("/jdl/Assets/background_tables4.jpg")));

@@ -16,6 +16,7 @@ import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -55,7 +56,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -75,6 +79,7 @@ public class TablesUpdateTransactions extends JFrame{
 	private JComboBox tables_comboBox1;
 	private TableModel tm;
 	private databaseProperties dP = new databaseProperties();
+	private JTextField tables_searchTxt;
 
 	/**
 	 * Create the application.
@@ -150,12 +155,32 @@ public class TablesUpdateTransactions extends JFrame{
 
 		tables_comboBox.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 14));
 		tables_comboBox.setBounds(20, 77, 400, 29);
-		
-		AutoCompletion.enable(tables_comboBox);
 		tables_inputPanel.add(tables_comboBox);
+		AutoCompletion.enable(tables_comboBox);
 		
-		JButton tables_reloadBtn = new JButton("Reload");
-		tables_reloadBtn.setBounds(1395, 159, 138, 38);
+		tables_searchTxt = new JTextField();
+		tables_searchTxt.setText("Enter keywords here");
+		tables_searchTxt.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+		tables_searchTxt.setColumns(10);
+		tables_searchTxt.setBorder(null);
+		tables_searchTxt.setBounds(1110, 160, 237, 35);
+		getContentPane().add(tables_searchTxt);
+		
+		JLabel tables_filterIcon = new JLabel("");
+		tables_filterIcon.setIcon(new ImageIcon(TablesUpdateTransactions.class.getResource("/jdl/Assets/client_filterIcon.png")));
+		tables_filterIcon.setForeground(Color.WHITE);
+		tables_filterIcon.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		tables_filterIcon.setBounds(1069, 158, 35, 37);
+		getContentPane().add(tables_filterIcon);
+		
+		JLabel tables_filterTableLbl = new JLabel("Filter Table:");
+		tables_filterTableLbl.setForeground(Color.WHITE);
+		tables_filterTableLbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		tables_filterTableLbl.setBounds(980, 160, 89, 37);
+		getContentPane().add(tables_filterTableLbl);
+		
+		JButton tables_reloadBtn = new JButton("Reset and Reload");
+		tables_reloadBtn.setBounds(1357, 159, 176, 38);
 		tables_reloadBtn.setForeground(new Color(255, 255, 255));
 		tables_reloadBtn.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/main_refresh.png")));
 		tables_reloadBtn.addActionListener(new ActionListener() {
@@ -191,7 +216,45 @@ public class TablesUpdateTransactions extends JFrame{
 							" FROM jdl_accounts.transactions WHERE client_id ="+Integer.parseInt(client_id)+" ORDER BY trans_transId");
 					tm = DbUtils.resultSetToTableModel(rs1);
 					table_1.setModel(tm);
+				
+					tables_searchTxt.setText("");
 					table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+					
+					TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table_1.getModel());
+					table_1.setRowSorter(sorter);
+					
+					tables_searchTxt.getDocument().addDocumentListener(new DocumentListener(){
+
+						@Override
+						public void insertUpdate(DocumentEvent e) {
+							 String text = tables_searchTxt.getText();
+
+				                if (text.trim().length() == 0) {
+				                    sorter.setRowFilter(null);
+				                } else {
+				                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+				                }
+				            
+							
+						}
+
+						@Override
+						public void removeUpdate(DocumentEvent e) {
+							 String text = tables_searchTxt.getText();
+
+				                if (text.trim().length() == 0) {
+				                    sorter.setRowFilter(null);
+				                } else {
+				                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+				                }						
+						}
+
+						@Override
+						public void changedUpdate(DocumentEvent e) {
+							 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			            }
+					 });
+					
 					
 					TableColumnAdjuster tca1 = new TableColumnAdjuster(table_1);
 					tca1.adjustColumns();
@@ -404,9 +467,6 @@ public class TablesUpdateTransactions extends JFrame{
 		tables_permitTypeTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 14));
 		tables_permitTypeTxt.setBounds(20, 454, 400, 23);
 		tables_inputPanel.add(tables_permitTypeTxt);
-
-		AutoCompletion.enable(tables_visaTypeTxt);
-		AutoCompletion.enable(tables_permitTypeTxt);
 		
 		JLabel tables_visaExpireLbl = new JLabel("Visa Expiry Date:");
 		tables_visaExpireLbl.setForeground(Color.WHITE);
@@ -954,7 +1014,7 @@ public class TablesUpdateTransactions extends JFrame{
 		tables_inputPanel.add(tables_transactionIdLbl);
 	
 		
-		JLabel tables_editClientsLbl = new JLabel("Updates Clients", SwingConstants.CENTER);
+		JLabel tables_editClientsLbl = new JLabel("Update Clients", SwingConstants.CENTER);
 		tables_editClientsLbl.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -967,6 +1027,7 @@ public class TablesUpdateTransactions extends JFrame{
 		tables_editClientsLbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		tables_editClientsLbl.setBounds(245, 48, 183, 37);
 		getContentPane().add(tables_editClientsLbl);
+		
 		
 		JLabel background_tables = new JLabel("");
 		background_tables.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/background_tables4.jpg")));

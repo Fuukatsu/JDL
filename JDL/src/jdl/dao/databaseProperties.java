@@ -28,7 +28,6 @@ public class databaseProperties
 		    setUrl(everything[0].split("=")[1].trim());
 		    setUsername(everything[1].split("=")[1].trim());
 		    setPassword(everything[2].split("=")[1].trim());
-		    System.out.println(this.url+" "+this.username+" "+this.password);
 		} finally {
 		    br.close();
 		}

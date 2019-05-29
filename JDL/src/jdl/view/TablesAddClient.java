@@ -16,9 +16,14 @@ import javax.swing.JTable;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
+
+import javax.swing.RowFilter;
 
 import jdl.controller.AutoCompletion;
 import jdl.controller.DateLabelFormatter;
@@ -51,6 +56,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.JComboBox;
 import javax.swing.GroupLayout;
@@ -74,6 +81,7 @@ public class TablesAddClient extends JFrame{
 	private JTable table_1;
 	private JTextField tables_clientCompanyTxt;
 	private databaseProperties dP = new databaseProperties();
+	private JTextField tables_searchTxt;
 	public TablesAddClient() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Tables.class.getResource("/jdl/Assets/login_small.png")));	
 		
@@ -115,13 +123,21 @@ public class TablesAddClient extends JFrame{
 		
 		//Input Section
 		
+		tables_searchTxt = new JTextField();
+		tables_searchTxt.setText("Enter keywords here");
+		tables_searchTxt.setBorder(null);
+		tables_searchTxt.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+		tables_searchTxt.setBounds(1074, 159, 237, 30);
+		getContentPane().add(tables_searchTxt);
+		tables_searchTxt.setColumns(10);
+		
 		JPanel tables_inputPanel = new JPanel();
 		tables_inputPanel.setBounds(25, 155, 450, 721);
 		tables_inputPanel.setBackground(new Color (255, 255, 255, 60));
 		tables_inputPanel.setLayout(null);
 		
-		JButton tables_reloadBtn = new JButton("Reload");
-		tables_reloadBtn.setBounds(1389, 159, 138, 38);
+		JButton tables_reloadBtn = new JButton("Reset and Reload");
+		tables_reloadBtn.setBounds(1321, 159, 206, 32);
 		tables_reloadBtn.setForeground(new Color(255, 255, 255));
 		tables_reloadBtn.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/main_refresh.png")));
 		tables_reloadBtn.addActionListener(new ActionListener() {
@@ -144,8 +160,44 @@ public class TablesAddClient extends JFrame{
 							", client_email AS 'Email' " + 
 							" FROM jdl_accounts.clients WHERE client_isActive = 1 OR null ORDER BY client_id DESC");
 					
+					tables_searchTxt.setText("");
 					table_1.setModel(DbUtils.resultSetToTableModel(rs));
 					table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+					
+					TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table_1.getModel());
+					table_1.setRowSorter(sorter);
+					
+					tables_searchTxt.getDocument().addDocumentListener(new DocumentListener(){
+
+						@Override
+						public void insertUpdate(DocumentEvent e) {
+							 String text = tables_searchTxt.getText();
+
+				                if (text.trim().length() == 0) {
+				                    sorter.setRowFilter(null);
+				                } else {
+				                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+				                }
+				            
+							
+						}
+
+						@Override
+						public void removeUpdate(DocumentEvent e) {
+							 String text = tables_searchTxt.getText();
+
+				                if (text.trim().length() == 0) {
+				                    sorter.setRowFilter(null);
+				                } else {
+				                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+				                }						
+						}
+
+						@Override
+						public void changedUpdate(DocumentEvent e) {
+							 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			            }
+					 });
 					
 					TableColumnAdjuster tca = new TableColumnAdjuster(table_1);
 					tca.adjustColumns();
@@ -488,6 +540,19 @@ public class TablesAddClient extends JFrame{
 		tables_editClientsLbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		tables_editClientsLbl.setBounds(245, 48, 183, 37);
 		getContentPane().add(tables_editClientsLbl);
+		
+		JLabel tables_filterTableTxt = new JLabel("Filter Table:");
+		tables_filterTableTxt.setForeground(Color.WHITE);
+		tables_filterTableTxt.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		tables_filterTableTxt.setBounds(948, 155, 89, 37);
+		getContentPane().add(tables_filterTableTxt);
+		
+		JLabel label_1 = new JLabel("");
+		label_1.setIcon(new ImageIcon(TablesAddClient.class.getResource("/jdl/Assets/client_filterIcon.png")));
+		label_1.setForeground(Color.WHITE);
+		label_1.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		label_1.setBounds(1036, 155, 35, 37);
+		getContentPane().add(label_1);
 		
 		JLabel background_tables = new JLabel("New label");
 		background_tables.setIcon(new ImageIcon(TablesAddClient.class.getResource("/jdl/Assets/background_tables4.jpg")));

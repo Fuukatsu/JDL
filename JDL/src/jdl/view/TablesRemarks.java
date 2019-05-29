@@ -15,6 +15,9 @@ import javax.swing.JTable;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
@@ -46,7 +49,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.JComboBox;
 import javax.swing.GroupLayout;
@@ -68,6 +74,7 @@ public class TablesRemarks extends JFrame{
 	private JTextField tables_remarksTxt;
 	private JTextField tables_toDoTxt;
 	private databaseProperties dP = new databaseProperties();
+	private JTextField tables_searchTxt;
 	public TablesRemarks() {
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Tables.class.getResource("/jdl/Assets/login_small.png")));	
@@ -122,8 +129,8 @@ public class TablesRemarks extends JFrame{
 		if (defaults.get("Table.alternateRowColor") == null)
 		    defaults.put("Table.alternateRowColor", new Color(155, 177, 166));
 		
-		JButton tables_reloadBtn = new JButton("Reload");
-		tables_reloadBtn.setBounds(1393, 137, 138, 38);
+		JButton tables_reloadBtn = new JButton("Reset and Reload");
+		tables_reloadBtn.setBounds(1325, 137, 206, 35);
 		tables_reloadBtn.setForeground(new Color(255, 255, 255));
 		tables_reloadBtn.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/main_refresh.png")));
 		
@@ -141,8 +148,9 @@ public class TablesRemarks extends JFrame{
 		tables_inputPanel.setLayout(null);
 
 		JComboBox tables_comboBox1 = new JComboBox();
-		tables_comboBox1.setModel(new DefaultComboBoxModel(new String[] {"List of Transaction IDs"}));
+		tables_comboBox1.setEditable(true);
 		tables_comboBox1.setBounds(17, 129, 407, 25);
+		AutoCompletion.enable(tables_comboBox1);
 		tables_inputPanel.add(tables_comboBox1);
 		tables_comboBox1.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
 		
@@ -151,7 +159,9 @@ public class TablesRemarks extends JFrame{
 		JButton tables_registerBtn = new JButton("Insert Remark");
 		
 		JComboBox tables_comboBox = new JComboBox();
+		tables_comboBox.setEditable(true);
 		tables_comboBox.insertItemAt("Click to see the list of registered client", 0);
+		AutoCompletion.enable(tables_comboBox);
 		tables_reloadBtn.setEnabled(false);
 		tables_registerBtn.setEnabled(false);
 		tables_comboBox.setSelectedIndex(0);
@@ -167,7 +177,6 @@ public class TablesRemarks extends JFrame{
 					tables_comboBox1.removeAllItems();
 				}else if (tables_comboBox.getSelectedItem().toString() != "Click to see the list of registered client") {
 					tables_reloadBtn.setEnabled(true);
-					tables_registerBtn.setEnabled(true);
 				
 				try {
 					conn = DriverManager.getConnection(dP.url, dP.username, dP.password);
@@ -186,8 +195,7 @@ public class TablesRemarks extends JFrame{
 					statement3.setInt(1, temp);
 					
 					tables_comboBox1.removeAllItems();
-					tables_comboBox1.setModel(new DefaultComboBoxModel(new String[] {"List of Transaction IDs"}));
-					
+	
 					ResultSet rs = statement.executeQuery();
 					
 					 while(rs.next()) {
@@ -230,7 +238,6 @@ public class TablesRemarks extends JFrame{
 		tables_comboBox.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 14));
 		tables_comboBox.setBounds(17, 73, 407, 25);
 		
-		AutoCompletion.enable(tables_comboBox);
 		tables_inputPanel.add(tables_comboBox);
 		
 		tables_reloadBtn.addActionListener(new ActionListener() {
@@ -267,12 +274,49 @@ public class TablesRemarks extends JFrame{
 					
 					table_1.setModel(DbUtils.resultSetToTableModel(rs1));
 					table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+					TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table_1.getModel());
+					table_1.setRowSorter(sorter);
+					
+					tables_searchTxt.setText("");
+					tables_searchTxt.getDocument().addDocumentListener(new DocumentListener(){
+
+						@Override
+						public void insertUpdate(DocumentEvent e) {
+							 String text = tables_searchTxt.getText();
+
+				                if (text.trim().length() == 0) {
+				                    sorter.setRowFilter(null);
+				                } else {
+				                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+				                }
+				            
+							
+						}
+
+						@Override
+						public void removeUpdate(DocumentEvent e) {
+							 String text = tables_searchTxt.getText();
+
+				                if (text.trim().length() == 0) {
+				                    sorter.setRowFilter(null);
+				                } else {
+				                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+				                }						
+						}
+
+						@Override
+						public void changedUpdate(DocumentEvent e) {
+							 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			            }
+					 });
 					
 					TableColumnAdjuster tca1 = new TableColumnAdjuster(table_1);
 					tca1.adjustColumns();
 					
 					table.setModel(DbUtils.resultSetToTableModel(rs2));
 					table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+					TableRowSorter<TableModel> sorter1 = new TableRowSorter<TableModel>(table.getModel());
+					table.setRowSorter(sorter1);
 					
 					TableColumnAdjuster tca = new TableColumnAdjuster(table);
 					tca.adjustColumns();
@@ -648,7 +692,7 @@ public class TablesRemarks extends JFrame{
 		
 		tables_comboBox1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(tables_comboBox1.getSelectedIndex() == -1 || tables_comboBox1.getSelectedIndex() == 0){
+				if(tables_comboBox1.getSelectedIndex() == -1){
 					tables_registerBtn.setEnabled(false);
 				}
 				else {
@@ -684,6 +728,27 @@ public class TablesRemarks extends JFrame{
 						tables_editClientLbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
 						tables_editClientLbl.setBounds(245, 48, 183, 37);
 						getContentPane().add(tables_editClientLbl);
+						
+						tables_searchTxt = new JTextField();
+						tables_searchTxt.setText("Enter keywords here");
+						tables_searchTxt.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+						tables_searchTxt.setColumns(10);
+						tables_searchTxt.setBorder(null);
+						tables_searchTxt.setBounds(1078, 138, 237, 31);
+						getContentPane().add(tables_searchTxt);
+						
+						JLabel tables_filterIcon = new JLabel("");
+						tables_filterIcon.setIcon(new ImageIcon(TablesRemarks.class.getResource("/jdl/Assets/client_filterIcon.png")));
+						tables_filterIcon.setForeground(Color.WHITE);
+						tables_filterIcon.setFont(new Font("Segoe UI", Font.BOLD, 15));
+						tables_filterIcon.setBounds(1043, 135, 35, 37);
+						getContentPane().add(tables_filterIcon);
+						
+						JLabel tables_filterTableLbl = new JLabel("Filter Table:");
+						tables_filterTableLbl.setForeground(Color.WHITE);
+						tables_filterTableLbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
+						tables_filterTableLbl.setBounds(955, 135, 89, 37);
+						getContentPane().add(tables_filterTableLbl);
 						
 						JLabel tables_background = new JLabel("");
 						tables_background.setIcon(new ImageIcon(TablesRemarks.class.getResource("/jdl/Assets/background_tables4.jpg")));

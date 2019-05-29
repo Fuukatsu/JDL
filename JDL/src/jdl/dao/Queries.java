@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
+import jdl.controller.objectFilter;
 import jdl.model.Client;
 import jdl.model.Transaction;
 import jdl.model.User;
@@ -336,7 +337,7 @@ public class Queries
 		try (Connection con = DriverManager.getConnection(dP.url, dP.username, dP.password)) 
 		{
 			PreparedStatement ps = con.prepareStatement("SELECT * FROM jdl_accounts.notifications WHERE notif_date = ?");
-			ps.setDate(1, date);
+			ps.setDate(1, java.sql.Date.valueOf(objectFilter.addDay((date.toString()))));
 			ResultSet rs = ps.executeQuery();
 			while(rs.next())
 			{
@@ -354,7 +355,7 @@ public class Queries
 		try (Connection con = DriverManager.getConnection(dP.url, dP.username, dP.password)) 
 		{
 			PreparedStatement ps = con.prepareStatement("INSERT INTO jdl_accounts.notifications (notif_date) values (?)");
-			ps.setDate(1, date);
+			ps.setDate(1, java.sql.Date.valueOf(objectFilter.addDay((date.toString()))));
 			ps.executeUpdate();
 			con.close();
 		} catch (SQLException e) 
