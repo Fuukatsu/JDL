@@ -39,7 +39,7 @@ public class databaseProperties
 	}
 	public void setUrl(String s)
 	{
-		this.url = "jdbc:mysql://"+s+"/jdl_accounts";
+		this.url = "jdbc:mysql://"+s+"/jdl_accounts?autoReconnect=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 	}
 	public void setUsername(String s)
 	{
