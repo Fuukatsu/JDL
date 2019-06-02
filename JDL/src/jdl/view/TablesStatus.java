@@ -235,9 +235,9 @@ public class TablesStatus extends JFrame{
 					Connection conn=DriverManager.getConnection(dP.url, dP.username, dP.password);
 					Statement stat1=conn.createStatement();
 	
-					ResultSet rs1 = stat1.executeQuery("SELECT client_id AS 'Client ID' "
-							+ ", trans_transId AS 'Transaction ID' " + 
-							", statusV_documentation AS 'Documentation' " + 
+					ResultSet rs1 = stat1.executeQuery("SELECT client_id AS 'Client ID'" +
+							", trans_transId AS 'Transaction ID'" + 
+							", statusV_documentation AS 'Documentation'" + 
 							", DATE_ADD(statusV_dateFiled, INTERVAL 1 DAY) AS 'Date Filed'" + 
 							", statusV_immigrant AS 'Immigrant'" + 
 							", DATE_ADD(statusV_earlyHearing, INTERVAL 1 DAY) AS 'Early Hearing Date'" + 
@@ -247,7 +247,7 @@ public class TablesStatus extends JFrame{
 							", statusV_waiverEcc AS 'Waiver/ECC Payment/ Others'" + 
 							", statusV_acrIcard AS 'ACR I-card'" + 
 							", statusV_docComplete AS 'Documentation Complete'" + 
-							" FROM jdl_accounts.status_visa WHERE client_id ="+client_id+"");
+							" FROM jdl_accounts.status_visa WHERE client_id = "+client_id);
 					
 					table_1.setModel(DbUtils.resultSetToTableModel(rs1));
 					table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -323,8 +323,6 @@ public class TablesStatus extends JFrame{
 				
 			}
 		});
-		
-		tables_reloadBtn.doClick();
 		
 		tables_reloadBtn.setBackground(new Color(0, 102, 102));
 		tables_reloadBtn.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
