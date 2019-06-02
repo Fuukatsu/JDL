@@ -53,7 +53,7 @@ public class Queries
 		ArrayList<Client> lists = new ArrayList<Client>();
 		try (Connection con = DriverManager.getConnection(dP.url, dP.username, dP.password)) 
 		{
-			PreparedStatement ps = con.prepareStatement("SELECT * FROM jdl_accounts.clients where client_isActive = 1");
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM jdl_accounts.clients where client_isActive = 1 OR null");
 			ResultSet rs = ps.executeQuery();
 			while(rs.next())
 			{        
@@ -90,14 +90,14 @@ public class Queries
 					",trans_passportNo AS 'Passport No' "+ 
 					", trans_tinID AS 'TIN ID' " + 
 					", trans_visaType AS 'Visa Type' " + 
-					", trans_visaStartDate AS 'Visa Start Date' " + 
-					", trans_visaEndDate AS 'Visa Expiry Date' " + 
+					", DATE_ADD(trans_visaStartDate, INTERVAL 1 DAY) AS 'Visa Start Date' " + 
+					", DATE_ADD(trans_visaEndDate, INTERVAL 1 DAY) AS 'Visa Expiry Date' " + 
 					", trans_permitType AS 'Permit Type' " + 
-					", trans_permitStartDate AS 'Permit Start Date' " + 
-					", trans_permitEndDate AS 'Permit Expiry Date' " + 
+					", DATE_ADD(trans_permitStartDate, INTERVAL 1 DAY) AS 'Permit Start Date' " + 
+					", DATE_ADD(trans_permitEndDate, INTERVAL 1 DAY) AS 'Permit Expiry Date' " + 
 					", trans_aepID AS 'AEP ID' " + 
-					", trans_aepStartDate AS 'AEP Start Date' " + 
-					", trans_aepEndDate AS 'AEP Expiry Date' " + 
+					", DATE_ADD(trans_aepStartDate, INTERVAL 1 DAY) AS 'AEP Start Date' " + 
+					", DATE_ADD(trans_aepEndDate, INTERVAL 1 DAY) AS 'AEP Expiry Date' " + 
 					" FROM transactions WHERE client_id = ? AND trans_isActive = 1 ORDER BY trans_transId DESC");
 			ps.setInt(1, id);
 			rs = ps.executeQuery();
@@ -146,7 +146,7 @@ public class Queries
 		try (Connection con = DriverManager.getConnection(dP.url, dP.username, dP.password)) 
 		{
 			PreparedStatement ps = con.prepareStatement("UPDATE jdl_accounts.transactions SET trans_passportNo = ?, trans_tinID = ?, trans_visaType=?, trans_visaStartDate=?, trans_visaEndDate=?, trans_permitType=?, trans_permitStartDate=?, trans_permitEndDate=?, trans_aepID=?, "
-					+ "trans_aepStartDate=?, trans_aepEndDate=?, client_id=?, trans_transTimestamp=?, trans_transAuthor=?  WHERE trans_transId = ?");
+					+ "trans_aepStartDate=?, trans_aepEndDate=?, client_id=?, trans_transTimestamp=?, trans_transAction=?, trans_transAuthor=?  WHERE trans_transId = ?");
 			ps.setString(1, t.getPassportNo());
 			ps.setString(2, t.getTinID());
 			ps.setString(3, t.getVisaType());
@@ -160,8 +160,9 @@ public class Queries
 			ps.setDate(11, t.getAepEndDate());
 			ps.setInt(12, t.getClient_id());
 			ps.setDate(13, t.getTransTimestamp());
-			ps.setString(14, t.getTransAuthor());
-			ps.setInt(15, t.getTransID());
+			ps.setString(14, t.getTransAction());
+			ps.setString(15, t.getTransAuthor());
+			ps.setInt(16, t.getTransID());
 			ps.executeUpdate();
 		} catch (SQLException e) 
 		{
@@ -237,18 +238,18 @@ public class Queries
 		{
 			PreparedStatement ps = con.prepareStatement("SELECT client_id AS 'Client ID',"
 					+ "trans_transId AS 'Transaction ID'" +
-					",trans_passportNo AS 'Passport No' "+ 
+					", trans_passportNo AS 'Passport No' "+ 
 					", trans_tinID AS 'TIN ID' " + 
 					", trans_visaType AS 'Visa Type' " + 
-					", trans_visaStartDate AS 'Visa Start Date' " + 
-					", trans_visaEndDate AS 'Visa Expiry Date' " + 
+					", DATE_ADD(trans_visaStartDate, INTERVAL 1 DAY) AS 'Visa Start Date' " + 
+					", DATE_ADD(trans_visaEndDate, INTERVAL 1 DAY) AS 'Visa Expiry Date' " + 
 					", trans_permitType AS 'Permit Type' " + 
-					", trans_permitStartDate AS 'Permit Start Date' " + 
-					", trans_permitEndDate AS 'Permit Expiry Date' " + 
+					", DATE_ADD(trans_permitStartDate, INTERVAL 1 DAY) AS 'Permit Start Date' " + 
+					", DATE_ADD(trans_permitEndDate, INTERVAL 1 DAY) AS 'Permit Expiry Date' " + 
 					", trans_aepID AS 'AEP ID' " + 
-					", trans_aepStartDate AS 'AEP Start Date' " + 
-					", trans_aepEndDate AS 'AEP Expiry Date' " + 
-					", trans_transTimestamp AS 'Timestamp' "+
+					", DATE_ADD(trans_aepStartDate, INTERVAL 1 DAY) AS 'AEP Start Date' " + 
+					", DATE_ADD(trans_aepEndDate, INTERVAL 1 DAY) AS 'AEP Expiry Date' " + 
+					", DATE_ADD(trans_transTimestamp, INTERVAL 1 DAY) AS 'Timestamp' "+
 					", trans_transAuthor AS 'Author' "+
 					", trans_transAction AS 'Action' "+
 					" FROM transactions WHERE trans_transAuthor = ? AND trans_isActive = 1 ORDER BY trans_transId DESC");
@@ -270,18 +271,18 @@ public class Queries
 		{
 			PreparedStatement ps = con.prepareStatement("SELECT client_id AS 'Client ID',"
 					+ "trans_transId AS 'Transaction ID'" +
-					",trans_passportNo AS 'Passport No' "+ 
+					", trans_passportNo AS 'Passport No' "+ 
 					", trans_tinID AS 'TIN ID' " + 
 					", trans_visaType AS 'Visa Type' " + 
-					", trans_visaStartDate AS 'Visa Start Date' " + 
-					", trans_visaEndDate AS 'Visa Expiry Date' " + 
+					", DATE_ADD(trans_visaStartDate, INTERVAL 1 DAY) AS 'Visa Start Date' " + 
+					", DATE_ADD(trans_visaEndDate, INTERVAL 1 DAY) AS 'Visa Expiry Date' " + 
 					", trans_permitType AS 'Permit Type' " + 
-					", trans_permitStartDate AS 'Permit Start Date' " + 
-					", trans_permitEndDate AS 'Permit Expiry Date' " + 
+					", DATE_ADD(trans_permitStartDate, INTERVAL 1 DAY) AS 'Permit Start Date' " + 
+					", DATE_ADD(trans_permitEndDate, INTERVAL 1 DAY) AS 'Permit Expiry Date' " + 
 					", trans_aepID AS 'AEP ID' " + 
-					", trans_aepStartDate AS 'AEP Start Date' " + 
-					", trans_aepEndDate AS 'AEP Expiry Date' " + 
-					", trans_transTimestamp AS 'Timestamp' "+
+					", DATE_ADD(trans_aepStartDate, INTERVAL 1 DAY) AS 'AEP Start Date' " + 
+					", DATE_ADD(trans_aepEndDate, INTERVAL 1 DAY) AS 'AEP Expiry Date' " + 
+					", DATE_ADD(trans_transTimestamp, INTERVAL 1 DAY) AS 'Timestamp' "+
 					", trans_transAuthor AS 'Author' "+
 					", trans_transAction AS 'Action' "+
 					" FROM transactions WHERE trans_transAuthor = ? ORDER BY trans_transId DESC");
@@ -354,8 +355,10 @@ public class Queries
 	{
 		try (Connection con = DriverManager.getConnection(dP.url, dP.username, dP.password)) 
 		{
-			PreparedStatement ps = con.prepareStatement("INSERT INTO jdl_accounts.notifications (notif_date) values (?)");
-			ps.setDate(1, java.sql.Date.valueOf(objectFilter.addDay((date.toString()))));
+			PreparedStatement ps = con.prepareStatement("INSERT INTO jdl_accounts.notifications (notif_date) values (?) ON DUPLICATE KEY UPDATE\r\n" + 
+					"notif_date = ?");
+			ps.setDate(1, java.sql.Date.valueOf((date.toString())));
+			ps.setDate(2, java.sql.Date.valueOf((date.toString())));
 			ps.executeUpdate();
 			con.close();
 		} catch (SQLException e) 
@@ -370,16 +373,14 @@ public class Queries
 		ArrayList<Transaction> tlist = new ArrayList<Transaction>();
 		try (Connection con = DriverManager.getConnection(dP.url, dP.username, dP.password)) 
 		{
-			String sql = "SELECT * FROM jdl_accounts.transactions WHERE trans_visaEndDate "+
+			String sql = "SELECT * FROM jdl_accounts.transactions WHERE trans_isActive = 1 AND trans_visaEndDate "+
 					"BETWEEN ? AND ? "+
 					"UNION "+
-					"SELECT * FROM jdl_accounts.transactions WHERE trans_permitEndDate "+
+					"SELECT * FROM jdl_accounts.transactions WHERE trans_isActive = 1 AND trans_permitEndDate "+
 					"BETWEEN ? AND ? "+
 					"UNION "+
-					"SELECT * FROM jdl_accounts.transactions WHERE trans_aepEndDate "+
-					"BETWEEN ? AND ? "+
-					"AND EXISTS "+
-					"(SELECT * FROM jdl_accounts.transactions WHERE trans_isActive = 1)";
+					"SELECT * FROM jdl_accounts.transactions WHERE trans_isActive = 1 AND trans_aepEndDate "+
+					"BETWEEN ? AND ? ";
 			PreparedStatement ps = con.prepareStatement(sql);
 			for(int i = 0; i < 6; i+=2)
 			{

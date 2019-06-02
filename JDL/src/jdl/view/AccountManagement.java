@@ -131,23 +131,25 @@ public class AccountManagement extends JFrame{
 		getContentPane().add(scrollPane_1);
 	
 		table_1 = new JTable();
-		table_1.setFont(new Font("Calibri", Font.PLAIN, 16));
+		table_1.setForeground(Color.DARK_GRAY);
+		table_1.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
 		table_1.setRowHeight(30);
 		table_1.setBorder(null);
 		
 		table = new JTable();
+		table.setForeground(Color.DARK_GRAY);
 		table.setRowHeight(30);
-		table.setFont(new Font("Calibri", Font.PLAIN, 16));
+		table.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
 		table.setBorder(null);
 		
 		JTableHeader header = table_1.getTableHeader();
-		header.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
+		header.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
 	    header.setBackground(new Color(155, 177, 166));
 	    header.setForeground(Color.WHITE);
 		scrollPane.setViewportView(table_1);
 
 		JTableHeader header1 = table.getTableHeader();
-		header1.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
+		header1.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
 	    header1.setBackground(new Color(155, 177, 166));
 	    header1.setForeground(Color.WHITE);
 		scrollPane_1.setViewportView(table);
@@ -208,7 +210,7 @@ public class AccountManagement extends JFrame{
 							", emp_firstname AS 'Firstname' " + 
 							", emp_position AS 'Position' " + 
 							", emp_gender AS 'Gender' " + 
-							", emp_birthdate AS 'Birthdate' " + 
+							", DATE_ADD(emp_birthdate, INTERVAL 1 DAY) AS 'Birthdate' " + 
 							", emp_address AS 'Address' " + 
 							", emp_contact AS 'Contact' " + 
 							", emp_email AS 'Email' " + 
@@ -264,7 +266,7 @@ public class AccountManagement extends JFrame{
 					TableRowSorter<TableModel> sorter1 = new TableRowSorter<TableModel>(table.getModel());
 					table.setRowSorter(sorter1);
 					
-					table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+					table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 					
 					tca1.adjustColumns();
 
@@ -572,7 +574,7 @@ public class AccountManagement extends JFrame{
 						if(birthdatePicker.getJFormattedTextField().getText().toString().equals("")) 
 							statement1.setDate(5, null);
 						else {
-							statement1.setDate(5, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().toString())));
+							statement1.setDate(5, java.sql.Date.valueOf(birthdatePicker.getJFormattedTextField().getText().toString()));
 							statement1.setString(6, emp_AddressTxt.getText());
 							statement1.setString(7, emp_ContactTxt.getText());
 							statement1.setString(8, emp_EmailTxt.getText());
@@ -582,7 +584,7 @@ public class AccountManagement extends JFrame{
 							statement1.setString(11, emp_FirstnameTxt.getText());
 							statement1.setString(12, emp_PositionTxt.getText());
 							statement1.setString(13, emp_genderBox.getSelectedItem().toString());
-							statement1.setDate(14, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().toString())));
+							statement1.setDate(14, java.sql.Date.valueOf(birthdatePicker.getJFormattedTextField().getText().toString()));
 							statement1.setString(15, emp_AddressTxt.getText());
 							statement1.setString(16, emp_ContactTxt.getText());
 							statement1.setString(17, emp_EmailTxt.getText());

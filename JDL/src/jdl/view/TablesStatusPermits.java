@@ -108,7 +108,7 @@ public class TablesStatusPermits extends JFrame{
 		
 		table = new JTable();
 		table.setRowHeight(32);
-		table.setFont(new Font("Calibri", Font.PLAIN, 16));
+		table.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
 		table.setBorder(null);
 		table.setBounds(495, 541, 1036, 298);
 		scrollPane.setViewportView(table);
@@ -118,19 +118,20 @@ public class TablesStatusPermits extends JFrame{
 		scrollPane_1.setLocation(487, 198);
 		
 		table_1 = new JTable();
+		table_1.setForeground(Color.DARK_GRAY);
 		table_1.setRowHeight(32);
-		table_1.setFont(new Font("Calibri", Font.PLAIN, 16));
+		table_1.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
 		table_1.setBorder(null);
 		table_1.setBounds(492, 217, 1040, 138);
 		
 		JTableHeader header_1 = table_1.getTableHeader();
-		header_1.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
+		header_1.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
 	    header_1.setBackground(new Color(155, 177, 166));
 	    header_1.setForeground(Color.WHITE);
 		scrollPane_1.setViewportView(table_1);
 		
 		JTableHeader header = table.getTableHeader();
-		header.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
+		header.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
 	    header.setBackground(new Color(155, 177, 166));
 	    header.setForeground(Color.WHITE);
 		
@@ -198,10 +199,10 @@ public class TablesStatusPermits extends JFrame{
 				try {
 					conn = DriverManager.getConnection(dP.url, dP.username, dP.password);
 					String sql = "SELECT * FROM jdl_accounts.clients WHERE client_id=?";
-					String sql2 = "SELECT * FROM jdl_accounts.transactions WHERE client_id=?";
+					String sql2 = "SELECT * FROM jdl_accounts.transactions WHERE client_id=? AND trans_isActive = 1 OR null";
 					String sql3 = "SELECT client_id AS 'Client ID' "
 							+ ", trans_transId AS 'Transaction ID' " + 
-							", statusP_dateReceived AS 'Date Received' " +
+							", DATE_ADD(statusP_dateReceived, INTERVAL 1 DAY) AS 'Date Received' " +
 							", statusP_instructions AS 'Instructions' " +
 							", statusP_aepCancellation AS 'AEP Cancellation' " +
 							", statusP_downgrading AS 'Downgrading' " +
@@ -209,12 +210,12 @@ public class TablesStatusPermits extends JFrame{
 							", statusP_updatedVisaExtend AS 'Visa Extend' " +
 							", statusP_documentation AS 'Documentation' " + 
 							", statusP_addRequirements AS 'Add Requirements' " + 
-							", statusP_aepDateFiled AS 'AEP Date Filed'" +
-							", statusP_aepDateRelease AS 'AEP Date Released'" + 
-							", statusP_permitDateFiled AS 'Permit Date Filed'" +
-							", statusP_permitDateReleased AS 'Permit Date Released'" + 
+							", DATE_ADD(statusP_aepDateFiled, INTERVAL 1 DAY) AS 'AEP Date Filed'" +
+							", DATE_ADD(statusP_aepDateRelease, INTERVAL 1 DAY) AS 'AEP Date Released'" + 
+							", DATE_ADD(statusP_permitDateFiled, INTERVAL 1 DAY) AS 'Permit Date Filed'" +
+							", DATE_ADD(statusP_permitDateReleased, INTERVAL 1 DAY) AS 'Permit Date Released'" + 
 							", statusP_acrIcard AS 'ACR I-card'" + 
-							" FROM jdl_accounts.status_permits WHERE client_id = ? ORDER BY trans_transId DESC";
+							" FROM jdl_accounts.status_permits WHERE client_id = ?";
 					PreparedStatement statement = conn.prepareStatement(sql);
 					PreparedStatement statement3= conn.prepareStatement(sql2);
 					PreparedStatement statement4= conn.prepareStatement(sql3);
@@ -288,7 +289,7 @@ public class TablesStatusPermits extends JFrame{
 	
 					ResultSet rs1 = stat1.executeQuery("SELECT client_id AS 'Client ID' "
 							+ ", trans_transId AS 'Transaction ID' " + 
-							", statusP_dateReceived AS 'Date Received' " +
+							", DATE_ADD(statusP_dateReceived, INTERVAL 1 DAY) AS 'Date Received' " +
 							", statusP_instructions AS 'Instructions' " +
 							", statusP_aepCancellation AS 'AEP Cancellation' " +
 							", statusP_downgrading AS 'Downgrading' " +
@@ -296,12 +297,12 @@ public class TablesStatusPermits extends JFrame{
 							", statusP_updatedVisaExtend AS 'Visa Extend' " +
 							", statusP_documentation AS 'Documentation' " + 
 							", statusP_addRequirements AS 'Add Requirements' " + 
-							", statusP_aepDateFiled AS 'AEP Date Filed'" +
-							", statusP_aepDateRelease AS 'AEP Date Released'" + 
-							", statusP_permitDateFiled AS 'Permit Date Filed'" +
-							", statusP_permitDateReleased AS 'Permit Date Released'" + 
+							", DATE_ADD(statusP_aepDateFiled, INTERVAL 1 DAY) AS 'AEP Date Filed' " + 
+							", DATE_ADD(statusP_aepDateRelease, INTERVAL 1 DAY) AS 'AEP Date Released' " + 
+							", DATE_ADD(statusP_permitDateFiled, INTERVAL 1 DAY) AS 'Permit Date Filed' " + 
+							", DATE_ADD(statusP_permitDateReleased, INTERVAL 1 DAY) AS 'Permit Date Released' " +
 							", statusP_acrIcard AS 'ACR I-card'" + 
-							" FROM jdl_accounts.status_permits WHERE client_id ="+client_id+" ORDER BY trans_transId DESC");
+							" FROM jdl_accounts.status_permits WHERE client_id ="+client_id+"");
 					
 					table_1.setModel(DbUtils.resultSetToTableModel(rs1));
 					TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table_1.getModel());
@@ -348,18 +349,18 @@ public class TablesStatusPermits extends JFrame{
 					
 					ResultSet rs2 = stat2.executeQuery("SELECT client_id AS 'Client ID',"
 							+ "trans_transId AS 'Transaction ID'" +
-							",trans_passportNo AS 'Passport No' "+ 
+							", trans_passportNo AS 'Passport No' "+ 
 							", trans_tinID AS 'TIN ID' " + 
 							", trans_visaType AS 'Visa Type' " + 
-							", trans_visaStartDate AS 'Visa Start Date' " + 
-							", trans_visaEndDate AS 'Visa Expiry Date' " + 
+							", DATE_ADD(trans_visaStartDate, INTERVAL 1 DAY) AS 'Visa Start Date' " + 
+							", DATE_ADD(trans_visaEndDate, INTERVAL 1 DAY) AS 'Visa Expiry Date' " + 
 							", trans_permitType AS 'Permit Type' " + 
-							", trans_permitStartDate AS 'Permit Start Date' " + 
-							", trans_permitEndDate AS 'Permit Expiry Date' " + 
+							", DATE_ADD(trans_permitStartDate, INTERVAL 1 DAY) AS 'Permit Start Date' " + 
+							", DATE_ADD(trans_permitEndDate, INTERVAL 1 DAY) AS 'Permit Expiry Date' " + 
 							", trans_aepID AS 'AEP ID' " + 
-							", trans_aepStartDate AS 'AEP Start Date' " + 
-							", trans_aepEndDate AS 'AEP Expiry Date' " + 
-							" FROM jdl_accounts.transactions WHERE client_id ="+Integer.parseInt(client_id)+" ORDER BY trans_transId DESC");
+							", DATE_ADD(trans_aepStartDate, INTERVAL 1 DAY) AS 'AEP Start Date' " + 
+							", DATE_ADD(trans_aepEndDate, INTERVAL 1 DAY) AS 'AEP Expiry Date' " + 
+							" FROM jdl_accounts.transactions WHERE client_id = "+Integer.parseInt(client_id)+" AND trans_isActive = 1 OR null");
 					
 					table.setModel(DbUtils.resultSetToTableModel(rs2));
 					table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -722,7 +723,7 @@ public class TablesStatusPermits extends JFrame{
 					if(tables_dateReceivedTxt.getJFormattedTextField().getText().trim().toString().equals("")) 
 						statement2.setDate(1, null);
 					else
-						statement2.setDate(1, java.sql.Date.valueOf(objectFilter.addDay( tables_dateReceivedTxt.getJFormattedTextField().getText().trim().toString())));
+						statement2.setDate(1, java.sql.Date.valueOf(tables_dateReceivedTxt.getJFormattedTextField().getText().trim().toString()));
 					
 						statement2.setString(2, tables_instructionsTxt.getText().trim());
 						statement2.setString(3, tables_aepCancellationTxt.getText().trim());
@@ -735,22 +736,22 @@ public class TablesStatusPermits extends JFrame{
 					if(tables_aepDateFiledTxt.getJFormattedTextField().getText().toString().equals(""))
 						statement2.setDate(9, null);
 					else
-						statement2.setDate(9, java.sql.Date.valueOf(objectFilter.addDay( tables_aepDateFiledTxt.getJFormattedTextField().getText().trim().toString())));
+						statement2.setDate(9, java.sql.Date.valueOf(tables_aepDateFiledTxt.getJFormattedTextField().getText().trim().toString()));
 					
 					if(tables_aepdateReleasedTxt.getJFormattedTextField().getText().toString().equals(""))
 						statement2.setDate(10, null);
 					else
-						statement2.setDate(10, java.sql.Date.valueOf(objectFilter.addDay( tables_aepdateReleasedTxt.getJFormattedTextField().getText().trim().toString())));
+						statement2.setDate(10, java.sql.Date.valueOf(tables_aepdateReleasedTxt.getJFormattedTextField().getText().trim().toString()));
 					
 					if(tables_permitDateFiledTxt.getJFormattedTextField().getText().toString().equals(""))
 						statement2.setDate(11, null);	
 					else
-						statement2.setDate(11, java.sql.Date.valueOf(objectFilter.addDay( tables_permitDateFiledTxt.getJFormattedTextField().getText().trim().toString())));
+						statement2.setDate(11, java.sql.Date.valueOf(tables_permitDateFiledTxt.getJFormattedTextField().getText().trim().toString()));
 					
 					if(tables_permitDateReleasedTxt.getJFormattedTextField().getText().toString().equals(""))
 						statement2.setDate(12, null);
 					else
-						statement2.setDate(12, java.sql.Date.valueOf(objectFilter.addDay( tables_permitDateReleasedTxt.getJFormattedTextField().getText().trim().toString())));
+						statement2.setDate(12, java.sql.Date.valueOf(tables_permitDateReleasedTxt.getJFormattedTextField().getText().trim().toString()));
 					
 						statement2.setString(13, tables_acrICardTxt.getText().trim());
 						statement2.setString(14, client_id);
@@ -759,7 +760,7 @@ public class TablesStatusPermits extends JFrame{
 						if(tables_dateReceivedTxt.getJFormattedTextField().getText().toString().equals("")) 
 							statement2.setDate(16, null);
 						else
-							statement2.setDate(16, java.sql.Date.valueOf(objectFilter.addDay( tables_dateReceivedTxt.getJFormattedTextField().getText().trim().toString())));
+							statement2.setDate(16, java.sql.Date.valueOf(tables_dateReceivedTxt.getJFormattedTextField().getText().trim().toString()));
 							statement2.setString(17, tables_instructionsTxt.getText().trim());
 							statement2.setString(18, tables_aepCancellationTxt.getText().trim());
 							statement2.setString(19, tables_downgradingTxt.getText().trim());
@@ -773,22 +774,22 @@ public class TablesStatusPermits extends JFrame{
 						if(tables_aepDateFiledTxt.getJFormattedTextField().getText().trim().toString().equals(""))
 							statement2.setDate(24, null);
 						else
-							statement2.setDate(24, java.sql.Date.valueOf(objectFilter.addDay( tables_aepDateFiledTxt.getJFormattedTextField().getText().trim().toString())));
+							statement2.setDate(24, java.sql.Date.valueOf(tables_aepDateFiledTxt.getJFormattedTextField().getText().trim().toString()));
 						
 						if(tables_aepdateReleasedTxt.getJFormattedTextField().getText().toString().equals(""))
 							statement2.setDate(25, null);
 						else
-							statement2.setDate(25, java.sql.Date.valueOf(objectFilter.addDay( tables_aepdateReleasedTxt.getJFormattedTextField().getText().toString())));
+							statement2.setDate(25, java.sql.Date.valueOf(tables_aepdateReleasedTxt.getJFormattedTextField().getText().toString()));
 						
 						if(tables_permitDateFiledTxt.getJFormattedTextField().getText().trim().toString().equals(""))
 							statement2.setDate(26, null);	
 						else
-							statement2.setDate(26, java.sql.Date.valueOf(objectFilter.addDay( tables_permitDateFiledTxt.getJFormattedTextField().getText().trim().toString())));
+							statement2.setDate(26, java.sql.Date.valueOf(tables_permitDateFiledTxt.getJFormattedTextField().getText().trim().toString()));
 						
 						if(tables_permitDateReleasedTxt.getJFormattedTextField().getText().trim().toString().equals(""))
 							statement2.setDate(27, null);	
 						else
-							statement2.setDate(27, java.sql.Date.valueOf(objectFilter.addDay( tables_permitDateReleasedTxt.getJFormattedTextField().getText().trim().toString())));
+							statement2.setDate(27, java.sql.Date.valueOf(tables_permitDateReleasedTxt.getJFormattedTextField().getText().trim().toString()));
 						
 							statement2.setString(28, tables_acrICardTxt.getText().trim());
 							statement2.setString(29, client_id);

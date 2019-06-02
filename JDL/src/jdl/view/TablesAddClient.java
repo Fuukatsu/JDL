@@ -106,13 +106,14 @@ public class TablesAddClient extends JFrame{
 		scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		
 		table_1 = new JTable();
-		table_1.setFont(new Font("Calibri", Font.PLAIN, 16));
+		table_1.setForeground(Color.DARK_GRAY);
+		table_1.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
 		table_1.setBounds(495, 198, 125, 68);
 		table_1.setRowHeight(32);
 		table_1.setBorder(null);
 
 		JTableHeader header = table_1.getTableHeader();
-		header.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
+		header.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
 	    header.setBackground(new Color(155, 177, 166));
 	    header.setForeground(Color.WHITE);
 		scrollPane.setViewportView(table_1);
@@ -152,7 +153,7 @@ public class TablesAddClient extends JFrame{
 							", client_firstname AS 'Firstname'" + 
 							", client_alias AS 'Alias' " + 
 							", client_nationality AS 'Country' " + 
-							", client_birthdate AS 'Birthdate' " + 
+							", DATE_ADD(client_birthdate, INTERVAL 1 DAY) AS 'Birthdate' " + 
 							", client_gender AS 'Gender' " + 
 							", client_company AS 'Company' " + 
 							", client_position AS 'Company Position' " + 
@@ -607,7 +608,7 @@ public class TablesAddClient extends JFrame{
 						if(input[3].equals(""))
 							statement1.setDate(4, null);
 						else
-							statement1.setDate(4, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().toString())));
+							statement1.setDate(4, java.sql.Date.valueOf(birthdatePicker.getJFormattedTextField().getText().toString()));
 						statement1.setString(5, tables_genderBox.getSelectedItem().toString());
 						statement1.setString(6, tables_clientCompanyTxt.getText().trim());
 						statement1.setString(7, tables_clientPositionTxt.getText().trim());

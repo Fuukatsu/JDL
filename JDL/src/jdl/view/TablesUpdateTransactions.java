@@ -106,14 +106,15 @@ public class TablesUpdateTransactions extends JFrame{
 		scrollPane_1.setLocation(493, 208);
 		
 		table_1 = new JTable();
-		table_1.setFont(new Font("Calibri", Font.PLAIN, 16));
+		table_1.setForeground(Color.DARK_GRAY);
+		table_1.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
 		table_1.setRowHeight(32);
 		table_1.setBorder(null);
 		table_1.setBounds(492, 217, 1040, 138);
 
 		
 		JTableHeader header_1 = table_1.getTableHeader();
-		header_1.setFont(new Font("Segoe UI Semibold", Font.BOLD, 13));
+		header_1.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
 	    header_1.setBackground(new Color(155, 177, 166));
 	    header_1.setForeground(Color.WHITE);
 		scrollPane_1.setViewportView(table_1);
@@ -133,6 +134,7 @@ public class TablesUpdateTransactions extends JFrame{
 		//Buttons
 		
 		JComboBox tables_comboBox = new JComboBox();
+		tables_comboBox.setEditable(true);
 		tables_comboBox.addItem("Click to see the list of registered client");
 		Connection conn1;
 		try {
@@ -163,24 +165,24 @@ public class TablesUpdateTransactions extends JFrame{
 		tables_searchTxt.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
 		tables_searchTxt.setColumns(10);
 		tables_searchTxt.setBorder(null);
-		tables_searchTxt.setBounds(1110, 160, 237, 35);
+		tables_searchTxt.setBounds(929, 162, 237, 35);
 		getContentPane().add(tables_searchTxt);
 		
 		JLabel tables_filterIcon = new JLabel("");
 		tables_filterIcon.setIcon(new ImageIcon(TablesUpdateTransactions.class.getResource("/jdl/Assets/client_filterIcon.png")));
 		tables_filterIcon.setForeground(Color.WHITE);
 		tables_filterIcon.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		tables_filterIcon.setBounds(1069, 158, 35, 37);
+		tables_filterIcon.setBounds(893, 162, 35, 37);
 		getContentPane().add(tables_filterIcon);
 		
 		JLabel tables_filterTableLbl = new JLabel("Filter Table:");
 		tables_filterTableLbl.setForeground(Color.WHITE);
 		tables_filterTableLbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		tables_filterTableLbl.setBounds(980, 160, 89, 37);
+		tables_filterTableLbl.setBounds(799, 162, 89, 37);
 		getContentPane().add(tables_filterTableLbl);
 		
 		JButton tables_reloadBtn = new JButton("Reset and Reload");
-		tables_reloadBtn.setBounds(1357, 159, 176, 38);
+		tables_reloadBtn.setBounds(1177, 160, 204, 38);
 		tables_reloadBtn.setForeground(new Color(255, 255, 255));
 		tables_reloadBtn.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/main_refresh.png")));
 		tables_reloadBtn.addActionListener(new ActionListener() {
@@ -205,15 +207,15 @@ public class TablesUpdateTransactions extends JFrame{
 							",trans_passportNo AS 'Passport No' "+ 
 							", trans_tinID AS 'TIN ID' " + 
 							", trans_visaType AS 'Visa Type' " + 
-							", trans_visaStartDate AS 'Visa Start Date' " + 
-							", trans_visaEndDate AS 'Visa Expiry Date' " + 
+							", DATE_ADD(trans_visaStartDate, INTERVAL 1 DAY) AS 'Visa Start Date' " + 
+							", DATE_ADD(trans_visaEndDate, INTERVAL 1 DAY) AS 'Visa Expiry Date' " + 
 							", trans_permitType AS 'Permit Type' " + 
-							", trans_permitStartDate AS 'Permit Start Date' " + 
-							", trans_permitEndDate AS 'Permit Expiry Date' " + 
+							", DATE_ADD(trans_permitStartDate, INTERVAL 1 DAY) AS 'Permit Start Date' " + 
+							", DATE_ADD(trans_permitEndDate, INTERVAL 1 DAY) AS 'Permit Expiry Date' " + 
 							", trans_aepID AS 'AEP ID' " + 
-							", trans_aepStartDate AS 'AEP Start Date' " + 
-							", trans_aepEndDate AS 'AEP Expiry Date' " + 
-							" FROM jdl_accounts.transactions WHERE client_id ="+Integer.parseInt(client_id)+" ORDER BY trans_transId");
+							", DATE_ADD(trans_aepStartDate, INTERVAL 1 DAY) AS 'AEP Start Date' " + 
+							", DATE_ADD(trans_aepEndDate, INTERVAL 1 DAY) AS 'AEP Expiry Date' " + 
+							" FROM jdl_accounts.transactions WHERE client_id = "+Integer.parseInt(client_id)+" AND trans_isActive = 1 OR null ORDER BY trans_transId");
 					tm = DbUtils.resultSetToTableModel(rs1);
 					table_1.setModel(tm);
 				
@@ -589,6 +591,8 @@ public class TablesUpdateTransactions extends JFrame{
 		tables_registerBtn.setForeground(new Color(255, 255, 255));
 		
 		tables_comboBox1 = new JComboBox();
+		tables_comboBox1.setEditable(true);
+		AutoCompletion.enable(tables_comboBox1);
 		tables_comboBox1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
@@ -636,9 +640,7 @@ public class TablesUpdateTransactions extends JFrame{
 				}
 			}
 		});
-		
-		System.out.print(tables_comboBox1.getItemCount());
-		
+			
 		tables_comboBox1.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 15));
 		tables_comboBox1.setBounds(20, 142, 400, 26);
 		tables_inputPanel.add(tables_comboBox1);
@@ -700,7 +702,7 @@ public class TablesUpdateTransactions extends JFrame{
 				try {
 					conn = DriverManager.getConnection(dP.url, dP.username, dP.password);
 					String sql = "SELECT * FROM jdl_accounts.clients WHERE client_id=?";
-					String sql1 = "SELECT * FROM jdl_accounts.transactions WHERE client_id=?";
+					String sql1 = "SELECT * FROM jdl_accounts.transactions WHERE client_id=? AND trans_isActive = 1 OR null";
 					PreparedStatement statement = (PreparedStatement) conn.prepareStatement(sql);
 					PreparedStatement statement1 = (PreparedStatement) conn.prepareStatement(sql1);
 					
@@ -830,7 +832,8 @@ public class TablesUpdateTransactions extends JFrame{
 				trans.setAepID(tables_aepIdTxt.getText().trim());
 				trans.setTransTimestamp(currentDate);
 				trans.setClient_id(Integer.parseInt(client_id));
-				trans.setTransAuthor(adminAcc_usernameTxt.getText().trim());
+				trans.setTransAuthor(Runner.getUser().getUser_username());
+				trans.setTransAction("UPDATED");
 				trans.setTransID(Integer.parseInt(tables_comboBox1.getSelectedItem().toString()));
 				
 				Queries.updateTransaction(trans);
@@ -1028,14 +1031,40 @@ public class TablesUpdateTransactions extends JFrame{
 		tables_editClientsLbl.setBounds(245, 48, 183, 37);
 		getContentPane().add(tables_editClientsLbl);
 		
+		JButton tables_deleteBtn = new JButton("Delete\r\n");
+		tables_deleteBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Runner.openTDT();
+			}
+		});
+		tables_deleteBtn.setIcon(new ImageIcon(TablesUpdateTransactions.class.getResource("/jdl/Assets/button_delete.png")));
+		tables_deleteBtn.setForeground(Color.WHITE);
+		tables_deleteBtn.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
+		tables_deleteBtn.setBorder(null);
+		tables_deleteBtn.setBackground(new Color(0, 102, 102));
+		tables_deleteBtn.setBounds(1393, 160, 138, 37);
+		getContentPane().add(tables_deleteBtn);
+		
 		
 		JLabel background_tables = new JLabel("");
 		background_tables.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/background_tables4.jpg")));
 		background_tables.setBounds(0, 0, 1550, 870);
 		getContentPane().add(background_tables);
 		
+		int ifAdmin = Runner.getUser().getUser_ifAdmin();
 		
+		if (ifAdmin == 0) {
+			
+			tables_deleteBtn.setVisible(false);
+			tables_searchTxt.setBounds(1079, 163, 237, 35);
+			tables_reloadBtn.setBounds(1327, 161, 204, 38);
+			tables_filterIcon.setBounds(1043, 163, 35, 37);
+			tables_filterTableLbl.setBounds(953, 161, 89, 37);
+			
+		}
 	}
+	
+	
 	
 	//Username
     public void setUser(String user) {

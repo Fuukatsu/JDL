@@ -24,6 +24,7 @@ public class Runner
 	private static GenerateExpiry gE;
 	private static TablesDeleteClient tdc;
 	private static optionsFAQ of;
+	private static TablesDeleteTransaction tdt;
 	
     public static void main(String[] args) 
     {
@@ -58,6 +59,15 @@ public class Runner
     {
     	tdc.setVisible(false);
     	tdc.dispose();
+    }
+    public static void openTDT()
+    {   
+        tdt = new TablesDeleteTransaction();
+    }
+    public static void destroyTDT()
+    {
+    	tdt.setVisible(false);
+    	tdt.dispose();
     }
     public static void openLogin()
     {   

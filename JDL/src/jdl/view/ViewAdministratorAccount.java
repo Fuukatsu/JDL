@@ -436,7 +436,7 @@ public class ViewAdministratorAccount extends JFrame{
 						statement1.setString(2, adminAcc_firstnameTxt.getText().trim());
 						statement1.setString(3, adminAcc_positionTxt.getText().trim());
 						statement1.setString(4, adminAcc_genderBox.getSelectedItem().toString().trim());
-						statement1.setDate(5, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().trim().toString())));
+						statement1.setDate(5, java.sql.Date.valueOf(birthdatePicker.getJFormattedTextField().getText().trim().toString()));
 						statement1.setString(6, adminAcc_addressTxt.getText().trim());
 						statement1.setString(7, adminAcc_contactTxt.getText().trim());
 						statement1.setString(8, adminAcc_emailTxt.getText().trim());
@@ -445,7 +445,7 @@ public class ViewAdministratorAccount extends JFrame{
 						statement1.setString(11, adminAcc_firstnameTxt.getText().trim());
 						statement1.setString(12, adminAcc_positionTxt.getText().trim());
 						statement1.setString(13, adminAcc_genderBox.getSelectedItem().toString().trim());
-						statement1.setDate(14, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().trim().toString())));
+						statement1.setDate(14, java.sql.Date.valueOf(birthdatePicker.getJFormattedTextField().getText().trim().toString()));
 						statement1.setString(15, adminAcc_addressTxt.getText().trim());
 						statement1.setString(16, adminAcc_contactTxt.getText().trim());
 						statement1.setString(17, adminAcc_emailTxt.getText().trim());
@@ -455,8 +455,8 @@ public class ViewAdministratorAccount extends JFrame{
 						statement2.setString(2, adminAcc_passwordTxt.getText().trim());
 						statement2.setString(3, adminAcc_userIdTxt.getText().trim());
 						
-						if(adminAcc_lastnameTxt.getText().isEmpty() && adminAcc_firstnameTxt.getText().isEmpty() && adminAcc_positionTxt.getText().isEmpty() && adminAcc_addressTxt.getText().isEmpty() && adminAcc_contactTxt.getText().isEmpty()
-								&& adminAcc_emailTxt.getText().isEmpty() && adminAcc_userIdTxt.getText().isEmpty() && adminAcc_userIdTxt.getText().isEmpty()) {
+						if(!(adminAcc_lastnameTxt.getText().isEmpty()) && !(adminAcc_firstnameTxt.getText().isEmpty()) && !(adminAcc_positionTxt.getText().isEmpty()) && !(adminAcc_addressTxt.getText().isEmpty()) && !(adminAcc_contactTxt.getText().isEmpty())
+								&& !(adminAcc_emailTxt.getText().isEmpty()) && !(adminAcc_userIdTxt.getText().isEmpty()) && !(adminAcc_userIdTxt.getText().isEmpty())) {
 						 int reply = JOptionPane.showConfirmDialog(null, "<html><center><font color = #ffffff> Are you sure you want to input this information? <br>You'll need to login again with your new credentials <br>once the settings have been changed.</br> </font color = #ffffff></html></center>", "Proceed to Logout?", JOptionPane.YES_NO_OPTION);
 					    	if (reply == JOptionPane.YES_OPTION) {
 					    		

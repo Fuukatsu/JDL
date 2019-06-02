@@ -236,6 +236,7 @@ public class ActivityHistory extends JFrame{
 		history_userHistory.setFont(new Font("Segoe UI Semibold", Font.BOLD, 16));
 		
 		table = new JTable();
+		table.setForeground(Color.DARK_GRAY);
 		TableModel md = Queries.getClientTransactions(history_userHistory.getSelectedItem().toString());
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
@@ -281,9 +282,9 @@ public class ActivityHistory extends JFrame{
 		TableColumnAdjuster tca = new TableColumnAdjuster(table);
 		tca.adjustColumns();
 		
-		table.setFont(new Font("Calibri", Font.PLAIN, 16));
+		table.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
 		table.setBounds(495, 198, 125, 68);
-		table.setRowHeight(25);
+		table.setRowHeight(30);
 		table.setBorder(null);
 		scrollPane.setViewportView(table);
 		
@@ -291,7 +292,7 @@ public class ActivityHistory extends JFrame{
 		getContentPane().add(history_userHistory);
 		
 		JTableHeader header = table.getTableHeader();
-		header.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
+		header.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
 	    header.setBackground(new Color(155, 177, 166));
 	    header.setForeground(Color.WHITE);
 		
@@ -320,18 +321,18 @@ public class ActivityHistory extends JFrame{
 					Connection conn=DriverManager.getConnection(dP.url, dP.username, dP.password);
 					PreparedStatement ps = conn.prepareStatement("SELECT client_id AS 'Client ID',"
 							+ "trans_transId AS 'Transaction ID'" +
-							",trans_passportNo AS 'Passport No' "+ 
+							", trans_passportNo AS 'Passport No' "+ 
 							", trans_tinID AS 'TIN ID' " + 
 							", trans_visaType AS 'Visa Type' " + 
-							", trans_visaStartDate AS 'Visa Start Date' " + 
-							", trans_visaEndDate AS 'Visa Expiry Date' " + 
+							", DATE_ADD(trans_visaStartDate, INTERVAL 1 DAY) AS 'Visa Start Date' " + 
+							", DATE_ADD(trans_visaEndDate, INTERVAL 1 DAY) AS 'Visa Expiry Date' " + 
 							", trans_permitType AS 'Permit Type' " + 
-							", trans_permitStartDate AS 'Permit Start Date' " + 
-							", trans_permitEndDate AS 'Permit Expiry Date' " + 
+							", DATE_ADD(trans_permitStartDate, INTERVAL 1 DAY) AS 'Permit Start Date' " + 
+							", DATE_ADD(trans_permitEndDate, INTERVAL 1 DAY) AS 'Permit Expiry Date' " + 
 							", trans_aepID AS 'AEP ID' " + 
-							", trans_aepStartDate AS 'AEP Start Date' " + 
-							", trans_aepEndDate AS 'AEP Expiry Date' " + 
-							", trans_transTimestamp AS 'Timestamp' "+
+							", DATE_ADD(trans_aepStartDate, INTERVAL 1 DAY) AS 'AEP Start Date' " + 
+							", DATE_ADD(trans_aepEndDate, INTERVAL 1 DAY) AS 'AEP Expiry Date' " + 
+							", DATE_ADD(trans_transTimestamp, INTERVAL 1 DAY) AS 'Timestamp' "+
 							", trans_transAuthor AS 'Author' "+
 							", trans_transAction AS 'Action' "+
 							" FROM transactions WHERE trans_transAuthor = ? ORDER BY trans_transId DESC");

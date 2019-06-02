@@ -100,14 +100,15 @@ public class Tables extends JFrame{
 		scrollPane_1.setLocation(493, 198);
 		
 		table_1 = new JTable();
-		table_1.setFont(new Font("Calibri", Font.PLAIN, 16));
+		table_1.setForeground(Color.DARK_GRAY);
+		table_1.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
 		table_1.setRowHeight(32);
 		table_1.setBorder(null);
 		table_1.setBounds(492, 217, 1040, 138);
 
 		
 		JTableHeader header_1 = table_1.getTableHeader();
-		header_1.setFont(new Font("Segoe UI Semibold", Font.BOLD, 13));
+		header_1.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
 	    header_1.setBackground(new Color(155, 177, 166));
 	    header_1.setForeground(Color.WHITE);
 		scrollPane_1.setViewportView(table_1);
@@ -711,6 +712,7 @@ public class Tables extends JFrame{
 			Calendar calendar = Calendar.getInstance();
 			java.sql.Date currentDate = new java.sql.Date(calendar.getTime().getTime());
 			trans.setTransTimestamp(currentDate);
+			trans.setTransAction("CREATED");
 			trans.setTransAuthor(Runner.getUser().getUser_username());
 			
 			boolean c = Queries.insertTransaction(trans);

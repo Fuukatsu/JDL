@@ -74,6 +74,7 @@ public class GenerateClients extends JFrame{
 		
 		//Main Panel
 		table_1 = new JTable();
+		table_1.setForeground(Color.DARK_GRAY);
 		table_1.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
@@ -444,9 +445,9 @@ public class GenerateClients extends JFrame{
 		scrollPane_1.setBounds(243, 101, 735, 567);
 		getContentPane().add(scrollPane_1);
 		
-		table_1.setFont(new Font("Calibri", Font.PLAIN, 16));
+		table_1.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
 		table_1.setBounds(495, 198, 125, 68);
-		table_1.setRowHeight(32);
+		table_1.setRowHeight(30);
 		table_1.setBorder(null);
 		
 		JTableHeader header1 = table_1.getTableHeader();
