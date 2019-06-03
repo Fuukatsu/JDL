@@ -127,7 +127,7 @@ public class TablesUpdateClient extends JFrame{
 		
 
 		JButton tables_reloadBtn = new JButton("Reset and Reload");
-		tables_reloadBtn.setBounds(1175, 154, 206, 37);
+		tables_reloadBtn.setBounds(1176, 153, 206, 37);
 		tables_reloadBtn.setForeground(new Color(255, 255, 255));
 		tables_reloadBtn.setIcon(new ImageIcon(Tables.class.getResource("/jdl/Assets/main_refresh.png")));
 		
@@ -163,20 +163,20 @@ public class TablesUpdateClient extends JFrame{
 		tables_searchTxt.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
 		tables_searchTxt.setColumns(10);
 		tables_searchTxt.setBorder(null);
-		tables_searchTxt.setBounds(926, 155, 237, 34);
+		tables_searchTxt.setBounds(929, 155, 237, 34);
 		getContentPane().add(tables_searchTxt);
 		
 		JLabel tables_filterIcon = new JLabel("");
 		tables_filterIcon.setIcon(new ImageIcon(TablesUpdateClient.class.getResource("/jdl/Assets/client_filterIcon.png")));
 		tables_filterIcon.setForeground(Color.WHITE);
 		tables_filterIcon.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		tables_filterIcon.setBounds(888, 155, 35, 37);
+		tables_filterIcon.setBounds(895, 155, 35, 37);
 		getContentPane().add(tables_filterIcon);
 		
 		JLabel tables_filterTableLbl = new JLabel("Filter Table:");
 		tables_filterTableLbl.setForeground(Color.WHITE);
 		tables_filterTableLbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		tables_filterTableLbl.setBounds(800, 155, 89, 37);
+		tables_filterTableLbl.setBounds(809, 153, 89, 37);
 		getContentPane().add(tables_filterTableLbl);
 	
 		tables_reloadBtn.addActionListener(new ActionListener() {
@@ -192,7 +192,7 @@ public class TablesUpdateClient extends JFrame{
 							", client_firstname AS 'Firstname'" + 
 							", client_alias AS 'Alias' " + 
 							", client_nationality AS 'Country' " + 
-							", DATE_ADD(client_birthdate, INTERVAL 1 DAY) AS 'Birthdate'  " + 
+							", client_birthdate AS 'Birthdate'  " + 
 							", client_gender AS 'Gender' " + 
 							", client_company AS 'Company' " + 
 							", client_position AS 'Company Position' " + 
@@ -721,7 +721,7 @@ public class TablesUpdateClient extends JFrame{
 						if(input[5].equals(""))
 							statement1.setDate(4, null);
 						else
-						statement1.setDate(4, java.sql.Date.valueOf(birthdatePicker.getJFormattedTextField().getText().toString()));
+						statement1.setDate(4, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().toString())));
 						statement1.setString(5, tables_genderBox.getSelectedItem().toString());
 						statement1.setString(6, tables_clientCompanyTxt.getText().trim());
 						statement1.setString(7, tables_clientPositionTxt.getText().trim());
@@ -749,9 +749,10 @@ public class TablesUpdateClient extends JFrame{
 		if (ifAdmin == 0) {
 			
 			btnDeleteClient.setVisible(false);
-			tables_searchTxt.setBounds(1074,159,237,30);
-			tables_filterIcon.setBounds(1039,155,35,37);
-			tables_filterTableLbl.setBounds(948,156,89,37);
+			tables_reloadBtn.setBounds(1319,154,206,37);
+			tables_searchTxt.setBounds(1077,155,237,34);
+			tables_filterIcon.setBounds(1043,155,35,37);
+			tables_filterTableLbl.setBounds(957,153,89,37);
 			
 		}
 	}

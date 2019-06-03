@@ -238,10 +238,10 @@ public class TablesStatus extends JFrame{
 					ResultSet rs1 = stat1.executeQuery("SELECT client_id AS 'Client ID'" +
 							", trans_transId AS 'Transaction ID'" + 
 							", statusV_documentation AS 'Documentation'" + 
-							", DATE_ADD(statusV_dateFiled, INTERVAL 1 DAY) AS 'Date Filed'" + 
+							", statusV_dateFiled AS 'Date Filed'" + 
 							", statusV_immigrant AS 'Immigrant'" + 
-							", DATE_ADD(statusV_earlyHearing, INTERVAL 1 DAY) AS 'Early Hearing Date'" + 
-							", DATE_ADD(statusV_hearingDate, INTERVAL 1 DAY) AS 'Hearing Date'" + 
+							", statusV_earlyHearing AS 'Early Hearing Date'" + 
+							", statusV_hearingDate AS 'Hearing Date'" + 
 							", statusV_agenda AS 'Agenda'" + 
 							", statusV_visaReleased AS 'Visa Released'" + 
 							", statusV_waiverEcc AS 'Waiver/ECC Payment/ Others'" + 
@@ -298,14 +298,14 @@ public class TablesStatus extends JFrame{
 							", trans_passportNo AS 'Passport No' "+ 
 							", trans_tinID AS 'TIN ID' " + 
 							", trans_visaType AS 'Visa Type' " + 
-							", DATE_ADD(trans_visaStartDate, INTERVAL 1 DAY) AS 'Visa Start Date' " + 
-							", DATE_ADD(trans_visaEndDate, INTERVAL 1 DAY) AS 'Visa Expiry Date' " + 
+							", trans_visaStartDate AS 'Visa Start Date' " + 
+							", trans_visaEndDate AS 'Visa Expiry Date' " + 
 							", trans_permitType AS 'Permit Type' " + 
-							", DATE_ADD(trans_permitStartDate, INTERVAL 1 DAY) AS 'Permit Start Date' " + 
-							", DATE_ADD(trans_permitEndDate, INTERVAL 1 DAY) AS 'Permit Expiry Date' " + 
+							", trans_permitStartDate AS 'Permit Start Date' " + 
+							", trans_permitEndDate AS 'Permit Expiry Date' " + 
 							", trans_aepID AS 'AEP ID' " + 
-							", DATE_ADD(trans_aepStartDate, INTERVAL 1 DAY) AS 'AEP Start Date' " + 
-							", DATE_ADD(trans_aepEndDate, INTERVAL 1 DAY) AS 'AEP Expiry Date' " + 
+							", trans_aepStartDate AS 'AEP Start Date' " + 
+							", trans_aepEndDate AS 'AEP Expiry Date' " + 
 							" FROM jdl_accounts.transactions WHERE client_id = "+client_id+" AND trans_isActive = 1 OR null");
 					
 					table.setModel(DbUtils.resultSetToTableModel(rs2));
@@ -721,20 +721,20 @@ public class TablesStatus extends JFrame{
 						if(dateFiledPicker.getJFormattedTextField().getText().trim().toString().equals("")) 
 							statement2.setDate(2, null);
 						else
-							statement2.setDate(2, java.sql.Date.valueOf(dateFiledPicker.getJFormattedTextField().getText().trim().toString()));
+							statement2.setDate(2, java.sql.Date.valueOf(objectFilter.addDay(dateFiledPicker.getJFormattedTextField().getText().trim().toString())));
 						
 						statement2.setString(3, tables_immigrantTxt.getText().trim());
 						
 						if(earlyHearingDatePicker.getJFormattedTextField().getText().trim().toString().equals("")) 
 							statement2.setDate(4, null);
 						else
-							statement2.setDate(4, java.sql.Date.valueOf(earlyHearingDatePicker.getJFormattedTextField().getText().trim().toString()));
+							statement2.setDate(4, java.sql.Date.valueOf(objectFilter.addDay(earlyHearingDatePicker.getJFormattedTextField().getText().trim().toString())));
 						
 						
 						if(hearingDatePicker.getJFormattedTextField().getText().trim().toString().equals("")) 
 							statement2.setDate(5, null);
 						else
-							statement2.setDate(5, java.sql.Date.valueOf(hearingDatePicker.getJFormattedTextField().getText().trim().toString()));
+							statement2.setDate(5, java.sql.Date.valueOf(objectFilter.addDay(hearingDatePicker.getJFormattedTextField().getText().trim().toString())));
 						
 						statement2.setString(6, tables_agendaTxt.getText().trim());
 						statement2.setString(7, tables_visaReleaseTxt.getText().trim());
@@ -748,19 +748,19 @@ public class TablesStatus extends JFrame{
 						if(dateFiledPicker.getJFormattedTextField().getText().trim().toString().equals("")) 
 							statement2.setDate(14, null);
 						else
-							statement2.setDate(14, java.sql.Date.valueOf(dateFiledPicker.getJFormattedTextField().getText().trim().toString()));
+							statement2.setDate(14, java.sql.Date.valueOf(objectFilter.addDay(dateFiledPicker.getJFormattedTextField().getText().trim().toString())));
 						
 						statement2.setString(15, tables_immigrantTxt.getText().trim());
 						
 						if(earlyHearingDatePicker.getJFormattedTextField().getText().trim().toString().equals("")) 
 							statement2.setDate(16, null);
 						else
-							statement2.setDate(16, java.sql.Date.valueOf(earlyHearingDatePicker.getJFormattedTextField().getText().trim().toString()));
+							statement2.setDate(16, java.sql.Date.valueOf(objectFilter.addDay(earlyHearingDatePicker.getJFormattedTextField().getText().trim().toString())));
 						
 						if(hearingDatePicker.getJFormattedTextField().getText().trim().toString().equals(""))
 							statement2.setDate(17, null);
 						else
-							statement2.setDate(17, java.sql.Date.valueOf(hearingDatePicker.getJFormattedTextField().getText().trim().toString()));
+							statement2.setDate(17, java.sql.Date.valueOf(objectFilter.addDay(hearingDatePicker.getJFormattedTextField().getText().trim().toString())));
 						
 						statement2.setString(18, tables_agendaTxt.getText().trim());
 						statement2.setString(19, tables_visaReleaseTxt.getText().trim());
@@ -910,10 +910,10 @@ public class TablesStatus extends JFrame{
 					String sql3 = "SELECT client_id AS 'Client ID' "
 							+ ", trans_transId AS 'Transaction ID' " + 
 							", statusV_documentation AS 'Documentation' " + 
-							", DATE_ADD(statusV_dateFiled, INTERVAL 1 DAY) AS 'Date Filed'" + 
+							", statusV_dateFiled AS 'Date Filed'" + 
 							", statusV_immigrant AS 'Immigrant'" + 
-							", DATE_ADD(statusV_earlyHearing, INTERVAL 1 DAY) AS 'Early Hearing Date'" + 
-							", DATE_ADD(statusV_hearingDate, INTERVAL 1 DAY) AS 'Hearing Date'" + 
+							", statusV_earlyHearing AS 'Early Hearing Date'" + 
+							", statusV_hearingDate AS 'Hearing Date'" + 
 							", statusV_agenda AS 'Agenda'" + 
 							", statusV_visaReleased AS 'Visa Released'" + 
 							", statusV_waiverEcc AS 'Waiver/ECC Payment/Others'" + 

@@ -153,7 +153,7 @@ public class TablesAddClient extends JFrame{
 							", client_firstname AS 'Firstname'" + 
 							", client_alias AS 'Alias' " + 
 							", client_nationality AS 'Country' " + 
-							", DATE_ADD(client_birthdate, INTERVAL 1 DAY) AS 'Birthdate' " + 
+							", client_birthdate AS 'Birthdate' " + 
 							", client_gender AS 'Gender' " + 
 							", client_company AS 'Company' " + 
 							", client_position AS 'Company Position' " + 
@@ -608,7 +608,7 @@ public class TablesAddClient extends JFrame{
 						if(input[3].equals(""))
 							statement1.setDate(4, null);
 						else
-							statement1.setDate(4, java.sql.Date.valueOf(birthdatePicker.getJFormattedTextField().getText().toString()));
+							statement1.setDate(4, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().toString())));
 						statement1.setString(5, tables_genderBox.getSelectedItem().toString());
 						statement1.setString(6, tables_clientCompanyTxt.getText().trim());
 						statement1.setString(7, tables_clientPositionTxt.getText().trim());

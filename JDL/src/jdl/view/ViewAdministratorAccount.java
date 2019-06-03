@@ -436,7 +436,7 @@ public class ViewAdministratorAccount extends JFrame{
 						statement1.setString(2, adminAcc_firstnameTxt.getText().trim());
 						statement1.setString(3, adminAcc_positionTxt.getText().trim());
 						statement1.setString(4, adminAcc_genderBox.getSelectedItem().toString().trim());
-						statement1.setDate(5, java.sql.Date.valueOf(birthdatePicker.getJFormattedTextField().getText().trim().toString()));
+						statement1.setDate(5, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().trim().toString())));
 						statement1.setString(6, adminAcc_addressTxt.getText().trim());
 						statement1.setString(7, adminAcc_contactTxt.getText().trim());
 						statement1.setString(8, adminAcc_emailTxt.getText().trim());
@@ -457,69 +457,71 @@ public class ViewAdministratorAccount extends JFrame{
 						
 						if(!(adminAcc_lastnameTxt.getText().isEmpty()) && !(adminAcc_firstnameTxt.getText().isEmpty()) && !(adminAcc_positionTxt.getText().isEmpty()) && !(adminAcc_addressTxt.getText().isEmpty()) && !(adminAcc_contactTxt.getText().isEmpty())
 								&& !(adminAcc_emailTxt.getText().isEmpty()) && !(adminAcc_userIdTxt.getText().isEmpty()) && !(adminAcc_userIdTxt.getText().isEmpty())) {
-						 int reply = JOptionPane.showConfirmDialog(null, "<html><center><font color = #ffffff> Are you sure you want to input this information? <br>You'll need to login again with your new credentials <br>once the settings have been changed.</br> </font color = #ffffff></html></center>", "Proceed to Logout?", JOptionPane.YES_NO_OPTION);
-					    	if (reply == JOptionPane.YES_OPTION) {
-					    		
-					    		statement1.executeUpdate();
-								statement2.executeUpdate();
-					  
-								JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Your record has been successfully updated.</font color = #ffffff></html>", "Update Successful", JOptionPane.INFORMATION_MESSAGE);
-						
-								
-								adminAcc_save.setEnabled(false);
-								adminAcc_editCredentials.setEnabled(true);
-								adminAcc_lastnameTxt.setVisible(false);
-								adminAcc_firstnameTxt.setVisible(false);
-								birthdatePicker.setVisible(false);
-								adminAcc_positionTxt.setVisible(false);
-								adminAcc_contactTxt.setVisible(false);
-								adminAcc_emailTxt.setVisible(false);
-								adminAcc_genderBox.setVisible(false);
-								adminAcc_addressTxt.setVisible(false);
-								
-								statement3.setInt(1, Integer.parseInt(adminAcc_userIdTxt.getText().trim()));
-								ResultSet rs1 = statement3.executeQuery();
-								
-								while(rs1.next()) {
-									adminAcc_lastname.setText("Lastname: "+rs1.getString("emp_lastname"));
-									adminAcc_firstname.setText("Firstname: "+rs1.getString("emp_firstname"));	
-									adminAcc_birthdate.setText("Birthdate: "+rs1.getString("emp_birthdate"));	
-									adminAcc_position.setText("Position: "+rs1.getString("emp_position"));
-									adminAcc_contact.setText("Contact: "+rs1.getString("emp_contact"));
-									adminAcc_email.setText("Email: "+rs1.getString("emp_email"));
-									adminAcc_gender.setText("Gender: "+rs1.getString("emp_gender"));	
-									adminAcc_address.setText("Address: "+rs1.getString("emp_address"));		
-									adminAcc_lastnameTxt.setText(rs1.getString("emp_lastname"));	
-									adminAcc_firstnameTxt.setText(rs1.getString("emp_firstname"));
-									String dateValue = String.valueOf(rs1.getString("emp_birthdate"));
-									birthdateModel.setDate(Integer.parseInt(dateValue.substring(0, dateValue.indexOf("-"))), (Integer.parseInt(dateValue.substring(dateValue.indexOf("-")+1, dateValue.lastIndexOf("-"))))-1, Integer.parseInt(dateValue.substring(dateValue.lastIndexOf("-")+1, dateValue.length())));
-									birthdateModel.setSelected(true);
-									adminAcc_positionTxt.setText(rs1.getString("emp_position"));
-									adminAcc_contactTxt.setText(rs1.getString("emp_contact"));
-									adminAcc_emailTxt.setText(rs1.getString("emp_email"));
-									adminAcc_genderBox.setSelectedItem(rs1.getString("emp_gender"));
-									adminAcc_addressTxt.setText(rs1.getString("emp_address"));	
-								}
-								
-								adminAcc_lastname.setVisible(true);
-								adminAcc_firstname.setVisible(true);	
-								adminAcc_birthdate.setVisible(true);	
-								adminAcc_position.setVisible(true);
-								adminAcc_contact.setVisible(true);
-								adminAcc_email.setVisible(true);
-								adminAcc_gender.setVisible(true);	
-								adminAcc_address.setVisible(true);
-								
-								adminAcc_usernameTxt.setEditable(false);
-								adminAcc_passwordTxt2.setEditable(false);
-								adminAcc_passwordTxt2.setVisible(false);
-								adminAcc_passwordTxt.setVisible(true);
-								
-								Runner.openLogin();
-								Runner.destroyViewAdminAcc();
+									if (!(adminAcc_lastnameTxt.getText().equals(" ")) && !(adminAcc_firstnameTxt.getText().equals(" ")) && !(adminAcc_positionTxt.getText().equals(" ")) && !(adminAcc_addressTxt.getText().equals(" ")) && !(adminAcc_contactTxt.getText().equals(" "))
+										&& !(adminAcc_emailTxt.getText().equals(" ")) && !(adminAcc_userIdTxt.getText().equals(" ")) && !(adminAcc_userIdTxt.getText().equals(" "))) {
+											int reply = JOptionPane.showConfirmDialog(null, "<html><center><font color = #ffffff> Are you sure you want to input this information? <br>You'll need to login again with your new credentials <br>once the settings have been changed.</br> </font color = #ffffff></html></center>", "Proceed to Logout?", JOptionPane.YES_NO_OPTION);
+												if (reply == JOptionPane.YES_OPTION) {
+													statement1.executeUpdate();
+													statement2.executeUpdate();
+													
+													JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Your record has been successfully updated.</font color = #ffffff></html>", "Update Successful", JOptionPane.INFORMATION_MESSAGE);
+		
+													adminAcc_save.setEnabled(false);
+													adminAcc_editCredentials.setEnabled(true);
+													adminAcc_lastnameTxt.setVisible(false);
+													adminAcc_firstnameTxt.setVisible(false);
+													birthdatePicker.setVisible(false);
+													adminAcc_positionTxt.setVisible(false);
+													adminAcc_contactTxt.setVisible(false);
+													adminAcc_emailTxt.setVisible(false);
+													adminAcc_genderBox.setVisible(false);
+													adminAcc_addressTxt.setVisible(false);
+													
+													statement3.setInt(1, Integer.parseInt(adminAcc_userIdTxt.getText().trim()));
+													ResultSet rs1 = statement3.executeQuery();
+													
+													while(rs1.next()) {
+														adminAcc_lastname.setText("Lastname: "+rs1.getString("emp_lastname"));
+														adminAcc_firstname.setText("Firstname: "+rs1.getString("emp_firstname"));	
+														adminAcc_birthdate.setText("Birthdate: "+rs1.getString("emp_birthdate"));	
+														adminAcc_position.setText("Position: "+rs1.getString("emp_position"));
+														adminAcc_contact.setText("Contact: "+rs1.getString("emp_contact"));
+														adminAcc_email.setText("Email: "+rs1.getString("emp_email"));
+														adminAcc_gender.setText("Gender: "+rs1.getString("emp_gender"));	
+														adminAcc_address.setText("Address: "+rs1.getString("emp_address"));		
+														adminAcc_lastnameTxt.setText(rs1.getString("emp_lastname"));	
+														adminAcc_firstnameTxt.setText(rs1.getString("emp_firstname"));
+														String dateValue = String.valueOf(rs1.getString("emp_birthdate"));
+														birthdateModel.setDate(Integer.parseInt(dateValue.substring(0, dateValue.indexOf("-"))), (Integer.parseInt(dateValue.substring(dateValue.indexOf("-")+1, dateValue.lastIndexOf("-"))))-1, Integer.parseInt(dateValue.substring(dateValue.lastIndexOf("-")+1, dateValue.length())));
+														birthdateModel.setSelected(true);
+														adminAcc_positionTxt.setText(rs1.getString("emp_position"));
+														adminAcc_contactTxt.setText(rs1.getString("emp_contact"));
+														adminAcc_emailTxt.setText(rs1.getString("emp_email"));
+														adminAcc_genderBox.setSelectedItem(rs1.getString("emp_gender"));
+														adminAcc_addressTxt.setText(rs1.getString("emp_address"));	
+													}
+													
+													adminAcc_lastname.setVisible(true);
+													adminAcc_firstname.setVisible(true);	
+													adminAcc_birthdate.setVisible(true);	
+													adminAcc_position.setVisible(true);
+													adminAcc_contact.setVisible(true);
+													adminAcc_email.setVisible(true);
+													adminAcc_gender.setVisible(true);	
+													adminAcc_address.setVisible(true);
+													
+													adminAcc_usernameTxt.setEditable(false);
+													adminAcc_passwordTxt2.setEditable(false);
+													adminAcc_passwordTxt2.setVisible(false);
+													adminAcc_passwordTxt.setVisible(true);
+													
+													Runner.openLogin();
+													Runner.destroyViewAdminAcc();
+												}
+									}
 							}
 						}
-					}
+					
 						
 				else {
 					// Nothing happens

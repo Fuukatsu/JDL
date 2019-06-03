@@ -28,7 +28,7 @@ public class Queries
 		User user = null;
 		try (Connection con = DriverManager.getConnection(dP.url, dP.username, dP.password)) 
 		{	
-			PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE user_username = ? AND user_password = ?");
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE user_username = ? AND user_password = ? AND user_isActive IS NULL");
 			ps.setString(1, username);
 			ps.setString(2, password);
 			ResultSet rs = ps.executeQuery();
@@ -90,14 +90,14 @@ public class Queries
 					",trans_passportNo AS 'Passport No' "+ 
 					", trans_tinID AS 'TIN ID' " + 
 					", trans_visaType AS 'Visa Type' " + 
-					", DATE_ADD(trans_visaStartDate, INTERVAL 1 DAY) AS 'Visa Start Date' " + 
-					", DATE_ADD(trans_visaEndDate, INTERVAL 1 DAY) AS 'Visa Expiry Date' " + 
+					", trans_visaStartDate AS 'Visa Start Date' " + 
+					", trans_visaEndDate AS 'Visa Expiry Date' " + 
 					", trans_permitType AS 'Permit Type' " + 
-					", DATE_ADD(trans_permitStartDate, INTERVAL 1 DAY) AS 'Permit Start Date' " + 
-					", DATE_ADD(trans_permitEndDate, INTERVAL 1 DAY) AS 'Permit Expiry Date' " + 
+					", trans_permitStartDate AS 'Permit Start Date' " + 
+					", trans_permitEndDate AS 'Permit Expiry Date' " + 
 					", trans_aepID AS 'AEP ID' " + 
-					", DATE_ADD(trans_aepStartDate, INTERVAL 1 DAY) AS 'AEP Start Date' " + 
-					", DATE_ADD(trans_aepEndDate, INTERVAL 1 DAY) AS 'AEP Expiry Date' " + 
+					", trans_aepStartDate AS 'AEP Start Date' " + 
+					", trans_aepEndDate AS 'AEP Expiry Date' " + 
 					" FROM transactions WHERE client_id = ? AND trans_isActive = 1 ORDER BY trans_transId DESC");
 			ps.setInt(1, id);
 			rs = ps.executeQuery();
@@ -241,15 +241,15 @@ public class Queries
 					", trans_passportNo AS 'Passport No' "+ 
 					", trans_tinID AS 'TIN ID' " + 
 					", trans_visaType AS 'Visa Type' " + 
-					", DATE_ADD(trans_visaStartDate, INTERVAL 1 DAY) AS 'Visa Start Date' " + 
-					", DATE_ADD(trans_visaEndDate, INTERVAL 1 DAY) AS 'Visa Expiry Date' " + 
+					", trans_visaStartDate AS 'Visa Start Date' " + 
+					", trans_visaEndDate AS 'Visa Expiry Date' " + 
 					", trans_permitType AS 'Permit Type' " + 
-					", DATE_ADD(trans_permitStartDate, INTERVAL 1 DAY) AS 'Permit Start Date' " + 
-					", DATE_ADD(trans_permitEndDate, INTERVAL 1 DAY) AS 'Permit Expiry Date' " + 
+					", trans_permitStartDate AS 'Permit Start Date' " + 
+					", trans_permitEndDate AS 'Permit Expiry Date' " + 
 					", trans_aepID AS 'AEP ID' " + 
-					", DATE_ADD(trans_aepStartDate, INTERVAL 1 DAY) AS 'AEP Start Date' " + 
-					", DATE_ADD(trans_aepEndDate, INTERVAL 1 DAY) AS 'AEP Expiry Date' " + 
-					", DATE_ADD(trans_transTimestamp, INTERVAL 1 DAY) AS 'Timestamp' "+
+					", trans_aepStartDate AS 'AEP Start Date' " + 
+					", trans_aepEndDate AS 'AEP Expiry Date' " + 
+					", trans_transTimestamp AS 'Timestamp' "+
 					", trans_transAuthor AS 'Author' "+
 					", trans_transAction AS 'Action' "+
 					" FROM transactions WHERE trans_transAuthor = ? AND trans_isActive = 1 ORDER BY trans_transId DESC");
@@ -274,15 +274,15 @@ public class Queries
 					", trans_passportNo AS 'Passport No' "+ 
 					", trans_tinID AS 'TIN ID' " + 
 					", trans_visaType AS 'Visa Type' " + 
-					", DATE_ADD(trans_visaStartDate, INTERVAL 1 DAY) AS 'Visa Start Date' " + 
-					", DATE_ADD(trans_visaEndDate, INTERVAL 1 DAY) AS 'Visa Expiry Date' " + 
+					", trans_visaStartDate AS 'Visa Start Date' " + 
+					", trans_visaEndDate AS 'Visa Expiry Date' " + 
 					", trans_permitType AS 'Permit Type' " + 
-					", DATE_ADD(trans_permitStartDate, INTERVAL 1 DAY) AS 'Permit Start Date' " + 
-					", DATE_ADD(trans_permitEndDate, INTERVAL 1 DAY) AS 'Permit Expiry Date' " + 
+					", trans_permitStartDate AS 'Permit Start Date' " + 
+					", trans_permitEndDate AS 'Permit Expiry Date' " + 
 					", trans_aepID AS 'AEP ID' " + 
-					", DATE_ADD(trans_aepStartDate, INTERVAL 1 DAY) AS 'AEP Start Date' " + 
-					", DATE_ADD(trans_aepEndDate, INTERVAL 1 DAY) AS 'AEP Expiry Date' " + 
-					", DATE_ADD(trans_transTimestamp, INTERVAL 1 DAY) AS 'Timestamp' "+
+					", trans_aepStartDate AS 'AEP Start Date' " + 
+					", trans_aepEndDate AS 'AEP Expiry Date' " + 
+					", trans_transTimestamp AS 'Timestamp' "+
 					", trans_transAuthor AS 'Author' "+
 					", trans_transAction AS 'Action' "+
 					" FROM transactions WHERE trans_transAuthor = ? ORDER BY trans_transId DESC");

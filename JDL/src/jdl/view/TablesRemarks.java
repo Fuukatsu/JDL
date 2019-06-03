@@ -249,8 +249,8 @@ public class TablesRemarks extends JFrame{
 	
 					ResultSet rs1 = stat1.executeQuery("SELECT client_id AS 'Client ID' "
 							+ ", trans_transId AS 'Transaction ID' " + 
-							", DATE_ADD(remarks_dateReceived, INTERVAL 1 DAY) AS 'Date Received' " +
-							", DATE_ADD(remarks_dateUpdated, INTERVAL 1 DAY) AS 'Date Updated' " +
+							", remarks_dateReceived AS 'Date Received' " +
+							", remarks_dateUpdated AS 'Date Updated' " +
 							", remarks_reminders AS 'Reminders' " +
 							", remarks_toDo AS 'To Do' " +
 							", remarks_transaction AS 'Transaction Remark' " +
@@ -263,14 +263,14 @@ public class TablesRemarks extends JFrame{
 							", trans_passportNo AS 'Passport No' "+ 
 							", trans_tinID AS 'TIN ID' " + 
 							", trans_visaType AS 'Visa Type' " + 
-							", DATE_ADD(trans_visaStartDate, INTERVAL 1 DAY) AS 'Visa Start Date' " + 
-							", DATE_ADD(trans_visaEndDate, INTERVAL 1 DAY) AS 'Visa Expiry Date' " + 
+							", trans_visaStartDate AS 'Visa Start Date' " + 
+							", trans_visaEndDate AS 'Visa Expiry Date' " + 
 							", trans_permitType AS 'Permit Type' " + 
-							", DATE_ADD(trans_permitStartDate, INTERVAL 1 DAY) AS 'Permit Start Date' " + 
-							", DATE_ADD(trans_permitEndDate, INTERVAL 1 DAY) AS 'Permit Expiry Date' " + 
+							", trans_permitStartDate AS 'Permit Start Date' " + 
+							", trans_permitEndDate AS 'Permit Expiry Date' " + 
 							", trans_aepID AS 'AEP ID' " + 
-							", DATE_ADD(trans_aepStartDate, INTERVAL 1 DAY) AS 'AEP Start Date' " + 
-							", DATE_ADD(trans_aepEndDate, INTERVAL 1 DAY) AS 'AEP Expiry Date' " + 
+							", trans_aepStartDate AS 'AEP Start Date' " + 
+							", trans_aepEndDate AS 'AEP Expiry Date' " + 
 							" FROM jdl_accounts.transactions WHERE client_id = "+Integer.parseInt(client_id)+" AND trans_isActive = 1 OR null");
 					
 					table_1.setModel(DbUtils.resultSetToTableModel(rs1));
@@ -576,13 +576,13 @@ public class TablesRemarks extends JFrame{
 					if(tables_dateReceivedTxt.getJFormattedTextField().getText().toString().equals("")) 
 						statement2.setDate(1, null);
 					else
-						statement2.setDate(1, java.sql.Date.valueOf(tables_dateReceivedTxt.getJFormattedTextField().getText().toString()));
+						statement2.setDate(1, java.sql.Date.valueOf(objectFilter.addDay(tables_dateReceivedTxt.getJFormattedTextField().getText().toString())));
 
 					
 					if(tables_dateUpdatedTxt.getJFormattedTextField().getText().toString().equals(""))
 						statement2.setDate(2, null);
 					else
-						statement2.setDate(2, java.sql.Date.valueOf(tables_dateUpdatedTxt.getJFormattedTextField().getText().toString()));
+						statement2.setDate(2, java.sql.Date.valueOf(objectFilter.addDay(tables_dateUpdatedTxt.getJFormattedTextField().getText().toString())));
 				
 					statement2.setString(3, tables_remindersTxt.getText());
 					statement2.setString(4, tables_toDoTxt.getText());
@@ -593,13 +593,13 @@ public class TablesRemarks extends JFrame{
 					if(tables_dateReceivedTxt.getJFormattedTextField().getText().toString().equals("")) 
 						statement2.setDate(8, null);
 					else
-						statement2.setDate(8, java.sql.Date.valueOf(tables_dateReceivedTxt.getJFormattedTextField().getText().toString()));
+						statement2.setDate(8, java.sql.Date.valueOf(objectFilter.addDay(tables_dateReceivedTxt.getJFormattedTextField().getText().toString())));
 
 					
 					if(tables_dateUpdatedTxt.getJFormattedTextField().getText().toString().equals(""))
 						statement2.setDate(9, null);
 					else
-						statement2.setDate(9, java.sql.Date.valueOf(tables_dateUpdatedTxt.getJFormattedTextField().getText().toString()));
+						statement2.setDate(9, java.sql.Date.valueOf(objectFilter.addDay(tables_dateUpdatedTxt.getJFormattedTextField().getText().toString())));
 				
 					statement2.setString(10, tables_remindersTxt.getText());
 					statement2.setString(11, tables_toDoTxt.getText());

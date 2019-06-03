@@ -124,7 +124,7 @@ public class AccountDelete extends JFrame{
 		try {
 			conn1 = DriverManager.getConnection(dP.url, dP.username, dP.password);
 			Statement stat=conn1.createStatement();
-			ResultSet rs1=stat.executeQuery("SELECT * FROM jdl_accounts.users WHERE user_id != "+Runner.getUser().getUser_id()+"");
+			ResultSet rs1=stat.executeQuery("SELECT * FROM jdl_accounts.users WHERE user_isActive IS NULL AND user_id != "+Runner.getUser().getUser_id()+"");
 			
 			 while(rs1.next()){        
 				 	String user_username = rs1.getString("user_username");
@@ -233,8 +233,8 @@ public class AccountDelete extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Connection conn=DriverManager.getConnection(dP.url, dP.username, dP.password);
-					String sql = "DELETE FROM jdl_accounts.employees WHERE user_id=?";
-					String sql1 = "DELETE FROM jdl_accounts.users WHERE user_id=?";
+					String sql = "UPDATE jdl_accounts.employees SET emp_isActive = 0 WHERE user_id=?";
+					String sql1 = "UPDATE jdl_accounts.users SET user_isActive = 0 WHERE user_id=?";
 					PreparedStatement statement = (PreparedStatement) conn.prepareStatement(sql);
 					PreparedStatement statement1 = (PreparedStatement) conn.prepareStatement(sql1);
 					
@@ -257,8 +257,8 @@ public class AccountDelete extends JFrame{
 				 		JOptionPane.showMessageDialog(null, "<html><font color = #ffffff> No user is specified. Please select one. </font color = #ffffff></html>", "No User Selected", JOptionPane.INFORMATION_MESSAGE);
 				 	}
 				 	else {
-				 		int message = JOptionPane.showConfirmDialog(null, "<html><font color = #ffffff> Are you sure you want to delete this user?<br>This will also delete"
-				 			+ " the transactions created using this account. The transactions to be deleted might be important.</br></font color = #ffffff></html>", "Delete this User?", JOptionPane.YES_NO_OPTION);
+				 		int message = JOptionPane.showConfirmDialog(null, "<html><center><font color = #ffffff> Are you sure you want to delete this user? This will prevent"
+				 			+ "<br>the user from logging-in the system.</font color = #ffffff></center></html>", "Delete this User?", JOptionPane.YES_NO_OPTION);
 				 			if (message == JOptionPane.YES_OPTION) {
 				 				statement.executeUpdate();
 				 				statement1.executeUpdate();

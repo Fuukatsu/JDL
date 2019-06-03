@@ -204,17 +204,17 @@ public class TablesUpdateTransactions extends JFrame{
 	
 					ResultSet rs1 = stat1.executeQuery("SELECT client_id AS 'Client ID',"
 							+ "trans_transId AS 'Transaction ID'" +
-							",trans_passportNo AS 'Passport No' "+ 
+							", trans_passportNo AS 'Passport No' "+ 
 							", trans_tinID AS 'TIN ID' " + 
 							", trans_visaType AS 'Visa Type' " + 
-							", DATE_ADD(trans_visaStartDate, INTERVAL 1 DAY) AS 'Visa Start Date' " + 
-							", DATE_ADD(trans_visaEndDate, INTERVAL 1 DAY) AS 'Visa Expiry Date' " + 
+							", trans_visaStartDate AS 'Visa Start Date' " + 
+							", trans_visaEndDate AS 'Visa Expiry Date' " + 
 							", trans_permitType AS 'Permit Type' " + 
-							", DATE_ADD(trans_permitStartDate, INTERVAL 1 DAY) AS 'Permit Start Date' " + 
-							", DATE_ADD(trans_permitEndDate, INTERVAL 1 DAY) AS 'Permit Expiry Date' " + 
+							", trans_permitStartDate AS 'Permit Start Date' " + 
+							", trans_permitEndDate AS 'Permit Expiry Date' " + 
 							", trans_aepID AS 'AEP ID' " + 
-							", DATE_ADD(trans_aepStartDate, INTERVAL 1 DAY) AS 'AEP Start Date' " + 
-							", DATE_ADD(trans_aepEndDate, INTERVAL 1 DAY) AS 'AEP Expiry Date' " + 
+							", trans_aepStartDate AS 'AEP Start Date' " + 
+							", trans_aepEndDate AS 'AEP Expiry Date' " + 
 							" FROM jdl_accounts.transactions WHERE client_id = "+Integer.parseInt(client_id)+" AND trans_isActive = 1 OR null ORDER BY trans_transId");
 					tm = DbUtils.resultSetToTableModel(rs1);
 					table_1.setModel(tm);
@@ -815,8 +815,8 @@ public class TablesUpdateTransactions extends JFrame{
 				Calendar calendar = Calendar.getInstance();
 				java.sql.Date currentDate = new java.sql.Date(calendar.getTime().getTime());
 				Transaction trans = new Transaction();
-				String[] in = new String[6];
 				
+				String[] in = new String[6];
 				in[0] = visaStartPick.getJFormattedTextField().getText().trim().toString();
 				in[1] = visaEndPick.getJFormattedTextField().getText().trim().toString();
 				in[2] = permitStartPick.getJFormattedTextField().getText().trim().toString();

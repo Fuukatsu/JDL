@@ -243,32 +243,32 @@ public class objectFilter
 		if(input[0].equals(""))
 			trans.setVisaEndDate(null);
 		else
-			trans.setVisaEndDate(java.sql.Date.valueOf(input[0]));
+			trans.setVisaEndDate(java.sql.Date.valueOf(objectFilter.addDay(input[0])));
 		
 		if(input[1].equals(""))
 			trans.setVisaStartDate(null);
 		else
-			trans.setVisaStartDate(java.sql.Date.valueOf(input[1]));
+			trans.setVisaStartDate(java.sql.Date.valueOf(objectFilter.addDay(input[1])));
 		
 		if(input[2].equals(""))
 			trans.setPermitStartDate(null);
 		else
-			trans.setPermitStartDate(java.sql.Date.valueOf(input[2]));
+			trans.setPermitStartDate(java.sql.Date.valueOf(objectFilter.addDay(input[2])));
 		
 		if(input[3].equals(""))
 			trans.setPermitEndDate(null);
 		else
-			trans.setPermitEndDate(java.sql.Date.valueOf(input[3]));
+			trans.setPermitEndDate(java.sql.Date.valueOf(objectFilter.addDay(input[3])));
 		
 		if(input[4].equals(""))
 			trans.setAepStartDate(null);
 		else
-			trans.setAepStartDate(java.sql.Date.valueOf(input[4]));
+			trans.setAepStartDate(java.sql.Date.valueOf(objectFilter.addDay(input[4])));
 		
 		if(input[5].equals(""))
 			trans.setAepEndDate(null);
 		else
-			trans.setAepEndDate(java.sql.Date.valueOf(input[5]));
+			trans.setAepEndDate(java.sql.Date.valueOf(objectFilter.addDay(input[5])));
 		return trans;
 	}
 	

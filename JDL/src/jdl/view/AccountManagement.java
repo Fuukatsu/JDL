@@ -203,18 +203,18 @@ public class AccountManagement extends JFrame{
 							+ "user_username AS 'Username'" +
 							", user_password AS 'Password' " + 
 							", user_ifAdmin AS 'Is An Administrator (1 if Yes / 0 if No)' " + 
-							" FROM jdl_accounts.users ORDER BY user_id DESC");
+							" FROM jdl_accounts.users WHERE user_isActive IS NULL ORDER BY user_id DESC");
 					
 					ResultSet rs1=stat1.executeQuery("SELECT user_id AS 'User ID',"
 							+ "emp_lastname AS 'Lastname'" +
 							", emp_firstname AS 'Firstname' " + 
 							", emp_position AS 'Position' " + 
 							", emp_gender AS 'Gender' " + 
-							", DATE_ADD(emp_birthdate, INTERVAL 1 DAY) AS 'Birthdate' " + 
+							", emp_birthdate AS 'Birthdate' " + 
 							", emp_address AS 'Address' " + 
 							", emp_contact AS 'Contact' " + 
 							", emp_email AS 'Email' " + 
-							" FROM jdl_accounts.employees ORDER BY user_id DESC");
+							" FROM jdl_accounts.employees WHERE emp_isActive IS NULL ORDER BY user_id DESC");
 			
 					table_1.setModel(DbUtils.resultSetToTableModel(rs));
 					table_1.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -455,7 +455,7 @@ public class AccountManagement extends JFrame{
 		try {
 			conn1 = DriverManager.getConnection(dP.url, dP.username, dP.password);
 			Statement stat=conn1.createStatement();
-			ResultSet rs1=stat.executeQuery("SELECT * FROM jdl_accounts.users WHERE user_id != "+Runner.getUser().getUser_id()+"");
+			ResultSet rs1=stat.executeQuery("SELECT * FROM jdl_accounts.users WHERE user_isActive IS NULL AND user_id != "+Runner.getUser().getUser_id()+"");
 			
 			 while(rs1.next()){        
 				 	String user_username = rs1.getString("user_username");
@@ -574,7 +574,7 @@ public class AccountManagement extends JFrame{
 						if(birthdatePicker.getJFormattedTextField().getText().toString().equals("")) 
 							statement1.setDate(5, null);
 						else {
-							statement1.setDate(5, java.sql.Date.valueOf(birthdatePicker.getJFormattedTextField().getText().toString()));
+							statement1.setDate(5, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().toString())));
 							statement1.setString(6, emp_AddressTxt.getText());
 							statement1.setString(7, emp_ContactTxt.getText());
 							statement1.setString(8, emp_EmailTxt.getText());
@@ -584,7 +584,7 @@ public class AccountManagement extends JFrame{
 							statement1.setString(11, emp_FirstnameTxt.getText());
 							statement1.setString(12, emp_PositionTxt.getText());
 							statement1.setString(13, emp_genderBox.getSelectedItem().toString());
-							statement1.setDate(14, java.sql.Date.valueOf(birthdatePicker.getJFormattedTextField().getText().toString()));
+							statement1.setDate(14, java.sql.Date.valueOf(objectFilter.addDay(birthdatePicker.getJFormattedTextField().getText().toString())));
 							statement1.setString(15, emp_AddressTxt.getText());
 							statement1.setString(16, emp_ContactTxt.getText());
 							statement1.setString(17, emp_EmailTxt.getText());
@@ -592,6 +592,7 @@ public class AccountManagement extends JFrame{
 							
 							statement1.executeUpdate();
 							tables_inputPanel.revalidate();
+							tables_reloadBtn.doClick();
 							
 							JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>Employee Information has been successfully updated.</font color = #ffffff></html>", "Information Updated Successfully", JOptionPane.INFORMATION_MESSAGE);
 					}
