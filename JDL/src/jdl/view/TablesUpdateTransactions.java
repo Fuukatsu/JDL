@@ -666,11 +666,82 @@ public class TablesUpdateTransactions extends JFrame{
 				if(tables_comboBox.getSelectedItem().toString() == "Click to see the list of registered client") {
 					tables_reloadBtn.setEnabled(false);
 					tables_comboBox1.removeAllItems();
+					
+					tables_reloadBtn.setEnabled(false);
+					Connection conn;
+					databaseProperties dP = new databaseProperties();
+					try {
+						conn = DriverManager.getConnection(dP.url, dP.username, dP.password);
+						
+						String sql = "SELECT client_id AS 'Client ID'," +
+								"trans_transId AS 'Transaction ID'" +
+								",trans_passportNo AS 'Passport No' "+ 
+								", trans_tinID AS 'TIN ID' " + 
+								", trans_visaType AS 'Visa Type' " + 
+								", trans_visaStartDate AS 'Visa Start Date' " + 
+								", trans_visaEndDate AS 'Visa Expiry Date' " + 
+								", trans_permitType AS 'Permit Type' " + 
+								", trans_permitStartDate AS 'Permit Start Date' " + 
+								", trans_permitEndDate AS 'Permit Expiry Date' " + 
+								", trans_aepID AS 'AEP ID' " + 
+								", trans_aepStartDate AS 'AEP Start Date' " + 
+								", trans_aepEndDate AS 'AEP Expiry Date' " + 
+								" FROM transactions WHERE trans_isActive = 1 OR trans_isActive IS NULL ORDER BY trans_transId DESC";
+						
+						PreparedStatement statement = (PreparedStatement) conn.prepareStatement(sql);
+					
+						ResultSet rs = statement.executeQuery();
+						table_1.setModel(DbUtils.resultSetToTableModel(rs));
+						table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+						
+						TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table_1.getModel());
+						table_1.setRowSorter(sorter);
+						
+						tables_searchTxt.setText("");
+						tables_searchTxt.getDocument().addDocumentListener(new DocumentListener(){
+
+							@Override
+							public void insertUpdate(DocumentEvent e) {
+								 String text = tables_searchTxt.getText();
+
+					                if (text.trim().length() == 0) {
+					                    sorter.setRowFilter(null);
+					                } else {
+					                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+					                }
+					            
+								
+							}
+
+							@Override
+							public void removeUpdate(DocumentEvent e) {
+								 String text = tables_searchTxt.getText();
+
+					                if (text.trim().length() == 0) {
+					                    sorter.setRowFilter(null);
+					                } else {
+					                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+					                }						
+							}
+
+							@Override
+							public void changedUpdate(DocumentEvent e) {
+								 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+				            }
+						 });
+						
+						TableColumnAdjuster tca1 = new TableColumnAdjuster(table_1);
+						tca1.adjustColumns();
+						
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
 				}else if (tables_comboBox.getSelectedItem().toString() != "Click to see the list of registered client") {
 					tables_reloadBtn.setEnabled(true);
 				}
 				
 				if(tables_comboBox.getSelectedIndex() == 0) {
+					tables_registerBtn.setEnabled(false);
 					tables_passportNoTxt.setEditable(false);
 					tables_tinIdTxt.setEditable(false);
 					tables_registerBtn.setEnabled(false);
@@ -686,6 +757,7 @@ public class TablesUpdateTransactions extends JFrame{
 				}
 				
 				if(tables_comboBox.getSelectedIndex() != 0) {
+					tables_registerBtn.setEnabled(true);
 					tables_passportNoTxt.setEditable(false);
 					tables_tinIdTxt.setEditable(false);
 					tables_visaTypeTxt.setEnabled(true);

@@ -204,17 +204,6 @@ public class AccountManagement extends JFrame{
 							", user_password AS 'Password' " + 
 							", user_ifAdmin AS 'Is An Administrator (1 if Yes / 0 if No)' " + 
 							" FROM jdl_accounts.users WHERE user_isActive IS NULL ORDER BY user_id DESC");
-					
-					ResultSet rs1=stat1.executeQuery("SELECT user_id AS 'User ID',"
-							+ "emp_lastname AS 'Lastname'" +
-							", emp_firstname AS 'Firstname' " + 
-							", emp_position AS 'Position' " + 
-							", emp_gender AS 'Gender' " + 
-							", emp_birthdate AS 'Birthdate' " + 
-							", emp_address AS 'Address' " + 
-							", emp_contact AS 'Contact' " + 
-							", emp_email AS 'Email' " + 
-							" FROM jdl_accounts.employees WHERE emp_isActive IS NULL ORDER BY user_id DESC");
 			
 					table_1.setModel(DbUtils.resultSetToTableModel(rs));
 					table_1.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -258,18 +247,58 @@ public class AccountManagement extends JFrame{
 					 });
 					
 					
-					
+					ResultSet rs1=stat1.executeQuery("SELECT user_id AS 'User ID',"
+							+ "emp_lastname AS 'Lastname'" +
+							", emp_firstname AS 'Firstname' " + 
+							", emp_position AS 'Position' " + 
+							", emp_gender AS 'Gender' " + 
+							", emp_birthdate AS 'Birthdate' " + 
+							", emp_address AS 'Address' " + 
+							", emp_contact AS 'Contact' " + 
+							", emp_email AS 'Email' " + 
+							" FROM jdl_accounts.employees WHERE emp_isActive IS NULL ORDER BY user_id DESC");
 					
 					table.setModel(DbUtils.resultSetToTableModel(rs1));
-					
-					TableColumnAdjuster tca1 = new TableColumnAdjuster(table);
-					TableRowSorter<TableModel> sorter1 = new TableRowSorter<TableModel>(table.getModel());
-					table.setRowSorter(sorter1);
-					
 					table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 					
-					tca1.adjustColumns();
+					TableColumnAdjuster tcaa = new TableColumnAdjuster(table);
+					TableRowSorter<TableModel> sorterr = new TableRowSorter<TableModel>(table.getModel());
+					table.setRowSorter(sorterr);
+					
+					tcaa.adjustColumns();
+					
+					tables_searchTxt.getDocument().addDocumentListener(new DocumentListener(){
 
+						@Override
+						public void insertUpdate(DocumentEvent e) {
+							 String text = tables_searchTxt.getText();
+
+				                if (text.trim().length() == 0) {
+				                    sorterr.setRowFilter(null);
+				                } else {
+				                    sorterr.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+				                }
+				            
+							
+						}
+
+						@Override
+						public void removeUpdate(DocumentEvent e) {
+							 String text = tables_searchTxt.getText();
+
+				                if (text.trim().length() == 0) {
+				                    sorterr.setRowFilter(null);
+				                } else {
+				                    sorterr.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+				                }						
+						}
+
+						@Override
+						public void changedUpdate(DocumentEvent e) {
+							 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			            }
+					 });
+					
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}

@@ -163,7 +163,7 @@ public class TablesStatus extends JFrame{
 		getContentPane().add(tables_clientTransactionsLbl);
 		
 		JPanel tables_inputPanel = new JPanel();
-		tables_inputPanel.setBounds(25, 174, 450, 670);
+		tables_inputPanel.setBounds(25, 174, 450, 665);
 		tables_inputPanel.setBackground(new Color (255, 255, 255, 60));
 		tables_inputPanel.setLayout(null);
 		
@@ -897,9 +897,81 @@ public class TablesStatus extends JFrame{
 				Connection conn2;
 				
 				if(tables_comboBox.getSelectedItem().toString() == "Click to see the list of registered client") {
+					tables_clientTransactionsLbl.setText("Client Transactions");
 					tables_reloadBtn.setEnabled(false);
 					tables_registerBtn.setEnabled(false);
 					tables_comboBox1.removeAllItems();
+					
+					tables_reloadBtn.setEnabled(false);
+					Connection conn1;
+					databaseProperties dP = new databaseProperties();
+					try {
+						conn1 = DriverManager.getConnection(dP.url, dP.username, dP.password);
+						
+						String sql = "SELECT client_id AS 'Client ID'," +
+								"trans_transId AS 'Transaction ID'" +
+								",trans_passportNo AS 'Passport No' "+ 
+								", trans_tinID AS 'TIN ID' " + 
+								", trans_visaType AS 'Visa Type' " + 
+								", trans_visaStartDate AS 'Visa Start Date' " + 
+								", trans_visaEndDate AS 'Visa Expiry Date' " + 
+								", trans_permitType AS 'Permit Type' " + 
+								", trans_permitStartDate AS 'Permit Start Date' " + 
+								", trans_permitEndDate AS 'Permit Expiry Date' " + 
+								", trans_aepID AS 'AEP ID' " + 
+								", trans_aepStartDate AS 'AEP Start Date' " + 
+								", trans_aepEndDate AS 'AEP Expiry Date' " + 
+								" FROM transactions WHERE trans_isActive = 1 OR trans_isActive IS NULL ORDER BY trans_transId DESC";
+						
+						PreparedStatement statement = (PreparedStatement) conn1.prepareStatement(sql);
+					
+						ResultSet rs = statement.executeQuery();
+						table.setModel(DbUtils.resultSetToTableModel(rs));
+						table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+						
+						TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table.getModel());
+						table.setRowSorter(sorter);
+						
+						tables_searchTxt.setText("");
+						tables_searchTxt.getDocument().addDocumentListener(new DocumentListener(){
+
+							@Override
+							public void insertUpdate(DocumentEvent e) {
+								 String text = tables_searchTxt.getText();
+
+					                if (text.trim().length() == 0) {
+					                    sorter.setRowFilter(null);
+					                } else {
+					                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+					                }
+					            
+								
+							}
+
+							@Override
+							public void removeUpdate(DocumentEvent e) {
+								 String text = tables_searchTxt.getText();
+
+					                if (text.trim().length() == 0) {
+					                    sorter.setRowFilter(null);
+					                } else {
+					                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+					                }						
+							}
+
+							@Override
+							public void changedUpdate(DocumentEvent e) {
+								 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+				            }
+						 });
+						
+						TableColumnAdjuster tca1 = new TableColumnAdjuster(table);
+						tca1.adjustColumns();
+						
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+
 				}else if (tables_comboBox.getSelectedItem().toString() != "Click to see the list of registered client") {
 					tables_reloadBtn.setEnabled(true);
 				
@@ -961,6 +1033,7 @@ public class TablesStatus extends JFrame{
 		
 		tables_reloadBtn.setEnabled(false);
 		tables_registerBtn.setEnabled(false);
+		tables_comboBox.setSelectedIndex(0);
 		
 		JLabel tables_editClientsLbl = new JLabel("Update Clients", SwingConstants.CENTER);
 		tables_editClientsLbl.addMouseListener(new MouseAdapter() {
@@ -978,7 +1051,7 @@ public class TablesStatus extends JFrame{
 		
 		JLabel tables_background = new JLabel("");
 		tables_background.setIcon(new ImageIcon(TablesStatus.class.getResource("/jdl/Assets/background_tables4.jpg")));
-		tables_background.setBounds(0, -4, 1551, 848);
+		tables_background.setBounds(0, -4, 1551, 854);
 		getContentPane().add(tables_background);
 		
 		tables_comboBox1.addActionListener(new ActionListener() {

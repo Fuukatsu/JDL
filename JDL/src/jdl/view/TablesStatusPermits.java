@@ -187,6 +187,7 @@ public class TablesStatusPermits extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				
 				if(tables_comboBox.getSelectedItem().toString() == "Click to see the list of registered client") {
+					tables_clientTransactionsLbl.setText("Client Transactions");
 					tables_reloadBtn.setEnabled(false);
 					tables_registerBtn.setEnabled(false);
 					tables_comboBox1.removeAllItems();
