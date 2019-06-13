@@ -144,8 +144,8 @@ public class GenerateExpiry extends JFrame{
 		});
 		generate_minimizeBtn.setIcon(new ImageIcon(GenerateExpiry.class.getResource("/jdl/Assets/button_minimizer.png")));
 		
-		JLabel generate_client = new JLabel("Number of Expiring Visas");
-		generate_client.setBounds(411, 0, 180, 46);
+		JLabel generate_client = new JLabel("Number of Expiration Dates");
+		generate_client.setBounds(411, 0, 202, 46);
 		getContentPane().add(generate_client);
 		
 		
@@ -444,7 +444,7 @@ public class GenerateExpiry extends JFrame{
 		generate_countLbl.setForeground(Color.WHITE);
 		generate_countLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 99));
 		
-		JLabel generate_clientListLbl = new JLabel("LIST OF EXPIRING VISAS\r\n");
+		JLabel generate_clientListLbl = new JLabel("LIST OF EXPIRATION DATES");
 		generate_clientListLbl.setForeground(Color.WHITE);
 		generate_clientListLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
 		generate_clientListLbl.setBounds(243, 57, 202, 34);
