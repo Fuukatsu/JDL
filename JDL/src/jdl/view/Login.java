@@ -185,20 +185,21 @@ public class Login extends JFrame {
 					 		String dateConverted = "'"+date+"'";
 							PreparedStatement ps = con.prepareStatement("SELECT * FROM jdl_accounts.notifications WHERE notif_date = "+dateConverted);
 							ResultSet rs = ps.executeQuery();
-							while(rs.next())
-							{
-								if(rs.isFirst() == true){
+							if(rs.next() == true){
 									JOptionPane.showMessageDialog(null, "<html><center><font color = #ffffff> We already sent emails today, "+date+", to your clients notifying that <br> their visas or permits are about to expire.</br>"
 								 			+ " To view the list of notified clients, <br>kindly generate the report for the expiring dates.</br></center></font color = #ffffff></html>", "Emails Sent Automatically", JOptionPane.INFORMATION_MESSAGE);
 								}
+								else {
+									JOptionPane.showMessageDialog(null, "<html><center><font color = #ffffff> No Emails Sent Today </font color = #ffffff></html>", "No Expiration Dates Detected", JOptionPane.INFORMATION_MESSAGE);
+								}
+								
 							}
-					}
+					
 					 	catch (SQLException ex) 
 						{
 							ex.printStackTrace();
 						}
 					}
-					else
 					{
 						login_error1.setVisible(false);
 						login_error2.setVisible(false);

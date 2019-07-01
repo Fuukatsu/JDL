@@ -23,7 +23,8 @@ public class EmailFunctions
 	{
 
 		String newMessage = "Good Day, "+c.getClient_lastname()+"\n\n"+
-							"Your "+Document+" is expiring on "+ExpiryDate+"";
+							"Your "+Document+" is about to expire on "+ExpiryDate+".\n"
+							+"This is an automated message. Do not reply.";
 		String subject = "JDL Business and Immigration Consultancy: Expiring "+Document;
 		EmailSender.EmailSendFunction(ExpiryDate, c.getClient_email(), newMessage, subject);
 	}
@@ -71,7 +72,7 @@ public class EmailFunctions
 	public static void checkTodayNotification()
 	{
 		try {
-		String date = objectFilter.getDateToday();
+		String date = objectFilter.addDay(objectFilter.getDateToday());
 		Date d = new SimpleDateFormat("yyyy-MM-dd").parse(date);
 		boolean dateCheck = Queries.checkNotification(new java.sql.Date(d.getTime()));
 		//System.out.println(dateCheck);
