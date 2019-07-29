@@ -40,8 +40,8 @@ public class Splash extends JWindow {
         
         JLabel splash_textDisplay = new JLabel("Setting up your workspace, please wait...");
         splash_textDisplay.setForeground(new Color(255, 255, 255));
-        splash_textDisplay.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
-        splash_textDisplay.setBounds(107, 228, 277, 22);
+        splash_textDisplay.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
+        splash_textDisplay.setBounds(118, 228, 277, 22);
         getContentPane().add(splash_textDisplay);
         
         //Images 
@@ -54,12 +54,7 @@ public class Splash extends JWindow {
         setLocationRelativeTo(null);
         setVisible(true);
 
-        //Email
-        EmailFunctions.initiateEmail();
-    	EmailFunctions.checkTodayNotification();
-        
         //Progress Bar
-  
         splash_progressBar.setBackground(new Color(255, 255, 255));
         splash_progressBar.setForeground(new Color(255, 204, 51));
         splash_progressBar.setMaximum(50);

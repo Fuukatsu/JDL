@@ -25,6 +25,7 @@ public class Runner
 	private static TablesDeleteClient tdc;
 	private static optionsFAQ of;
 	private static TablesDeleteTransaction tdt;
+	private static EmailSending es;
 	
     public static void main(String[] args) 
     {
@@ -230,5 +231,12 @@ public class Runner
     {
     	gE.dispose();
     }
-    
+    public static void openES(){
+        es = new EmailSending();
+        es.loadProgressBar();
+    }
+	public static void destroyES() {
+		es.dispose();
+	}
 }
+

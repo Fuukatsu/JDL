@@ -171,34 +171,40 @@ public class Login extends JFrame {
 						Runner.destroyLogin();
 						Runner.openOptionList();
 						
+						String date = objectFilter.addDay(objectFilter.getDateToday());
+						Date d;
+						
+						try {
+							UIManager.put("OptionPane.background",new ColorUIResource(90, 103, 115));
+						 	UIManager.put("Panel.background",new ColorUIResource(90, 103, 115));
+						 	UIManager.put("OptionPane.messageFont", new Font("Segoe UI Semibold", Font.BOLD, 14));
+						 	UIManager.put("Button.background", Color.WHITE);
+						 	UIManager.put("OptionPane.foreground",new ColorUIResource(90, 103, 115));
+						 	
+							d = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+							boolean dateCheck = Queries.checkNotification(new java.sql.Date(d.getTime()));
+							if(dateCheck == false) {
+			                	JOptionPane.showMessageDialog(null, "<html><center><font color = #ffffff> We already sent emails today, "+date+", to your clients notifying<br>"
+			                			+ "that their visas or permits are about to expire. To view the list of <br>"
+							 			+ "notified clients, kindly generate the report for the expiring dates.</br></center></font color = #ffffff></html>", "Emails Sent Already", JOptionPane.INFORMATION_MESSAGE);
+							}
+							else {
+								JOptionPane.showMessageDialog(null, "<html><center><font color = #ffffff> You haven't sent any messages today so far. Please send emails to<br>"
+										+ "your clients in order to inform them about their current status. Click<br>"
+										+ "the paper plane button at the top-left corner of your main screen.</center></font color = #ffffff></html>", "Forgetting something?", JOptionPane.INFORMATION_MESSAGE);
+						}
+							} catch (ParseException e1) {
+							e1.printStackTrace();
+						}
+						
+						
 						
 						UIManager.put("OptionPane.background",new ColorUIResource(90, 103, 115));
 					 	UIManager.put("Panel.background",new ColorUIResource(90, 103, 115));
 					 	UIManager.put("OptionPane.messageFont", new Font("Segoe UI Semibold", Font.BOLD, 14));
 					 	UIManager.put("Button.background", Color.WHITE);
 					 	UIManager.put("OptionPane.foreground",new ColorUIResource(90, 103, 115));
-					 	
-					 	try 
-						{
-					 		Connection con = DriverManager.getConnection(dP.url, dP.username, dP.password);
-					 		String date = objectFilter.getDateToday();
-					 		String dateConverted = "'"+date+"'";
-							PreparedStatement ps = con.prepareStatement("SELECT * FROM jdl_accounts.notifications WHERE notif_date = "+dateConverted);
-							ResultSet rs = ps.executeQuery();
-							if(rs.next() == true){
-									JOptionPane.showMessageDialog(null, "<html><center><font color = #ffffff> We already sent emails today, "+date+", to your clients notifying that <br> their visas or permits are about to expire.</br>"
-								 			+ " To view the list of notified clients, <br>kindly generate the report for the expiring dates.</br></center></font color = #ffffff></html>", "Emails Sent Automatically", JOptionPane.INFORMATION_MESSAGE);
-								}
-								else {
-									JOptionPane.showMessageDialog(null, "<html><center><font color = #ffffff> No Emails Sent Today </font color = #ffffff></html>", "No Expiration Dates Detected", JOptionPane.INFORMATION_MESSAGE);
-								}
-								
-							}
-					
-					 	catch (SQLException ex) 
-						{
-							ex.printStackTrace();
-						}
+
 					}
 					{
 						login_error1.setVisible(false);

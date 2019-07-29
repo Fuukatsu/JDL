@@ -338,7 +338,7 @@ public class Queries
 		try (Connection con = DriverManager.getConnection(dP.url, dP.username, dP.password)) 
 		{
 			PreparedStatement ps = con.prepareStatement("SELECT * FROM jdl_accounts.notifications WHERE notif_date = ?");
-			ps.setDate(1, java.sql.Date.valueOf(objectFilter.addDay((date.toString()))));
+			ps.setDate(1, java.sql.Date.valueOf((date.toString())));
 			ResultSet rs = ps.executeQuery();
 			while(rs.next())
 			{

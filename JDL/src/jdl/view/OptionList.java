@@ -18,11 +18,17 @@ import javax.swing.UIManager;
 import javax.swing.plaf.ColorUIResource;
 
 import jdl.controller.CSVLoaderMain;
+import jdl.controller.EmailFunctions;
 import jdl.controller.Runner;
+import jdl.controller.objectFilter;
+import jdl.dao.Queries;
 import jdl.model.User;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class OptionList extends JFrame{
 	
@@ -96,7 +102,7 @@ public class OptionList extends JFrame{
 		JLabel options_logout = new JLabel("");
 		options_logout.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
 		options_logout.setToolTipText("<html>Logout.</html>");
-		options_logout.setBounds(74, 11, 37, 29);
+		options_logout.setBounds(140, 10, 37, 29);
 		getContentPane().add(options_logout);
 		options_logout.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -118,7 +124,7 @@ public class OptionList extends JFrame{
 		options_logout.setIcon(new ImageIcon(OptionList.class.getResource("/jdl/Assets/button_logout.png")));
 		
 		JLabel options_welcomeLbl = new JLabel("Welcome Administrator");
-		options_welcomeLbl.setBounds(268, 0, 168, 46);
+		options_welcomeLbl.setBounds(263, 0, 168, 46);
 		getContentPane().add(options_welcomeLbl);
 		options_welcomeLbl.setForeground(new Color(255, 255, 255));
 		options_welcomeLbl.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
@@ -228,9 +234,39 @@ public class OptionList extends JFrame{
 			}
 		});
 		options_faq.setIcon(new ImageIcon(OptionList.class.getResource("/jdl/Assets/options_FAQ.png")));
-		options_faq.setBounds(106, 11, 31, 29);
+		options_faq.setBounds(109, 12, 31, 29);
 		getContentPane().add(options_faq);
 		
+		JLabel options_sendEmail = new JLabel("");
+		try {
+    		String date = objectFilter.addDay(objectFilter.getDateToday());
+    		Date d;
+			d = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+			boolean dateCheck = Queries.checkNotification(new java.sql.Date(d.getTime()));
+			if(dateCheck == false) {
+				options_sendEmail.setEnabled(false);
+			}
+    	}
+			catch (ParseException e1) {
+			e1.printStackTrace();
+		}	
+		
+		if(options_sendEmail.isEnabled() == true) {
+		
+			options_sendEmail.addMouseListener(new MouseAdapter() {
+		public void mouseClicked(MouseEvent e) {
+			Runner.openES();
+			Runner.destroyOptionList();
+		}
+		});
+		}
+		options_sendEmail.setIcon(new ImageIcon(OptionList.class.getResource("/jdl/Assets/options_sendEmailExp.png")));
+		options_sendEmail.setToolTipText("<html> Send email to expiring clients (Note: This will pause any <br>of your currently running operations.) </html>");
+		options_sendEmail.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
+		options_sendEmail.setBounds(75, 11, 37, 29);
+		getContentPane().add(options_sendEmail);
+		
+
 		JLabel options_background = new JLabel("");
 		options_background.setIcon(new ImageIcon(OptionList.class.getResource("/jdl/Assets/background_optionList4.jpg")));
 		options_background.setBounds(0, 0, 690, 480);

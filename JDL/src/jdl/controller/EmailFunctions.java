@@ -16,8 +16,10 @@ public class EmailFunctions
 	private static Email emCredential;
 	public static void initiateEmail()
 	{
+		
 		emCredential = new Email();
 		emCredential.setEmailCredentials();
+		
 	}
 	public static void composeEmail(Client c, String ExpiryDate, String Document)
 	{
@@ -37,36 +39,40 @@ public class EmailFunctions
 	}
 	public static void checkExpiration()
 	{
+		try {
+		String today = objectFilter.getDateToday();
+		Date d = new SimpleDateFormat("yyyy-MM-dd").parse(today);
 		String newweek = objectFilter.addWeek(objectFilter.getDateToday());
-		ArrayList<Transaction> tlist = Queries.getTransactions();
+		Date dd = new SimpleDateFormat("yyyy-MM-dd").parse(newweek);
+		System.out.print(today);
+		System.out.println(newweek);
+		ArrayList<Transaction> tlist = Queries.getTransactionsBetweenDate(new java.sql.Date(d.getTime()), new java.sql.Date(dd.getTime()));
 		for(Transaction t:tlist)
 		{
 			int client_id = t.getClient_id();
 			Client c = Queries.getClient(client_id);
 			if(t.getVisaEndDate() != null)
 			{
-				if(newweek.equals(t.getVisaEndDate().toString()))
-				{
+					System.out.print("Visa: "+t.getVisaEndDate());
 					composeEmail(c, newweek, "Visa");
 					composeEmailEmployee(c, newweek, objectFilter.getDateToday(), "Visa");
-				}
 			}
 			if(t.getPermitEndDate() != null)
 			{
-				if(newweek.equals(t.getPermitEndDate().toString()))
-				{
+					System.out.print("Permit: "+t.getVisaEndDate());
 					composeEmail(c, newweek, "Permit");
 					composeEmailEmployee(c, newweek, objectFilter.getDateToday(), "Permit");
 				}
-			}
+		
 			if(t.getAepEndDate() != null)
-			{
-				if(newweek.equals(t.getAepEndDate().toString()))
-				{
+			{	
+					System.out.print("AEP: "+t.getVisaEndDate());
 					composeEmail(c, newweek, "Aep");
 					composeEmailEmployee(c, newweek, objectFilter.getDateToday(), "Aep");
-				}
 			}
+		}
+		}catch (ParseException e1) {
+			e1.printStackTrace();
 		}
 	}
 	public static void checkTodayNotification()
