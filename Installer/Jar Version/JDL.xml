@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>C:\Users\mrand\Downloads\JDL.jar</jar>
+  <outfile>C:\Users\mrand\Downloads\JDL.exe</outfile>
+  <errTitle>No Java Virtual Machine (JVM) Found</errTitle>
+  <cmdLine></cmdLine>
+  <chdir>.</chdir>
+  <priority>normal</priority>
+  <downloadUrl>https://www.java.com/en/download/</downloadUrl>
+  <supportUrl></supportUrl>
+  <stayAlive>false</stayAlive>
+  <restartOnCrash>false</restartOnCrash>
+  <manifest></manifest>
+  <icon>C:\Users\mrand\Documents\JDL\JDL\src\jdl\Assets\JDLogo.ico</icon>
+  <jre>
+    <path></path>
+    <bundledJre64Bit>false</bundledJre64Bit>
+    <bundledJreAsFallback>false</bundledJreAsFallback>
+    <minVersion>1.0</minVersion>
+    <maxVersion></maxVersion>
+    <jdkPreference>preferJre</jdkPreference>
+    <runtimeBits>64/32</runtimeBits>
+  </jre>
+  <messages>
+    <startupErr>An unknown error occured during startup.</startupErr>
+    <bundledJreErr>This application requires a Java Runtime Environment (JRE). It seems to be missing or corrupted.</bundledJreErr>
+    <jreVersionErr>The Java Runtime Environment (JRE) might be outdated or incompatible with this application.</jreVersionErr>
+    <launcherErr>The Java Runtime Environment (JRE) seems to be non-existent or corrupted.</launcherErr>
+    <instanceAlreadyExistsMsg>The application is already running.</instanceAlreadyExistsMsg>
+  </messages>
+</launch4jConfig>
