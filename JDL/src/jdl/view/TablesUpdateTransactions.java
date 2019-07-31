@@ -462,6 +462,8 @@ public class TablesUpdateTransactions extends JFrame{
 		tables_visaTypeTxt.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 14));
 		tables_visaTypeTxt.setBounds(20, 340, 400, 23);
 		tables_inputPanel.add(tables_visaTypeTxt);
+		AutoCompletion.enable(tables_visaTypeTxt);
+		
 		
 		JComboBox tables_permitTypeTxt = new JComboBox();
 		tables_permitTypeTxt.setEditable(true);
@@ -475,6 +477,7 @@ public class TablesUpdateTransactions extends JFrame{
 		tables_visaExpireLbl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
 		tables_visaExpireLbl.setBounds(230, 370, 192, 29);
 		tables_inputPanel.add(tables_visaExpireLbl);
+		AutoCompletion.enable(tables_visaTypeTxt);
 		
 		JLabel tables_permitLbl = new JLabel("Permit Type:");
 		tables_permitLbl.setForeground(Color.WHITE);
