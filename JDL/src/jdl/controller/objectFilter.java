@@ -496,6 +496,14 @@ public class objectFilter
 			else if(input[9].length() <8)
 				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[9]+" too short. Minimum of 8 alphanumeric characters. </font color = #ffffff></html>", "Detected an invalid field", JOptionPane.ERROR_MESSAGE);	
 		}
+		else if(input[5].isEmpty()) {
+			if(input[5].isEmpty())
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[5]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
+		}
+		else if(input[6].isEmpty()) {
+			if(input[6].isEmpty())
+				JOptionPane.showMessageDialog(null, "<html><font color = #ffffff>"+what[6]+" must not be empty.</font color = #ffffff></html>", "Detected an empty required field", JOptionPane.ERROR_MESSAGE);	
+		}
 		else{
 			t = true;
 		}
